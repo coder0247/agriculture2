@@ -1,0 +1,62 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { AccountRoutingModule } from './account-routing.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { InboxComponent } from './inbox/inbox.component';
+import { NewadComponent } from './newad/newad.component';
+import { HeaderCommonModule } from './../header-common/header-common.module';
+import {FooterModule} from '../footer/footer.module';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { ActiveadsComponent } from './activeads/activeads.component';
+import { ArchiveadsComponent } from './archiveads/archiveads.component';
+import { SentComponent } from './sent/sent.component';
+import { EditprofileComponent } from './editprofile/editprofile.component';
+import { FileSelectDirective } from 'ng2-file-upload';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ImagePreview } from '../directive/image-preview.directive';
+import { QuickviewComponent } from './quickview/quickview.component';
+import { ModalModule } from 'ngx-bootstrap';
+import { ProductService } from '../service/product.service';
+import { ViewmsgComponent } from './viewmsg/viewmsg.component';
+import { SentmsgComponent } from './sentmsg/sentmsg.component';
+import { EditadComponent } from './editad/editad.component';
+import { EditadsComponent } from './editads/editads.component';
+import { PopupComponent } from './popup/popup.component';
+import { ChangepasswordComponent } from './changepassword/changepassword.component';
+import { PagerService } from './../service/pager.service';
+@NgModule({
+  imports: [
+CommonModule,
+    AccountRoutingModule,
+    HeaderCommonModule,
+    FooterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    ModalModule.forRoot()
+  ],
+  declarations: [
+                    DashboardComponent,
+                    InboxComponent,
+                    NewadComponent,
+                    SidebarComponent,
+                    ActiveadsComponent,
+                    ArchiveadsComponent,
+                    SentComponent,
+                    EditprofileComponent,
+                    FileSelectDirective,
+                    ImagePreview,
+                    QuickviewComponent,
+                    ViewmsgComponent,
+                    SentmsgComponent,
+                    EditadComponent,
+                    EditadsComponent,
+                    PopupComponent,
+                    ChangepasswordComponent
+                  ],
+
+                    providers: [ProductService , PagerService],
+})
+export class AccountModule { }

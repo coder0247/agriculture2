@@ -1,0 +1,23 @@
+.productloading{
+    display: inline-block;
+    position: relative;
+    left: 20px;
+    background-color: green;
+    padding: 0 10px;
+    color: #fff;
+}
+.shop-page .shop-title {
+    display: inline;
+}
+.product-item .group-button .add-to-cart{
+    width: 100%;
+}
+.sidebar .widget_filter_size .list-size li {
+    display: block;
+}
+.disabled>a:hover {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}

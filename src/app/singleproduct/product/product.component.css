@@ -1,0 +1,16 @@
+.label-text {
+    display: block;
+}
+h4.imgloading {
+    left: 0;
+    right: 0px;
+    margin: auto;
+    position: absolute;
+    top: 192px;
+    color: #ffffff;
+    font-size: 23px;
+    background: #d27430;
+    width: 138px;
+    padding: 5px;
+    text-align: center;
+}

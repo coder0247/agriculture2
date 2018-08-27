@@ -1,0 +1,107 @@
+<app-header-common></app-header-common>
+<div class="main-content shop-page main-content-grid">
+		<div class="container">
+			<div class="breadcrumbs">
+					<a href="user/account">My Account</a>
+			</div>
+			<div class="row">
+					<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset">
+							<div class="categories-content">
+									<div class="login-register-form content-form">
+											<h4 class="shop-title">Edit Profile</h4>
+											<div class="product-container auto-clear grid-style equal-container box-has-content">
+													<form [formGroup]="registerForm">
+															<div class="register-form">
+
+															  <h5 class="note-title">All ( * ) fields are required</h5>
+															  <div class="row">
+																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+																  <span class="label-text">Fist name <span>*</span></span>
+																  <input type="text"  class="input-info" formControlName="firstname" required>
+																  <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+																	  <div class="text-danger" *ngIf="!!registerForm.controls['firstname'].pristine || !!registerForm.controls['firstname'].errors?.required">First Name is required.</div>
+																  </div>
+																</div>
+																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+																  <span class="label-text">Last name <span>*</span></span>
+																  <input type="text"  class="input-info" formControlName="lastname" required>
+															  <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+																  <div class="text-danger" *ngIf="!!registerForm.controls['lastname'].pristine || !!registerForm.controls['lastname'].errors?.required">Last Name is required.</div>
+															  </div>
+																</div>
+															  </div>
+															  <div class="row">
+															  
+																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+																  <span class="label-text">Phone Number <span>*</span></span>
+																  <input type="number"  class="input-info" formControlName="phoneno" required min="0" oninput="validity.valid||(value='');">
+																  <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+																	  <div class="text-danger" *ngIf="!!registerForm.controls['phoneno'].pristine || !!registerForm.controls['phoneno'].errors?.required">Phone number is required.</div>
+																  </div>
+																</div>
+																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 regionoption">
+																  <span class="label-text">Region<span>*</span></span>
+																  <ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
+																										 placeholder="Select region" formControlName="region">
+																										</ng-select>
+																				<div *ngIf="registerForm.invalid && formsubmitted" class="error-msg top-minus-4">
+																					<div class="text-danger" *ngIf="!!registerForm.controls['region'].pristine || !!registerForm.controls['region'].errors?.required">Region is required.</div> 
+																				</div>
+															  
+																</div>
+															  </div>
+															  <!-- <span class="label-text">Last name <span>*</span></span>
+															  <input type="text"  class="input-info" formControlName="lastname" required>
+															  <div *ngIf="registerForm.controls['lastname'].errors && !registerForm.controls['lastname'].pristine" class="error-msg">
+																  <div class="text-danger" [hidden]="!registerForm.controls['lastname'].errors.required">Last Name is required.</div>
+															  </div> -->
+															  <span class="label-text">Email Address <span>*</span></span>
+															  <input type="email" class="input-info" formControlName="email" required>
+															  <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+																  <div class="text-danger" *ngIf="!!registerForm.controls['email'].pristine || !!registerForm.controls['email'].errors?.required">Email is required.</div>
+																  <div class="text-danger" *ngIf="registerForm.controls['email'].dirty && !!registerForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
+															  </div>
+															  <div class="check-box">
+																<input type="checkbox" formControlName="newsletter" class="login-check" id="register-check"> <label class="text-label" for="register-check">Sign Up for Newsletter</label>
+															  </div>
+															  <h5 class="title">Login Information</h5>
+															  <div class="row">
+																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+																  <span class="label-text">Password <span>*</span></span>
+																  <input type="password"  formControlName="password"  class="input-info">
+																  <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+																	  <div class="text-danger" *ngIf="!!registerForm.controls['password'].pristine || !!registerForm.controls['password'].errors?.required">Password is required.</div>
+																  </div>
+																</div>
+																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+																  <span class="label-text">Confirm Password <span>*</span></span>
+																  <input type="password"  formControlName="confirm_password"  class="input-info">
+																  <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+																	  <div class="text-danger" *ngIf="!!registerForm.controls['confirm_password'].pristine || !!registerForm.controls['confirm_password'].errors?.required">Confirm Password is required.</div>
+																  </div>
+																  <div *ngIf="registerForm.invalid && formsubmitted && registerForm.controls['confirm_password'].dirty" class="error-msg">
+																	  <div class="text-danger" *ngIf="!!registerForm.errors?.mismatch && !!registerForm.controls['confirm_password'].errors?.required === false">Password & Confirm Password should be same.</div>
+																 </div>
+																
+																</div>
+															
+															  </div>
+															  <div class="group-button">
+																<button class="button submit"  (click)="register()">SUBMIT <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
+																<span class="successmsg" [ngClass]="{'bg-danger': error, 'bg-success': success}"  *ngIf="!!usermsg" >{{usermsg}}</span>
+															  </div>		
+															</div>
+															</form>
+											</div>
+									</div>
+									
+									</div>
+							
+						  </div>
+      <!-- sidebar -->
+      <app-sidebar></app-sidebar>
+      <!-- /sidebar-->
+			</div>
+		</div>
+	</div>
+	<app-footer></app-footer>

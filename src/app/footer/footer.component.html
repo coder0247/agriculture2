@@ -1,0 +1,188 @@
+<!--Footer-->
+
+<footer>
+	<div class="footer layout2">
+		<div class="">
+			<div class="container">
+				<div class="main-footer">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 col-ss-12">
+							<div class="widget widget-text">
+								<h3 class="widgettitle">Contact information</h3>
+								<div class="content">
+									<h5 class="subtitle">Address</h5>
+									<p class="des">218 Fifth Avenue, HeavenTower NewYork City</p>
+									<h5 class="subtitle">Phone</h5>
+									<p class="des">(+68) 123 456 7890</p>
+									<h5 class="subtitle">Email</h5>
+									<p class="des">Support@techone.com
+										<br> Hot-Support@techone.com</p>
+								</div>
+							</div>
+							<ul class="list-socials">
+								<li>
+									<a href="#">
+										<i class="fa fa-twitter" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-facebook" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-pinterest" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-instagram" aria-hidden="true"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 col-ss-12">
+							<div class="newsletter-form layout1 box-has-content">
+								<div class="widget widget-newsletter">
+									<h3 class="widgettitle">Newsletter</h3>
+									<div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-6">
+											<p class="des">Get all the latest information on Events, Sales and Offers. Sign up for newsletter today.</p>
+										</div>
+										<form [formGroup]="subsForm">
+											<div class="col-ts-12 col-xs-8 col-sm-12 col-md-6">
+																						  
+												<div class="newsletter-block">
+														
+													<div class="newsletter-inner">
+														<input type="email" class="newsletter-info" placeholder="Enter Your e-mail..." formControlName="email">
+													</div>
+													<a href="javascript:void(0)" class="submit" (click)="subscribe()">
+														<span *ngIf="!checking">Subscribe</span>
+														<span *ngIf="checking"><img src="assets/images/loader.gif"></span>
+													</a>
+												</div>
+												<span class="error" *ngIf="validationerror">Enter a valid email</span>
+												<span class="success" *ngIf="!validationerror && success">Subscribed successfully</span>
+												<span class="error" *ngIf="alreadysubs">Your are already subscribed</span>
+												
+											</div>
+										</form>
+										
+									</div>
+								</div>
+							</div>
+							<div class="row auto-clear">
+								<!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-ts-12 ">
+									<div class="widget widget-custom-menu">
+										<h3 class="widgettitle">My account</h3>
+										<ul>
+											<li>
+												<a href="login.html">Sign In</a>
+											</li>
+											<li>
+												<a href="shopping-cart.html">View Cart</a>
+											</li>
+											<li>
+												<a href="#">My Wishlist</a>
+											</li>
+											<li>
+												<a href="#">Helps</a>
+											</li>
+										</ul>
+									</div>
+								</div> -->
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-ts-12 ">
+									<div class="widget widget-custom-menu">
+										<h3 class="widgettitle">Information</h3>
+										<ul>
+											<li routerLinkActive="active">
+												<a routerLink="/privacy">Privacy Policy</a>
+											</li>
+											<li>
+												<a routerLink="/contact">Terms & Conditions</a>
+											</li>
+											<li>
+												<a href="#">Sitemap</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-ts-12">
+									<div class="widget widget-custom-menu">
+										<h3 class="widgettitle">Customer Services</h3>
+										<ul>
+											<!-- <li>
+												<a href="#">Secure Shopping</a>
+											</li>
+											<li>
+												<a href="#">Affiliates</a>
+											</li> -->
+											<li>
+												    <a routerLink="/contact">Contact Us</a>
+											</li>
+											<li>
+												<a routerLink="/termsofuse">Terms of Use</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 col-ts-12">
+									<div class="widget widget-custom-menu">
+										<h3 class="widgettitle">Payment & Shipping</h3>
+										<ul>
+											<li>
+												<a href="#">Terms of Use</a>
+											</li>
+											<li>
+												<a href="#">Payment Methods</a>
+											</li>
+
+										</ul>
+									</div>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer-note">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 left-content">
+							<div class="coppy-right">
+								<h3 class="content">© Copyright 2018
+									<span class="site-name"> Agriculture</span>
+									All rights reserved</h3>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 right-content">
+							<!-- <ul class="list-payment">
+								<li>
+									<a href="#">
+										<img src="images/payment1.png" alt="">
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img src="images/payment2.png" alt="">
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img src="images/payment3.png" alt="">
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img src="images/payment4.png" alt="">
+									</a>
+								</li>
+							</ul> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!--/Footer-->

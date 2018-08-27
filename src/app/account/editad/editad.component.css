@@ -1,0 +1,12 @@
+.content-form .input-info {
+    padding: 0 5px;
+}
+
+.buttonblock button {
+    margin-bottom:5px;  
+    display: block;
+}
+
+.ng-select .ng-placeholder {
+    display: none;
+  }

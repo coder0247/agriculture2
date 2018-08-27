@@ -1,0 +1,6 @@
+<div *ngIf="show_message" class="message">
+	<div class="alert alert-{{ message_style_class }} fade in alert-dismissible">
+		<a class="close" (click)="hideMessage()" title="close">×</a>
+		<strong>{{message_type_text}}!</strong> {{message}}
+	</div>
+</div>

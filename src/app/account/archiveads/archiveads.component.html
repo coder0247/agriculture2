@@ -1,0 +1,123 @@
+<app-header-common></app-header-common>
+<div class="main-content shop-page main-content-grid">
+		<div class="container">
+			<div class="breadcrumbs">
+					<a href="user/account">My Account</a>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset">
+					<div class="categories-content">
+						<h4 class="shop-title">Archive Ads</h4>
+						<div class="productloading" *ngIf="showloading">Loading...</div>
+						<div class="product-container auto-clear grid-style equal-container box-has-content" *ngIf="pagedItems">
+								<table class="table table-hover"> 
+									<thead> 
+										<tr> 
+											<th>#</th> 
+											<th>Product Image</th> 
+											<th>Name</th>
+											<th>Price</th>
+											<!-- <th>Category</th> 
+											<th>Sub Category</th> -->
+											<th>Added on</th>
+											<th>Action</th>
+										 </tr> 
+									</thead> 
+									<tbody> 
+										<tr *ngFor="let item of pagedItems; let i = index"> 
+											<th scope="row">{{i + 1}}</th> 
+											<td><img src="assets/images/products/{{item.pimage}}" width="100" alt=""></td> 
+											<td>{{item.pname}}</td> 
+											<td>$ {{item.saleamount}}</td> 
+											<!-- <td>{{item.category}}</td>
+											<td>{{item.subcategory}}</td> -->
+											<td>{{item.created_at | date:'MM-dd-y'}}</td>
+											<td>
+													<div class="btn-group" role="group" aria-label="...">
+															<button type="button" class="btn btn-primary" (click)="makeadactive(item._id)"><span class="text">Activate Ad</span></button>
+													  </div>
+												<!-- <button type="button" class="btn btn-primary" (click)="editproductdetails(item)"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button> 
+												<button type="button" class="btn btn-danger" (click)="deleteproduct(item)"><i class="fa fa-trash-alt" aria-hidden="true"></i> Delete</button> -->
+											</td>
+										</tr> 
+									</tbody> 
+								</table>
+										<!-- <div class="product-item layout1 col-ts-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 no-padding" *ngFor="let item of products">
+											<div class="product-inner equal-elem" >
+												<div class="thumb">
+													<button href="#" class="quickview-button" (click)="quickview(item.pname, item.pimage, item.saleamount,  item.amtunit, item.unitprice)"><span class="icon"><i class="fa fa-eye" aria-hidden="true"></i></span> Quick View</button>
+													<a href="javascript:void(0)" (click)="showproductdetails(item._id)"  class="thumb-link"><img src="assets/images/products/{{item.pimage}}" alt=""></a>
+												</div>
+												<div class="info">
+													<a href="javascript:void(0)" (click)="showproductdetails(item._id)"  class="product-name">{{item.pname}}</a>
+												
+													<div class="price">
+														<span>$ {{item.saleamount}}</span>
+													</div>
+													
+												</div>
+												<div class="group-button">
+													<div class="inner">
+														<a href="javascript:void(0)" class="add-to-cart" (click)="archivead(item._id)"><span class="text">Archive</span></a>
+														
+													</div>
+												</div>
+											</div>
+										</div> -->
+									
+									
+						</div>
+						<div class="pagination" *ngIf="pagedItems?.length" >
+								<ul class="list-page" *ngIf="pager.pages && pager.pages.length">
+										<li [ngClass]="{disabled:pager.currentPage === 1}">
+											<a href="javascript:void(0)" class="nav-button" (click)="setPage(1)">First</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === 1}">
+											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.currentPage - 1)">Previous</a>
+										</li>
+										<li *ngFor="let page of pager.pages" >
+											<a href="javascript:void(0)" [ngClass]="{'page-number current':pager.currentPage === page}" (click)="setPage(page)">{{page}}</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.currentPage + 1)">Next</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.totalPages)">Last</a>
+										</li>
+								</ul>
+							</div>
+						<span  *ngIf="pagedItems?.length" class="note">Showing {{pager.startIndex + 1}}-{{pager.endIndex + 1}}  of {{pager.totalItems}} result</span> 
+						<!-- <div class="product-container auto-clear grid-style equal-container box-has-content" *ngIf="products">
+							
+										<div class="product-item layout1 col-ts-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 no-padding" *ngFor="let item of products">
+											<div class="product-inner equal-elem" >
+												<div class="thumb">
+													<button href="#" class="quickview-button" (click)="quickview(item.pname, item.pimage, item.saleamount,  item.amtunit, item.unitprice)"><span class="icon"><i class="fa fa-eye" aria-hidden="true"></i></span> Quick View</button>
+													<a href="javascript:void(0)" (click)="showproductdetails(item._id)"  class="thumb-link"><img src="assets/images/products/{{item.pimage}}" alt=""></a>
+												</div>
+												<div class="info">
+													<a href="javascript:void(0)" (click)="showproductdetails(item._id)"  class="product-name">{{item.pname}}</a>
+													<div class="price">
+														<span>$ {{item.saleamount}}</span>
+													</div>
+												</div>
+												<div class="group-button">
+													<div class="inner">
+														<a href="javascript:void(0)" class="add-to-cart" (click)="makeadactive(item._id)"><span class="text">Activate Ad</span></a>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									
+						</div> -->
+						
+					</div>
+				</div>
+      <!-- sidebar -->
+      <app-sidebar></app-sidebar>
+      <!-- /sidebar-->
+			</div>
+		</div>
+	</div>
+	<app-footer></app-footer>

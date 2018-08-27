@@ -1,0 +1,104 @@
+<app-header-common></app-header-common>
+<div class="main-content shop-page main-content-grid">
+		<div class="container">
+			<div class="breadcrumbs">
+					<a href="user/account">My Account</a>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset">
+					<div class="categories-content">
+						<!-- <h4 class="shop-title">Inbox Messages</h4> -->
+						<aside class="lg-side">
+							<div class="inbox-head">
+								<h3>Sent</h3>
+								<!-- <form action="#" class="pull-right position">
+									<div class="input-append">
+										<input type="text" class="sr-input" placeholder="Search Mail">
+										<button class="btn sr-btn" type="button"><i class="fa fa-search"></i></button>
+									</div>
+								</form> -->
+							</div>
+							<div class="inbox-body">
+							   <!-- <div class="mail-option">
+								   <div class="chk-all">
+									   <input type="checkbox" class="mail-checkbox mail-group-checkbox">
+									   <div class="btn-group">
+										   <a data-toggle="dropdown" href="#" class="btn mini all" aria-expanded="false">
+											   All
+											   <i class="fa fa-angle-down "></i>
+										   </a>
+										   <ul class="dropdown-menu">
+											   <li><a href="#"> None</a></li>
+											   <li><a href="#"> Read</a></li>
+											   <li><a href="#"> Unread</a></li>
+										   </ul>
+									   </div>
+								   </div>
+	  
+								   <div class="btn-group">
+									   <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="#" class="btn mini tooltips">
+										   <i class=" fa fa-refresh"></i>
+									   </a>
+								   </div>
+								   <div class="btn-group hidden-phone">
+									   <a data-toggle="dropdown" href="#" class="btn mini blue" aria-expanded="false">
+										   More
+										   <i class="fa fa-angle-down "></i>
+									   </a>
+									   <ul class="dropdown-menu">
+										   <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
+										   <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
+										   <li class="divider"></li>
+										   <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
+									   </ul>
+								   </div>
+								   <div class="btn-group">
+									   <a data-toggle="dropdown" href="#" class="btn mini blue">
+										   Move to
+										   <i class="fa fa-angle-down "></i>
+									   </a>
+									   <ul class="dropdown-menu">
+										   <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
+										   <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
+										   <li class="divider"></li>
+										   <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
+									   </ul>
+								   </div>
+	  
+								   <ul class="unstyled inbox-pagination">
+									   <li><span>1-50 of 234</span></li>
+									   <li>
+										   <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
+									   </li>
+									   <li>
+										   <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>
+									   </li>
+								   </ul>
+							   </div> -->
+								<table class="table table-inbox table-hover">
+									<thead>
+										<tr>
+												<th class="text-left">From</th>
+												<th class="text-left">Message</th>
+												<th class="text-right">Date</th>
+										</tr>
+									</thead>
+								  <tbody>
+									<tr  *ngFor="let msg of sentmsg">
+										<td [ngClass]="{'unread': msg.status, 'view-message': true}" (click)="viewmsg(msg._id)">{{msg.from.firstname}} {{msg.from.lastname}}</td>
+										<td [ngClass]="{'unread': msg.status, 'view-message': true}" (click)="viewmsg(msg._id)">{{msg.comment}}</td>
+										<td [ngClass]="{'unread': msg.status, 'view-message': true, 'text-right': true}" (click)="viewmsg(msg._id)">{{msg.created_at | date:'y-MM-dd'}}</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</aside>
+					</div>
+				</div>
+      <!-- sidebar -->
+      <app-sidebar></app-sidebar>
+      <!-- /sidebar-->
+			</div>
+		</div>
+	</div>
+	<app-footer></app-footer>

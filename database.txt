@@ -1,0 +1,5 @@
+create collection
+m_agriculture  
+restore database
+cd agriculture_ng\server\dump\dump
+mongodump -h localhost:27017 -d m_agriculture  

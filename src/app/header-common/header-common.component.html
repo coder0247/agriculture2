@@ -1,0 +1,219 @@
+<header>
+	<div class="header layout3 no-prepend-box-sticky header-home4">
+		<div class="topbar layout1">
+			<div class="container">
+				<ul class="list-socials">
+					<li>
+						<a href="#">
+							<i class="fa fa-facebook" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-twitter" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-google-plus" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-instagram" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa fa-pinterest" aria-hidden="true"></i>
+						</a>
+					</li>
+				</ul>
+				<ul class="menu-topbar top-links" *ngIf="!loggedinMenu">
+					<li routerLinkActive="active">
+						<a routerLink="/user/register">Register</a>
+					</li>
+					<li routerLinkActive="active">
+						<a routerLink="/user/signin">Sign in</a>
+					</li>
+					<!-- <li routerLinkActive="active">
+						<a routerLink="/newsletter">Newsletter</a>
+					</li> -->
+				</ul>
+				<ul class="menu-topbar top-links" *ngIf="loggedinMenu">
+					<li routerLinkActive="active">
+						<a routerLink="/user/account">My Account</a>
+					</li>
+					<li routerLinkActive="active">
+						<a (click)="logout()">Logout</a>
+					</li>
+					<!-- <li routerLinkActive="active">
+						<a routerLink="/newsletter">Newsletter</a>
+					</li> -->
+				</ul>
+			</div>
+		</div>
+		<div class="main-header">
+			<div class="top-header">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  left-content">
+							<div class="logo">
+								<a href="index.html">
+									<img src="images/main-logo.png" alt="">
+								</a>
+							</div>
+						</div>
+
+						<div class="col-lg-8 col-md-7 col-sm-8 col-xs-12 midle-content">
+
+							<form [formGroup]="searchForm" (ngSubmit)="submitForm()" class="form-inline">
+
+								<div class="search-form layout1 box-has-content">
+
+										<div class="search-block1" *ngIf="mainCats; else showloading">
+												<div class="form-row">
+													<div class="form-group col-md-3 category-list">
+														<ng-select [searchable]="false" #categorySelect [items]="mainCats" [selectOnTab]="true" bindLabel="catname" bindValue="_id"
+														 placeholder="Select category" formControlName="category" (change)="getSubcatList($event._id)">
+														</ng-select>
+													</div>
+													<div class="form-group col-md-3 cropoption subcategory-list">
+														<ng-select [searchable]="false" #cropsSelect [items]="subCats" [selectOnTab]="true" bindLabel="subcatname" bindValue="_id"
+														 placeholder="Select subcategory" formControlName="subcategory">
+														</ng-select>
+													</div>
+													<div class="form-group  col-md-3 regionoption region-list">
+														<ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
+														 placeholder="Select region" formControlName="region">
+														</ng-select>
+													</div>
+													<button class="search-button">
+														<i class="fa fa-search" aria-hidden="true"></i>
+													</button>
+												</div>
+												<!-- <div class=" firstselect search-choice parent-content">
+													<select data-placeholder="All Categories" class="chosen-select" formControlName="crop">
+														<option value="{{item._id}}" *ngFor="let item of crops;let i = index">{{item.cropname}}</option>
+													</select>
+												</div> -->
+												<!-- <div class="secondselect search-choice parent-content">
+													<select data-placeholder="Divisions" class="chosen-select" formControlName="region">
+														<option value="{{item._id}}" *ngFor="let item of regions;let i = index">{{item.regionname}}</option>
+													</select>
+												</div> -->
+		
+											</div>
+									<ng-template #showloading>Loading...</ng-template>
+								</div>
+							</form>
+						</div>
+
+						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 right-content">
+							<ul class="header-control">
+								<!-- <li class="hotline">
+									<div class="icon">
+										<i class="fa fa-phone" aria-hidden="true"></i>
+									</div>
+									<div class="content">
+										<span class="text">Call us now</span>
+										<span class="number">(080)123 4567 891</span>
+									</div>
+								</li> -->
+								<li class="box-minicart">
+									<div class="minicart ">
+										<button type="button" class="btn btn-success" (click)="postnewadd()">
+											Post New Ad
+										</button>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="this-sticky">
+				<div class="header-nav-wapper">
+					<div class="container main-menu-wapper">
+						<div class="row">
+							<div class="col-lg-3 col-md-4 col-sm-12">
+								<div class="vertical-wapper parent-content" #parentcontent>
+									<div class="block-title show-content" (click)="toggleClass()">
+										<span class="icon-bar">
+											<span></span>
+											<span></span>
+											<span></span>
+										</span>
+										<span class="text">Categories</span>
+									</div>
+									<div class="vertical-content hidden-content" #hiddencontent >
+										<ul class="vertical-menu ovic-clone-mobile-menu" *ngIf="mainCats ; else sidebarloading">
+
+											<li *ngFor="let item of mainCats;let i = index">
+												<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}" (click)="toggleClass()">
+													<span class="icon"></span>{{item.catname}}</a>
+											</li>
+
+											<!-- <li class="menu-item-has-children has-megamenu">
+                          <a href="#" class="ovic-menu-item-title" title="More..."><span class="icon"></span> More...</a>
+                          <a href="#" class="toggle-sub-menu"></a>
+                          <div class="sub-menu mega-menu sub-menu2">
+                            <div class="row">
+                              <div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4 col-lg-4" *ngFor="let subarray of morecats">
+                                
+                                  <ul>
+                                      <li *ngFor="let item of subarray">
+                                        <a routerLink="/crop/{{item._id}}">{{item.cropname}}</a>
+                                      </li>
+                                  </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </li> -->
+										</ul>
+										<ng-template #sidebarloading>Loading...</ng-template>
+										<!-- <div class="view-all-categori">
+                      <a href="#" class="button">All Categories <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                    </div> -->
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-9 col-md-8 col-sm-12">
+								<div class="header-nav container-vertical-wapper ">
+									<div class="header-nav-inner">
+										<div class="box-header-nav">
+											<div class=" container-wapper">
+												<a href="#" class="header-top-menu-mobile">
+													<span class="fa fa-cog" aria-hidden="true"></span>
+												</a>
+												<a class="menu-bar mobile-navigation " href="#">
+													<span class="icon">
+														<span></span>
+														<span></span>
+														<span></span>
+													</span>
+													<span class="text">Main Menu</span>
+												</a>
+												<ul id="menu-main-menu" class="main-menu clone-main-menu ovic-clone-mobile-menu box-has-content">
+													<li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+														<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home">HOME</a>
+													</li>
+													<li class="menu-item" routerLinkActive="active">
+														<a routerLink="/about">About US</a>
+													</li>
+													<li class="menu-item" routerLinkActive="active">
+														<a routerLink="/contact">Contact US</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

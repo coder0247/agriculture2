@@ -1,0 +1,14 @@
+.productloading{
+    display: inline-block;
+    position: relative;
+    left: 20px;
+    background-color: green;
+    padding: 0 10px;
+    color: #fff;
+}
+.shop-page .shop-title {
+    display: inline;
+}
+.product-item .group-button .add-to-cart{
+    width: 100%;
+}

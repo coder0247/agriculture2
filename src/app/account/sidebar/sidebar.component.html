@@ -1,0 +1,47 @@
+<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 sidebar">
+    <div class="widget widget-categories">
+        <h5 class="widgettitle">New Ad</h5>
+        <ul class="list-categories dashboardmenu">
+          <li>
+              <i class="fa fa-plus-square"></i> <a  [routerLink]="['../newad']" class="label-text">Create New Ad</a>
+          </li>
+        </ul>
+      </div>
+  <div class="widget widget-categories">
+    <h5 class="widgettitle">Ads</h5>
+    <ul class="list-categories dashboardmenu">
+            <li>
+                    <i class="fa fa-edit"></i> <a  [routerLink]="['../editads']" class="label-text"> Edit Ads</a>
+                </li>
+      <li>
+          <i class="fa fa-eye"></i> <a  [routerLink]="['../activeads']" class="label-text"> Active Ads</a>
+      </li>
+      <li>
+          <i class="fa fa-archive"></i> <a  [routerLink]="['../archiveads']" class="label-text">Archive</a>
+      </li>
+    </ul>
+  </div>
+  <div class="widget widget-categories">
+    <h5 class="widgettitle">Messages</h5>
+    <ul class="list-categories">
+        <li>
+            <i class="fa fa-inbox"></i> <a  [routerLink]="['../inbox']"  class="label-text"> Inbox</a>
+        </li>
+        <li>
+            <i class="fa fa-paper-plane"></i> <a  [routerLink]="['../sent']" class="label-text">Sent</a>
+        </li>
+    </ul>
+  </div>
+  <!-- <div class="widget widget-categories">
+      <h5 class="widgettitle">Profile</h5>
+      <ul class="list-categories dashboardmenu">
+        <li>
+            <i class="fa fa-user"></i> <a  [routerLink]="['../profile']" class="label-text">Edit Profile</a>
+        </li>
+        <li>
+                <i class="fa fa-user"></i> <a  [routerLink]="['../changepassword']" class="label-text">Change Password</a>
+            </li>
+      </ul>
+    </div> -->
+    
+</div>

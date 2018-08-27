@@ -1,0 +1,127 @@
+<div class="breadcrumbs">
+	<a href="#">Category</a> >
+	<span class="current"> List</span>
+</div>
+
+<app-message *ngIf="message" [message]="message" [type]="message_type"></app-message>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="alert alert-info">
+		<strong>Info!</strong> Click on
+		<a class="btn btn-primary btn-xs">
+			<i class="glyphicon glyphicon-align-justify"></i>
+		</a> icon to see the subcategories of that category
+	</div>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th class="text-center">Category Name</th>
+					<th class="text-center" style="width: 100px;">Status</th>
+					<th class="text-center" style="width: 110px;">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngIf="!categoryLoaded; else elseBlock">
+					<td colspan="3" class="text-center">
+						<h5>
+							<i class="fa fa-spinner fa-spin fa-lg"></i> Loading categories ...
+						</h5>
+					</td>
+				</tr>
+				<ng-template #elseBlock>
+					<tr *ngIf="categories.length == 0; else elseBlock">
+						<td colspan="3" class="text-center">
+							<h5>No category found</h5>
+						</td>
+					</tr>
+					<ng-template #elseBlock>
+						<tr *ngFor="let category of categories">
+							<td>{{category.catname}}</td>
+							<td class="text-center">
+								<span class="label label-success" *ngIf="category.status; else elseBlock">Active</span>
+								<ng-template #elseBlock>
+									<span class="label label-danger">In-Active</span>
+								</ng-template>
+							</td>
+							<td class="text-center">
+								<a class="btn btn-success btn-xs" title="Edit" routerLink="../{{category._id}}">
+									<i class="glyphicon glyphicon-pencil"></i>
+									<!-- <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> -->
+								</a>&nbsp;
+								<a class="btn btn-primary btn-xs" title="Subcategory list" (click)="showSubcategoryList(category._id)">
+									<i class="glyphicon glyphicon-align-justify"></i>
+									<!-- <i class="fa fa-bars fa-lg" aria-hidden="true"></i> -->
+								</a>&nbsp;
+								<a class="btn btn-danger btn-xs" title="Delete" (click)="deleteCategory(category)">
+									<i class="glyphicon glyphicon-trash"></i>
+									<!-- <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> -->
+								</a>
+							</td>
+						</tr>
+					</ng-template>
+				</ng-template>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th class="text-center">Sub-Category Name</th>
+					<th class="text-center" style="width: 100px;">Status</th>
+					<th class="text-center" style="width: 110px;">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngIf="!categorySelected; else subCatElseBlock">
+					<td colspan="3" class="text-center">
+						<h5>
+							Select category
+						</h5>
+					</td>
+				</tr>
+				<ng-template #subCatElseBlock>
+					<tr *ngIf="!subCategoryLoaded; else subCatElseBlock">
+						<td colspan="3" class="text-center">
+							<h5>
+								<i class="fa fa-spinner fa-spin fa-lg"></i> Loading sub-categories ...
+							</h5>
+						</td>
+					</tr>
+					<ng-template #subCatElseBlock>
+						<tr *ngIf="subcategories.length == 0; else subCatElseBlock">
+							<td colspan="3" class="text-center">
+								<h5>No sub-category found</h5>
+							</td>
+						</tr>
+						<ng-template #subCatElseBlock>
+							<tr *ngFor="let subcategory of subcategories">
+								<td>{{subcategory.subcatname}}</td>
+								<td class="text-center">
+									<span class="label label-success" *ngIf="subcategory.status; else elseBlock">Active</span>
+									<ng-template #elseBlock>
+										<span class="label label-danger">In-Active</span>
+									</ng-template>
+								</td>
+								<td class="text-center">
+									<a class="btn btn-success btn-xs" title="Edit" routerLink="../../subcategory/{{subcategory._id}}">
+										<i class="glyphicon glyphicon-pencil"></i>
+									</a>&nbsp;
+									<a class="btn btn-danger btn-xs" title="Delete" (click)="deleteSubcategory(subcategory)">
+										<i class="glyphicon glyphicon-trash"></i>
+									</a>
+								</td>
+							</tr>
+						</ng-template>
+					</ng-template>
+				</ng-template>
+			</tbody>
+		</table>
+	</div>
+</div>
