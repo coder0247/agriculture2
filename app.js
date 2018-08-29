@@ -45,8 +45,7 @@ const siteurl = 'https://previewagriculture.herokuapp.com';
 const url = "mongodb://admin:123456@ds121321.mlab.com:21321/m_agriculture";
 const DIR = './assets/images/products/';
 //connect to MongoDB
-var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
-                replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };  
+var options = { keepAlive: 300000, connectTimeoutMS: 30000, useNewUrlParser: true};
 mongoose.connect(url, options);
 var db = mongoose.connection;
 var storage = multer.diskStorage({ //multers disk storage settings
