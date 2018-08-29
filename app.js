@@ -31,6 +31,8 @@ var dashdata = {
     archiveadscount: 0,
     inboxnewmsg: 0,
 };
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
 const siteurl = 'https://previewagriculture.herokuapp.com';
 // app.use(function (req, res, next) {
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
