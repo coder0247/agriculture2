@@ -42,11 +42,11 @@ const siteurl = 'https://previewagriculture.herokuapp.com';
 //     next();
 // });
 // app.use(cors({ origin: ["http://localhost:4200"], credentials: true }));
-const url = "mongodb://admin:123456@ds121321.mlab.com:21321/m_agriculture";
+// const url = "mongodb://admin:123456@ds121321.mlab.com:21321/m_agriculture";
 const DIR = './assets/images/products/';
 //connect to MongoDB
 var options = { keepAlive: 300000, connectTimeoutMS: 30000, useNewUrlParser: true};
-mongoose.connect(url, options);
+mongoose.connect(process.env.MONGODB_URI, options);
 var db = mongoose.connection;
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
