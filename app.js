@@ -31,17 +31,17 @@ var dashdata = {
     archiveadscount: 0,
     inboxnewmsg: 0,
 };
-const siteurl = 'http://localhost:4200';
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
-app.use(cors({ origin: ["http://localhost:4200"], credentials: true }));
-const url = "mongodb://localhost:27017/agriculture";
-const DIR = '../src/assets/images/products/';
+const siteurl = 'https://previewagriculture.herokuapp.com';
+// app.use(function (req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     next();
+// });
+// app.use(cors({ origin: ["http://localhost:4200"], credentials: true }));
+const url = "mongodb://admin:123456@ds121321.mlab.com:21321/m_agriculture";
+const DIR = './assets/images/products/';
 //connect to MongoDB
 mongoose.connect(url);
 var db = mongoose.connection;
@@ -57,7 +57,7 @@ var storage = multer.diskStorage({ //multers disk storage settings
 let upload = multer({ storage: storage }).single('file');
 app.use(session({
     key: 'user_sid',
-    secret: 'work hard',
+    secret: 'TQnN$d#fsurwer87234897#@$$',
     resave: true,
     saveUninitialized: false,
     store: new MongoStore({

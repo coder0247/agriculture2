@@ -6,7 +6,7 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 // const user = JSON.parse(localStorage.getItem('user'));
-const apiUrl = 'http://localhost:3000/api/';
+const apiUrl = '/api/';
 
 @Injectable({
   providedIn: 'root'

@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Utils } from '../utils/utils';
-const URL = 'http://localhost:3000/api/upload';
+const URL = '/api/upload';
 @Component({
   selector: 'app-edit-sub-category',
   templateUrl: './edit-sub-category.component.html',
