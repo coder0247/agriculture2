@@ -68,7 +68,9 @@ var sessionChecker = (req, res, next) => {
         res.redirect(siteurl);
     }
 };
-
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
+  });
 app.post('/api/upload', function (req, res) {
     upload(req, res, function (err) {
         // console.log(req.file);
