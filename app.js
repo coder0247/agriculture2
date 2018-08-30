@@ -34,7 +34,7 @@ var dashdata = {
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 const siteurl = 'https://previewagriculture.herokuapp.com';
-const url = "mongodb://admin:123456@ds121321.mlab.com:21321/m_agriculture";
+const url = "mongodb://nemumba2018:nemumba2018@ds237072.mlab.com:37072/agriculture";
 const DIR = './assets/images/products/';
 //connect to MongoDB
 var options = { keepAlive: 300000, connectTimeoutMS: 30000, useNewUrlParser: true};
