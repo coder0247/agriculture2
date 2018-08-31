@@ -21,7 +21,7 @@
 			</div> -->
 			<div>
 				<a routerLink="product/detail/{{ topSellProduct.productid._id }}" class="">
-					<img src="assets/images/products/{{ topSellProduct.productid.pimage }}" alt="">
+					<img src="{{ topSellProduct.productid.pimage }}" alt="">
 				</a>
 			</div>
 			<div class="product-item">
@@ -46,7 +46,7 @@
 								<i class="fa fa-eye" aria-hidden="true"></i>
 							</span> Quick View</a>
 						<a routerLink="product/detail/{{ item.productid._id }}" class="thumb-link">
-							<img src="assets/images/products/{{ item.productid.pimage }}" alt="">
+							<img src="{{ item.productid.pimage }}" alt="">
 						</a>
 					</div>
 					<div class="info">

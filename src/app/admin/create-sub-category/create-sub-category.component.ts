@@ -39,7 +39,7 @@ export class CreateSubCategoryComponent implements OnInit {
 	}
 	onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
 		this.imagedata = JSON.parse(response); // success server response
-		this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
+		// this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
 	  }
 	ngOnInit() {
 		this.admin.getActiveCategories().subscribe(response => {
@@ -69,7 +69,7 @@ export class CreateSubCategoryComponent implements OnInit {
 				this.admin.addSubcategory(data).subscribe(response => {
 					this.message = response.message;
 					this.message_type = response.status ? 'success' : 'error';
-	
+
 					if (response.status) {
 						this.showimageerror = false;
 						this.uploadsuccess = true;
@@ -86,7 +86,7 @@ export class CreateSubCategoryComponent implements OnInit {
 		} else {
 			this.showimageerror = true;
 		}
-		
+
 	}
 
 	isFieldValid(formGroup: FormGroup, field: string) {

@@ -71,7 +71,7 @@
 				<ng-template #productElseBlock>
 					<div class="col-sm-2" *ngFor="let product of products">
 						<div class="product-details">
-							<img src="assets/images/products/{{ product.pimage }}">
+							<img src="{{ product.pimage }}">
 							<h5>{{ product.pname }}</h5>
 							<button class="btn btn-success btn-block" (click)="makeProductFeatured(product)" *ngIf="!product.is_featured; else featureButtonElseBlock">Make Featured</button>
 							<ng-template #featureButtonElseBlock>

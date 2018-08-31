@@ -18,16 +18,16 @@
     <div class="row">
       <div class="details-info col-xs-12 col-sm-6">
         <a href="javascript:void(0)" (click)="showproductdetails(item._id)" class="product-name">
-          <img src="assets/images/products/{{modaldata[1]}}" alt="{{modaldata[0]}}" />
+          <img src="{{modaldata[1]}}" alt="{{modaldata[0]}}" />
           </a>
       </div>
       <div class="details-info col-xs-12 col-sm-6">
         <a href="detail.html" class="product-name">{{modaldata[0]}}</a>
-       
+
         <div class="price">
           <span>$ {{modaldata[2]}}</span>
         </div>
-  
+
         <div class="group-button">
           <div class="inner">
             <a href="#" class="add-to-cart">
@@ -42,5 +42,3 @@
     </div>
   </div>
   </div>
-  
-  

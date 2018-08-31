@@ -13,7 +13,7 @@
 					<div class="details-thumb col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<h4 class="imgloading" *ngIf="showloading">Loading...</h4>
 						<div class="details-item">
-							<img src="assets/images/products/{{singleproduct.pimage}}" alt="">
+							<img src="{{singleproduct.pimage}}" alt="">
 						</div>
 						<!-- <div class="owl-carousel nav-style3 has-thumbs" data-autoplay="false" data-nav="true" data-dots="false" data-loop="true" data-slidespeed="800" data-margin="0"  data-responsive = '{"0":{"items":1}, "480":{"items":2}, "768":{"items":1}, "1024":{"items":1}, "1200":{"items":1}}'>
               <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
@@ -122,7 +122,7 @@
 											<button href="#" class="button submit"  (click)="sendMsg()">Send Message</button>
 										</div>
 									</form>
-									
+
 								</div>
 							</div>
 						</div>
@@ -367,9 +367,9 @@
 					<h5 class="widgettitle">Bestseller</h5>
 					<ul class="list-recent-posts">
 						<li class="product-item" *ngFor="let item of best_sell_products; let i = index;">
-							<div class="thumb">  
+							<div class="thumb">
 								<a href="javascript:void(0)" (click)="showproductdetails(item.productid._id)" >
-									<img src="assets/images/products/{{ item.productid.pimage }}" alt="">
+									<img src="{{ item.productid.pimage }}" alt="">
 								</a>
 							</div>
 							<div class="info">

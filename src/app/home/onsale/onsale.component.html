@@ -5,7 +5,7 @@
 			<li class="product-item" *ngFor="let item of best_sell_products; let i = index;">
 				<div class="thumb">
 					<a routerLink="product/detail/{{ item.productid._id }}">
-						<img src="assets/images/products/{{ item.productid.pimage }}" alt="">
+						<img src="{{ item.productid.pimage }}" alt="">
 					</a>
 				</div>
 				<div class="info">
