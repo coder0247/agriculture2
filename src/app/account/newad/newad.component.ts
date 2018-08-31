@@ -30,7 +30,7 @@ export class NewadComponent implements OnInit {
   selectedCategory = '';
   defaultproductimage: any;
   productimage: any;
-  defaultimagepath = 'assets/images/products/';
+  defaultimagepath: any;
 
 constructor( private productservice: ProductService,  private route: ActivatedRoute, private router: Router, public homepage: HomeService) {
   // this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
@@ -39,7 +39,7 @@ constructor( private productservice: ProductService,  private route: ActivatedRo
 
 onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
   this.imagedata = JSON.parse(response); // success server response
-   this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
+   // this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
 }
 
 // onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
@@ -135,7 +135,7 @@ getSubcatimages(e) {
     //   }
     let productimage;
     if (typeof this.imagedata !== undefined && this.imagedata) {
-      productimage = this.imagedata.data.filename;
+      productimage = this.imagedata.data;
     } else {
       productimage = this.productimage;
     }

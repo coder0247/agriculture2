@@ -10,7 +10,6 @@ import {
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Utils } from '../utils/utils';
 const URL = '/api/upload';
-
 @Component({
   selector: 'app-edit-sub-category',
   templateUrl: './edit-sub-category.component.html',
@@ -33,7 +32,7 @@ export class EditSubCategoryComponent implements OnInit {
   public hasAnotherDropZoneOver = false;
   showimageerror = false;
   uploadsuccess = false;
-  // tempimagename: any;
+  tempimagename: any;
 
   constructor(
     private admin: AdminService,
@@ -51,8 +50,8 @@ export class EditSubCategoryComponent implements OnInit {
   }
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     this.imagedata = JSON.parse(response); // success server response
+    // console.log('from server', this.imagedata);
     // this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
-    console.log('onsuccess', this.imagedata);
   }
 
   ngOnInit() {
@@ -136,7 +135,7 @@ export class EditSubCategoryComponent implements OnInit {
         catid: this.subcategoryForm.value.catid,
         subcatname: this.subcategoryForm.value.subcatname,
         status: this.subcategoryForm.value.status,
-        defaultimage: !!this.imagedata === false ? this.defaultimage : this.imagedata.data.filename,
+        defaultimage: !!this.imagedata === false ? this.defaultimage : this.imagedata.data,
       };
       // console.log('data', data, this.imagedata, !!this.imagedata);
       this.route.params.subscribe(params => {

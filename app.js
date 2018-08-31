@@ -19,6 +19,7 @@ const Contact = require('./model/contact');
 const MapProductCrop = require('./model/mapproductcrop');
 const MappingTbl = require('./model/mappingtbl');
 const bodyParser = require('body-parser')
+var cloudinary = require('cloudinary');
 var crypt = require("apache-crypt");
 const path = require('path');
 var multer = require('multer');
@@ -35,21 +36,30 @@ var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 const siteurl = 'https://previewagriculture.herokuapp.com';
 const url = "mongodb://nemumba2018:nemumba2018@ds237072.mlab.com:37072/agriculture";
-const DIR = './products/';
 //connect to MongoDB
 var options = { keepAlive: 300000, connectTimeoutMS: 30000, useNewUrlParser: true};
 mongoose.connect(url, options);
 var db = mongoose.connection;
-var storage = multer.diskStorage({ //multers disk storage settings
-    destination: function (req, file, cb) {
-        cb(null, DIR);
-    },
-    filename: function (req, file, cb) {
-        var datetimestamp = Date.now();
-        cb(null, file.fieldname + '_' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
-    }
+// MULTER CONFIGURATION
+var storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
 });
-let upload = multer({ storage: storage }).single('file');
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg)$/i)) {
+        return cb(new Error('Only JPG/JPEG image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter}).single('file')
+// CLOUDINARY STATIC FILE HOSTING
+cloudinary.config({
+  cloud_name: 'minati',
+  api_key: '883321298325664',
+  api_secret: 'dfywICECmWZen0RYCcQwEH5JxZY'
+});
 app.use(session({
     key: 'user_sid',
     secret: 'TQnN$d#fsurwer87234897#@$$',
@@ -71,16 +81,17 @@ var sessionChecker = (req, res, next) => {
 app.get(/^(?!\/api).+/, function(req, res) {
     res.sendFile(path.join(__dirname + '/dist/index.html'));
   });
-app.post('/api/upload', function (req, res) {
-    upload(req, res, function (err) {
-        // console.log(req.file);
+app.post('/api/upload',  function (req, res) {
+        upload(req, res, function (err) {
         if (err) {
             res.json({ error_code: 1, err_desc: err });
             return;
         }
-        res.json({ error_code: 0, err_desc: null, data: req.file });
-    });
+        cloudinary.uploader.upload(req.file.path, function(result) {
+            res.json({ error_code: 0, err_desc: null, data: result.url });
+        });
 
+    });
 });
 
 app.get('/api/user/logout', (req, res) => {
@@ -376,19 +387,19 @@ app.get('/api/user/dashboard/:userid', (req, res) => {
                         '_id': { $in: reformattedArray }, 'status': '0'
                     }, function (err, archiveads) {
                         dashdata.archiveadscount = archiveads.length;
-                        
+
                     });
                     dashdata.activeadscount = activeads.length;
                     // console.log(dashdata);
-                  
+
                     return res.status(200).json({
                         status: 'success',
                         data: dashdata
                     });
                 });
-               
-            } 
-            
+
+            }
+
         });
         // // archive ads
         // MappingTbl.find({ userid: req.params.userid }, function (err, mappingfound) {
@@ -420,8 +431,8 @@ app.get('/api/user/dashboard/:userid', (req, res) => {
             // });
             // console.log(dashdata);
         })
-        
-        
+
+
     });
 });
 app.get('/api/newsletterSubs/:email', (req, res) => {
@@ -447,7 +458,7 @@ app.get('/api/newsletterSubs/:email', (req, res) => {
         })
     });
 });
-	// 
+	//
     // subscribe
     app.post('/api/subscribe', (req, res) => {
         mongoose.connect(url, function (err) {
@@ -459,20 +470,20 @@ app.get('/api/newsletterSubs/:email', (req, res) => {
                     return res.status(200).json({
                         status: 'Failed',
                         data: { 'error': error },
-    
+
                     });
                 } else {
                     return res.status(200).json({
                         status: 'success',
                         data: {'msg': "Subscriped Successfully" },
-    
+
                     });
                 }
             });
-    
+
         });
     });
-    
+
 app.post('/api/contact', (req, res) => {
     mongoose.connect(url, function (err) {
         if (err) throw err;
@@ -581,7 +592,7 @@ app.post('/api/updateproduct', function (req, res) {
                     });
                 });
 
-                
+
             } else {
                 return res.status(200).json({
                     status: false,
@@ -783,7 +794,7 @@ app.delete('/api/removeproduct/:product_id', (req, res) => {
                 // deleted at most one tank document
               });
         });
-       
+
     });
 });
 app.post('/api/inbox', (req, res) => {
@@ -844,9 +855,9 @@ app.get('/api/inbox/:msgid', (req, res) => {
                             status: 'success',
                             data: { 'msgs': msgs },
                         });
-    
+
                     });
-                  
+
                 } else {
                     return res.status(200).json({
                         status: 'fail',
@@ -1049,7 +1060,7 @@ app.get('/api/productlistbycat/:id', function (req, res) {
             Subcategory.find({ 'catid': req.params.id }, function (err, subcatfound) {
                 if (err) throw err;
                 if (subcatfound.length > 0) {
-                    //    productfound[0]._id  
+                    //    productfound[0]._id
                     var maproductarray = subcatfound.map(obj => {
                         return obj._id;
                     });
@@ -1069,19 +1080,19 @@ app.get('/api/productlistbycat/:id', function (req, res) {
                                             data: { 'product': docs },
                                             subcat: { 'subcat': subcatfound },
                                             cat: { 'cat': catename[0] }
-    
-    
+
+
                                         });
                                     });
-    
+
                                 } else {
                                     return res.status(200).json({
                                         status: 'Fail',
                                         msg: 'Fail',
-    
+
                                     });
                                 }
-    
+
                             });
                             // Product.find({_id :  mappingfound[0].productid}, function(err, products){
                             //     return res.status(200).json({
@@ -1093,20 +1104,20 @@ app.get('/api/productlistbycat/:id', function (req, res) {
                             return res.status(200).json({
                                 status: 'fail',
                                 message: 'Fetch Failed',
-    
-    
+
+
                             })
                         }
-    
+
                     });
                 } else {
                     return res.status(200).json({
                         status: 'fail',
                         message: 'Fetch Failed',
-    
+
                     })
                 }
-    
+
             })
 
 
@@ -1120,7 +1131,7 @@ app.get('/api/productlistbycat/:id', function (req, res) {
 //         Crop.find({ _id: req.params.id }, function (err, cropfound) {
 //             if (err) throw err;
 //             if (cropfound.length > 0) {
-//                 //    productfound[0]._id  
+//                 //    productfound[0]._id
 //                 MapProductCrop.find({ cropid: cropfound[0]._id }, function (err, mappingfound) {
 //                     if (mappingfound.length > 0) {
 //                         // mappingfound[0].productid
@@ -1336,7 +1347,7 @@ app.get('/api/adminauth', (req, res) => {
 });
 /**
  * Login Admin
- * 
+ *
  */
 app.post('/api/admin/login', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1391,7 +1402,7 @@ app.post('/api/admin/login', (req, res) => {
 
 /**
  * Logout Admin
- * 
+ *
  */
 app.get('/api/admin/logout', (req, res) => {
     if (req.session) {
@@ -1411,7 +1422,7 @@ app.get('/api/admin/logout', (req, res) => {
 
 /**
  * Fetch list of all categories
- * 
+ *
  */
 app.get('/api/admin/categories',adminSessionChecker, (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1438,7 +1449,7 @@ app.get('/api/admin/categories',adminSessionChecker, (req, res) => {
 
 /**
  * Fetch list of all active categories
- * 
+ *
  */
 app.get('/api/admin/active-categories', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1466,12 +1477,12 @@ app.get('/api/admin/active-categories', (req, res) => {
 
 /**
  * Add a category
- * 
+ *
  */
 app.post('/api/admin/category', (req, res) => {
     mongoose.connect(url, function (err) {
         if (err) throw err;
-    
+
         var newCategory = new Category();
         newCategory.catname = req.body.catname;
         newCategory.status = req.body.status;
@@ -1496,7 +1507,7 @@ app.post('/api/admin/category', (req, res) => {
 
 /**
  * Fetch a particular category details
- * 
+ *
  */
 app.get('/api/admin/category/:catid', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1523,7 +1534,7 @@ app.get('/api/admin/category/:catid', (req, res) => {
 
 /**
  * Update a particular category details
- * 
+ *
  */
 app.put('/api/admin/category/:catid', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1553,7 +1564,7 @@ app.put('/api/admin/category/:catid', (req, res) => {
 
 /**
  * Delete a particular category
- * 
+ *
  */
 app.delete('/api/admin/category/:catid', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1582,7 +1593,7 @@ app.delete('/api/admin/category/:catid', (req, res) => {
 
 /**
  * Fetch list of all sub-categories of a particular category
- * 
+ *
  */
 app.get('/api/admin/category/:catid/subcategories', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1610,7 +1621,7 @@ app.get('/api/admin/category/:catid/subcategories', (req, res) => {
 
 /**
  * Fetch list of all active sub-categories of a particular category
- * 
+ *
  */
 app.get('/api/admin/category/:catid/active-subcategories', sessionChecker, (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1639,7 +1650,7 @@ app.get('/api/admin/category/:catid/active-subcategories', sessionChecker, (req,
 
 /**
  * Add a subcategory
- * 
+ *
  */
 app.post('/api/admin/subcategory', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1671,7 +1682,7 @@ app.post('/api/admin/subcategory', (req, res) => {
 
 /**
  * Fetch a particular subcategory details
- * 
+ *
  */
 app.get('/api/admin/subcategory/:subcatid', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1697,12 +1708,12 @@ app.get('/api/admin/subcategory/:subcatid', (req, res) => {
 
 /**
  * Update a particular subcategory details
- * 
+ *
  */
 app.put('/api/admin/subcategory/:subcatid', (req, res) => {
     mongoose.connect(url, function (err) {
         if (err) throw err;
-    
+
         let data = {
             catid: req.body.catid,
             subcatname: req.body.subcatname,
@@ -1730,7 +1741,7 @@ app.put('/api/admin/subcategory/:subcatid', (req, res) => {
 
 /**
  * Delete a particular subcategory
- * 
+ *
  */
 app.delete('/api/admin/subcategory/:subcatid', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1759,7 +1770,7 @@ app.delete('/api/admin/subcategory/:subcatid', (req, res) => {
 
 /**
  * Fetch list of all products of a particular sub-category
- * 
+ *
  */
 app.get('/api/admin/category/:catid/subcategory/:subcatid/products', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1827,7 +1838,7 @@ app.get('/api/admin/category/:catid/subcategory/:subcatid/products', (req, res) 
 
 /**
  * Make product featured
- * 
+ *
  */
 // /api/admin/categoryid/5b56cd9ecb50b83ff77b5168/subcategory/5b6049d110bf2f5125647364/product/5b72bfaf4f5f191b50430e40/featured
 app.post('/api/admin/categoryid/:categoryid/subcategory/:subcatid/product/:productid/featured', (req, res) => {
@@ -1891,7 +1902,7 @@ app.post('/api/admin/categoryid/:categoryid/subcategory/:subcatid/product/:produ
 
 /**
  * Make product unfeatured
- * 
+ *
  */
 app.post('/api/admin/subcategory/:subcatid/product/:productid/unfeatured', (req, res) => {
     mongoose.connect(url, function (err) {
@@ -1941,7 +1952,7 @@ app.post('/api/admin/subcategory/:subcatid/product/:productid/unfeatured', (req,
 
 /**
  * Fetch list of all users
- * 
+ *
  */
 app.get('/api/admin/users', (req, res) => {
     mongoose.connect(url, function (err) {

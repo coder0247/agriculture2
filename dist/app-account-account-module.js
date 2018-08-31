@@ -836,14 +836,13 @@ var EditadComponent = /** @class */ (function () {
         this.forcevalidation = false;
         // subCats: Array<any> = [];
         this.selectedCategory = '';
-        this.defaultimagepath = 'assets/images/products/';
         this.updatingstatus = false;
         // this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
         this.uploader.onSuccessItem = function (item, response, status, headers) { return _this.onSuccessItem(item, response, status, headers); };
     }
     EditadComponent.prototype.onSuccessItem = function (item, response, status, headers) {
         this.imagedata = JSON.parse(response); // success server response
-        this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
+        // this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
     };
     // onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     //   let error = JSON.parse(response); //error server response
@@ -961,7 +960,7 @@ var EditadComponent = /** @class */ (function () {
         //   }
         var productimage;
         if (typeof this.imagedata !== undefined && this.imagedata) {
-            productimage = this.imagedata.data.filename;
+            productimage = this.imagedata.data;
         }
         else {
             if (this.productimage === '' || typeof this.productimage === 'undefined') {
@@ -1537,13 +1536,12 @@ var NewadComponent = /** @class */ (function () {
         this.forcevalidation = false;
         // subCats: Array<any> = [];
         this.selectedCategory = '';
-        this.defaultimagepath = 'assets/images/products/';
         // this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
         this.uploader.onSuccessItem = function (item, response, status, headers) { return _this.onSuccessItem(item, response, status, headers); };
     }
     NewadComponent.prototype.onSuccessItem = function (item, response, status, headers) {
         this.imagedata = JSON.parse(response); // success server response
-        this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
+        // this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
     };
     // onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     //   let error = JSON.parse(response); //error server response
@@ -1636,7 +1634,7 @@ var NewadComponent = /** @class */ (function () {
         //   }
         var productimage;
         if (typeof this.imagedata !== undefined && this.imagedata) {
-            productimage = this.imagedata.data.filename;
+            productimage = this.imagedata.data;
         }
         else {
             productimage = this.productimage;

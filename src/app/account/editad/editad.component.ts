@@ -30,7 +30,7 @@ export class EditadComponent implements OnInit {
   selectedCategory = '';
   defaultproductimage: any;
   productimage: any;
-  defaultimagepath = 'assets/images/products/';
+  defaultimagepath: any;
   productdetails: any;
   updatingstatus = false;
 constructor( private productservice: ProductService,  private route: ActivatedRoute, private router: Router, public homepage: HomeService) {
@@ -40,7 +40,7 @@ constructor( private productservice: ProductService,  private route: ActivatedRo
 
 onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
   this.imagedata = JSON.parse(response); // success server response
-   this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
+   // this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
 }
 
 // onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
@@ -159,7 +159,7 @@ getRegionList() {
     //   }
     let productimage;
     if (typeof this.imagedata !== undefined && this.imagedata) {
-      productimage = this.imagedata.data.filename;
+      productimage = this.imagedata.data;
     } else {
       if (this.productimage === '' || typeof this.productimage === 'undefined') {
         console.log('---undefined');
