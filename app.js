@@ -35,7 +35,7 @@ var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 const siteurl = 'https://previewagriculture.herokuapp.com';
 const url = "mongodb://nemumba2018:nemumba2018@ds237072.mlab.com:37072/agriculture";
-const DIR = './assets/images/products/';
+const DIR = './products/';
 //connect to MongoDB
 var options = { keepAlive: 300000, connectTimeoutMS: 30000, useNewUrlParser: true};
 mongoose.connect(url, options);
@@ -46,7 +46,7 @@ var storage = multer.diskStorage({ //multers disk storage settings
     },
     filename: function (req, file, cb) {
         var datetimestamp = Date.now();
-        cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
+        cb(null, file.fieldname + '_' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
     }
 });
 let upload = multer({ storage: storage }).single('file');
