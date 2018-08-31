@@ -88,7 +88,7 @@ app.post('/api/upload',  function (req, res) {
             return;
         }
         cloudinary.uploader.upload(req.file.path, function(result) {
-            res.json({ error_code: 0, err_desc: null, data: result.url });
+            res.json({ error_code: 0, err_desc: null, data: result.secure_url });
         });
 
     });
