@@ -848,6 +848,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var URL = '/api/upload';
 var EditSubCategoryComponent = /** @class */ (function () {
+    // tempimagename: any;
     function EditSubCategoryComponent(admin, route, router, formBuilder) {
         var _this = this;
         this.admin = admin;
@@ -870,7 +871,8 @@ var EditSubCategoryComponent = /** @class */ (function () {
     }
     EditSubCategoryComponent.prototype.onSuccessItem = function (item, response, status, headers) {
         this.imagedata = JSON.parse(response); // success server response
-        this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
+        // this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
+        console.log('onsuccess', this.imagedata);
     };
     EditSubCategoryComponent.prototype.ngOnInit = function () {
         var _this = this;
