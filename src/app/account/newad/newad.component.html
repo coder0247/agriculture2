@@ -9,10 +9,10 @@
 					<div class="categories-content">
 						<h4 class="shop-title">Create Ad</h4>
                         <div class="row content-form ">
-                        
-                              
+
+
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 info-content">
-                                    <form [formGroup]="newadForm" class="addnewproduct register-form" (ngSubmit)="addnewproduct()"> 
+                                    <form [formGroup]="newadForm" class="addnewproduct register-form" (ngSubmit)="addnewproduct()">
                                     <div class="contact-form">
                                         <h4 class="main-title">Product Details</h4>
                                         <h5 class="note-title">( * ) Required fields</h5>
@@ -49,7 +49,7 @@
                                             </div> -->
                                             <div class="col-xs-12 ">
                                                 <span class="label-text">Region <span>*</span></span>
-                                             
+
                                                         <ng-select [searchable]="false"  #regionSelect [items]="regions"
                                                         [selectOnTab]="true"
                                                         bindLabel="regionname"
@@ -60,7 +60,7 @@
                                                       <div *ngIf="!newadForm.valid && forcevalidation" class="error-msg">
                                                             <div *ngIf="newadForm.controls['region'].pristine && newadForm.controls['region'].errors.required">Region is required.</div>
                                                           </div>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="row">
@@ -75,7 +75,7 @@
                                                                 <div [hidden]="!newadForm.controls['productname'].errors.required">Name is required.</div>
                                                               </div> -->
                                             </div>
-                                           
+
                                         </div>
                                         <div class="row">
                                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -84,7 +84,7 @@
                                                         <div *ngIf="!newadForm.valid && forcevalidation" class="error-msg">
                                                                 <div *ngIf="newadForm.controls['saleamount'].pristine && newadForm.controls['saleamount'].errors.required">Amount For Sale is required.</div>
                                                                 <div *ngIf="newadForm.controls['saleamount'].dirty && newadForm.controls['saleamount'].errors?.required">Amount For Sale is required.</div>
-                                                              </div>  
+                                                              </div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                                         <span class="label-text">Amount Unit <span>*</span></span>
@@ -97,7 +97,7 @@
                                                     </ng-select>
                                                     <div *ngIf="!newadForm.valid && forcevalidation" class="error-msg">
                                                             <div *ngIf="newadForm.controls['amtunit'].pristine && newadForm.controls['amtunit'].errors.required">Amount Unit is required.</div>
-                                                          </div>  
+                                                          </div>
                                                     </div>
                                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                                         <span class="label-text">Price Per Unit <span>*</span></span>
@@ -105,41 +105,41 @@
                                                         <div *ngIf="!newadForm.valid && forcevalidation" class="error-msg">
                                                                 <div *ngIf="newadForm.controls['unitprice'].pristine && newadForm.controls['unitprice'].errors.required">Price Per Unit is required.</div>
                                                                 <div *ngIf="newadForm.controls['unitprice'].dirty && newadForm.controls['unitprice'].errors?.required">Price Per Unit is required.</div>
-                                                              </div>  
+                                                              </div>
                                                 </div>
                                         </div>
-                                        
-                                        
+
+
                                     </div>
                                     <div class="group-button">
                                             <button href="#" class="button submit" >Submit</button>
                                           </div>
-                          
+
                                 </form>
                                 <div class="alert alert-success" role="alert" *ngIf="uploadsuccess">
-                                        <strong>New Ad : </strong> New Ad Posted Successfully 
+                                        <strong>New Ad : </strong> New Ad Posted Successfully
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 map-content" *ngIf="!!defaultproductimage">
                                     <div *ngIf="!uploader?.queue?.length">
                                             <h3>Default product image</h3>
                                             <small>If you dont' have product image then this will the default products image.</small>
-                                            <img [src]=defaultproductimage alt="default product image">
+                                            <img src="{{defaultproductimage}}" alt="default product image">
                                     </div>
                                     <h3>Upload product image</h3>
                                     <small>I want to upload my product image.</small>
                                     <div class="alert alert-danger" role="alert" *ngIf="showimageerror">
-                                            <strong>Image Error : </strong> Please upload product image (Allowed Extension: .JPG) 
+                                            <strong>Image Error : </strong> Please upload product image (Allowed Extension: .JPG)
                                         </div>
-                                        
-                                        
+
+
                                     <input type="file" name="file" ng2FileSelect [uploader]="uploader"  *ngIf="uploader?.queue?.length < 1"/>
                                     <table class="table" *ngIf="uploader?.queue?.length">
                                             <thead>
                                             <tr>
                                                 <th width="50%">Name</th>
-                                               
-                                                
+
+
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -147,13 +147,13 @@
                                             <tbody>
                                             <tr *ngFor="let item of uploader.queue">
                                                     <div class="map" *ngIf="uploader?.queue?.length">
-                                        
+
                                                             <img src="" imgPreview [image]="item?._file" class="media-object" />
                                                             <div class="media-body">
                                                                    <p>{{ item?.file?.name }}</p>
                                                                </div>
                                                            </div>
-                                                
+
                                                 <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
                                                 <!-- <td *ngIf="uploader.isHTML5">
                                                     <div class="progress" style="margin-bottom: 0;">
@@ -161,7 +161,7 @@
                                                     </div>
                                                 </td> -->
                                                 <td class="text-center">
-                                                   <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>   
+                                                   <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
                                                     <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                                                     <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                                                 </td>
@@ -169,11 +169,11 @@
                                                     <button type="button" class="btn btn-success btn-xs"
                                                             (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
                                                         <span class="glyphicon glyphicon-upload"></span> Upload
-                                                    </button> 
+                                                    </button>
                                                     <button type="button" class="btn btn-warning btn-xs"
                                                             (click)="item.cancel()" [disabled]="!item.isUploading">
                                                         <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-                                                    </button> 
+                                                    </button>
                                                     <button type="button" class="btn btn-danger btn-xs"
                                                             (click)="item.remove()">
                                                         <span class="glyphicon glyphicon-trash"></span> Remove
@@ -190,16 +190,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                    
+
                                 </div>
                             </div>
                         <!-- <div class="product-container auto-clear grid-style equal-container box-has-content">
-                        
+
                             <h5>Product Image</h5>
                             <div class="alert alert-danger" role="alert" *ngIf="showimageerror">
                                 <strong>Image Error : </strong> Please upload product image (Allowed Extension: .JPG) </div>
-                        
-                        
+
+
                         </div> -->
 					</div>
 				</div>
