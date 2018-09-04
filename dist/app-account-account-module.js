@@ -905,7 +905,7 @@ var EditadComponent = /** @class */ (function () {
     };
     EditadComponent.prototype.getSubcatimages = function (e) {
         this.productimage = e.defaultimage;
-        this.defaultproductimage = this.defaultimagepath + e.defaultimage;
+        this.defaultproductimage = e.defaultimage;
     };
     EditadComponent.prototype.fileOverBase = function (e) {
         this.hasBaseDropZoneOver = e;

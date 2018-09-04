@@ -103,7 +103,7 @@ getSubcatList(catid) {
 }
 getSubcatimages(e) {
   this.productimage = e.defaultimage;
- this.defaultproductimage = this.defaultimagepath + e.defaultimage;
+ this.defaultproductimage =e.defaultimage;
 
 }
   public fileOverBase(e: any): void {

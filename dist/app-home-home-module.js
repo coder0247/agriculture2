@@ -17839,6 +17839,7 @@ var FeaturedsmallComponent = /** @class */ (function () {
                         productlist: _this.education
                     }
                 ];
+                console.log('featured', _this.featurelist);
             }
             else {
             }

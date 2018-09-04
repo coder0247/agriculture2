@@ -183,6 +183,7 @@ mouseleaverowl() {
               productlist: this.education
             }
           ];
+          console.log('featured', this.featurelist);
         } else {
         }
       },
