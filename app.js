@@ -35,14 +35,14 @@ var dashdata = {
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 const siteurl = 'https://previewagriculture.herokuapp.com';
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', siteurl);
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
-app.use(cors({ origin: [siteurl], credentials: true }));
+// app.use(function (req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', siteurl);
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     next();
+// });
+app.use(cors({ origin: ['https://previewagriculture.herokuapp.com'], credentials: true }));
 // const url = "mongodb://nemumba2018:nemumba2018@ds237072.mlab.com:37072/agriculture";
 const url = "mongodb://agriuser:agri123@ds121321.mlab.com:21321/m_agriculture";
 //connect to MongoDB
