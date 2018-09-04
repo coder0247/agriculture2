@@ -915,7 +915,7 @@ var EditadComponent = /** @class */ (function () {
     };
     EditadComponent.prototype.createForm = function () {
         this.productdetails = JSON.parse(localStorage.getItem('productinfo'));
-        this.defaultproductimage = this.productdetails === null ? '' : this.defaultimagepath + this.productdetails.pimage;
+        this.defaultproductimage = this.productdetails === null ? '' : this.productdetails.pimage;
         var formprefilled = {
             pimage: this.productdetails === null ? '' : this.productdetails.pimage,
             category_id: this.productdetails === null ? '' : this.productdetails.category_id,

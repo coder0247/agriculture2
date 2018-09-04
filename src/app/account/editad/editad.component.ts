@@ -116,7 +116,7 @@ getSubcatimages(e) {
   private createForm() {
     this.productdetails = JSON.parse(localStorage.getItem('productinfo'));
 
-    this.defaultproductimage = this.productdetails === null ? '' : this.defaultimagepath + this.productdetails.pimage;
+    this.defaultproductimage = this.productdetails === null ? '' : this.productdetails.pimage;
     const formprefilled = {
       pimage: this.productdetails === null ? '' : this.productdetails.pimage,
       category_id : this.productdetails === null ? '' : this.productdetails.category_id,
