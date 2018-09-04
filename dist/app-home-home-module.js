@@ -17816,30 +17816,30 @@ var FeaturedsmallComponent = /** @class */ (function () {
                     },
                     {
                         categoryname: 'Agro Jobs',
-                        productlist: _this.agro_jobs
+                        productlist: lodash__WEBPACK_IMPORTED_MODULE_5__["chunk"](_this.agro_jobs, 2)
                     },
                     {
                         categoryname: 'Farm Lands',
-                        productlist: _this.farm_lands
+                        productlist: lodash__WEBPACK_IMPORTED_MODULE_5__["chunk"](_this.farm_lands, 2)
                     },
                     {
                         categoryname: 'Fertilizers/Chemicals',
-                        productlist: _this.fertilizers
+                        productlist: lodash__WEBPACK_IMPORTED_MODULE_5__["chunk"](_this.farm_lands, 2)
                     },
                     {
                         categoryname: 'Machinery & Equiqment',
-                        productlist: _this.machinery
+                        productlist: lodash__WEBPACK_IMPORTED_MODULE_5__["chunk"](_this.machinery, 2)
                     },
                     {
                         categoryname: 'Insurance',
-                        productlist: _this.insurance
+                        productlist: lodash__WEBPACK_IMPORTED_MODULE_5__["chunk"](_this.insurance, 2)
                     },
                     {
                         categoryname: 'Education/Training',
-                        productlist: _this.education
+                        productlist: lodash__WEBPACK_IMPORTED_MODULE_5__["chunk"](_this.education, 2)
                     }
                 ];
-                console.log('featured', _this.featurelist);
+                // console.log('featured', this.featurelist);
             }
             else {
             }

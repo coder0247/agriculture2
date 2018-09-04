@@ -160,30 +160,30 @@ mouseleaverowl() {
             },
             {
               categoryname: 'Agro Jobs',
-              productlist: this.agro_jobs
+              productlist: _.chunk(this.agro_jobs, 2)
             },
             {
               categoryname: 'Farm Lands',
-              productlist: this.farm_lands
+              productlist: _.chunk(this.farm_lands, 2)
             },
             {
               categoryname: 'Fertilizers/Chemicals',
-              productlist: this.fertilizers
+              productlist: _.chunk(this.farm_lands, 2)
             },
             {
               categoryname: 'Machinery & Equiqment',
-              productlist: this.machinery
+              productlist: _.chunk(this.machinery, 2)
             },
             {
               categoryname: 'Insurance',
-              productlist: this.insurance
+              productlist: _.chunk(this.insurance, 2)
             },
             {
               categoryname: 'Education/Training',
-              productlist: this.education
+              productlist: _.chunk(this.education, 2)
             }
           ];
-          console.log('featured', this.featurelist);
+          // console.log('featured', this.featurelist);
         } else {
         }
       },
