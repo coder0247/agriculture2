@@ -35,7 +35,12 @@ var UtilsService = /** @class */ (function () {
         this.http = http;
     }
     UtilsService.prototype.getClientIPAddress = function () {
-        return this.http.get('https://jsonip.com/', httpOptions).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+        return this.http
+            .get('https://jsonip.com/', {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' }),
+            withCredentials: true
+        })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     };
     UtilsService.prototype.extractData = function (res) {
         var body = res;
@@ -49,8 +54,7 @@ var UtilsService = /** @class */ (function () {
         else {
             // The backend returned an unsuccessful response code.
             // The response body may contain clues as to what went wrong,
-            console.error("Backend returned code " + error.status + ", " +
-                ("body was: " + error.error));
+            console.error("Backend returned code " + error.status + ", " + ("body was: " + error.error));
         }
         // return an observable with a user-facing error message
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Something bad happened; please try again later.');
