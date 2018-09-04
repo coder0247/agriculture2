@@ -42,7 +42,7 @@ const siteurl = 'https://previewagriculture.herokuapp.com';
 //     res.setHeader('Access-Control-Allow-Credentials', true);
 //     next();
 // });
-app.use(cors({ origin: ['https://previewagriculture.herokuapp.com'], credentials: true }));
+// app.use(cors({ origin: ['https://previewagriculture.herokuapp.com'], credentials: true }));
 // const url = "mongodb://nemumba2018:nemumba2018@ds237072.mlab.com:37072/agriculture";
 const url = "mongodb://agriuser:agri123@ds121321.mlab.com:21321/m_agriculture";
 //connect to MongoDB
