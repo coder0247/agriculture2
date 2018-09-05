@@ -3,3 +3,8 @@
     border-left: solid 0px #e6e6e6 !important;
     margin-right: -1px;
 }
+span.successmsg {
+    padding: 10px;
+    left: 5px;
+    position: relative;
+}

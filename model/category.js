@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // create a schema
 const categorySchema = new Schema({
-  id: { type: String, required: false, unique: true },
+  id: { type: String, required: false, unique: false },
   catname: { type: String, required: true },
   status: { type: Number, default: 1 },
   is_deleted: { Boolean, default: false }

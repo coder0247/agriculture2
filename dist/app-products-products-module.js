@@ -170,7 +170,11 @@ var HeadersecondaryComponent = /** @class */ (function () {
             console.log(err);
         });
         this.loggedinMenu = false;
-        localStorage.clear();
+        localStorage.removeItem('firstname');
+        localStorage.removeItem('email');
+        localStorage.removeItem('lastname');
+        localStorage.removeItem('isadmin');
+        localStorage.removeItem('id');
         this.router.navigate(['user/signin']);
     };
     __decorate([

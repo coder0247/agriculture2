@@ -621,9 +621,9 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\ngproject\main\development\src\styles.css */"./src/styles.css");
-__webpack_require__(/*! C:\ngproject\main\development\node_modules\owl.carousel\dist\assets\owl.carousel.css */"./node_modules/owl.carousel/dist/assets/owl.carousel.css");
-module.exports = __webpack_require__(/*! C:\ngproject\main\development\node_modules\owl.carousel\dist\assets\owl.theme.default.css */"./node_modules/owl.carousel/dist/assets/owl.theme.default.css");
+__webpack_require__(/*! C:\ngproject\main\heroku\src\styles.css */"./src/styles.css");
+__webpack_require__(/*! C:\ngproject\main\heroku\node_modules\owl.carousel\dist\assets\owl.carousel.css */"./node_modules/owl.carousel/dist/assets/owl.carousel.css");
+module.exports = __webpack_require__(/*! C:\ngproject\main\heroku\node_modules\owl.carousel\dist\assets\owl.theme.default.css */"./node_modules/owl.carousel/dist/assets/owl.theme.default.css");
 
 
 /***/ })

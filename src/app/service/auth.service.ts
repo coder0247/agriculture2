@@ -21,6 +21,29 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+  getUserDetails(userid): Observable<any> {
+    // console.log('service userid', userid);
+    return this.http.get(apiUrl + 'user/details/' + userid, httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+  resetUserPassword(data): Observable<any> {
+    // console.log('service userid', userid);
+    return this.http.post(apiUrl + 'user/resetuserpass/', data)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+  editProfile(data): Observable<any> {
+    return this.http.post(apiUrl + 'user/editprofile', data)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   newUserRegister(data): Observable<any> {
     return this.http.post(apiUrl + 'user/register', data, httpOptions)
       .pipe(

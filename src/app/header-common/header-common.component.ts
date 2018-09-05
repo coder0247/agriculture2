@@ -21,17 +21,26 @@ export class HeaderCommonComponent implements OnInit {
   subCats: NgOption[];
   morecats: NgOption[];
   loggedinMenu = false;
+  categoryerror = false;
+  subcategoryerror = false;
+  regionerror = false;
   // creates instance of FormGroup called authForm
   searchForm: FormGroup;
   @ViewChild('parentcontent', { read: ElementRef })
   parentcontent: ElementRef;
   @ViewChild('hiddencontent', { read: ElementRef })
   hiddencontent: ElementRef;
+  @ViewChild('mmenu', { read: ElementRef })
+ mmenu: ElementRef;
+ @ViewChild('mobileconfig', { read: ElementRef })
+ mobileconfig: ElementRef;
+ @ViewChild('cogactive', { read: ElementRef })
+ cogactive: ElementRef;
   selectedCategory = '';
   category: any;
   crop: any;
   region: any;
-
+  selecthascontent = false;
   constructor(
     private homepage: HomeService,
     private renderer: Renderer2,
@@ -44,29 +53,69 @@ export class HeaderCommonComponent implements OnInit {
   ) {
 
   }
-
+  mmenutoggleClass() {
+    // console.log('menu click', this.mmenu.nativeElement.classList);
+      if (this.mmenu.nativeElement.classList.contains('open')) {
+        this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+      } else {
+        this.renderer.addClass(this.mmenu.nativeElement, 'open');
+      }
+    }
+    mconfigtoggleClass() {
+      // console.log('menu click', this.mmenu.nativeElement.classList);
+        if (this.mobileconfig.nativeElement.classList.contains('open')) {
+          this.renderer.removeClass(this.cogactive.nativeElement, 'active');
+          this.renderer.removeClass(this.mobileconfig.nativeElement, 'open');
+          this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+        } else {
+          this.renderer.addClass(this.cogactive.nativeElement, 'active');
+          this.renderer.addClass(this.mobileconfig.nativeElement, 'open');
+          this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+        }
+      }
   ngOnInit() {
     this.checksession();
-    this.route.params.subscribe(params => {
-      this.category = params.catid || null;
-      this.crop = params.cropid || null;
-      this.region = params.regionid || null;
+    const regionid = localStorage.getItem('regionid') !== null ? localStorage.getItem('regionid') : '';
+    const subcategoryid = localStorage.getItem('subcategoryid') !== null ? localStorage.getItem('subcategoryid') : '';
+    const categoryid = localStorage.getItem('categoryid') !== null ? localStorage.getItem('categoryid') : '';
+    
+    if (categoryid !== '') {
+      console.log('categoryid' , categoryid);
+      this.selecthascontent = true;
+      // this.getSubcatList(categoryid);
+      this.searchForm = this.fb.group({
+        category: [categoryid],
+        subcategory: [subcategoryid],
+        region: [regionid]
+      });
+    } else {
+      this.selecthascontent = false;
+      this.searchForm = this.fb.group({
+        category: [],
+        subcategory: [],
+        region: []
+      });
+    }
+    // this.route.params.subscribe(params => {
+    //   this.category = params.catid || null;
+    //   this.crop = params.cropid || null;
+    //   this.region = params.regionid || null;
 
-      if (this.category) {
-        this.selectedCategory = this.category;
-        this.searchForm = this.fb.group({
-          category: [this.selectedCategory],
-          subcategory: [],
-          region: []
-        });
-      } else {
-        this.searchForm = this.fb.group({
-          category: [],
-          subcategory: [],
-          region: []
-        });
-      }
-    });
+    //   if (this.category) {
+    //     this.selectedCategory = this.category;
+    //     this.searchForm = this.fb.group({
+    //       category: [this.selectedCategory],
+    //       subcategory: [],
+    //       region: []
+    //     });
+    //   } else {
+    //     this.searchForm = this.fb.group({
+    //       category: [],
+    //       subcategory: [],
+    //       region: []
+    //     });
+    //   }
+    // });
 
     this.homepage.getCatList().subscribe(
       res => {
@@ -95,9 +144,8 @@ export class HeaderCommonComponent implements OnInit {
       }
     );
 
-    console.log('selcat', this.selectedCategory);
-    if (this.selectedCategory) {
-      this.homepage.getSubcatListByCatID(this.selectedCategory).subscribe(
+    // if (this.selectedCategory) {
+      this.homepage.getSubcatListByCatID(categoryid).subscribe(
         res => {
           if (res.status === 'success') {
             this.subCats = res.data.subcategory;
@@ -107,7 +155,7 @@ export class HeaderCommonComponent implements OnInit {
           console.log(err);
         }
       );
-    }
+    // }
   }
   routing () {
     const pattern = /(inbox|newad|activeads|archiveads|sent|profile|view|viewsent)$/;
@@ -118,10 +166,14 @@ export class HeaderCommonComponent implements OnInit {
     res => {
       if (res['status'] === 'success') {
         this.loggedinMenu = true;
-        
+
       } else {
         this.loggedinMenu = false;
-    localStorage.clear();
+    localStorage.removeItem('firstname');
+    localStorage.removeItem('email');
+    localStorage.removeItem('lastname');
+    localStorage.removeItem('isadmin');
+    localStorage.removeItem('id');
     if (this.routing()) {
     this.router.navigate(['user/signin']);
   }
@@ -137,7 +189,11 @@ export class HeaderCommonComponent implements OnInit {
     this.auth.dologout().subscribe(
       res => {
         this.loggedinMenu = false;
-        localStorage.clear();
+        localStorage.removeItem('firstname');
+    localStorage.removeItem('email');
+    localStorage.removeItem('lastname');
+    localStorage.removeItem('isadmin');
+    localStorage.removeItem('id');
         this.router.navigate(['user/signin']);
       },
       err => {
@@ -177,6 +233,18 @@ export class HeaderCommonComponent implements OnInit {
 
   submitForm() {
     const credentials = this.searchForm.value;
+    this.categoryerror = false;
+    this.subcategoryerror = false;
+    this.regionerror = false;
+    if (credentials.category === null) {
+   this.categoryerror = true;
+ }
+ if (credentials.subcategory === null) {
+   this.subcategoryerror = true;
+ }
+ if (credentials.region === null) {
+   this.regionerror = true;
+ }
     this.router.navigate(['/search', 'subcategory', credentials.subcategory, 'region', credentials.region ]);
   }
 }

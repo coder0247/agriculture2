@@ -36,14 +36,7 @@ var UtilsService = /** @class */ (function () {
     }
     UtilsService.prototype.getClientIPAddress = function () {
         return this.http
-            .get('https://jsonip.com/', {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
-            }),
-            withCredentials: true
-        })
+            .get('https://jsonip.com/')
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     };
     UtilsService.prototype.extractData = function (res) {

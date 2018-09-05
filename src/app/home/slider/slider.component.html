@@ -11,7 +11,7 @@
                         <h5 class="subtitle" [innerHTML]="image.subtitle"></h5>
                         <h3 class="title" [innerHTML]="image.title"></h3>
                         <h5 class="smalltitle" [innerHTML]="image.smalltitle"></h5>
-                        <a href="#" class="button">{{image.buttontext}}</a>
+                        <a href="javascript:void(0)" (click)="redirectotpage(image.buttonurl)" class="button">{{image.buttontext}}</a>
                     </div>
                          <!-- <div class="thumbnail-image" [ngStyle]="{'background': 'url({{image}}) no-repeat scroll center center / 80px 80px'}"></div> -->
                 </div>

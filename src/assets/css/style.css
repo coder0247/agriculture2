@@ -3797,10 +3797,12 @@ body.home5 {
   right: 60%;
 }
 /*INNER PAGE*/
+
 .main-content-list .content-offset,
 .main-content-grid .content-offset {
   margin-top: -55px;
   float: right;
+  min-height: 600px;
 }
 .main-content-grid .sidebar,
 .main-content-list .sidebar {
@@ -5632,6 +5634,10 @@ body.home5 {
   float: left;
   padding: 15px 0;
 }
+.header-mobile .logo-mob {
+  float: left;
+  padding: 0;
+}
 .header-mobile .box-minicart .minicart {
   padding: 0;
 }
@@ -6804,6 +6810,10 @@ hr{margin: 6px 0;}
   .details-thumb .owl-carousel.has-thumbs .owl-nav .owl-next {
     right: 5px;
   }
+.section-head.box-has-content{margin-bottom:200px;}
+body .featured ul.nav-tabs{position: absolute;}
+body .featured ul.nav-tabs li{float:none;}
+
 }
 @media (max-width: 639px) {
   .header .mobile-config .search-form .search-block,
@@ -7181,7 +7191,7 @@ hr{margin: 6px 0;}
   }
 }
 /*----------------
-AUTO CLEAR 
+AUTO CLEAR
 ----------------*/
 @media (min-width: 1200px) {
   .auto-clear .col-lg-1:nth-child(12n + 1) {
@@ -7645,9 +7655,11 @@ app-featuredsmall {
 }
 .error {
   color: #f00;
-  padding: 6px 0 0 15px;
+  /* padding: 6px 0 0 15px; */
   display: inline-block;
+  border: 0px !important;
 }
+
 .ng-dropdown-panel.ng-select-bottom {
   top: 43px !important;
 }
@@ -7709,4 +7721,51 @@ app-featuredsmall {
 }
 .product-item.layout1  {
   border: 1px solid #e6e6e6;
+}
+
+/* responsive */
+@media (max-width: 639px) {
+.search-block1
+ .category-list
+ .ng-select
+ .ng-select-container
+ .ng-value-container
+ .ng-placeholder {
+    padding: 10px;
+    color: #999;
+}
+.search-block1 .form-row > div.category-list {
+  border-left: 1px solid #ccc;
+  border-radius: 0px;
+}
+.search-block1 .form-row > div {
+  border-left: 1px solid #ccc;
+}
+.search-button1 {
+  font-size: 20px;
+  color: #fff;
+  width: 100%;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  border-radius: 0;
+  display: inline-block;
+  background-color: #35b035;
+  border: 0px;
+}
+.search-block1 .col-xs-12 {
+  padding: 0px !important;
+}
+.product-container {
+  border-top: solid 0px #e6e6e6;
+  border-left: solid 0px #e6e6e6;
+  margin-right: 0px;
+}
+.main-content-list .content-offset, .main-content-grid .content-offset {
+  margin-top: 0px;
+  min-height: auto; 
+}
+}
+.selecthascontent   .ng-placeholder {
+  display: none !important;
 }

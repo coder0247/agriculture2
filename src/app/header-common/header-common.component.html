@@ -1,5 +1,112 @@
+<div #mmenu class="ovic-menu-clone-wrap">
+    <div class="ovic-menu-panels-actions-wrap">
+		<span class="ovic-menu-current-panel-title">MENU</span>
+		<a class="ovic-menu-close-btn ovic-menu-close-panels" href="javascript:void(0)" (click)="mmenutoggleClass()">x</a>
+	</div>
+    <div class="ovic-menu-panels">
+        <div id="ovic-menu-panel-main" class="ovic-menu-panel ovic-menu-panel-main ovic-menu-panel-opened">
+				<!-- <ul class="vertical-menu ovic-clone-mobile-menu" *ngIf="mainCats ; else sidebarloading">
+
+						<li *ngFor="let item of mainCats;let i = index">
+							<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}">
+								<span class="icon"></span>{{item.catname}}</a>
+						</li> -->
+            <ul class="depth-01" *ngIf="mainCats ; else sidebarloading">
+					<li *ngFor="let item of mainCats;let i = index">
+							<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}">
+								<span class="icon"></span>{{item.catname}}</a>
+						</li>
+						<!-- <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+								<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home">HOME</a>
+							</li> -->
+                <li class="menu-item clone-menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+						<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home">HOME</a>
+                </li>
+				<li class="menu-item clone-menu-item" routerLinkActive="active">
+						<a routerLink="/about" class="kt-item-title ovic-menu-item-title" title="Home">About Us</a>
+                </li>
+                <li class="menu-item clone-menu-item">	<a routerLink="/contact" class="kt-item-title ovic-menu-item-title" title="Home">Contact Us</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+</div>
 <header>
 	<div class="header layout3 no-prepend-box-sticky header-home4">
+		<div class="header-mobile">
+					<div class="container">
+						<div class="logo-mob">
+								<a routerLink="/"><img src="assets/images/logo.jpg" alt="" style="width: 139px"></a>
+						</div>
+						<a #cogactive href="javascript:void(0)" (click)="mconfigtoggleClass()" class="header-top-menu-mobile"><span class="fa fa-cog" aria-hidden="true"></span></a><a class="menu-bar menu-toggle" href="javascript:void(0)" (click)="mmenutoggleClass()"><span class="icon"><span></span><span></span><span></span></span><span class="text">Menu</span></a>
+						<div  #mobileconfig class="mobile-config">
+							<a href="javascript:void(0)" class="close-btn" (click)="mconfigtoggleClass()" >x</a>
+							<div class="topbar">
+
+								<ul class="menu-topbar top-links" *ngIf="!loggedinMenu">
+										<li routerLinkActive="active">
+												<a routerLink="/user/register">Register</a>
+											</li>
+											<li routerLinkActive="active">
+												<a routerLink="/user/signin">Sign in</a>
+											</li>
+
+								</ul>
+								<ul class="menu-topbar top-links" *ngIf="loggedinMenu">
+										<li routerLinkActive="active">
+											<a routerLink="/user/account">My Account</a>
+										</li>
+										<li routerLinkActive="active">
+											<a (click)="logout()">Logout</a>
+										</li>
+									</ul>
+								<ul class="list-socials">
+									<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+									<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+									<li class="pull-right">
+											<button type="button" class="btn btn-success" (click)="postnewadd()">
+													Post New Ad
+												</button>
+									</li>
+								</ul>
+							</div>
+							<form [formGroup]="searchForm" (ngSubmit)="submitForm()" class="form-inline">
+
+									<div class="search-form layout1 box-has-content">
+										
+										<div class="search-block1" *ngIf="mainCats; else showloading">
+												<div class="form-row">
+												<div class="form-group col-md-3 col-xs-12 cropoption  subcategory-list">
+													<ng-select [searchable]="false" #categorySelect [items]="mainCats" [selectOnTab]="true" bindLabel="catname" bindValue="_id"
+													 placeholder="Select category" formControlName="category" (change)="getSubcatList($event._id)">
+													</ng-select>
+													
+												</div>
+												<div class="form-group col-xs-12 col-md-3 cropoption subcategory-list">
+													<ng-select [searchable]="false" #cropsSelect [items]="subCats" [selectOnTab]="true" bindLabel="subcatname" bindValue="_id"
+													 placeholder="Select subcategory" formControlName="subcategory">
+													</ng-select>
+												</div>
+												<div class="form-group  col-xs-12 col-md-3 regionoption region-list">
+													<ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
+													 placeholder="Select region" formControlName="region">
+													</ng-select>
+												</div>
+												<button class="search-button1">
+													Search <i class="fa fa-search" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+										<ng-template #showloading>Loading...</ng-template>
+									</div>
+								</form>
+						</div>
+					</div>
+				</div>
 		<div class="topbar layout1">
 			<div class="container">
 				<ul class="list-socials">
@@ -29,7 +136,7 @@
 						</a>
 					</li>
 				</ul>
-				<ul class="menu-topbar top-links" *ngIf="!loggedinMenu">
+				<ul class="menu-topbar top-links hidden-xs hidden-sm abc" *ngIf="!loggedinMenu" >
 					<li routerLinkActive="active">
 						<a routerLink="/user/register">Register</a>
 					</li>
@@ -40,7 +147,7 @@
 						<a routerLink="/newsletter">Newsletter</a>
 					</li> -->
 				</ul>
-				<ul class="menu-topbar top-links" *ngIf="loggedinMenu">
+				<ul class="menu-topbar top-links hidden-xs hidden-sm" *ngIf="loggedinMenu">
 					<li routerLinkActive="active">
 						<a routerLink="/user/account">My Account</a>
 					</li>
@@ -57,11 +164,9 @@
 			<div class="top-header">
 				<div class="container">
 					<div class="row">
-						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12  left-content">
+						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 left-content hidden-xs hidden-sm">
 							<div class="logo">
-								<a href="index.html">
-									<img src="images/main-logo.png" alt="">
-								</a>
+							<a routerLink="/"><img src="assets/images/logo.jpg" alt="Agriculture" style="width: 139px"></a>
 							</div>
 						</div>
 
@@ -71,45 +176,49 @@
 
 								<div class="search-form layout1 box-has-content">
 
-										<div class="search-block1" *ngIf="mainCats; else showloading">
-												<div class="form-row">
-													<div class="form-group col-md-3 category-list">
-														<ng-select [searchable]="false" #categorySelect [items]="mainCats" [selectOnTab]="true" bindLabel="catname" bindValue="_id"
-														 placeholder="Select category" formControlName="category" (change)="getSubcatList($event._id)">
-														</ng-select>
-													</div>
-													<div class="form-group col-md-3 cropoption subcategory-list">
-														<ng-select [searchable]="false" #cropsSelect [items]="subCats" [selectOnTab]="true" bindLabel="subcatname" bindValue="_id"
-														 placeholder="Select subcategory" formControlName="subcategory">
-														</ng-select>
-													</div>
-													<div class="form-group  col-md-3 regionoption region-list">
-														<ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
-														 placeholder="Select region" formControlName="region">
-														</ng-select>
-													</div>
-													<button class="search-button">
-														<i class="fa fa-search" aria-hidden="true"></i>
-													</button>
-												</div>
-												<!-- <div class=" firstselect search-choice parent-content">
-													<select data-placeholder="All Categories" class="chosen-select" formControlName="crop">
-														<option value="{{item._id}}" *ngFor="let item of crops;let i = index">{{item.cropname}}</option>
-													</select>
-												</div> -->
-												<!-- <div class="secondselect search-choice parent-content">
-													<select data-placeholder="Divisions" class="chosen-select" formControlName="region">
-														<option value="{{item._id}}" *ngFor="let item of regions;let i = index">{{item.regionname}}</option>
-													</select>
-												</div> -->
-		
+									<div class="search-block1" *ngIf="mainCats; else showloading">
+										<div class="form-row" [ngClass]="{'selecthascontent': selecthascontent}">
+											<div class="form-group col-md-3 category-list">
+												<ng-select [searchable]="false" #categorySelect [items]="mainCats" [selectOnTab]="true" bindLabel="catname" bindValue="_id"
+												 placeholder="Select category" formControlName="category" (change)="getSubcatList($event._id)">
+												</ng-select>
 											</div>
+											
+											<div class="form-group col-md-3 cropoption subcategory-list">
+												<ng-select [searchable]="false" #cropsSelect [items]="subCats" [selectOnTab]="true" bindLabel="subcatname" bindValue="_id"
+												 placeholder="Select subcategory" formControlName="subcategory">
+												</ng-select>
+											</div>
+											
+											<div class="form-group  col-md-3 regionoption region-list">
+												<ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
+												 placeholder="Select region" formControlName="region">
+												</ng-select>
+											</div>
+											
+											<button class="search-button">
+												<i class="fa fa-search" aria-hidden="true"></i>
+											</button>
+										</div>
+										
+										<!-- <div class=" firstselect search-choice parent-content">
+											<select data-placeholder="All Categories" class="chosen-select" formControlName="crop">
+												<option value="{{item._id}}" *ngFor="let item of crops;let i = index">{{item.cropname}}</option>
+											</select>
+										</div> -->
+										<!-- <div class="secondselect search-choice parent-content">
+											<select data-placeholder="Divisions" class="chosen-select" formControlName="region">
+												<option value="{{item._id}}" *ngFor="let item of regions;let i = index">{{item.regionname}}</option>
+											</select>
+										</div> -->
+
+									</div>
 									<ng-template #showloading>Loading...</ng-template>
 								</div>
 							</form>
 						</div>
 
-						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 right-content">
+						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 right-content hidden-sm hidden-xs">
 							<ul class="header-control">
 								<!-- <li class="hotline">
 									<div class="icon">
@@ -136,8 +245,8 @@
 				<div class="header-nav-wapper">
 					<div class="container main-menu-wapper">
 						<div class="row">
-							<div class="col-lg-3 col-md-4 col-sm-12">
-								<div class="vertical-wapper parent-content" #parentcontent>
+							<div class="col-lg-3 col-md-4 col-sm-12 hidden-xs hidden-sm">
+								<div class="vertical-wapper parent-content nonactive" #parentcontent>
 									<div class="block-title show-content" (click)="toggleClass()">
 										<span class="icon-bar">
 											<span></span>
@@ -146,7 +255,7 @@
 										</span>
 										<span class="text">Categories</span>
 									</div>
-									<div class="vertical-content hidden-content" #hiddencontent >
+									<div class="vertical-content hidden-content" #hiddencontent>
 										<ul class="vertical-menu ovic-clone-mobile-menu" *ngIf="mainCats ; else sidebarloading">
 
 											<li *ngFor="let item of mainCats;let i = index">
@@ -160,7 +269,7 @@
                           <div class="sub-menu mega-menu sub-menu2">
                             <div class="row">
                               <div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4 col-lg-4" *ngFor="let subarray of morecats">
-                                
+
                                   <ul>
                                       <li *ngFor="let item of subarray">
                                         <a routerLink="/crop/{{item._id}}">{{item.cropname}}</a>

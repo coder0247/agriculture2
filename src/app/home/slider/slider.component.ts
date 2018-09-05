@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
@@ -7,30 +7,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SliderComponent implements OnInit {
   images: Array<any> = [];
-  constructor() {
+  constructor( private route: ActivatedRoute,
+    private router: Router) {
     const slide1 = {
         'imgsrc' : 'assets/images/slider/3a.jpg',
         'subtitle': 'up to <span class="text-main-color">60% off</span>',
-        'title': 'Smart Watchs',
+        'title': 'Crops',
         'smalltitle': 'Only: <span> $226.00</span>',
         'buttontext': 'Shop Now',
-        'buttonurl': ''
+        'buttonurl': 'category/5b56cd9ecb50b83ff77b5168'
     };
     const slide2 = {
-      'imgsrc' : 'assets/images/slider/1a.jpg',
+      'imgsrc' : 'assets/images/slider/agri1.jpg',
       'subtitle': 'up to <span class="text-main-color"> 50% off</span>',
-      'title': '<span>Sales</span> & Sevice of Laptop',
-      'smalltitle': 'Only: <span> $268.00</span>',
+      'title': '<span>Agriculture</span> Services',
+      'smalltitle': 'Only: <span> $68.00</span>',
       'buttontext': 'Shop Now',
-      'buttonurl': ''
+      'buttonurl': 'category/5b56cd2fcb50b83ff77b4e84'
   };
   const slide3 = {
-    'imgsrc' : 'assets/images/slider/2a.jpg',
+    'imgsrc' : 'assets/images/slider/farm1.jpg',
     'subtitle': '<span class="text-main-color"> 50% off</span>',
-    'title': 'Gear VR 3D.',
-    'smalltitle': 'Virtual reality through a new lens',
+    'title': 'Farm Lands',
+    'smalltitle': 'Only: <span> $2000.00</span>',
     'buttontext': 'Shop Now',
-    'buttonurl': ''
+    'buttonurl': 'category/5b56cd9ecb50b83ff77b5164'
 };
 
     this.images.push(slide1);
@@ -38,7 +39,9 @@ export class SliderComponent implements OnInit {
     this.images.push(slide3);
     // console.log(this.images);
   }
-
+ public redirectotpage(pageurl) {
+    this.router.navigate([pageurl]);
+  }
   ngOnInit() {
   }
 

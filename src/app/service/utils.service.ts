@@ -18,14 +18,7 @@ export class UtilsService {
 
   getClientIPAddress(): Observable<any> {
     return this.http
-      .get('https://jsonip.com/', {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
-        }),
-        withCredentials: true
-      })
+      .get('https://jsonip.com/')
       .pipe(
         map(this.extractData),
         catchError(this.handleError)

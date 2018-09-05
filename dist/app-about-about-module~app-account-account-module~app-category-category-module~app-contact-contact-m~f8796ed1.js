@@ -198,6 +198,20 @@ var AuthService = /** @class */ (function () {
         return this.http.post(apiUrl + 'user/signin', data)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     };
+    AuthService.prototype.getUserDetails = function (userid) {
+        // console.log('service userid', userid);
+        return this.http.get(apiUrl + 'user/details/' + userid, httpOptions)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+    };
+    AuthService.prototype.resetUserPassword = function (data) {
+        // console.log('service userid', userid);
+        return this.http.post(apiUrl + 'user/resetuserpass/', data)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+    };
+    AuthService.prototype.editProfile = function (data) {
+        return this.http.post(apiUrl + 'user/editprofile', data)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+    };
     AuthService.prototype.newUserRegister = function (data) {
         return this.http.post(apiUrl + 'user/register', data, httpOptions)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));

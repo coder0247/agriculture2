@@ -12,7 +12,7 @@ import { NgOption } from '@ng-select/ng-select';
 })
 export class ChangepasswordComponent implements OnInit {
   regions: NgOption[];
-  registerForm: FormGroup;
+  passwordresetForm: FormGroup;
   formsubmitted = false;
   showloading = false;
   usermsg: any;
@@ -21,40 +21,48 @@ export class ChangepasswordComponent implements OnInit {
   constructor(  private route: ActivatedRoute, private router: Router, private authservice: AuthService, private homepage: HomeService) { }
 
   ngOnInit() {
-    this.homepage.getRegionList()
-    .subscribe(res => {
-      if (res.status === 'success') {
-        // console.log(res);
-        this.regions = res.data.regions;
-      }
-    }, (err) => {
-      console.log(err);
-    });
+    // this.authservice.currentUserDetail()
+    // .subscribe(res => {
+    //   if (res.status === 'success') {
+    //     console.log(res);
+    //     // this.regions = res.data.regions;
+    //   }
+    // }, (err) => {
+    //   console.log(err);
+    // });
     this.createForm();
   }
   private createForm() {
-    this.registerForm = new FormGroup({
+    this.passwordresetForm = new FormGroup({
        // tslint:disable-next-line
+       email: new FormControl('', [Validators.required, patternValidator(/^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
       currentpassword: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
       confirm_password: new FormControl('', Validators.required),
     }, passwordMatchValidator);
   }
 
-  public register() {
+  public resetPassword() {
     this.formsubmitted = true;
-    if (this.registerForm.valid) {
+    this.showloading = false;
+          this.usermsg = '';
+          this.success = false;
+          this.error = false;
+    if (this.passwordresetForm.valid) {
       this.showloading = true;
-      this.authservice.newUserRegister(this.registerForm.value).subscribe(res => {
+      this.authservice.resetUserPassword(this.passwordresetForm.value).subscribe(res => {
         if ( res['status'] === 'success') {
-          this.usermsg = 'You have successfully registered.';
+          this.usermsg = 'Password Updated successfully.';
           this.showloading = false;
           this.success = true;
           this.error = false;
-          this.registerForm.reset();
+          // setTimeout(() => {
+          //   this.router.navigate(['user/sigin']);
+          // }, 2000);
+          // this.passwordresetForm.reset();
         } else {
           this.showloading = false;
-          this.usermsg = res.dup;
+          this.usermsg = res.data;
           this.success = false;
           this.error = true;
         }
@@ -63,7 +71,17 @@ export class ChangepasswordComponent implements OnInit {
         console.log(err);
       });
     }
- 
-    // console.log(this.registerForm.value);
+    this.validateAllFormFields(this.passwordresetForm);
+    // console.log(this.passwordresetForm.value);
   }
+  validateAllFormFields(formGroup: any) {
+    Object.keys(formGroup.controls).forEach(field => {
+        const control = formGroup.get(field);
+        if (control instanceof FormControl) {
+            control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) {
+            this.validateAllFormFields(control);
+        }
+    });
+}
 }

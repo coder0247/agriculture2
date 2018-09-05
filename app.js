@@ -32,21 +32,21 @@ var dashdata = {
     archiveadscount: 0,
     inboxnewmsg: 0,
 };
-var distDir = __dirname + "/dist/";
-app.use(express.static(distDir));
-const siteurl = 'https://previewagriculture.herokuapp.com';
-// app.use(function (req, res, next) {
-//     res.setHeader('Access-Control-Allow-Origin', siteurl);
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
-//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//     next();
-// });
-// app.use(cors({ origin: ['https://previewagriculture.herokuapp.com'], credentials: true }));
-// const url = "mongodb://nemumba2018:nemumba2018@ds237072.mlab.com:37072/agriculture";
+// var distDir = __dirname + "/dist/";
+// app.use(express.static(distDir));
+// const siteurl = 'https://previewagriculture.herokuapp.com';
+const siteurl = 'http://localhost:4200';
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', false);
+    next();
+});
+app.use(cors());
 const url = "mongodb://agriuser:agri123@ds121321.mlab.com:21321/m_agriculture";
 //connect to MongoDB
-var options = { keepAlive: 300000, connectTimeoutMS: 30000, useNewUrlParser: true};
+var options = { keepAlive: 300000, connectTimeoutMS: 30000};
 mongoose.connect(url, options);
 var db = mongoose.connection;
 // MULTER CONFIGURATION
@@ -549,7 +549,96 @@ app.post('/api/user/register', (req, res) => {
 
     });
 });
+// http://localhost:3000/api/user/details/5b6193e4b85809c142b2dceb
+app.get('/api/user/details/:userid', (req, res) => {
+    mongoose.connect(url, function (err) {
+        if (err) throw err;
+        User.find({'_id' : req.params.userid}, 'firstname lastname phonenumber email region', function (err, userdetails) {
+            if (err) throw err;
+            if (userdetails.length > 0) {
+                return res.status(200).json({
+                    status: 'success',
+                    data: userdetails ,
+                });
 
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: 'Fetch Failed',
+
+                })
+            }
+
+        })
+    });
+});
+app.post('/api/user/resetuserpass', (req, res) => {
+    /*
+    confirm_password:"asdasd"
+    currentpassword:"asdasdasd"
+    email:"dsfdfs@yahoo.com"
+    password:"sdasd"
+    */ 
+    mongoose.connect(url, function (err) {
+        if (err) throw err;
+        console.log( req.body);
+        User.find({'email' : req.body.email}, function (err, userdetails) {
+            if (err) throw err;
+            if (userdetails.length > 0  && userdetails[0].password == crypt(req.body.currentpassword, userdetails[0].password)) {
+                
+                let newpassword = {
+                    password: crypt(req.body.password),
+                };
+                User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: newpassword }, function (error, passwordreset) {
+                    if (req.session) {
+                        // delete session object
+                        req.session.destroy(function (err) {
+                          
+                                res.clearCookie('user_sid');
+
+              
+                        });
+                    }
+                    return res.status(200).json({
+                        status: 'success',
+                        data: 'Password updated successfully'
+                    });
+                });
+
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    data: 'Invalid Email/Password',
+
+                })
+            }
+
+        })
+    });
+});
+
+app.post('/api/user/editprofile', (req, res) => {
+    mongoose.connect(url, function (err) {
+        if (err) throw err;
+   
+        let setprofiledata = {
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            phonenumber: req.body.phoneno,
+            email: req.body.email,
+            region: req.body.region
+        };
+        User.findByIdAndUpdate({ _id : req.body.userid }, { $set: setprofiledata }, function (error, profileupdated) {
+            return res.status(200).json({
+                status: true,
+                message: {'profile' : 'profile updated successfully' }, 
+                extra: profileupdated
+            });
+        });
+        
+
+    });
+});
 app.post('/api/postmsg', (req, res) => {
     mongoose.connect(url, function (err) {
         if (err) throw err;
@@ -1984,4 +2073,4 @@ app.get('/api/admin/users', (req, res) => {
     });
 });
 
-app.listen(process.env.PORT || 4001)
+app.listen(3000, () => console.log('server running on port 3000!'))

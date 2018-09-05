@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {  Component, OnInit, Inject, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { HomeService } from '../../service/home.service';
 import {
   FormBuilder,
@@ -26,6 +26,17 @@ export class HeaderprimaryComponent implements OnInit {
   morecats: NgOption[];
   loggedinMenu = false;
   selectedCategory = '';
+  @ViewChild('mmenu', { read: ElementRef })
+ mmenu: ElementRef;
+ @ViewChild('mobileconfig', { read: ElementRef })
+ mobileconfig: ElementRef;
+ @ViewChild('cogactive', { read: ElementRef })
+ cogactive: ElementRef;
+ categoryerror = false;
+ subcategoryerror = false;
+ regionerror = false;
+ selectedcats: any;
+ selecthascontent = false;
   // creates instance of FormGroup called authForm
   searchForm: FormGroup;
   constructor(
@@ -35,15 +46,49 @@ export class HeaderprimaryComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public auth: AuthService,
-    private _location: Location
+    private _location: Location,
+     private renderer: Renderer2
   ) {
-    this.searchForm = fb.group({
-      category: [],
-      subcategory: [],
-      region: []
-    });
+    const regionid = localStorage.getItem('regionid') !== null ? localStorage.getItem('regionid') : '';
+    const subcategoryid = localStorage.getItem('subcategoryid') !== null ? localStorage.getItem('subcategoryid') : '';
+    const categoryid = localStorage.getItem('categoryid') !== null ? localStorage.getItem('categoryid') : '';
+    if (categoryid !== '') {
+      this.selecthascontent = true;
+      this.getSubcatList(categoryid);
+      this.searchForm = fb.group({
+        category: [categoryid],
+        subcategory: [subcategoryid],
+        region: [regionid]
+      });
+    } else {
+      this.selecthascontent = false;
+      this.searchForm = fb.group({
+        category: [],
+        subcategory: [],
+        region: []
+      });
+    }
   }
-
+  mmenutoggleClass() {
+  // console.log('menu click', this.mmenu.nativeElement.classList);
+    if (this.mmenu.nativeElement.classList.contains('open')) {
+      this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+    } else {
+      this.renderer.addClass(this.mmenu.nativeElement, 'open');
+    }
+  }
+  mconfigtoggleClass() {
+    // console.log('menu click', this.mmenu.nativeElement.classList);
+      if (this.mobileconfig.nativeElement.classList.contains('open')) {
+        this.renderer.removeClass(this.cogactive.nativeElement, 'active');
+        this.renderer.removeClass(this.mobileconfig.nativeElement, 'open');
+        this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+      } else {
+        this.renderer.addClass(this.cogactive.nativeElement, 'active');
+        this.renderer.addClass(this.mobileconfig.nativeElement, 'open');
+        this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+      }
+    }
   ngOnInit() {
     this.checksession();
     this.homepage.getCatList().subscribe(
@@ -84,7 +129,11 @@ export class HeaderprimaryComponent implements OnInit {
           this.loggedinMenu = true;
         } else {
           this.loggedinMenu = false;
-          localStorage.clear();
+          localStorage.removeItem('firstname');
+    localStorage.removeItem('email');
+    localStorage.removeItem('lastname');
+    localStorage.removeItem('isadmin');
+    localStorage.removeItem('id');
           if (this.routing()) {
             this.router.navigate(['user/signin']);
           }
@@ -99,7 +148,11 @@ export class HeaderprimaryComponent implements OnInit {
     this.auth.dologout().subscribe(
       res => {
         this.loggedinMenu = false;
-        localStorage.clear();
+        localStorage.removeItem('firstname');
+        localStorage.removeItem('email');
+        localStorage.removeItem('lastname');
+        localStorage.removeItem('isadmin');
+        localStorage.removeItem('id');
         this.router.navigate(['user/signin']);
       },
       err => {
@@ -113,6 +166,7 @@ export class HeaderprimaryComponent implements OnInit {
   }
 
   getSubcatList(catid) {
+    localStorage.setItem('categoryid', catid);
     this.homepage.getSubcatListByCatID(catid).subscribe(
       res => {
         if (res.status === 'success') {
@@ -128,28 +182,21 @@ export class HeaderprimaryComponent implements OnInit {
   submitForm() {
     const credentials = this.searchForm.value;
     // tslint:disable-next-line:max-line-length
+    this.categoryerror = false;
+    this.subcategoryerror = false;
+    this.regionerror = false;
+    if (credentials.category === null) {
+   this.categoryerror = true;
+ }
+ if (credentials.subcategory === null) {
+   this.subcategoryerror = true;
+ }
+ if (credentials.region === null) {
+   this.regionerror = true;
+ }
+ localStorage.setItem('regionid', credentials.region);
+ localStorage.setItem('subcategoryid', credentials.subcategory);
     this.router.navigate(['/search', 'subcategory', credentials.subcategory, 'region', credentials.region ]);
-    // this.router.navigate(['/search',
-    // 'category', credentials.category,
-    // 'subcategory', credentials.subcategory,
-    // 'region', credentials.region ]);
-    // this.route.params.subscribe(params => {
-    //   // console.log('params[id]', params['id']);
-    //   // // this.router.navigate(['/cropnotfound']);
-    //   // this.imageurl =  'assets/images/crop/small/' + params['id'] + '.jpeg';
-    //   // console.log(params); // log the entire params object
-    //   // console.log(params['id']); // log the value of id
-    //   //  this.product.getSearchResult(params['id'])
-    //   //   .subscribe(res => {
-    //   //      if (res.status === 'success') {
-    //   //        this.showloading = false;
-    //   //        this.products = res.data.product;
-    //   //      } else {
-    //   //       this.router.navigate(['/cropnotfound']);
-    //   //      }
-    //   //     }, (err) => {
-    //   //       console.log(err);
-    //   //     });
-    // });
+
   }
 }
