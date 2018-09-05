@@ -32,21 +32,13 @@ var dashdata = {
     archiveadscount: 0,
     inboxnewmsg: 0,
 };
-// var distDir = __dirname + "/dist/";
-// app.use(express.static(distDir));
-// const siteurl = 'https://previewagriculture.herokuapp.com';
-const siteurl = 'http://localhost:4200';
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', false);
-    next();
-});
-app.use(cors());
-const url = "mongodb://agriuser:agri123@ds121321.mlab.com:21321/m_agriculture";
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+const siteurl = 'https://previewagriculture.herokuapp.com';
+const url = "mongodb://nemumba2018:nemumba2018@ds237072.mlab.com:37072/agriculture";
+const DIR = './assets/images/products/';
 //connect to MongoDB
-var options = { keepAlive: 300000, connectTimeoutMS: 30000};
+var options = { keepAlive: 300000, connectTimeoutMS: 30000, useNewUrlParser: true};
 mongoose.connect(url, options);
 var db = mongoose.connection;
 // MULTER CONFIGURATION
@@ -2073,4 +2065,4 @@ app.get('/api/admin/users', (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log('server running on port 3000!'))
+app.listen(process.env.PORT || 4001)
