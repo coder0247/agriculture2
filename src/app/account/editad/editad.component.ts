@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { HomeService } from '../../service/home.service';
 
 import { NgOption } from '@ng-select/ng-select';
-const URL = 'http://localhost:3000/api/upload';
+const URL = '/api/upload';
 @Component({
   selector: 'app-editad',
   templateUrl: './editad.component.html',

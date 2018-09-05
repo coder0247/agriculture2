@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Utils } from '../utils/utils';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-const URL = 'http://localhost:3000/api/upload';
+const URL = '/api/upload';
 @Component({
 	selector: 'app-create-sub-category',
 	templateUrl: './create-sub-category.component.html',
