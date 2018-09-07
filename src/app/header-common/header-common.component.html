@@ -200,7 +200,17 @@
 												<i class="fa fa-search" aria-hidden="true"></i>
 											</button>
 										</div>
-										
+										<div class="row">
+												<div class="col-md-3">
+														<div class="error" *ngIf="categoryerror">Please select category</div>
+												</div>
+												<div class="col-md-3">
+														<div class="error" *ngIf="subcategoryerror">Please select subcategory</div>
+												</div>
+												<div class="col-md-3">
+														<div class="error" *ngIf="regionerror">Please select region</div>
+												</div>
+											</div>
 										<!-- <div class=" firstselect search-choice parent-content">
 											<select data-placeholder="All Categories" class="chosen-select" formControlName="crop">
 												<option value="{{item._id}}" *ngFor="let item of crops;let i = index">{{item.cropname}}</option>

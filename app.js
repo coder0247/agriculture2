@@ -570,14 +570,14 @@ app.post('/api/user/resetuserpass', (req, res) => {
     currentpassword:"asdasdasd"
     email:"dsfdfs@yahoo.com"
     password:"sdasd"
-    */ 
+    */
     mongoose.connect(url, function (err) {
         if (err) throw err;
         console.log( req.body);
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0  && userdetails[0].password == crypt(req.body.currentpassword, userdetails[0].password)) {
-                
+
                 let newpassword = {
                     password: crypt(req.body.password),
                 };
@@ -585,10 +585,10 @@ app.post('/api/user/resetuserpass', (req, res) => {
                     if (req.session) {
                         // delete session object
                         req.session.destroy(function (err) {
-                          
+
                                 res.clearCookie('user_sid');
 
-              
+
                         });
                     }
                     return res.status(200).json({
@@ -612,7 +612,7 @@ app.post('/api/user/resetuserpass', (req, res) => {
 app.post('/api/user/editprofile', (req, res) => {
     mongoose.connect(url, function (err) {
         if (err) throw err;
-   
+
         let setprofiledata = {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
@@ -623,11 +623,11 @@ app.post('/api/user/editprofile', (req, res) => {
         User.findByIdAndUpdate({ _id : req.body.userid }, { $set: setprofiledata }, function (error, profileupdated) {
             return res.status(200).json({
                 status: true,
-                message: {'profile' : 'profile updated successfully' }, 
+                message: {'profile' : 'profile updated successfully' },
                 extra: profileupdated
             });
         });
-        
+
 
     });
 });
@@ -1133,7 +1133,28 @@ app.get('/api/regionlist', (req, res) => {
         })
     });
 });
+app.post('/api/getProductListBySubCat',  function (req, res) {
+    mongoose.connect(url, function (err) {
+        if (err) throw err;
+        console.log(req.body.subcatlist);
+        MappingTbl.find({ subcatid: { $in: req.body.subcatlist } }).populate({ path: 'productid'}).exec(function (err, mappingfound) {
 
+            if (mappingfound.length > 0) {
+                return res.status(200).json({
+                    status: 'success',
+                    data: {'prodlist' : mappingfound }
+                });
+            } else {
+                return res.status(200).json({
+                    status: 'Fail',
+                    msg: 'Fail',
+
+                });
+            }
+    });
+    });
+
+});
 app.get('/api/productlistbycat/:id', function (req, res) {
     //    return res.send(req.params);
     mongoose.connect(url, function (err) {

@@ -35,6 +35,7 @@ var map = {
 		"app-about-about-module~app-account-account-module~app-category-category-module~app-contact-contact-m~f8796ed1",
 		"app-about-about-module~app-account-account-module~app-category-category-module~app-contact-contact-m~4235a603",
 		"app-account-account-module~app-category-category-module~app-home-home-module~app-products-products-m~dbc04460",
+		"app-category-category-module~app-home-home-module",
 		"common",
 		"app-category-category-module"
 	],
@@ -49,6 +50,7 @@ var map = {
 		"./src/app/home/home.module.ts",
 		"app-about-about-module~app-account-account-module~app-category-category-module~app-contact-contact-m~f8796ed1",
 		"app-account-account-module~app-category-category-module~app-home-home-module~app-products-products-m~dbc04460",
+		"app-category-category-module~app-home-home-module",
 		"common",
 		"app-home-home-module"
 	],

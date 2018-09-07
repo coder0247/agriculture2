@@ -1712,9 +1712,10 @@ body.home1 {
 }
 .other-product-show {
   position: relative;
-  background-color: #e6e6e6;
+  /* background-color: #e6e6e6; */
   margin: 0 -0.5px;
   padding: 0 0.5px;
+  border-right: 1px solid #e6e6e6;
 }
 .main-content-home1 .product-show .section-content {
   border-right-width: 0;
@@ -6647,6 +6648,7 @@ hr{margin: 6px 0;}
 }
 @media (max-width: 767px) {
   /*HEADER LAYOUT1*/
+  
   .topbar,
   .main-header .top-header .midle-content {
     display: none;
@@ -7245,6 +7247,9 @@ AUTO CLEAR
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
+  .filter-choice {
+    width: auto!important;
+  }
   .auto-clear .col-sm-1:nth-child(12n + 1) {
     clear: left;
   }
@@ -7503,9 +7508,9 @@ AUTO CLEAR
 }
 .featured .tab-pane.active {
   display: block !important;
+  border-right: 1px solid #e6e6e6;
 }
-app-featuredsmall {
-}
+
 .ng-select.ng-dirty .ng-placeholder {
   display: none;
 }
@@ -7720,11 +7725,15 @@ app-featuredsmall {
   z-index: 100;
 }
 .product-item.layout1  {
-  border: 1px solid #e6e6e6;
+  border-left: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
 }
 
 /* responsive */
 @media (max-width: 639px) {
+  .filter-choice {
+    width: auto !important;
+  }
 .search-block1
  .category-list
  .ng-select
@@ -7768,4 +7777,60 @@ app-featuredsmall {
 }
 .selecthascontent   .ng-placeholder {
   display: none !important;
+}
+.overlaypanelscreen {
+  top: 0;
+  left: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  opacity: .6;
+  background-color: #fff;
+  z-index: 99999;
+}
+.overlaypanelscreen img {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+}
+
+.filter-choice {
+  font-size: 13px;
+  color: #666;
+  background-color: #fff;
+  border: solid 1px #ddd;
+  border-radius: 3px;
+  padding: 0 20px;
+  height: 30px;
+  line-height: 30px;
+  box-shadow: none;
+  width: 180px;
+}
+.filter-choice .ng-dropdown-panel .scroll-host {
+  min-width: 178px;
+}
+.filter-choice .ng-dropdown-panel {
+  left: -20px;
+  text-align: left;
+}
+.filter-choice .ng-dropdown-panel.ng-select-bottom {
+  top: 28px !important;
+}
+.filter-choice .ng-select.ng-select-opened > .ng-select-container .ng-arrow {
+  top: -2px;
+  border-color: transparent transparent #999;
+  border-width: 0 5px 5px;
+}
+.filter-choice .ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: #999 transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 2.5px;
+}
+.togglelist  .thumb {
+  height: 214px;
+  width: 214px;
+}
+.togglelist .add-to-cart {
+  width: auto !important;
 }

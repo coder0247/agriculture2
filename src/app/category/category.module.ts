@@ -7,8 +7,6 @@ import { ProductService } from '../service/product.service';
 import { ModalModule } from 'ngx-bootstrap';
 import { QuickviewComponent } from './quickview/quickview.component';
 import { FooterModule } from '../footer/footer.module';
-
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HeaderCommonComponent } from '../header-common/header-common.component';

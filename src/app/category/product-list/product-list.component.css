@@ -21,3 +21,6 @@
     background-color: #fff;
     border-color: #ddd;
 }
+.sidebar .label-text {
+    padding-left: 25px;
+}

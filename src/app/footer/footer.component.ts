@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../service/home.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { patternValidator } from '../sharedfn/userfn';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -13,7 +14,7 @@ export class FooterComponent implements OnInit {
   alreadysubs = false;
   checking = false;
   validationerror = false;
-  constructor(private homepage: HomeService) { }
+  constructor(private homepage: HomeService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.createForm();

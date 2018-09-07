@@ -16,40 +16,31 @@
 				<div class="categories-content">
 					<h4 class="shop-title">Products</h4>
 					<div class="productloading" *ngIf="showloading">Loading...</div>
-					<!-- <div class="top-control box-has-content">
+					<div class="top-control box-has-content">
 							<div class="control">
-								<div class="filter-choice">
-									<select data-placeholder="All Categories" class="chosen-select">
-										<option value="1">Sort by popularity</option>
-										<option value="2">Size</option>
-										<option value="3">Type</option>
-										<option value="4">Name</option>
-										<option value="5">Data Modified</option>
-									</select>
+								<div class="filter-choice"> 
+									   <ng-select [searchable]="false"  [items]="filterchoice" [selectOnTab]="true" bindLabel="sortbyfilter" bindValue="_id"
+									   [(ngModel)]="filterdefault" (change)="getfilteritem($event._id)">
+									  </ng-select>
 								</div>
-								<div class="select-item">
-									<select data-placeholder="All Categories" class="chosen-select">
-										<option value="1">12 per page</option>
-										<option value="2">9 per page</option>
-										<option value="3">12 per page</option>
-										<option value="4">15 per page</option>
-										<option value="5">18 per page</option>
-										<option value="5">21 per page</option>
-									</select>
+								<div class="filter-choice">
+									<ng-select [searchable]="false"  [items]="perpageitems" [selectOnTab]="true" bindLabel="perpagevalue" bindValue="_id"
+									 [(ngModel)]="pagevaluedefault" (change)="getitembypagevalue($event._id)">
+								   </ng-select>
 								</div>
 								<div class="control-button">
-									<a href="#" class="grid-button active"><span class="icon"><i class="fa fa-th-large" aria-hidden="true"></i> </span>Grid</a>
-									<a href="#" class="list-button"><span class="icon"><i class="fa fa-th-list" aria-hidden="true"></i></span> List</a>
+									<a href="javascript:void(0)" (click)="togglegrid()" class="grid-button active"><span class="icon"><i class="fa fa-th-large" aria-hidden="true"></i> </span>Grid</a>
+									<a href="javascript:void(0)" (click)="togglelist()" class="list-button"><span class="icon"><i class="fa fa-th-list" aria-hidden="true"></i></span> List</a>
 								</div>
 							</div>
-						</div> -->
+						</div>
 					<div class="auto-clear grid-style equal-container box-has-content" *ngIf="notfound">
 						<h3>Found nothing to show</h3>
 					</div>
-					<div class="product-container auto-clear grid-style equal-container box-has-content" *ngIf="pagedItems">
+					<div [ngClass]="{'product-container auto-clear box-has-content  equal-container': true, 'grid-style': gridstatus, 'list-style': liststatus}"  *ngIf="pagedItems">
 
 						<div class="product-item layout1 col-ts-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 no-padding" *ngFor="let item of pagedItems">
-							<div class="product-inner equal-elem">
+							<div [ngClass]="{'product-inner equal-elem': true, 'togglelist': togglestatus}" >
 								<div class="thumb">
 									<!-- {{item | json}} -->
 									<button href="#" class="quickview-button" (click)="quickview(item._id, item.pname, item.pimage, item.saleamount,  item.amtunit, item.unitprice)">
@@ -71,7 +62,7 @@
 											</ul>
 											<span class="count">5 Review(s)</span>
 										</div> -->
-									<a href="javascript:void(0)" (click)="showproductdetails(item._id)" class="product-name">{{item.pname}}</a>
+									<a href="javascript:void(0)" (click)="showproductdetails(item._id)" class="product-name">{{item.pname | titlecase }}</a>
 									<!-- <p class="description">Lorem Ipsum is simply dummy text of the printing and try. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer.</p> -->
 									<div class="price">
 										<span>$ {{item.saleamount}}</span>
@@ -115,20 +106,15 @@
 			</div>
 			<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 sidebar">
 				<!-- <h4 class="main-title">Shop by</h4> -->
-				<!-- <div class="widget widget-categories">
-						<h5 class="widgettitle">Categories</h5>
+				<div class="widget widget-categories">
+						<h5 class="widgettitle">{{catname}}</h5>
 						<ul class="list-categories">
-							<li><input type="checkbox" id="cb1"><label for="cb1" class="label-text">Home Audio & Theater</label></li>
-							<li><input type="checkbox" id="cb2"><label for="cb2" class="label-text">TV & Video</label></li>
-							<li><input type="checkbox" id="cb3"><label for="cb3" class="label-text">Camera, Photo & Video</label></li>
-							<li><input type="checkbox" id="cb4"><label for="cb4" class="label-text">Cell Phones & Accessories</label></li>
-							<li><input type="checkbox" id="cb5"><label for="cb5" class="label-text">Headphones</label></li>
-							<li><input type="checkbox" id="cb6"><label for="cb6" class="label-text">Video Games</label></li>
-							<li><input type="checkbox" id="cb7"><label for="cb7" class="label-text">Bluetooth & Wireless Speakers</label></li>
-							<li><input type="checkbox" id="cb8"><label for="cb8" class="label-text">Gaming Console</label></li>
-							<li><input type="checkbox" id="cb9"><label for="cb9" class="label-text">Computers & Tablets</label></li>
+							<li *ngFor="let item of sidecorps">
+								<input type="checkbox" id="{{item._id}}" name="{{item._id}}" value="{{item._id}}" (change)="getproductbysubcat($event)">
+								<label for="{{item._id}}" class="label-text">{{item.subcatname}}</label>
+							</li>
 						</ul>
-					</div> -->
+					</div>
 				<!-- <div class="widget widget-brand">
 						<h5 class="widgettitle">Brand</h5>
 						<ul class="list-categories">
@@ -147,14 +133,14 @@
 		                    <a href="#" class="filter">Filter</a>
 		                </div>
 					</div> -->
-				<div class="widget widget_filter_size">
+				<!-- <div class="widget widget_filter_size">
 					<h3 class="widgettitle">{{catname}}</h3>
 					<ul class="list-color" *ngFor="let item of sidecorps">
 						<li>
-							<a routerLink="/crop/{{item._id}}">{{item.cropname}}</a>
+							<a routerLink="/{{catname}}/{{item._id}}">{{item.subcatname}}</a>
 						</li>
 					</ul>
-				</div>
+				</div> -->
 				<!-- <div class="widget widget_filter_color box-has-content">
 						<h3 class="widgettitle">color</h3>
 						<ul class="list-color">
@@ -282,5 +268,6 @@
 			</div>
 		</div>
 	</div> -->
+	<div  [ngClass]="{'overlaypanelscreen': blockui}"><img src="assets/images/ajax-loader.gif" alt="loading" *ngIf="blockui"></div>
 </div>
 <app-footer></app-footer>

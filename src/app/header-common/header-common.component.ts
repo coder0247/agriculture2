@@ -1,6 +1,19 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+  AfterViewInit,
+  Inject
+} from '@angular/core';
 import { HomeService } from '../service/home.service';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators
+} from '@angular/forms';
 import * as _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../service/product.service';
@@ -24,6 +37,7 @@ export class HeaderCommonComponent implements OnInit {
   categoryerror = false;
   subcategoryerror = false;
   regionerror = false;
+
   // creates instance of FormGroup called authForm
   searchForm: FormGroup;
   @ViewChild('parentcontent', { read: ElementRef })
@@ -31,11 +45,11 @@ export class HeaderCommonComponent implements OnInit {
   @ViewChild('hiddencontent', { read: ElementRef })
   hiddencontent: ElementRef;
   @ViewChild('mmenu', { read: ElementRef })
- mmenu: ElementRef;
- @ViewChild('mobileconfig', { read: ElementRef })
- mobileconfig: ElementRef;
- @ViewChild('cogactive', { read: ElementRef })
- cogactive: ElementRef;
+  mmenu: ElementRef;
+  @ViewChild('mobileconfig', { read: ElementRef })
+  mobileconfig: ElementRef;
+  @ViewChild('cogactive', { read: ElementRef })
+  cogactive: ElementRef;
   selectedCategory = '';
   category: any;
   crop: any;
@@ -44,43 +58,50 @@ export class HeaderCommonComponent implements OnInit {
   constructor(
     private homepage: HomeService,
     private renderer: Renderer2,
-   public fb: FormBuilder,
+    public fb: FormBuilder,
     private product: ProductService,
     private route: ActivatedRoute,
     private router: Router,
     public auth: AuthService,
     private _location: Location
-  ) {
-
-  }
+  ) {}
   mmenutoggleClass() {
     // console.log('menu click', this.mmenu.nativeElement.classList);
-      if (this.mmenu.nativeElement.classList.contains('open')) {
-        this.renderer.removeClass(this.mmenu.nativeElement, 'open');
-      } else {
-        this.renderer.addClass(this.mmenu.nativeElement, 'open');
-      }
+    if (this.mmenu.nativeElement.classList.contains('open')) {
+      this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+    } else {
+      this.renderer.addClass(this.mmenu.nativeElement, 'open');
     }
-    mconfigtoggleClass() {
-      // console.log('menu click', this.mmenu.nativeElement.classList);
-        if (this.mobileconfig.nativeElement.classList.contains('open')) {
-          this.renderer.removeClass(this.cogactive.nativeElement, 'active');
-          this.renderer.removeClass(this.mobileconfig.nativeElement, 'open');
-          this.renderer.removeClass(this.mmenu.nativeElement, 'open');
-        } else {
-          this.renderer.addClass(this.cogactive.nativeElement, 'active');
-          this.renderer.addClass(this.mobileconfig.nativeElement, 'open');
-          this.renderer.removeClass(this.mmenu.nativeElement, 'open');
-        }
-      }
+  }
+  mconfigtoggleClass() {
+    // console.log('menu click', this.mmenu.nativeElement.classList);
+    if (this.mobileconfig.nativeElement.classList.contains('open')) {
+      this.renderer.removeClass(this.cogactive.nativeElement, 'active');
+      this.renderer.removeClass(this.mobileconfig.nativeElement, 'open');
+      this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+    } else {
+      this.renderer.addClass(this.cogactive.nativeElement, 'active');
+      this.renderer.addClass(this.mobileconfig.nativeElement, 'open');
+      this.renderer.removeClass(this.mmenu.nativeElement, 'open');
+    }
+  }
   ngOnInit() {
     this.checksession();
-    const regionid = localStorage.getItem('regionid') !== null ? localStorage.getItem('regionid') : '';
-    const subcategoryid = localStorage.getItem('subcategoryid') !== null ? localStorage.getItem('subcategoryid') : '';
-    const categoryid = localStorage.getItem('categoryid') !== null ? localStorage.getItem('categoryid') : '';
-    
+    const regionid =
+      localStorage.getItem('regionid') !== null
+        ? localStorage.getItem('regionid')
+        : '';
+    const subcategoryid =
+      localStorage.getItem('subcategoryid') !== null
+        ? localStorage.getItem('subcategoryid')
+        : '';
+    const categoryid =
+      localStorage.getItem('categoryid') !== null
+        ? localStorage.getItem('categoryid')
+        : '';
+
     if (categoryid !== '') {
-      console.log('categoryid' , categoryid);
+      console.log('categoryid', categoryid);
       this.selecthascontent = true;
       // this.getSubcatList(categoryid);
       this.searchForm = this.fb.group({
@@ -144,7 +165,7 @@ export class HeaderCommonComponent implements OnInit {
       }
     );
 
-    // if (this.selectedCategory) {
+    if (!!categoryid) {
       this.homepage.getSubcatListByCatID(categoryid).subscribe(
         res => {
           if (res.status === 'success') {
@@ -155,45 +176,43 @@ export class HeaderCommonComponent implements OnInit {
           console.log(err);
         }
       );
-    // }
+    }
   }
-  routing () {
+  routing() {
     const pattern = /(inbox|newad|activeads|archiveads|sent|profile|view|viewsent)$/;
     return pattern.test(this._location.path());
- }
- checksession() {
-  this.auth.authsession().subscribe(
-    res => {
-      if (res['status'] === 'success') {
-        this.loggedinMenu = true;
-
-      } else {
-        this.loggedinMenu = false;
-    localStorage.removeItem('firstname');
-    localStorage.removeItem('email');
-    localStorage.removeItem('lastname');
-    localStorage.removeItem('isadmin');
-    localStorage.removeItem('id');
-    if (this.routing()) {
-    this.router.navigate(['user/signin']);
   }
+  checksession() {
+    this.auth.authsession().subscribe(
+      res => {
+        if (res['status'] === 'success') {
+          this.loggedinMenu = true;
+        } else {
+          this.loggedinMenu = false;
+          localStorage.removeItem('firstname');
+          localStorage.removeItem('email');
+          localStorage.removeItem('lastname');
+          localStorage.removeItem('isadmin');
+          localStorage.removeItem('id');
+          if (this.routing()) {
+            this.router.navigate(['user/signin']);
+          }
+        }
+      },
+      err => {
+        console.log(err);
       }
-    },
-    err => {
-      console.log(err);
-    }
-);
-
-}
+    );
+  }
   logout() {
     this.auth.dologout().subscribe(
       res => {
         this.loggedinMenu = false;
         localStorage.removeItem('firstname');
-    localStorage.removeItem('email');
-    localStorage.removeItem('lastname');
-    localStorage.removeItem('isadmin');
-    localStorage.removeItem('id');
+        localStorage.removeItem('email');
+        localStorage.removeItem('lastname');
+        localStorage.removeItem('isadmin');
+        localStorage.removeItem('id');
         this.router.navigate(['user/signin']);
       },
       err => {
@@ -207,6 +226,7 @@ export class HeaderCommonComponent implements OnInit {
   }
 
   getSubcatList(catid) {
+    localStorage.setItem('categoryid', catid);
     this.homepage.getSubcatListByCatID(catid).subscribe(
       res => {
         if (res.status === 'success') {
@@ -237,14 +257,22 @@ export class HeaderCommonComponent implements OnInit {
     this.subcategoryerror = false;
     this.regionerror = false;
     if (credentials.category === null) {
-   this.categoryerror = true;
- }
- if (credentials.subcategory === null) {
-   this.subcategoryerror = true;
- }
- if (credentials.region === null) {
-   this.regionerror = true;
- }
-    this.router.navigate(['/search', 'subcategory', credentials.subcategory, 'region', credentials.region ]);
+      this.categoryerror = true;
+    }
+    if (credentials.subcategory === null) {
+      this.subcategoryerror = true;
+    }
+    if (credentials.region === null) {
+      this.regionerror = true;
+    }
+    localStorage.setItem('regionid', credentials.region);
+    localStorage.setItem('subcategoryid', credentials.subcategory);
+    this.router.navigate([
+      '/search',
+      'subcategory',
+      credentials.subcategory,
+      'region',
+      credentials.region
+    ]);
   }
 }

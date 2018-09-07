@@ -50,12 +50,20 @@
 						</a>
 					</div>
 					<div class="info">
+							<a routerLink="product/detail/{{ item.productid._id }}" class="product-name">
+								{{ item.productid.pname }}
+							</a>	
+							<div class="price">
+								<span>${{ item.productid.saleamount }}</span>
+							</div>
+						</div>
+					<!-- <div class="info">
 						<a routerLink="product/detail/{{ item.productid._id }}" class="product-name">
 							<div class="price">
 								<span>${{ item.productid.saleamount }}</span>
 							</div>
 						</a>
-					</div>
+					</div> -->
 					<div class="group-button">
 						<div class="inner">
 							<a routerLink="product/detail/{{ item.productid._id }}" class="add-to-cart">

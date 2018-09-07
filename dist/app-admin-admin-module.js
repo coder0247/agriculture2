@@ -504,7 +504,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var URL = 'http://localhost:3000/api/upload';
+var URL = '/api/upload';
 var CreateSubCategoryComponent = /** @class */ (function () {
     function CreateSubCategoryComponent(admin, route, router, formBuilder) {
         var _this = this;

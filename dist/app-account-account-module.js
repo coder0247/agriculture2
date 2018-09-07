@@ -840,7 +840,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var URL = 'http://localhost:3000/api/upload';
+var URL = '/api/upload';
 var EditadComponent = /** @class */ (function () {
     function EditadComponent(productservice, route, router, homepage) {
         var _this = this;
