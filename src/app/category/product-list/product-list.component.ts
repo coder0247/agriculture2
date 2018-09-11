@@ -93,16 +93,20 @@ export class ProductListComponent implements OnInit {
     this.bsModalRef.content.closeBtnName = 'Close';
   }
   togglegrid() {
-    this.gridstatus = !this.gridstatus;
-    this.liststatus = !this.liststatus;
+    this.gridstatus = true;
+    this.liststatus = false;
     this.togglestatus = false;
   }
   togglelist() {
-    this.gridstatus = !this.gridstatus;
-    this.liststatus = !this.liststatus;
+    this.gridstatus = false;
+    this.liststatus = true;
     this.togglestatus = true;
   }
   setPage(page: number) {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
     // get pager object from service
     this.pager = this.pageservice.getPager(
       this.products.length,

@@ -25,7 +25,7 @@ export class OnsaleComponent implements OnInit {
 		this.product.getBestSellProductList(this.limit).subscribe(res => {
 			if (res['status'] === 'success') {
 				this.best_sell_products = res['data'].bestselllist;
-				console.log("Best sell", this.best_sell_products);
+				// console.log("Best sell", this.best_sell_products);
 			}
 		}, (err) => {
 			console.log(err);

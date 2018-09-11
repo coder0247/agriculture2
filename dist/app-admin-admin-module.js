@@ -532,7 +532,7 @@ var CreateSubCategoryComponent = /** @class */ (function () {
     CreateSubCategoryComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.admin.getActiveCategories().subscribe(function (response) {
-            console.log(response);
+            // console.log(response);
             if (response.status) {
                 _this.categories = response.data.categories;
             }
@@ -870,8 +870,6 @@ var EditSubCategoryComponent = /** @class */ (function () {
     }
     EditSubCategoryComponent.prototype.onSuccessItem = function (item, response, status, headers) {
         this.imagedata = JSON.parse(response); // success server response
-        // console.log('from server', this.imagedata);
-        // this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
     };
     EditSubCategoryComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -887,7 +885,6 @@ var EditSubCategoryComponent = /** @class */ (function () {
         });
         this.route.params.subscribe(function (params) {
             _this.admin.getSubcategoryDetails(params.id).subscribe(function (response) {
-                console.log(response);
                 if (response.status) {
                     _this.subcategory = response.data.subcategory;
                     _this.subcatname = _this.subcategory['subcatname'];
@@ -914,7 +911,6 @@ var EditSubCategoryComponent = /** @class */ (function () {
         this.status = 0;
         this.route.params.subscribe(function (params) {
             _this.admin.getSubcategoryDetails(params.id).subscribe(function (response) {
-                console.log(response);
                 if (response.status) {
                     _this.subcategory = response.data.subcategory;
                     _this.subcatname = _this.subcategory['subcatname'];
@@ -941,7 +937,6 @@ var EditSubCategoryComponent = /** @class */ (function () {
     };
     EditSubCategoryComponent.prototype.updateSubcategoryDetails = function () {
         var _this = this;
-        console.log('this.subcategoryForm.valid', this.subcategoryForm.valid);
         if (this.subcategoryForm.valid) {
             this.message = '';
             this.message_type = '';
@@ -951,7 +946,6 @@ var EditSubCategoryComponent = /** @class */ (function () {
                 status: this.subcategoryForm.value.status,
                 defaultimage: !!this.imagedata === false ? this.defaultimage : this.imagedata.data,
             };
-            // console.log('data', data, this.imagedata, !!this.imagedata);
             this.route.params.subscribe(function (params) {
                 // if (typeof this.imagedata !== undefined && this.imagedata) {
                 _this.admin
@@ -1128,12 +1122,10 @@ var HeaderComponent = /** @class */ (function () {
         this.routingstate = routingstate;
     }
     HeaderComponent.prototype.ngOnInit = function () {
-        var _this = this;
         this.router.events
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(function (event) { return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["NavigationEnd"]; }))
             .subscribe(function (_a) {
             var urlAfterRedirects = _a.urlAfterRedirects;
-            console.log('header', _this.routingstate.getPreviousUrl());
         });
         this.checksession();
     };
@@ -1850,7 +1842,7 @@ var Utils = /** @class */ (function () {
     function Utils() {
     }
     Utils.validatefields = function (somefields) {
-        console.log(somefields);
+        // console.log(somefields);
     };
     Utils.validateAllFormFields = function (formGroup) {
         Object.keys(formGroup.controls).forEach(function (field) {

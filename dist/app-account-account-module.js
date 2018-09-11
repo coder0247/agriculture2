@@ -1635,7 +1635,6 @@ var NewadComponent = /** @class */ (function () {
         this.homepage.getRegionList()
             .subscribe(function (res) {
             if (res.status === 'success') {
-                // console.log(res);
                 _this.regions = res.data.regions;
             }
         }, function (err) {
@@ -1654,7 +1653,7 @@ var NewadComponent = /** @class */ (function () {
     };
     NewadComponent.prototype.getSubcatList = function (catid) {
         var _this = this;
-        console.log(catid);
+        // console.log(catid);
         this.homepage.getSubcatListByCatID(catid).subscribe(function (res) {
             if (res.status === 'success') {
                 _this.subCats = res.data.subcategory;

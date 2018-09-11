@@ -75,7 +75,6 @@ ngOnInit () {
   this.homepage.getRegionList()
   .subscribe(res => {
      if (res.status === 'success') {
-      // console.log(res);
        this.regions = res.data.regions;
      }
     }, (err) => {
@@ -94,7 +93,7 @@ ngOnInit () {
 
 }
 getSubcatList(catid) {
-  console.log(catid);
+  // console.log(catid);
   this.homepage.getSubcatListByCatID(catid).subscribe(res => {
     if (res.status === 'success') {
       this.subCats = res.data.subcategory;

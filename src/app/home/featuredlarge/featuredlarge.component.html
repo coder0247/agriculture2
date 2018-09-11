@@ -28,7 +28,7 @@
 				<div class="product-inner">
 					<div class="info">
 						<a routerLink="product/detail/{{ topSellProduct.productid._id }}" class="product-name">
-							{{ topSellProduct.productid.pname }}
+							{{ topSellProduct.productid.pname | titlecase}}
 						</a>
 						<div class="price">
 							<span class="ins">${{ topSellProduct.productid.saleamount }}</span>
@@ -51,7 +51,7 @@
 					</div>
 					<div class="info">
 							<a routerLink="product/detail/{{ item.productid._id }}" class="product-name">
-								{{ item.productid.pname }}
+								{{ item.productid.pname | titlecase}}
 							</a>	
 							<div class="price">
 								<span>${{ item.productid.saleamount }}</span>

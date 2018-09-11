@@ -97,17 +97,16 @@ var HeaderCommonComponent = /** @class */ (function () {
     HeaderCommonComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.checksession();
-        var regionid = localStorage.getItem('regionid') !== null
+        var regionid = localStorage.getItem('regionid') !== 'null'
             ? localStorage.getItem('regionid')
             : '';
-        var subcategoryid = localStorage.getItem('subcategoryid') !== null
+        var subcategoryid = localStorage.getItem('subcategoryid') !== 'null'
             ? localStorage.getItem('subcategoryid')
             : '';
-        var categoryid = localStorage.getItem('categoryid') !== null
+        var categoryid = localStorage.getItem('categoryid') !== 'null'
             ? localStorage.getItem('categoryid')
             : '';
-        if (categoryid !== '') {
-            console.log('categoryid', categoryid);
+        if (categoryid !== '' && subcategoryid !== '' && regionid !== '') {
             this.selecthascontent = true;
             // this.getSubcatList(categoryid);
             this.searchForm = this.fb.group({

@@ -2,7 +2,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 export class Utils {
     public static validatefields(somefields) {
-        console.log(somefields);
+        // console.log(somefields);
     }
 
     public static validateAllFormFields(formGroup: any) {

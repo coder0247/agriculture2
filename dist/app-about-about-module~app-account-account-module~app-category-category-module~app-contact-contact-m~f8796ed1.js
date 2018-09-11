@@ -266,7 +266,7 @@ var AuthService = /** @class */ (function () {
     //     );
     // }
     AuthService.prototype.extractData = function (res) {
-        console.log(res.headers);
+        // console.log(res.headers);
         var body = res;
         return body || {};
     };

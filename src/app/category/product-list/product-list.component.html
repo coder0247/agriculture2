@@ -29,8 +29,8 @@
 								   </ng-select>
 								</div>
 								<div class="control-button">
-									<a href="javascript:void(0)" (click)="togglegrid()" class="grid-button active"><span class="icon"><i class="fa fa-th-large" aria-hidden="true"></i> </span>Grid</a>
-									<a href="javascript:void(0)" (click)="togglelist()" class="list-button"><span class="icon"><i class="fa fa-th-list" aria-hidden="true"></i></span> List</a>
+									<a href="javascript:void(0)" (click)="togglegrid()" [ngClass]="{'grid-button': true, 'active': gridstatus}"><span class="icon"><i class="fa fa-th-large" aria-hidden="true"></i> </span>Grid</a>
+									<a href="javascript:void(0)" (click)="togglelist()" [ngClass]="{'list-button': true, 'active': liststatus}"><span class="icon"><i class="fa fa-th-list" aria-hidden="true"></i></span> List</a>
 								</div>
 							</div>
 						</div>
@@ -99,7 +99,7 @@
 										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
 											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.totalPages)">Last</a>
 										</li>
-								</ul>
+								</ul> 
 							</div>
 						<span  *ngIf="pagedItems?.length" class="note">Showing {{pager.startIndex + 1}}-{{pager.endIndex + 1}}  of {{pager.totalItems}} result</span>
 				</div>

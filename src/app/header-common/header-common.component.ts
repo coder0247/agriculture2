@@ -88,20 +88,20 @@ export class HeaderCommonComponent implements OnInit {
   ngOnInit() {
     this.checksession();
     const regionid =
-      localStorage.getItem('regionid') !== null
+      localStorage.getItem('regionid') !== 'null'
         ? localStorage.getItem('regionid')
         : '';
     const subcategoryid =
-      localStorage.getItem('subcategoryid') !== null
+      localStorage.getItem('subcategoryid') !== 'null'
         ? localStorage.getItem('subcategoryid')
         : '';
     const categoryid =
-      localStorage.getItem('categoryid') !== null
+      localStorage.getItem('categoryid') !== 'null'
         ? localStorage.getItem('categoryid')
         : '';
-
-    if (categoryid !== '') {
-      console.log('categoryid', categoryid);
+  
+    if (categoryid !== '' && subcategoryid !== '' && regionid !== '') {
+      
       this.selecthascontent = true;
       // this.getSubcatList(categoryid);
       this.searchForm = this.fb.group({

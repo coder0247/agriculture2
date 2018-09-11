@@ -1047,7 +1047,7 @@ var ImagePreview = /** @class */ (function () {
         this.renderer = renderer;
     }
     ImagePreview.prototype.ngOnChanges = function (changes) {
-        console.log('from directive', this.image);
+        // console.log('from directive', this.image);
         var reader = new FileReader();
         var el = this.el;
         reader.onloadend = function (e) {

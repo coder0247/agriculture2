@@ -24,7 +24,7 @@
             </div> -->
 					</div>
 					<div class="details-info col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<a href="javascript:void(0)" class="product-name">{{singleproduct.pname}}</a>
+						<a href="javascript:void(0)" class="product-name">{{singleproduct.pname | titlecase}}</a>
 						<!-- <div class="rating">
               <ul class="list-star">
                 <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
@@ -403,8 +403,8 @@
 									</ul>
 									<span class="count">5 Review(s)</span>
 								</div> -->
-								<a routerLink="product/detail/{{ item.productid._id }}" class="product-name">
-									{{ item.productid.pname }}
+								<a href="javascript:void(0)" (click)="showproductdetails(item.productid._id)"  class="product-name">
+									{{ item.productid.pname | titlecase}}
 								</a>
 								<div class="price">
 									<span class="ins">${{ item.productid.saleamount }}</span>

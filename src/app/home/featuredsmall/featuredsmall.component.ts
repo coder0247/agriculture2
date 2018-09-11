@@ -78,7 +78,7 @@ mouseleaverowl() {
           for (let item in res['data'].category) {
             this.catelist.push(res['data'].category[item].catname);
           }
-          console.log(this.catelist);
+          // console.log(this.catelist);
         } else {
         }
       },
@@ -90,7 +90,7 @@ mouseleaverowl() {
       res => {
         if (res['status'] === 'success') {
           this.allproducts = res['data'].featured;
-          console.log(this.allproducts);
+          // console.log(this.allproducts);
           // tslint:disable-next-line
           for (let item in this.allproducts) {
             if (this.allproducts[item].categoryid.catname === 'Crops') {

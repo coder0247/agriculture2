@@ -50,8 +50,6 @@ export class EditSubCategoryComponent implements OnInit {
   }
   onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
     this.imagedata = JSON.parse(response); // success server response
-    // console.log('from server', this.imagedata);
-    // this.tempimagename = 'assets/images/products/' + this.imagedata.data.filename;
   }
 
   ngOnInit() {
@@ -71,7 +69,6 @@ export class EditSubCategoryComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.admin.getSubcategoryDetails(params.id).subscribe(
         response => {
-          console.log(response);
           if (response.status) {
             this.subcategory = response.data.subcategory;
             this.subcatname = this.subcategory['subcatname'];
@@ -99,7 +96,6 @@ export class EditSubCategoryComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.admin.getSubcategoryDetails(params.id).subscribe(
         response => {
-          console.log(response);
           if (response.status) {
             this.subcategory = response.data.subcategory;
             this.subcatname = this.subcategory['subcatname'];
@@ -127,7 +123,6 @@ export class EditSubCategoryComponent implements OnInit {
     this.hasAnotherDropZoneOver = e;
   }
   updateSubcategoryDetails() {
-    console.log('this.subcategoryForm.valid', this.subcategoryForm.valid);
     if (this.subcategoryForm.valid) {
       this.message = '';
       this.message_type = '';
@@ -137,7 +132,6 @@ export class EditSubCategoryComponent implements OnInit {
         status: this.subcategoryForm.value.status,
         defaultimage: !!this.imagedata === false ? this.defaultimage : this.imagedata.data,
       };
-      // console.log('data', data, this.imagedata, !!this.imagedata);
       this.route.params.subscribe(params => {
         // if (typeof this.imagedata !== undefined && this.imagedata) {
         this.admin

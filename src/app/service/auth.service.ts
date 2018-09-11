@@ -99,7 +99,7 @@ export class AuthService {
   //     );
   // }
   private extractData(res: Response) {
-    console.log(res.headers);
+    // console.log(res.headers);
     const body = res;
     return body || { };
   }

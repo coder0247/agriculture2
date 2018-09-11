@@ -9,7 +9,7 @@ export class ImagePreview {
     constructor(private el: ElementRef, private renderer: Renderer) { }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log('from directive', this.image);
+        // console.log('from directive', this.image);
         let reader = new FileReader();
         let el = this.el;
 

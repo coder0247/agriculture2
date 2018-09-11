@@ -10,7 +10,7 @@
 				</div>
 				<div class="info">
 					<a routerLink="product/detail/{{ product._id }}" class="product-name">
-						{{ product.pname }}
+						{{ product.pname | titlecase}}
 					</a>
 					<div class="price">
 						<span>${{ product.saleamount }}</span>

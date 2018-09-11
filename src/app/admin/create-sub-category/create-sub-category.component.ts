@@ -43,7 +43,7 @@ export class CreateSubCategoryComponent implements OnInit {
 	  }
 	ngOnInit() {
 		this.admin.getActiveCategories().subscribe(response => {
-			console.log(response);
+			// console.log(response);
 			if (response.status) {
 				this.categories = response.data.categories;
 			} else {
