@@ -8,6 +8,7 @@ import { MsgService } from '../../service/msg.service';
 })
 export class SentComponent implements OnInit {
   sentmsg: Array<any> = [];
+  loadingmsg = false;
   constructor(private route: ActivatedRoute, private router: Router, private msg: MsgService) { }
 
   ngOnInit() {
@@ -15,12 +16,15 @@ export class SentComponent implements OnInit {
     // if (typeof userid === undefined) {
     //   this.router.navigate(['user/signin']);
     // }
+    this.loadingmsg = true;
     this.msg.getSentMsg(userid)
       .subscribe(res => {
         if (res['status'] === 'success') {
           this.sentmsg = res.data.sentmsg;
+          this.loadingmsg = false;
         }
       }, (err) => {
+        this.loadingmsg = false;
         console.log(err);
       });
 

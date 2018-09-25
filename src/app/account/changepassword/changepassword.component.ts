@@ -56,10 +56,6 @@ export class ChangepasswordComponent implements OnInit {
           this.showloading = false;
           this.success = true;
           this.error = false;
-          // setTimeout(() => {
-          //   this.router.navigate(['user/sigin']);
-          // }, 2000);
-          // this.passwordresetForm.reset();
         } else {
           this.showloading = false;
           this.usermsg = res.data;

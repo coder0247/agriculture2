@@ -17,7 +17,7 @@ export class ActiveadsComponent implements OnInit {
   notfound = false;
   pager: any = {};
   pageSize = 9;
-  pagedItems: any[];
+  pagedItems: any[]; 
   constructor( private product: ProductService,
                private route: ActivatedRoute, private router: Router,
                private modalService: BsModalService,
@@ -76,16 +76,9 @@ export class ActiveadsComponent implements OnInit {
     .subscribe(res => {
         if (res['status'] === 'success') {
          this.showloading = false;
-        //  this.notfound = false;
         this.activeads();
-        //  this.products = res.data.product;
        } else {
-        // this.router.navigate(['/cropnotfound']);
-        // if (this.products) {
-        //   this.products.length = 0;
-        // }
         this.showloading = false;
-        // this.notfound = true;
        }
       }, (err) => {
         console.log(err);

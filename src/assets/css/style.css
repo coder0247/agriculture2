@@ -7834,3 +7834,8 @@ AUTO CLEAR
 .togglelist .add-to-cart {
   width: auto !important;
 }
+
+/* cropper classes override */
+img.source-image {
+  min-height: 420px;
+}

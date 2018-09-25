@@ -10,6 +10,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { EditSubCategoryComponent } from './edit-sub-category/edit-sub-category.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { LoginComponent } from './login/login.component';
+import { CroperpopupComponent } from './croperpopup/croperpopup.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,10 @@ const routes: Routes = [
         component: UserListComponent
       },
       {
+        path: 'croperpopup',
+        component: CroperpopupComponent
+      },
+      {
         path: 'product/list',
         component: ProductListComponent
       }
@@ -62,6 +67,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+exports: [RouterModule]
 })
 export class AdminRoutingModule {}

@@ -7,11 +7,12 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 export class QuickviewComponent implements OnInit {
   closeBtnName: string;
-  modaldata: any[] = [];
+  modaldata: any;
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit() {
     // this.list.push('PROFIT!!!');
   }
-
+  showproductdetails() {
+  }
 }

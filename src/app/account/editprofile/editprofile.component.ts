@@ -35,7 +35,7 @@ export class EditprofileComponent implements OnInit {
       console.log(err);
     });
     this.createForm();
-    
+
     this.authservice.getUserDetails(userid)
     .subscribe(res => {
       if (res.status === 'success') {
@@ -63,7 +63,6 @@ export class EditprofileComponent implements OnInit {
       phoneno: new FormControl('', Validators.required),
       region: new FormControl('Loading...', Validators.required),
     });
-   
   }
 
   public editprofile() {

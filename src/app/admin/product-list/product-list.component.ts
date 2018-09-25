@@ -72,8 +72,8 @@ export class ProductListComponent implements OnInit {
     if (this.productSearchForm.dirty && this.productSearchForm.valid) {
       this.productFormSubmitted = true;
       this.productLoaded = false;
-      let category_id = this.productSearchForm.controls.catid.value;
-      let subcategory_id = this.productSearchForm.controls.subcatid.value;
+      const category_id = this.productSearchForm.controls.catid.value;
+      const subcategory_id = this.productSearchForm.controls.subcatid.value;
       this.admin
         .getProductListByCategorySubcategory(category_id, subcategory_id)
         .subscribe(
@@ -95,7 +95,7 @@ export class ProductListComponent implements OnInit {
   }
 
   makeProductFeatured(product) {
-    var product_id = product._id;
+    const product_id = product._id;
     this.message = '';
     this.message_type = '';
 
@@ -121,7 +121,7 @@ export class ProductListComponent implements OnInit {
   }
 
   makeProductUnfeatured(product) {
-    var product_id = product._id;
+    const product_id = product._id;
     this.message = '';
     this.message_type = '';
 

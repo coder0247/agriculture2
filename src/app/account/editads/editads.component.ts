@@ -60,13 +60,13 @@ export class EditadsComponent implements OnInit {
       );
     }, 500);
     // get current page of items
-   
   }
   confirmdelete(productid, productindex) {
     this.catsubcat.splice(productindex, 1);
     this.product.deleteProduct(productid)
     .subscribe(res => {
         if (res['status'] === 'success') {
+          this.pagedItems.splice(productindex, 1);
        } else {
 
        }
@@ -118,27 +118,9 @@ export class EditadsComponent implements OnInit {
                 this.catsubcat.push(catsubcat);
               }
             }
-
-            // let catsubcat = {
-            //   productid: item.productid,
-            //   regionid: item.regionid,
-            //   category: item.subcatid.catid.catname,
-            //   subcategory: item.subcatid.subcatname,
-            //   pimage: productinfo.pimage,
-            //   pname: productinfo.pname,
-            //   amtunit: productinfo.amtunit,
-            //   unitprice: productinfo.unitprice,
-            //   saleamount: productinfo.saleamount,
-            //   category_id: item.subcatid.catid._id,
-            //   subcatid: item.subcatid._id,
-            //   created_at: productinfo.created_at
-            // };
-            // this.catsubcat.push(catsubcat);
           }
           this.setPage(1);
-          // console.log(this.catsubcat);
         } else {
-          // this.router.navigate(['/cropnotfound']);
           if (this.products) {
             this.products.length = 0;
           }
@@ -164,16 +146,9 @@ export class EditadsComponent implements OnInit {
       res => {
         if (res['status'] === 'success') {
           this.showloading = false;
-          //  this.notfound = false;
           this.activeads();
-          //  this.products = res.data.product;
         } else {
-          // this.router.navigate(['/cropnotfound']);
-          // if (this.products) {
-          //   this.products.length = 0;
-          // }
           this.showloading = false;
-          // this.notfound = true;
         }
       },
       err => {

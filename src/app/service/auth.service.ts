@@ -22,7 +22,6 @@ export class AuthService {
       );
   }
   getUserDetails(userid): Observable<any> {
-    // console.log('service userid', userid);
     return this.http.get(apiUrl + 'user/details/' + userid, httpOptions)
       .pipe(
         map(this.extractData),

@@ -131,14 +131,11 @@ export class ProductListComponent implements OnInit {
       this.showloading = true;
       this.products = '';
       this.filtersubcat.length = 0;
-      // console.log('init', this.filtersubcat);
       if (!!this.pagedItems && !!this.pagedItems.length) {
         this.pagedItems.length = 0;
       }
-      this.product.getProductListByCat(params['catid']).subscribe(
+      this.product.getProductListByCat(params['catid']).subscribe( 
         res => {
-          // console.log(res);
-
           if (res['status'] === 'success') {
             this.showloading = false;
             this.notfound = false;
@@ -155,17 +152,11 @@ export class ProductListComponent implements OnInit {
               // names must be equal
               return 0;
             });
-            // const newsortedProducts =  _.sortBy(this.products, [function(o) { return o.pname; }]);
-            // console.log('newsortedProducts', newsortedProducts);
-            // this.products = newsortedProducts[0];
             this.setPage(1);
             this.sidecorps = res.subcat.subcat;
             this.catname = res.cat.cat.catname;
           } else {
-            // console.log('notfond ................', res);
-            // this.router.navigate(['/cropnotfound']);
             if (!!res.pagenotfound) {
-              // console.log('notfond ................');
               this.router.navigate(['/notfound']);
             }
             if (!!this.pagedItems && !!this.pagedItems.length) {
@@ -187,7 +178,6 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['product/detail/' + itemid]);
   }
   getproductbysubcat(subcatid) {
- 
     let searchstart = false;
     this.products = '';
     if (subcatid.target.checked) {
@@ -203,12 +193,10 @@ export class ProductListComponent implements OnInit {
       this.filtersubcat.splice(index, 1);
       searchstart = true;
     }
-   console.log('searchstart' , searchstart, 'this.filtersubcat', this.filtersubcat.length, this.filterchange);
     if (searchstart && this.filtersubcat.length > 0) {
 
       this.showloading = true;
       this.blockui = true;
-      // console.log('params[id]', params['id']);
       const subcatlist = {
         subcatlist: this.filtersubcat
       };
@@ -223,9 +211,7 @@ export class ProductListComponent implements OnInit {
             for (let item of data) {
               subCategoryItem.push(item.productid);
             }
-            // this.products = subCategoryItem;
             if (typeof this.filterchange !== 'undefined') {
-              // console.log('subCategoryItem1', subCategoryItem);
               this.products = subCategoryItem;
               this.setProductSortOrder(this.filterchange);
             } else {
@@ -242,7 +228,6 @@ export class ProductListComponent implements OnInit {
                 return 0;
               });
               this.products = subCategoryItem;
-              console.log('subCategoryItem', subCategoryItem);
               this.setPage(1);
             }
           } else {
@@ -267,9 +252,6 @@ export class ProductListComponent implements OnInit {
     this.setProductSortOrder(this.filterchange);
   }
   setProductSortOrder(ordertype) {
-
-    // _.orderBy(users, ['user', 'age'], ['asc', 'desc']);
-    // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
     let productCollection;
     switch (ordertype) {
       case '1':

@@ -95,7 +95,9 @@ mouseleaverowl() {
           for (let item in this.allproducts) {
             if (this.allproducts[item].categoryid.catname === 'Crops') {
               for (let prod in this.allproducts[item].productid) {
-                this.crops.push(this.allproducts[item].productid[prod]);
+                if (prod) {
+                  this.crops.push(this.allproducts[item].productid[prod]);
+                }
               }
             }
             if (
@@ -103,19 +105,25 @@ mouseleaverowl() {
               'Agricultural Services'
             ) {
               for (let prod in this.allproducts[item].productid) {
-                this.agricultural_services.push(
-                  this.allproducts[item].productid[prod]
-                );
+                if (prod) {
+                  this.agricultural_services.push(
+                    this.allproducts[item].productid[prod]
+                  );
+                }
               }
             }
             if (this.allproducts[item].categoryid.catname === 'Agro Jobs') {
               for (let prod in this.allproducts[item].productid) {
-                this.agro_jobs.push(this.allproducts[item].productid[prod]);
+                if (prod) {
+                  this.agro_jobs.push(this.allproducts[item].productid[prod]);
+                }
               }
             }
             if (this.allproducts[item].categoryid.catname === 'Farm Lands') {
               for (let prod in this.allproducts[item].productid) {
-                this.farm_lands.push(this.allproducts[item].productid[prod]);
+                if (prod) {
+                  this.farm_lands.push(this.allproducts[item].productid[prod]);
+                }
               }
             }
             if (
@@ -123,7 +131,9 @@ mouseleaverowl() {
               'Fertilizers/Chemicals'
             ) {
               for (let prod in this.allproducts[item].productid) {
-                this.fertilizers.push(this.allproducts[item].productid[prod]);
+                if (prod) {
+                  this.fertilizers.push(this.allproducts[item].productid[prod]);
+                }
               }
             }
             if (
@@ -131,23 +141,28 @@ mouseleaverowl() {
               'Machinery & Equiqment'
             ) {
               for (let prod in this.allproducts[item].productid) {
-                this.machinery.push(this.allproducts[item].productid[prod]);
+                if (prod) {
+                  this.machinery.push(this.allproducts[item].productid[prod]);
+                }
               }
             }
             if (this.allproducts[item].categoryid.catname === 'Insurance') {
               for (let prod in this.allproducts[item].productid) {
-                this.insurance.push(this.allproducts[item].productid[prod]);
+                if (prod) {
+                  this.insurance.push(this.allproducts[item].productid[prod]);
+                }
               }
             }
             if (
               this.allproducts[item].categoryid.catname === 'Education/Training'
             ) {
               for (let prod in this.allproducts[item].productid) {
-                this.education.push(this.allproducts[item].productid[prod]);
+                if (prod) {
+                  this.education.push(this.allproducts[item].productid[prod]);
+                }
               }
             }
           }
-         
 
           this.featurelist = [
             {
@@ -183,7 +198,6 @@ mouseleaverowl() {
               productlist: _.chunk(this.education, 2)
             }
           ];
-          // console.log('featured', this.featurelist);
         } else {
         }
       },

@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class QuickviewComponent implements OnInit {
 	closeBtnName: string;
-	modaldata: any[] = [];
+	modaldata: any;
 	constructor(
 		public bsModalRef: BsModalRef,
 		private route: ActivatedRoute,
@@ -17,7 +17,7 @@ export class QuickviewComponent implements OnInit {
 
 	ngOnInit() {
 		// this.list.push('PROFIT!!!');
-
+		console.log('modaldata: any[] = [];', this.modaldata);
 	}
 
 	showproductdetails(itemid) {

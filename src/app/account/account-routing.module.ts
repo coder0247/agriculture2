@@ -14,7 +14,7 @@ import { SentmsgComponent } from './sentmsg/sentmsg.component';
 import { EditadComponent } from './editad/editad.component';
 import { EditadsComponent } from './editads/editads.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
-
+import { CroperpopupComponent } from './croperpopup/croperpopup.component';
 const routes: Routes = [
   {
     path: '',
@@ -61,11 +61,14 @@ const routes: Routes = [
     path: 'changepassword',
     component: ChangepasswordComponent
   },
-  
   {
     path: 'quickview',
     component: QuickviewComponent
-  }, 
+  },
+  {
+    path: 'croperpopup',
+    component: CroperpopupComponent
+  },
   {
     path: 'popup',
     component: PopupComponent

@@ -13,5 +13,7 @@ export class QuickviewComponent implements OnInit {
   ngOnInit() {
     // this.list.push('PROFIT!!!');
   }
+  showproductdetails() {
 
+  }
 }

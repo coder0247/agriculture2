@@ -12,11 +12,11 @@ import { ActiveadsComponent } from './activeads/activeads.component';
 import { ArchiveadsComponent } from './archiveads/archiveads.component';
 import { SentComponent } from './sent/sent.component';
 import { EditprofileComponent } from './editprofile/editprofile.component';
-import { FileSelectDirective } from 'ng2-file-upload';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { ImagePreview } from '../directive/image-preview.directive';
+// import { ImagePreview } from '../directive/image-preview.directive';
 import { QuickviewComponent } from './quickview/quickview.component';
+import { CroperpopupComponent } from './croperpopup/croperpopup.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { ProductService } from '../service/product.service';
 import { ViewmsgComponent } from './viewmsg/viewmsg.component';
@@ -26,6 +26,7 @@ import { EditadsComponent } from './editads/editads.component';
 import { PopupComponent } from './popup/popup.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { PagerService } from './../service/pager.service';
+import { ImageCropperModule } from 'ngx-image-cropper';
 @NgModule({
   imports: [
 CommonModule,
@@ -35,7 +36,8 @@ CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ImageCropperModule
   ],
   declarations: [
                     DashboardComponent,
@@ -46,9 +48,8 @@ CommonModule,
                     ArchiveadsComponent,
                     SentComponent,
                     EditprofileComponent,
-                    FileSelectDirective,
-                    ImagePreview,
                     QuickviewComponent,
+                    CroperpopupComponent,
                     ViewmsgComponent,
                     SentmsgComponent,
                     EditadComponent,

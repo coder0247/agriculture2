@@ -39,24 +39,16 @@ export class ResultComponent implements OnInit {
     this.fetchNewProductList();
 
     this.route.params.subscribe(params => {
-      // console.log('params[id]', params['id']);
-      // // this.router.navigate(['/cropnotfound']);
-      // this.imageurl =  'assets/images/crop/small/' + params['id'] + '.jpeg';
-      // console.log(params); // log the entire params object
-      // console.log(params['id']); // log the value of id
       this.showloading = true;
-      // console.log('search params', params);
       this.product
         .getSearchResult(params['subcatid'], params['regionid'])
         .subscribe(
           res => {
-            console.log('search result response', res);
             if (res['status'] === 'success') {
               this.showloading = false;
               this.noresultfound = false;
               this.products = res['data'].product;
             } else {
-              // this.router.navigate(['/cropnotfound']);
               if (this.products) {
                 this.products.length = 0;
               }

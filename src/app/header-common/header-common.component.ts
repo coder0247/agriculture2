@@ -99,9 +99,8 @@ export class HeaderCommonComponent implements OnInit {
       localStorage.getItem('categoryid') !== 'null'
         ? localStorage.getItem('categoryid')
         : '';
-  
+
     if (categoryid !== '' && subcategoryid !== '' && regionid !== '') {
-      
       this.selecthascontent = true;
       // this.getSubcatList(categoryid);
       this.searchForm = this.fb.group({
@@ -117,26 +116,6 @@ export class HeaderCommonComponent implements OnInit {
         region: []
       });
     }
-    // this.route.params.subscribe(params => {
-    //   this.category = params.catid || null;
-    //   this.crop = params.cropid || null;
-    //   this.region = params.regionid || null;
-
-    //   if (this.category) {
-    //     this.selectedCategory = this.category;
-    //     this.searchForm = this.fb.group({
-    //       category: [this.selectedCategory],
-    //       subcategory: [],
-    //       region: []
-    //     });
-    //   } else {
-    //     this.searchForm = this.fb.group({
-    //       category: [],
-    //       subcategory: [],
-    //       region: []
-    //     });
-    //   }
-    // });
 
     this.homepage.getCatList().subscribe(
       res => {

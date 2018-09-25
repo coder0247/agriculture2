@@ -54,12 +54,10 @@ export class ProductComponent implements OnInit {
       res => {
         this.clientIP = res['ip'];
         this.route.params.subscribe(params => {
-          // console.log('params[id]', params['id']);
           this.product
             .saveProductViewedStatus(params['id'], this.clientIP)
-            .subscribe(
-              res => {
-                console.log(res);
+            .subscribe( res => {
+                // console.log(res);
               },
               err => {
                 console.log(err);

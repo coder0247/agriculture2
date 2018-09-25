@@ -11,7 +11,7 @@ const httpOptions = {
 };
 // const user = JSON.parse(localStorage.getItem('user'));
 // console.log(user.name); + 'token/' + user.token +
-const apiUrl = '/api/'; 
+const apiUrl = '/api/';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,7 @@ export class ProductService {
     );
   }
   getProductListByUser(id: string): Observable<any> {
-    return this.http.get(apiUrl + 'cropbyuser/' + id, httpOptions).pipe(
+    return this.http.get(apiUrl + 'productsbyuser/' + id, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

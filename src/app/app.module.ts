@@ -7,13 +7,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 // import {FooterModule} from './footer/footer.module';
 import { NgSelectModule } from '@ng-select/ng-select';
-
+import { ImagePreview } from './directive/image-preview.directive';
 // bootstrap
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RoutingState } from './service/routingState';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ImagePreview],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -21,7 +21,7 @@ import { RoutingState } from './service/routingState';
     AppRoutingModule,
     FormsModule,
     NgSelectModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   providers: [RoutingState],
   bootstrap: [AppComponent]

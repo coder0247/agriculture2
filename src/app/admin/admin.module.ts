@@ -19,14 +19,19 @@ import { EditSubCategoryComponent } from './edit-sub-category/edit-sub-category.
 import { UserListComponent } from './user-list/user-list.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { RoutingState } from './../service/routingState';
-import { FileSelectDirective } from 'ng2-file-upload';
-import { ImagePreview } from '../directive/image-preview.directive';
+// import { ImagePreview } from '../directive/image-preview.directive';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { ModalModule } from 'ngx-bootstrap';
+import { CroperpopupComponent } from './croperpopup/croperpopup.component';
 @NgModule({
   imports: [
-  CommonModule,
+
+CommonModule,
     AdminRoutingModule,
     FormsModule,
-    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' })
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+    ModalModule.forRoot(),
+    ImageCropperModule
   ],
   declarations: [
     LayoutComponent,
@@ -43,8 +48,7 @@ import { ImagePreview } from '../directive/image-preview.directive';
     EditSubCategoryComponent,
     UserListComponent,
     ProductListComponent,
-    FileSelectDirective,
-    ImagePreview,
+    CroperpopupComponent
   ],
   providers: [AdminService, RoutingState]
 })
