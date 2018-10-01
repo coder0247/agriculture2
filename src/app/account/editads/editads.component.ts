@@ -113,6 +113,9 @@ export class EditadsComponent implements OnInit {
                   saleamount: productinfo.saleamount,
                   category_id: item.subcatid.catid._id,
                   subcatid: item.subcatid._id,
+                  adid: productinfo.adid,
+                  negotiable: productinfo.negotiable,
+                  updated_at: productinfo.updated_at,
                   created_at: productinfo.created_at
                 };
                 this.catsubcat.push(catsubcat);

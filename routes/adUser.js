@@ -6,6 +6,6 @@ app.post('/api/admin/login', adUserController.login);
 app.get('/api/admin/logout', adUserController.logout);
 app.get('/api/adminauth', adUserController.adminAuth);
 app.get('/api/admin/users', adUserController.userList);
-app.get('/api/admin/category/:catid/active-subcategories', mid.adminSessionChecker, adUserController.activeSubCategoriesList);
+app.get('/api/admin/category/:catid/active-subcategories', adUserController.activeSubCategoriesList);
 app.get('/api/admin/category/:catid/subcategory/:subcatid/products', adUserController.getProductListByCategorySubcategory);
 module.exports = app;

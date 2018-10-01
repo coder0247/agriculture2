@@ -39,7 +39,8 @@
 		"rxjs": "^6.0.0",
 		"script-loader": "^0.7.2",
 		"uid-generator": "^1.0.0",
-		"zone.js": "^0.8.26"
+		"zone.js": "^0.8.26",
+		"mongoose-auto-increment-fix": "^5.0.2"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "~0.6.8",

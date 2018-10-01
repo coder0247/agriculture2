@@ -14,3 +14,11 @@ h4.imgloading {
     padding: 5px;
     text-align: center;
 }
+.disclaimer {
+    background-color: #ddd;
+    margin-top:40px;
+}
+.disclaimer span {
+    display: block;
+    font-weight: bold;
+}

@@ -170,12 +170,15 @@ exports.amountUnitList = function (req, res) {
 exports.updateProduct = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
+        console.log(req.body.pricetype === "true"? "negtrue": "negfalse");
         let productupdateinfo = {
             pname : req.body.productname,
             unitprice : req.body.unitprice,
             pimage : req.body.productimage,
             amtunit : req.body.amtunit,
-            saleamount : req.body.saleamount
+            saleamount : req.body.saleamount, 
+            negotiable: req.body.pricetype === "true" ? true: false,
+            updated_at: Date.now()
         }
         let mappingtableupdate = {
             subcatid : req.body.subcat,

@@ -5,6 +5,7 @@ const config = require('../config');
 const MappingTbl = require('../model/mappingtbl');
 const Product = require('../model/product');
 const Featured = require('../model/featured');
+const Subcategory = require('../model/subcategory');
 exports.logout = function (req, res) {
     if (req.session) {
         // delete session object
@@ -92,7 +93,7 @@ exports.userList = function (req, res) {
             if (users.length > 0) {
                 return res.status(200).json({
                     status: true,
-                    message: 'Users fetched successfully',
+                    message: 'Users fetched successfully', 
                     data: { 'users': users },
                 });
             } else {

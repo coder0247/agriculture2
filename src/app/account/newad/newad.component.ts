@@ -273,7 +273,7 @@ getSubcatimages(e) {
         formData.append('filename', selectedFile.file.name);
         formData.append('file', selectedFile.file);
         console.log('selectedFile.file', selectedFile.file);
-        const uploadReq = new HttpRequest('POST', URL, formData, {
+        const uploadReq = new HttpRequest('POST', `/api/upload`, formData, {
           reportProgress: true,
         });
 

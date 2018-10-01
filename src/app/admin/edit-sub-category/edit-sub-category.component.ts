@@ -17,7 +17,7 @@ import { UploadQueue } from '../../entities/uploadqueue';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
-const URL = '/api/upload';
+// const URL = 'http://localhost:3000/api/upload';
 @Component({
   selector: 'app-edit-sub-category',
   templateUrl: './edit-sub-category.component.html',
@@ -293,7 +293,7 @@ export class EditSubCategoryComponent implements OnInit {
         formData.append('filename', selectedFile.file.name);
         formData.append('file', selectedFile.file);
         // console.log('selectedFile.file', selectedFile.file);
-        const uploadReq = new HttpRequest('POST', URL, formData, {
+        const uploadReq = new HttpRequest('POST', `/api/upload`, formData, {
           reportProgress: true,
         });
 

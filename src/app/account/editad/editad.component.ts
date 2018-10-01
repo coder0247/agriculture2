@@ -12,6 +12,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { NgOption } from '@ng-select/ng-select';
 const URL = '/api/upload';
+
 @Component({
   selector: 'app-editad',
   templateUrl: './editad.component.html',
@@ -41,6 +42,8 @@ export class EditadComponent implements OnInit {
   uploadedimages: any;
   productdetails: any;
   updatingstatus = false;
+  pricetypeyes = false;
+  pricetypeno = false;
 constructor( private productservice: ProductService,
               private route: ActivatedRoute,
               private router: Router,
@@ -142,6 +145,13 @@ getSubcatimages(e) {
       saleamount : this.productdetails === null ? '' : this.productdetails.saleamount,
       pname : this.productdetails === null ? '' : this.productdetails.pname,
     };
+    if(this.productdetails.negotiable === true) {
+      this.pricetypeyes = true;
+      this.pricetypeno = false;
+    } else {
+      this.pricetypeyes = false;
+      this.pricetypeno = true;
+    }
     this.newadForm = new FormGroup({
       // tslint:disable-next-line
       category:new FormControl(formprefilled.category_id, Validators.required),
@@ -150,7 +160,8 @@ getSubcatimages(e) {
       unitprice: new FormControl(formprefilled.unitprice, Validators.required),
       region : new FormControl(formprefilled.regionid, Validators.required),
       saleamount: new FormControl(formprefilled.saleamount, Validators.required),
-      productname: new FormControl(formprefilled.pname, Validators.required)
+      productname: new FormControl(formprefilled.pname, Validators.required),
+      pricetype: new FormControl()
         }); // remove updateon to change the event to onchange
         this.getSubcatList(this.productdetails === null ? 111111111111111111111111111 : this.productdetails.category_id);
         this.getRegionList();
@@ -188,8 +199,10 @@ getSubcatimages(e) {
       'unitprice': this.newadForm.value.unitprice,
       'productname': this.newadForm.value.productname,
       'productimage': productimage,
-      'userid' : userid
+      'userid' : userid,
+      'pricetype': this.newadForm.value.pricetype
     };
+    // console.log(this.newadForm.value, productdetails);
    if (this.newadForm.valid) {
     this.uploadsuccess = false;
     this.updatingstatus = true;
@@ -310,7 +323,7 @@ getSubcatimages(e) {
         formData.append('filename', selectedFile.file.name);
         formData.append('file', selectedFile.file);
         // console.log('selectedFile.file', selectedFile.file);
-        const uploadReq = new HttpRequest('POST', URL, formData, {
+        const uploadReq = new HttpRequest('POST', `/api/upload`, formData, {
           reportProgress: true,
         });
         this.uploadinginprogress = true;

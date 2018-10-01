@@ -24,7 +24,9 @@
             </div> -->
 					</div>
 					<div class="details-info col-xs-12 col-sm-12 col-md-6 col-lg-6">
-						<a href="javascript:void(0)" class="product-name">{{singleproduct.pname | titlecase}}</a>
+						<h4><strong>Ad ID:</strong> {{singleproduct.adid}}</h4>
+						<h4><strong>Posted at :</strong> {{singleproduct.updated_at | date:'y-MM-dd'}}</h4>
+						<!-- <a href="javascript:void(0)" class="product-name">{{singleproduct.pname | titlecase}}</a> -->
 						<!-- <div class="rating">
               <ul class="list-star">
                 <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
@@ -36,8 +38,21 @@
               <span class="count">5 Review(s)</span>
             </div> -->
 						<!-- <p class="description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 making it over 2000 years old. Richard McClintock, a Latin at Hampden-Sydney College in Virginia.</p> -->
+						
 						<div class="price">
-							<span>${{singleproduct.saleamount}}</span>
+								<h4><strong>Details</strong></h4>
+							<span>{{singleproduct.pname | titlecase}}</span>
+							
+						</div>
+						<div class="price"  style="margin-top: 10px;">
+							
+								<span>Price: ${{singleproduct.saleamount}}</span>
+				
+						</div>
+						<div class="price" style="margin-top: 10px;">
+							
+							<span  *ngIf="!singleproduct.negotiable">Price negotiable : No</span>
+							<span  *ngIf="singleproduct.negotiable">Price negotiable : Yes</span>
 						</div>
 						<!-- <div class="availability">Availability: <a href="#">in Stock</a></div> -->
 						<div class="group-social">
@@ -126,6 +141,13 @@
 								</div>
 							</div>
 						</div>
+						
+					</div>
+					<div class="col-md-12">
+							<div class="disclaimer">
+									<span>Disclaimer:</span>
+									WE VALUE YOUR SAFETY ABOVE EVERYTHING. NEVER PAY MONEY BEFORE VIEWING A PROPERTY, PLEASE REPORT ANY USER REQUESTING UPFRONT PAYMENT USING THE REPORT ABUSE BUTTON ON THIS PAGE. FOR MORE TOP TIPS ON KEEPING SAFE, SEE OUR SAFETY PAGES.
+							</div>
 					</div>
 				</div>
 				<!-- <div class="kt-tab nav-tab-style2">

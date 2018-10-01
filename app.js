@@ -28,14 +28,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
-// app.use(function (req, res, next) {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
-//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//     res.setHeader('Access-Control-Allow-Credentials', true);
-//     next();
-// });
-// app.use(cors());
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', false);
+    next();
+});
+app.use(cors());
 
 // //connect to MongoDB
 var options = { keepAlive: 300000, connectTimeoutMS: 30000};
@@ -52,9 +52,9 @@ app.use(session({
     })
 }));
 
-app.get(/^(?!\/api).+/, function(req, res) {
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
-  });
+// app.get(/^(?!\/api).+/, function(req, res) {
+//     res.sendFile(path.join(__dirname + '/dist/index.html'));
+//   });
 //frontend
 app.use(headerRoute);
 app.use(footerRoute);
@@ -72,4 +72,4 @@ app.use(uploadImage);
 app.use(adminCategory);
 app.use(adminFeaturedProduct);
 app.use(adminUser);
-app.listen(process.env.PORT || 4001)
+app.listen(3000, () => console.log('server running on port 3000!'))

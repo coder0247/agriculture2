@@ -30,6 +30,7 @@ export class HomeService {
   //     catchError(this.handleError)
   //   );
   // }
+  
   getCatList(): Observable<any> {
     return this.http.get(apiUrl + 'catlist', httpOptions).pipe(
       map(this.extractData),

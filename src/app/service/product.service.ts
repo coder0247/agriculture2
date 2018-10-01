@@ -11,7 +11,7 @@ const httpOptions = {
 };
 // const user = JSON.parse(localStorage.getItem('user'));
 // console.log(user.name); + 'token/' + user.token +
-const apiUrl = '/api/';
+const apiUrl = '/api/'; 
 
 @Injectable({
   providedIn: 'root'
