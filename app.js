@@ -11,7 +11,7 @@ const config = require('./config');
 const headerRoute = require('./routes/header');
 const footerRoute = require('./routes/footer');
 const userRoute = require('./routes/user');
-const homeRoute = require('./routes/home'); 
+const homeRoute = require('./routes/home');
 const accountRoute = require('./routes/account');
 const categoryRoute = require('./routes/category');
 const contactRoute = require('./routes/contact');
@@ -72,4 +72,4 @@ app.use(uploadImage);
 app.use(adminCategory);
 app.use(adminFeaturedProduct);
 app.use(adminUser);
-app.listen(3000, () => console.log('server running on port 3000!'))
+app.listen(process.env.PORT || 4001)
