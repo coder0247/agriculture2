@@ -21,6 +21,13 @@ const uploadImage = require('./routes/upload.js');
 const adminCategory = require('./routes/adCategory');
 const adminFeaturedProduct = require('./routes/adFeaturedProduct.js');
 const adminUser = require('./routes/adUser');
+const reportedAds = require('./routes/adReportedAds');
+const pageEdit = require('./routes/adPageEdit');
+const siteSettings = require('./routes/adSiteSettings');
+const adBestSellerProduct = require('./routes/adBestSellerProduct');
+const adMostViewedProduct = require('./routes/adMostViewedProduct');
+const adNewArrivalsProduct = require('./routes/adNewArrivalsProduct');
+const adOnSaleProduct = require('./routes/adOnSaleProduct');
 const MongoStore = require('connect-mongo')(session);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,16 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, UPDATE, DELETE, PATCH, PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', false);
-    next();
-});
-app.use(cors());
-
-// //connect to MongoDB
+//connect to MongoDB
 var options = { keepAlive: 300000, connectTimeoutMS: 30000};
 mongoose.connect(config.dbUrl, options);
 var db = mongoose.connection;
@@ -52,9 +50,9 @@ app.use(session({
     })
 }));
 
-// app.get(/^(?!\/api).+/, function(req, res) {
-//     res.sendFile(path.join(__dirname + '/dist/index.html'));
-//   });
+app.get(/^(?!\/api).+/, function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
+  });
 //frontend
 app.use(headerRoute);
 app.use(footerRoute);
@@ -72,4 +70,12 @@ app.use(uploadImage);
 app.use(adminCategory);
 app.use(adminFeaturedProduct);
 app.use(adminUser);
+app.use(reportedAds);
+app.use(pageEdit);
+app.use(siteSettings);
+app.use(adBestSellerProduct);
+app.use(adMostViewedProduct);
+app.use(adNewArrivalsProduct);
+app.use(adOnSaleProduct);
+
 app.listen(process.env.PORT || 4001)

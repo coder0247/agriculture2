@@ -4,7 +4,11 @@ import { ProductService } from '../../service/product.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MsgService } from '../../service/msg.service';
 import { UtilsService } from '../../service/utils.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+
 import {transition, animate } from '@angular/animations';
+import { ReportadComponent } from '../reportad/reportad.component';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -14,6 +18,7 @@ export class ProductComponent implements OnInit {
   imageurl: any;
   showloading = false;
   singleproduct: any;
+  productlocation: any;
   sendMsgForm: FormGroup;
   showsellerDetails = false;
   sellerdetails = {
@@ -27,13 +32,14 @@ export class ProductComponent implements OnInit {
   best_sell_products: Array<any> = [];
   limit: any = 6;
   msgerror = false;
-
+  bsModalRef: BsModalRef;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private product: ProductService,
     private utils: UtilsService,
-    private msgservice: MsgService
+    private msgservice: MsgService,
+    private modalService: BsModalService
   ) {}
 
   ngOnInit() {
@@ -107,6 +113,7 @@ export class ProductComponent implements OnInit {
           if (res['status'] === 'success') {
             this.showloading = false;
             this.singleproduct = res['data'].singleproduct[0];
+            this.productlocation = res['data'].location;
             this.sellerdetails.productid = this.singleproduct._id;
           } else {
             // this.router.navigate(['/cropnotfound']);
@@ -177,5 +184,19 @@ export class ProductComponent implements OnInit {
     if (!userid) {
       this.router.navigate(['/user/signin']);
     }
+  }
+  reportAd(adid) {
+    // const image = product.pimage;
+    // const pname = product.pname;
+    // const pprice = product.saleamount;
+
+    const initialState = {
+      modaldata: [adid]
+      // modaldata: { product: product }
+    };
+    this.bsModalRef = this.modalService.show(ReportadComponent, {
+      initialState
+    });
+    this.bsModalRef.content.closeBtnName = 'Close';
   }
 }

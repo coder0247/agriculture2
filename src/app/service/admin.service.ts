@@ -52,9 +52,50 @@ export class AdminService {
       catchError(this.handleError)
     );
   }
+  getPageContent(page): Observable<any> {
+    return this.http.get(apiUrl + 'admin/page/' + page).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+  getSiteSettings(): Observable<any> {
+    return this.http.get(apiUrl + 'admin/sitesettings').pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+  updateSiteSettings(formData): Observable<any> {
+    return this.http
+      .post(apiUrl + 'admin/sitesettings/', formData, httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+  updatePageContent(formData): Observable<any> {
+    return this.http
+      .post(apiUrl + 'admin/page/', formData, httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
 
   getCategoryList(): Observable<any> {
     return this.http.get(apiUrl + 'admin/categories').pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  getReportedAd(reportadid): Observable<any> {
+    return this.http.get(apiUrl + 'admin/reportedad/' + reportadid).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+  getReportedAdList(): Observable<any> {
+    return this.http.get(apiUrl + 'admin/reportedadlist').pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
@@ -170,6 +211,82 @@ export class AdminService {
       );
   }
 
+  getBestSellerByCategorySubcategory(
+    category_id: string,
+    subcategory_id: string
+  ): Observable<any> {
+    return this.http
+      .get(
+        apiUrl +
+          'admin/category/' +
+          category_id +
+          '/subcategory/' +
+          subcategory_id +
+          '/bestsellerproducts',
+        httpOptions
+      )
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+  getMostviewedByCategorySubcategory(
+    category_id: string,
+    subcategory_id: string
+  ): Observable<any> {
+    return this.http
+      .get(
+        apiUrl +
+          'admin/category/' +
+          category_id +
+          '/subcategory/' +
+          subcategory_id +
+          '/mostviewedproducts',
+        httpOptions
+      )
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+  getOnSaleByCategorySubcategory(
+    category_id: string,
+    subcategory_id: string
+  ): Observable<any> {
+    return this.http
+      .get(
+        apiUrl +
+          'admin/category/' +
+          category_id +
+          '/subcategory/' +
+          subcategory_id +
+          '/onsaleproducts',
+        httpOptions
+      )
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+  getNewArrivalsByCategorySubcategory(
+    category_id: string,
+    subcategory_id: string
+  ): Observable<any> {
+    return this.http
+      .get(
+        apiUrl +
+          'admin/category/' +
+          category_id +
+          '/subcategory/' +
+          subcategory_id +
+          '/newarrivalproducts',
+        httpOptions
+      )
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   getProductListByCategorySubcategory(
     category_id: string,
     subcategory_id: string
@@ -232,7 +349,151 @@ export class AdminService {
         catchError(this.handleError)
       );
   }
+/* best seller*/
 
+makeProductBestSeller(
+  product_id: string
+): Observable<any> {
+  return this.http
+    .post(
+      apiUrl +
+        'admin/product/' +
+        product_id +
+        '/bestseller',
+      httpOptions
+    )
+    .pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+}
+
+makeProductNotBestSeller(
+    product_id: string
+): Observable<any> {
+  return this.http
+    .post(
+      apiUrl +
+        'admin/product/' +
+        product_id +
+        '/notbestseller',
+      httpOptions
+    )
+    .pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+}
+/* end best seller*/
+
+/* Most viewed*/
+
+makeProductMostViewed(
+  product_id: string
+): Observable<any> {
+  return this.http
+    .post(
+      apiUrl +
+        'admin/product/' +
+        product_id +
+        '/mostviewed',
+      httpOptions
+    )
+    .pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+}
+
+makeProductNotMostViewed(
+    product_id: string
+): Observable<any> {
+  return this.http
+    .post(
+      apiUrl +
+        'admin/product/' +
+        product_id +
+        '/notmostviewed',
+      httpOptions
+    )
+    .pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+}
+/* end Most viewed*/
+/* On Sale*/
+
+makeProductOnSale(
+  product_id: string
+): Observable<any> {
+  return this.http
+    .post(
+      apiUrl +
+        'admin/product/' +
+        product_id +
+        '/onsale',
+      httpOptions
+    )
+    .pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+}
+
+makeProductNotOnSale(
+    product_id: string
+): Observable<any> {
+  return this.http
+    .post(
+      apiUrl +
+        'admin/product/' +
+        product_id +
+        '/notonsale',
+      httpOptions
+    )
+    .pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+}
+/* end On Sale*/
+/* NewArrival*/
+
+makeProductNewArrival(
+  product_id: string
+): Observable<any> {
+  return this.http
+    .post(
+      apiUrl +
+        'admin/product/' +
+        product_id +
+        '/newarrival',
+      httpOptions
+    )
+    .pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+}
+
+makeProductNotNewArrival(
+    product_id: string
+): Observable<any> {
+  return this.http
+    .post(
+      apiUrl +
+        'admin/product/' +
+        product_id +
+        '/notnewarrival',
+      httpOptions
+    )
+    .pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+}
+/* end NewArrival*/
   getUserList(): Observable<any> {
     return this.http.get(apiUrl + 'admin/users', httpOptions).pipe(
       map(this.extractData),

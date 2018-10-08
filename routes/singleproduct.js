@@ -6,4 +6,7 @@ app.get('/api/search/subcategory/:subCatId/region/:regionId', singleProductContr
 app.get('/api/getsellerinfo/:productid', mid.sessionChecker, singleProductController.getSellerInfo);
 app.get('/api/product/:id', mid.sessionChecker, singleProductController.productDetails);
 app.post('/api/postmsg', singleProductController.postMsg);
+app.get('/api/reasonlist', singleProductController.reportReason);
+app.get('/api/intlcodes',singleProductController.intlcodelist);
+app.post('/api/reportad', singleProductController.reportad);
 module.exports = app;

@@ -7,6 +7,39 @@
 			<span class="current">Detail</span>
 		</div>
 		<div class="row">
+				<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset" *ngIf="!singleproduct">
+						<!-- <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset"> -->
+						<div class="about-product row">
+							<!-- {{singleproduct | json}} -->
+							<div class="details-thumb col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="prodimgbox shine"></div>
+							</div>
+							<div class="details-info col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="price margintop-0">
+									<div class="textline shine"></div>
+								</div>
+			
+										<div class="textline shine"></div>
+					
+										<div class="textline shine"></div>
+					
+								<div class="price">
+										<div class="textline shine"></div>
+								</div>
+								<div class="price" style="margin-top: 10px;">
+										<div class="textline shine"></div>
+								</div>
+								<div class="price" style="margin-top: 10px;">
+					
+										<div class="textline shine"></div>
+										<div class="textline shine"></div>
+								</div>
+								<div class="price">
+										<div class="textline shine"></div>
+								</div>
+							</div>
+						</div>
+					</div>
 			<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset" *ngIf="singleproduct">
 				<div class="about-product row">
 					<!-- {{singleproduct | json}} -->
@@ -24,6 +57,9 @@
             </div> -->
 					</div>
 					<div class="details-info col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<div class="price margintop-0">
+									<span>{{singleproduct.pname | titlecase}}</span>
+								</div>
 						<h4><strong>Ad ID:</strong> {{singleproduct.adid}}</h4>
 						<h4><strong>Posted at :</strong> {{singleproduct.updated_at | date:'y-MM-dd'}}</h4>
 						<!-- <a href="javascript:void(0)" class="product-name">{{singleproduct.pname | titlecase}}</a> -->
@@ -40,20 +76,23 @@
 						<!-- <p class="description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 making it over 2000 years old. Richard McClintock, a Latin at Hampden-Sydney College in Virginia.</p> -->
 						
 						<div class="price">
-								<h4><strong>Details</strong></h4>
-							<span>{{singleproduct.pname | titlecase}}</span>
-							
+								<span>Details</span>
 						</div>
 						<div class="price"  style="margin-top: 10px;">
 							
-								<span>Price: ${{singleproduct.saleamount}}</span>
+								<h4>Price: ${{singleproduct.saleamount}}</h4>
 				
 						</div>
 						<div class="price" style="margin-top: 10px;">
 							
-							<span  *ngIf="!singleproduct.negotiable">Price negotiable : No</span>
-							<span  *ngIf="singleproduct.negotiable">Price negotiable : Yes</span>
+							<h4  *ngIf="!singleproduct.negotiable">Price negotiable : No</h4>
+							<h4  *ngIf="singleproduct.negotiable">Price negotiable : Yes</h4>
 						</div>
+						<div class="price"><span>
+							Location
+						</span>
+						<h4>{{productlocation}}</h4>
+					</div>
 						<!-- <div class="availability">Availability: <a href="#">in Stock</a></div> -->
 						<div class="group-social">
 							<ul class="list-socials">
@@ -143,12 +182,21 @@
 						</div>
 						
 					</div>
-					<div class="col-md-12">
-							<div class="disclaimer">
-									<span>Disclaimer:</span>
-									WE VALUE YOUR SAFETY ABOVE EVERYTHING. NEVER PAY MONEY BEFORE VIEWING A PROPERTY, PLEASE REPORT ANY USER REQUESTING UPFRONT PAYMENT USING THE REPORT ABUSE BUTTON ON THIS PAGE. FOR MORE TOP TIPS ON KEEPING SAFE, SEE OUR SAFETY PAGES.
-							</div>
-					</div>
+					
+				</div>
+				<div class="row">
+						<div class="col-md-12">
+								<div class="disclaimer">
+										<span>Disclaimer:</span>
+										WE VALUE YOUR SAFETY ABOVE EVERYTHING. NEVER PAY MONEY BEFORE VIEWING A PROPERTY, PLEASE REPORT ANY USER REQUESTING UPFRONT PAYMENT USING THE REPORT ABUSE BUTTON ON THIS PAGE. FOR MORE TOP TIPS ON KEEPING SAFE, SEE OUR SAFETY PAGES.
+								</div>
+								<div class="pull-right">
+									<button class="btn btn-danger" (click) ="reportAd(singleproduct.adid)">
+											<i class="fa fa-exclamation-circle" aria-hidden="true"></i>	Report Ad
+									</button>
+									
+								</div>
+						</div>
 				</div>
 				<!-- <div class="kt-tab nav-tab-style2">
 					<ul class="nav list-nav">
@@ -387,6 +435,45 @@
 				</div> -->
 				<div class="widget widget-recent-post">
 					<h5 class="widgettitle">Bestseller</h5>
+					
+					<ul class="list-recent-posts" *ngIf="!best_sell_products.length">
+							<li class="product-item">
+								<div class="thumb">
+									<div class="thumblock shine"></div>
+								</div>
+								<div class="info">
+									<div class="textline shine"></div>
+									<div class="textline shine"></div>
+								</div>
+							</li>
+							<li class="product-item">
+									<div class="thumb">
+										<div class="thumblock shine"></div>
+									</div>
+									<div class="info">
+										<div class="textline shine"></div>
+										<div class="textline shine"></div>
+									</div>
+								</li>
+								<li class="product-item">
+										<div class="thumb">
+											<div class="thumblock shine"></div>
+										</div>
+										<div class="info">
+											<div class="textline shine"></div>
+											<div class="textline shine"></div>
+										</div>
+									</li>
+									<li class="product-item">
+											<div class="thumb">
+												<div class="thumblock shine"></div>
+											</div>
+											<div class="info">
+												<div class="textline shine"></div>
+												<div class="textline shine"></div>
+											</div>
+										</li>
+						</ul>
 					<ul class="list-recent-posts">
 						<li class="product-item" *ngFor="let item of best_sell_products; let i = index;">
 							<div class="thumb">

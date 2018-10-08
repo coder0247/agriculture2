@@ -7,6 +7,9 @@ import { ProductComponent } from './product/product.component';
 import { FooterModule } from '../footer/footer.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderCommonModule } from '../header-common/header-common.module';
+import { ReportadComponent } from './reportad/reportad.component';
+import { ModalModule } from 'ngx-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
 	imports: [
 		CommonModule,
@@ -15,9 +18,12 @@ import { HeaderCommonModule } from '../header-common/header-common.module';
 		HeaderCommonModule,
 		FooterModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		NgSelectModule,
+		ModalModule.forRoot()
+
 	],
-	declarations: [ProductComponent],
+	declarations: [ProductComponent, ReportadComponent],
 	providers: [ProductService],
 })
 export class SingleproductModule { }

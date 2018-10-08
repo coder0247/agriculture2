@@ -5,6 +5,8 @@ import { AboutRoutingModule } from './about-routing.module';
 import { AboutpageComponent } from './aboutpage/aboutpage.component';
 import { FooterModule } from '../footer/footer.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HomeService } from '../service/home.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -14,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		FormsModule,
 		ReactiveFormsModule
   ],
-  declarations: [AboutpageComponent]
+  declarations: [AboutpageComponent],
+  providers: [HomeService],
 })
 export class AboutModule { }

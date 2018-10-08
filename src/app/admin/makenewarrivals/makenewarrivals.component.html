@@ -1,0 +1,70 @@
+<div class="breadcrumbs">
+	<a routerLink="../../product/list">Product</a> >
+	<span class="current"> New Arrivals</span>
+</div>
+
+<app-message *ngIf="message" [message]="message" [type]="message_type"></app-message>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="row">
+		<form [formGroup]="productSearchForm" (submit)="findProducts()" class="form-inline">
+			
+			<div class="col-sm-3">
+				<div class="form-group" [ngClass]="displayFieldCss(productSearchForm, 'catid')">
+					<label for="catid">Category : </label>&nbsp;
+					<select class="form-control" formControlName="catid" id="catid" (change)="loadSubcategoryByCategoryID($event.target.value)">
+						<option value="">-- Select Category --</option>
+						<option *ngFor="let category of categories" value="{{ category._id }}">{{ category.catname }}</option>
+					</select>
+					<span class="help-block" *ngIf="isFieldValid(productSearchForm, 'catid')">Category is required</span>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group" [ngClass]="displayFieldCss(productSearchForm, 'subcatid')">
+					<label for="subcatid">Subcategory : </label>&nbsp;
+					<select class="form-control" formControlName="subcatid" id="subcatid" (change)="currentSubcategory = $event.target.value">
+						<option value="">-- Select Subcategory --</option>
+						<option *ngFor="let subcategory of subcategories" value="{{ subcategory._id }}">{{ subcategory.subcatname }}</option>
+					</select>
+					<span class="help-block" *ngIf="isFieldValid(productSearchForm, 'subcatid')">Subcategory is required</span>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<button type="submit" class="btn btn-success pull-left">Show Product</button>
+			</div>
+		</form>
+	</div>
+	<div class="row product-list">
+		<div class="product-list-heading">
+			<h4>Product List</h4>
+		</div>
+		<div class="products">
+
+			<div *ngIf="!productFormSubmitted; else productElseBlock" class="col-md-6">
+				<div class="alert alert-info fade in alert-dismissible">
+					<strong>Info!</strong> Click on
+					<strong>Show Product</strong> button to see product.
+				</div>
+			</div>
+			<ng-template #productElseBlock>
+				<div *ngIf="!productLoaded; else productElseBlock">
+					<h4>
+						<i class="fa fa-spinner fa-spin fa-lg"></i> Loading products ...
+					</h4>
+				</div>
+				<ng-template #productElseBlock>
+					<div class="col-sm-2" *ngFor="let product of products">
+						<div class="product-details">
+							<img src="{{ product.pimage }}">
+							<h5>{{ product.pname }}</h5>
+							<button class="btn btn-success btn-block" (click)="makeProductNewArrival(product)" *ngIf="!product.is_newarrival; else newarrivalButtonElseBlock">Make New Arrivals</button>
+							<ng-template #newarrivalButtonElseBlock>
+								<button class="btn btn-primary btn-block" (click)="makeProductNotNewArrival(product)">Not New Arrivals</button>
+							</ng-template>
+						</div>
+					</div>
+				</ng-template>
+			</ng-template>
+		</div>
+	</div>
+</div>

@@ -8,4 +8,8 @@ app.get('/api/adminauth', adUserController.adminAuth);
 app.get('/api/admin/users', adUserController.userList);
 app.get('/api/admin/category/:catid/active-subcategories', adUserController.activeSubCategoriesList);
 app.get('/api/admin/category/:catid/subcategory/:subcatid/products', adUserController.getProductListByCategorySubcategory);
+app.get('/api/admin/category/:catid/subcategory/:subcatid/bestsellerproducts', adUserController.getBestSellerByCategorySubcategory);
+app.get('/api/admin/category/:catid/subcategory/:subcatid/newarrivalproducts', adUserController.getNewArrivalByCategorySubcategory);
+app.get('/api/admin/category/:catid/subcategory/:subcatid/onsaleproducts', adUserController.getOnSaleByCategorySubcategory);
+app.get('/api/admin/category/:catid/subcategory/:subcatid/mostviewedproducts', adUserController.getMostViewedByCategorySubcategory);
 module.exports = app;

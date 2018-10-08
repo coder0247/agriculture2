@@ -18,7 +18,26 @@ const apiUrl = '/api/';
 })
 export class ProductService {
   constructor(private http: HttpClient) {}
+  reportad(data): Observable<any> {
+    return this.http.post(apiUrl + 'reportad', data, httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+  reportadreason(): Observable<any> {
+    return this.http.get(apiUrl + 'reasonlist', httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
 
+  intlcodes(): Observable<any> {
+    return this.http.get(apiUrl + 'intlcodes', httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
   getProductList(id: string): Observable<any> {
     return this.http.get(apiUrl + 'crop/' + id, httpOptions).pipe(
       map(this.extractData),

@@ -23,10 +23,23 @@ import { RoutingState } from './../service/routingState';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ModalModule } from 'ngx-bootstrap';
 import { CroperpopupComponent } from './croperpopup/croperpopup.component';
+import { ReportedadsComponent } from './reportedads/reportedads.component';
+import { ReportedadviewComponent } from './reportedadview/reportedadview.component';
+import { TruncatePipe } from '../pipe/truncate.pipe';
+import { AboutComponent } from './about/about.component';
+import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component';
+import { TermsconditionComponent } from './termscondition/termscondition.component';
+import { TermsofuseComponent } from './termsofuse/termsofuse.component';
+import { SitesettingComponent } from './sitesetting/sitesetting.component';
+import { CKEditorModule } from 'ngx-ckeditor';
+import { MakebestsellerComponent } from './makebestseller/makebestseller.component';
+import { MakemostviewedComponent } from './makemostviewed/makemostviewed.component';
+import { MakeonsaleComponent } from './makeonsale/makeonsale.component';
+import { MakenewarrivalsComponent } from './makenewarrivals/makenewarrivals.component';
 @NgModule({
   imports: [
-
-CommonModule,
+    CommonModule,
+    CKEditorModule,
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
@@ -48,7 +61,19 @@ CommonModule,
     EditSubCategoryComponent,
     UserListComponent,
     ProductListComponent,
-    CroperpopupComponent
+    CroperpopupComponent,
+    ReportedadsComponent,
+    ReportedadviewComponent,
+    TruncatePipe,
+    AboutComponent,
+    PrivacypolicyComponent,
+    TermsconditionComponent,
+    TermsofuseComponent,
+    SitesettingComponent,
+    MakebestsellerComponent,
+    MakemostviewedComponent,
+    MakeonsaleComponent,
+    MakenewarrivalsComponent
   ],
   providers: [AdminService, RoutingState]
 })

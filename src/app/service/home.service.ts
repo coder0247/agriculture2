@@ -13,7 +13,7 @@ const httpOptions = {
 const apiUrl = '/api/';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class HomeService {
   constructor(private http: HttpClient) {}
@@ -30,7 +30,12 @@ export class HomeService {
   //     catchError(this.handleError)
   //   );
   // }
-  
+  getPageContent(page) : Observable<any> {
+    return this.http.get(apiUrl + 'page/'+ page).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
   getCatList(): Observable<any> {
     return this.http.get(apiUrl + 'catlist', httpOptions).pipe(
       map(this.extractData),

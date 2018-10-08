@@ -3544,6 +3544,7 @@ body.home5 {
   background-color: #262626;
   clear: both;
   padding-top: 38px;
+  margin-top: 5px;
 }
 .footer.home1 {
   background-color: #f0f2f5;
@@ -6955,6 +6956,9 @@ body .featured ul.nav-tabs li{float:none;}
   .mobile-navigation .icon {
     margin-right: 10px;
   }
+  .about-product {
+    margin: 0 !important;
+  }
 }
 @media (max-width: 479px) {
   .header-mobile .box-minicart .cart-block,
@@ -7115,8 +7119,14 @@ body .featured ul.nav-tabs li{float:none;}
     margin: 0 0 5px;
     float: none;
   }
+  .about-product {
+    margin: 0 !important;
+  }
 }
 @media (max-width: 360px) {
+  .about-product {
+    margin: 0 !important;
+  }
   /*HEADER LAYOUT1*/
   .box-minicart .cart-inner {
     display: none;
@@ -7838,4 +7848,34 @@ AUTO CLEAR
 /* cropper classes override */
 img.source-image {
   min-height: 420px;
+}
+.reasonoption  > .ng-select.ng-select-single .ng-select-container {
+  height: 42px;
+  line-height: 42px;
+  background-color: #ffffff;
+  font-size: 13px;
+  color: #888888;
+  padding: 0 5px;
+  border-radius: 0px;
+  border: solid 1px #e6e6e6;
+  border-right: none;
+}
+
+.reasonoption .ng-select .ng-select-container {
+/* border: 0px !important; */
+background-color: #f8f8f8;
+border: solid 1px #e6e6e6 !important;
+-webkit-box-shadow: none !important;
+-moz-box-shadow: none !important;
+box-shadow: none !important;
+}
+.reasonoption > .ng-select.ng-select-single .ng-select-container {
+  margin-bottom: 25px;
+}
+
+.about-info .info .des, .about-info .info  p {
+  font-size: 14px;
+  color: #666;
+  line-height: 20px;
+  margin: 0 0 20px;
 }

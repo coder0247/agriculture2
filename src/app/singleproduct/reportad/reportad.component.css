@@ -1,0 +1,23 @@
+button.close{
+    cursor: pointer;
+    /* background: 0 0; */
+    border: 0;
+    position: relative;
+    right: -28px;
+    top: -33px;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 100%;
+    text-shadow: none;
+    opacity: 1;
+    outline: none;  
+}
+span.successmsg {
+    padding: 10px;
+    left: 5px;
+    position: relative;
+    display: inline-block;
+}
+input::-webkit-inner-spin-button {
+    display: none !important;
+}
