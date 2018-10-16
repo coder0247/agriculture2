@@ -7879,3 +7879,15 @@ box-shadow: none !important;
   line-height: 20px;
   margin: 0 0 20px;
 }
+.reasonoption .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  left: 5px !important;
+}
+
+.reasonoption .ng-dropdown-panel .scroll-host {
+  min-width: auto !important;
+}
+::-webkit-input-placeholder {
+  -webkit-text-security: none;
+  color: rgb(156, 152, 152);
+  pointer-events: none !important;
+}

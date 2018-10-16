@@ -12,10 +12,12 @@ import { ImagePreview } from './directive/image-preview.directive';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RoutingState } from './service/routingState';
 
+
 @NgModule({
   declarations: [AppComponent, ImagePreview],
   imports: [
-    BrowserModule,
+
+  BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,

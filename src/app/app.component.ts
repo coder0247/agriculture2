@@ -4,6 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { RoutingState } from './service/routingState';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,7 +17,8 @@ export class AppComponent implements OnInit {
   password: string;
   modalRef: BsModalRef;
   isCollapsed = true;
-  constructor(private formBuilder: FormBuilder, private modalService: BsModalService, private routingState: RoutingState) {
+
+  constructor( private formBuilder: FormBuilder, private modalService: BsModalService, private routingState: RoutingState) {
     routingState.loadRouting();
   }
   ngOnInit() {

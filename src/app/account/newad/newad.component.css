@@ -114,3 +114,26 @@ ul.actiongroup li {
 h5.note-title.note-bg {
     margin-bottom: 0;
 }
+.tsidebar {
+    float: left;
+}
+.tsidebar .widget {
+
+    display: inline-block;
+}
+.tsidebar .widget> ul {
+padding:0;
+margin:0;
+}
+.tsidebar .widget > ul > li , .tsidebar .widget > ul > li > *{
+    list-style: none;
+    float:left;
+    margin-left: 19px;
+    line-height: 0px;
+}
+.tsidebar .widget > ul > li .label-text {
+    margin-left: 10px; 
+}
+.tsidebar input[type="checkbox"] {
+    display: none;
+}

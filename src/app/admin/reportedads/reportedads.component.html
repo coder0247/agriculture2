@@ -1,56 +1,33 @@
-<!-- <div class="breadcrumbs">
-    <a href="#">Category</a> >
-    <span class="current"> List</span>
-  </div> -->
-  
-  <!-- <app-message *ngIf="message" [message]="message" [type]="message_type"></app-message> -->
-  
-  <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="alert alert-info">
-      <strong>Info!</strong> Click on
-      <a class="btn btn-primary btn-xs">
-        <i class="glyphicon glyphicon-align-justify"></i>
-      </a> icon to see the subcategories of that category
-    </div>
-  </div> -->
-  
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div class="categories-content">
-          <!-- <h4 class="shop-title">Inbox Messages</h4> -->
-          <aside class="lg-side">
-              <div class="inbox-head">
-                  <h3>Reported Ads <span *ngIf="loadingmsg">Loading...</span></h3>
-                  <!-- <form action="#" class="pull-right position">
-                    <div class="input-append">
-                      <input type="text" class="sr-input" placeholder="Search Mail">
-                      <button class="btn sr-btn" type="button"><i class="fa fa-search"></i></button>
-                    </div>
-                  </form> -->
-                </div>
-                <div class="inbox-body">
-              <table class="table table-inbox table-hover">
-                  <thead>
-                    <tr>
-                        <th class="text-left">From</th>
-                        <th class="text-left">Email</th>
-                        <th class="text-left">Reason</th>
-                        <th class="text-left">Message</th>
-                        <th class="text-right">Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <tr  *ngFor="let msg of reportedads">
-                    <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true}" (click)="viewreportmsg(msg._id)">{{msg.fullname}}</td>
-                    <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true}" (click)="viewreportmsg(msg._id)">{{msg.email}}</td>
-                    <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true}" (click)="viewreportmsg(msg._id)">{{msg.reportreason.reason | truncate:[20, '...']}}</td>
-                    <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true}" (click)="viewreportmsg(msg._id)">{{msg.msg | truncate:[20, '...'] }}</td>
-                    <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true, 'text-right': true}" (click)="viewreportmsg(msg._id)">{{msg.created_at | date:'y-MM-dd'}}</td>
-                  </tr>
-                  </tbody>
-                </table>
-                </div>
-            </aside>
-            </div>
-  
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="categories-content">
+    <aside class="lg-side">
+      <div class="inbox-head">
+        <h3>Reported Ads
+          <span *ngIf="loadingmsg">Loading...</span>
+        </h3>
+      </div>
+      <div class="inbox-body">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+          <thead>
+            <tr *ngIf="!loadingmsg">
+              <th class="text-left">From</th>
+              <th class="text-left">Email</th>
+              <th class="text-left">Reason</th>
+              <th class="text-left">Message</th>
+              <th class="text-right">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let msg of reportedads">
+              <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true}" (click)="viewreportmsg(msg._id)">{{msg.fullname}}</td>
+              <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true}" (click)="viewreportmsg(msg._id)">{{msg.email}}</td>
+              <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true}" (click)="viewreportmsg(msg._id)">{{msg.reportreason.reason | truncate:[20, '...']}}</td>
+              <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true}" (click)="viewreportmsg(msg._id)">{{msg.msg | truncate:[20, '...'] }}</td>
+              <td [ngClass]="{'unread': !msg.viewstatus, 'view-message': true, 'text-right': true}" (click)="viewreportmsg(msg._id)">{{msg.created_at | date:'y-MM-dd'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </aside>
   </div>
- 
+</div>

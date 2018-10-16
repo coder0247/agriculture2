@@ -5,7 +5,7 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, tap, map , mergeMap} from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -38,7 +38,12 @@ export class AdminService {
     // return an observable with a user-facing error message
     return throwError('Something bad happened; please try again later.');
   }
-
+  getformfields(subcatid): Observable<any> {
+    return this.http.get(apiUrl + 'getformfields/' + subcatid, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
   login(formData: any): Observable<any> {
     return this.http.post(apiUrl + 'admin/login', formData, httpOptions).pipe(
       map(this.extractData),
@@ -93,6 +98,14 @@ export class AdminService {
       map(this.extractData),
       catchError(this.handleError)
     );
+  }
+  updateReportedAdViewStatus(reportedadid): Observable<any> {
+    return this.http
+      .get(apiUrl + 'admin/reportedadupdatestatus/' + reportedadid)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
   }
   getReportedAdList(): Observable<any> {
     return this.http.get(apiUrl + 'admin/reportedadlist').pipe(
@@ -192,16 +205,51 @@ export class AdminService {
         catchError(this.handleError)
       );
   }
-
-  addSubcategory(formData: any): Observable<any> {
+  updateFormFields(
+    formData: any
+  ): Observable<any> {
     return this.http
-      .post(apiUrl + 'admin/subcategory/', formData, httpOptions)
+      .post(
+        apiUrl + 'admin/updateformfield/',
+        formData,
+        httpOptions
+      )
       .pipe(
         map(this.extractData),
         catchError(this.handleError)
       );
   }
-
+  /*
+  import { mergeMap } from 'rxjs/operators';
+  */
+  // addformfields(formData: any): Observable<any> {
+  //   return this.http
+  //     .post(apiUrl + 'admin/addformfields/', formData, httpOptions)
+  //     .pipe(
+  //       map(this.extractData),
+  //       catchError(this.handleError)
+  //     );
+  // }
+  // addSubcategory(formData: any): Observable<any> {
+  //   return this.http
+  //     .post(apiUrl + 'admin/subcategory/', formData, httpOptions)
+  //     .pipe(
+  //       map(this.extractData),
+  //       catchError(this.handleError)
+  //     );
+  // }
+  addSubcategory(formData: any, formfields: any): Observable<any> {
+    return this.http
+      .post(apiUrl + 'admin/subcategory/', formData, httpOptions)
+      .pipe(
+        mergeMap(subcatid => {
+         formfields.subcatid = subcatid['subcatid'];
+         return this.http.post(apiUrl + 'admin/addformfields/', formfields, httpOptions);
+        }),
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   deleteSubcategory(subcategory_id: string): Observable<any> {
     return this.http
       .delete(apiUrl + 'admin/subcategory/' + subcategory_id, httpOptions)

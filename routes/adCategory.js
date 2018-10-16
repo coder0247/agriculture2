@@ -13,4 +13,6 @@ app.put('/api/admin/category/:catid', adCategoryListController.updateCategoryDet
 app.get('/api/admin/subcategory/:subcatid', adCategoryListController.getSubCategoryDetails);
 app.put('/api/admin/subcategory/:subcatid', adCategoryListController.updateSubCategoryDetails);
 app.post('/api/admin/subcategory', adCategoryListController.addSubCategory);
+app.post('/api/admin/addformfields', adCategoryListController.addFormFields);
+app.post('/api/admin/updateformfield', adCategoryListController.updateFormFields);
 module.exports = app;

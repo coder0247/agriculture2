@@ -1,5 +1,5 @@
 import { ProductService } from '../../service/product.service';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef , Input} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { HomeService } from '../../service/home.service';
@@ -11,6 +11,12 @@ import { UploadQueue } from '../../entities/uploadqueue';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { NgOption } from '@ng-select/ng-select';
+import { FormBase } from '../../form/formbase/form-base';
+import { ControlService } from '../../form/service/control.service';
+import { FormControlService } from './../../service/formcontrols.service';
+import { Dropdown } from './../../form/formcontrol/dropdown';
+import { FvalidationService } from './../../service/fvalidation';
+
 const URL = '/api/upload';
 
 @Component({
@@ -23,7 +29,10 @@ export class NewadComponent implements OnInit {
   subCats: NgOption[];
   amtforsale: NgOption[];
   regions:  NgOption[];
+  @Input() formbaseelements: FormBase<any>[] = [];
   imagedata: any;
+  formElements: Array<any> = [];
+  
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
   showimageerror = false;
@@ -39,12 +48,21 @@ export class NewadComponent implements OnInit {
   defaultimagepath: any;
   uploader: Uploader = new Uploader();
   uploadedimages: any;
+  formselementcat_idx: any;
+  formselementsubcat_idx: any;
+ pricenegradio1: any;
+ pricenegradio2: any;
+ showcatloading = false;
+ showfrmloading = false;
 constructor( private productservice: ProductService,
               private route: ActivatedRoute,
               private router: Router,
               public homepage: HomeService,
               private modalService: BsModalService,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private formcontrolservice: FormControlService,
+              private cs: ControlService,
+              private fvalid: FvalidationService) {
   // this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
  // this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
 }
@@ -58,66 +76,153 @@ showCroperWindow(event) {
   this.bsModalRef.content.closeBtnName = 'Close';
 }
 ngOnInit () {
-
+  this.formbaseelements.push(new Dropdown({
+    key: 'category',
+    label: 'Category',
+    options: []
+  }));
+  this.newadForm = this.cs.toFormGroup( this.formbaseelements);
+  this.formbaseelements.splice(0, 1);
+  delete this.newadForm.controls['category'];
+  delete this.newadForm.value['category'];
   this.homepage.getCatList().subscribe(res => {
     if (res.status === 'success') {
       this.mainCats = res.data.category;
       if (this.mainCats.length > 0) {
         this.selectedCategory = this.mainCats[0]._id;
+        this.formbaseelements = this.formcontrolservice.categoryfield(res.data.category);
+        // console.log(this.formbaseelements);
+       this.newadForm = this.cs.toFormGroup(this.formbaseelements);
+       this.formbaseelements.splice(1, this.formbaseelements.length - 1);
       }
     }
   }, (err) => {
     console.log(err);
   });
-  this.createForm();
+  // this.createForm();
   const userid = localStorage.getItem('id');
-  if (!userid) {
-  this.router.navigate(['user/signin']);
-  }
-  // croplist
-  // this.homepage.getCropList()
-  // .subscribe(res => {
-  //    if (res.status === 'success') {
-  //      this.subcatsnames = res.data.crops;
-  //    }
-  //   }, (err) => {
-  //     console.log(err);
-  //   });
-  // region list
-  this.homepage.getRegionList()
-  .subscribe(res => {
-     if (res.status === 'success') {
-       this.regions = res.data.regions;
-     }
-    }, (err) => {
-      console.log(err);
-    });
-     // amounit list
-  this.homepage.getAmountUnitList()
-  .subscribe(res => {
-     if (res.status === 'success') {
-      // console.log(res);
-       this.amtforsale = res.data.amountunit;
-     }
-    }, (err) => {
-      console.log(err);
-    });
+  if (!userid) { this.router.navigate(['user/signin']); }
 
 }
-getSubcatList(catid) {
-  // console.log(catid);
-  this.homepage.getSubcatListByCatID(catid).subscribe(res => {
+getRegion(isrequired) {
+// region list
+this.homepage.getRegionList()
+.subscribe(res => {
+   if (res.status === 'success') {
+    //  this.regions = res.data.regions;
+     this.formbaseelements.push(this.formcontrolservice.regionfield(res.data.regions, isrequired));
+     console.log('aaaa', this.formbaseelements);
+   }
+  }, (err) => {
+    console.log(err);
+  });
+}
+getAmountList(isrequired) {
+ // amounit list
+ this.homepage.getAmountUnitList()
+ .subscribe(res => {
     if (res.status === 'success') {
-      this.subCats = res.data.subcategory;
+     // console.log(res);
+     this.formbaseelements.push(this.formcontrolservice.amountunitfield(res.data.amountunit, isrequired));
+      // this.amtforsale = res.data.amountunit;
+    }
+   }, (err) => {
+     console.log(err);
+   });
+}
+getProductName(isrequired) {
+  this.formbaseelements.push(this.formcontrolservice.productnamefield(isrequired));
+}
+getSaleAmount(isrequired) {
+  this.formbaseelements.push(this.formcontrolservice.saleamountfield(isrequired));
+}
+getUnitPrice(isrequired) {
+  this.formbaseelements.push(this.formcontrolservice.unitpricefield(isrequired));
+}
+
+priceneg() {
+  let radio = this.formcontrolservice.priceneg();
+
+  let item = this.formbaseelements.push(radio[0]);
+ this.pricenegradio1 = item - 1;
+  let vitem = this.formbaseelements.push(radio[1]);
+  this.pricenegradio2 = vitem - 1;
+  // this.newadForm. = this.cs.toFormGroup(this.radiobutton);
+}
+getSubcatList(catid) {
+  // console.log('catid', catid);
+  this.showcatloading = true;
+  if (this.formbaseelements.length === 2) {
+    this.formbaseelements.splice(1, 1);
+  } else {
+    this.formbaseelements.splice(2, this.formbaseelements.length -1);
+  }
+  // console.log('aaaa', this.formbaseelements);
+  this.homepage.getSubcatListByCatID(catid._id).subscribe(res => {
+    if (res.status === 'success') {
+      // this.formbaseelements[this.formselementsubcat_idx] = res.data.subcategory;
+      this.formbaseelements.push(this.formcontrolservice.subcategoryfield(res.data.subcategory));
+      this.showcatloading = false;
+      // console.log('this.formbaseelements[1]', this.formbaseelements);
+      // this.subCats = res.data.subcategory;
+    } else {
+      this.formbaseelements.splice(2, this.formbaseelements.length);
     }
   }, (err) => {
     console.log(err);
   });
 }
 getSubcatimages(e) {
-  this.productimage = e.defaultimage;
+  // console.log('subcat details', e);
+  this.formbaseelements.splice(2, this.formbaseelements.length - 1);
+  this.pricenegradio1 = null;
+  this.pricenegradio2 = null;
+  this.showfrmloading = true;
+ this.productimage = e.defaultimage;
  this.defaultproductimage = e.defaultimage;
-
+ this.homepage.getformfields(e._id).subscribe(res => {
+  if (res.status === 'success') {
+    // console.log('form data', res.data);
+    // this.subCats = res.data;
+    this.formElements = res.data[0].form;
+    for ( let item in this.formElements) {
+      // console.log('this.formElements[item].fieldname', this.formElements[item].fieldname);
+      // ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable']
+     if (this.formElements[item].fieldname) {
+      switch (this.formElements[item].fieldname) {
+        case 'region':
+        this.getRegion(this.formElements[item].isrequired);
+          break;
+          case 'name':
+          this.getProductName(this.formElements[item].isrequired);
+          break;
+          case 'amountforsale':
+          this.getSaleAmount(this.formElements[item].isrequired);
+          break;
+          case 'amountunit':
+          this.getAmountList(this.formElements[item].isrequired);
+          break;
+          case 'priceperunit':
+          this.getUnitPrice(this.formElements[item].isrequired);
+          break;
+          case 'pricenegotiable':
+          this.priceneg();
+          break;
+        default:
+          break;
+      }
+     }
+    }
+    this.showfrmloading = false;
+    // this.formbaseelements.push(this.formcontrolservice.subcategoryfield(res.data.subcategory));
+    // console.log('formfields', res.data[0].form);
+  } else {
+    this.showfrmloading = false;
+  }
+}, (err) => {
+  
+  console.log(err);
+});
 }
   // public fileOverBase(e: any): void {
   //   this.hasBaseDropZoneOver = e;
@@ -127,19 +232,21 @@ getSubcatimages(e) {
   //   this.hasAnotherDropZoneOver = e;
   // }
   private createForm() {
-    this.newadForm = new FormGroup({
-      // tslint:disable-next-line
-      category:new FormControl('', Validators.required),
-      subcatnames: new FormControl('', Validators.required),
-      amtunit: new FormControl('', Validators.required),
-      unitprice: new FormControl('', Validators.required),
-      region : new FormControl('', Validators.required),
-      saleamount: new FormControl('', Validators.required),
-      productname: new FormControl('', Validators.required)
-        }); // remove updateon to change the event to onchange
+    // this.newadForm = new FormGroup({
+    //   // tslint:disable-next-line
+    //   category:new FormControl('', Validators.required),
+    //   subcatnames: new FormControl('', Validators.required),
+    //   amtunit: new FormControl('', Validators.required),
+    //   unitprice: new FormControl('', Validators.required),
+    //   region : new FormControl('', Validators.required),
+    //   saleamount: new FormControl('', Validators.required),
+    //   productname: new FormControl('', Validators.required)
+    //     }); // remove updateon to change the event to onchange
   }
 
   addnewproduct(templatenewaddposted) {
+    console.log('1111', this.newadForm.value);
+    console.log('2222', this.formElements);
     const userid = localStorage.getItem('id');
     // console.log('this.uploadedimages', this.uploadedimages);
     let productimage;
@@ -149,6 +256,7 @@ getSubcatimages(e) {
       productimage = this.productimage;
     }
     this.forcevalidation = true;
+    this.fvalid.setMessage(this.forcevalidation);
     const newproduct = {
       'subcat': this.newadForm.value.subcatnames,
       'region': this.newadForm.value.region,
@@ -171,6 +279,8 @@ getSubcatimages(e) {
     }, (error) => {
       console.log(error);
     });
+   } else {
+     console.log('form valid', this.newadForm);
    }
   }
     // FILE UPLOAD CODE

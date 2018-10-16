@@ -93,7 +93,7 @@ mouseleaverowl() {
           // console.log(this.allproducts);
           // tslint:disable-next-line
           for (let item in this.allproducts) {
-            if (this.allproducts[item].categoryid.catname === 'Crops') {
+            if (this.allproducts[item].categoryid.catname === 'Crops' && this.allproducts[item].categoryid.status === 1) {
               for (let prod in this.allproducts[item].productid) {
                 if (prod) {
                   this.crops.push(this.allproducts[item].productid[prod]);
@@ -102,7 +102,7 @@ mouseleaverowl() {
             }
             if (
               this.allproducts[item].categoryid.catname ===
-              'Agricultural Services'
+              'Agricultural Services'  && this.allproducts[item].categoryid.status === 1
             ) {
               for (let prod in this.allproducts[item].productid) {
                 if (prod) {
@@ -112,14 +112,14 @@ mouseleaverowl() {
                 }
               }
             }
-            if (this.allproducts[item].categoryid.catname === 'Agro Jobs') {
+            if (this.allproducts[item].categoryid.catname === 'Agro Jobs'  && this.allproducts[item].categoryid.status === 1) {
               for (let prod in this.allproducts[item].productid) {
                 if (prod) {
                   this.agro_jobs.push(this.allproducts[item].productid[prod]);
                 }
               }
             }
-            if (this.allproducts[item].categoryid.catname === 'Farm Lands') {
+            if (this.allproducts[item].categoryid.catname === 'Farm Lands'  && this.allproducts[item].categoryid.status === 1) {
               for (let prod in this.allproducts[item].productid) {
                 if (prod) {
                   this.farm_lands.push(this.allproducts[item].productid[prod]);
@@ -128,7 +128,7 @@ mouseleaverowl() {
             }
             if (
               this.allproducts[item].categoryid.catname ===
-              'Fertilizers/Chemicals'
+              'Fertilizers/Chemicals'  && this.allproducts[item].categoryid.status === 1
             ) {
               for (let prod in this.allproducts[item].productid) {
                 if (prod) {
@@ -138,7 +138,7 @@ mouseleaverowl() {
             }
             if (
               this.allproducts[item].categoryid.catname ===
-              'Machinery & Equiqment'
+              'Machinery & Equiqment'  && this.allproducts[item].categoryid.status === 1
             ) {
               for (let prod in this.allproducts[item].productid) {
                 if (prod) {
@@ -146,7 +146,7 @@ mouseleaverowl() {
                 }
               }
             }
-            if (this.allproducts[item].categoryid.catname === 'Insurance') {
+            if (this.allproducts[item].categoryid.catname === 'Insurance'  && this.allproducts[item].categoryid.status === 1) {
               for (let prod in this.allproducts[item].productid) {
                 if (prod) {
                   this.insurance.push(this.allproducts[item].productid[prod]);
@@ -154,7 +154,7 @@ mouseleaverowl() {
               }
             }
             if (
-              this.allproducts[item].categoryid.catname === 'Education/Training'
+              this.allproducts[item].categoryid.catname === 'Education/Training'  && this.allproducts[item].categoryid.status === 1
             ) {
               for (let prod in this.allproducts[item].productid) {
                 if (prod) {

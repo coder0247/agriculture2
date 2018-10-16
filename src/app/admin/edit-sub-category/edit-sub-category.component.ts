@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -8,15 +8,17 @@ import {
   FormControl
 } from '@angular/forms';
 import { Utils } from '../utils/utils';
-import { CroperpopupComponent } from './../../account/croperpopup/croperpopup.component';
-
+ 
 import * as _ from 'lodash';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Uploader } from '../../entities/uploader';
 import { UploadQueue } from '../../entities/uploadqueue';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-
+import { CroperpopupComponent } from './../croperpopup/croperpopup.component';
+import { FormBase } from '../configformfield/formbase/form-base';
+import { ControlService } from '../configformfield/service/control.service';
+import { AdminConfigControlService } from '../../service/adminconfigcontrol';
 // const URL = 'http://localhost:3000/api/upload';
 @Component({
   selector: 'app-edit-sub-category',
@@ -25,10 +27,13 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 export class EditSubCategoryComponent implements OnInit {
   subcategoryForm: any;
+  newadForm: FormGroup;
+  @Input() formbaseelements: FormBase<any>[] = [];
   categories = [];
   subcategory = [];
   subcatname: any;
   catid: any;
+  subcatid: any;
   status: number;
   message: string;
   message_type: string;
@@ -44,13 +49,31 @@ export class EditSubCategoryComponent implements OnInit {
   tempimagename: any;
   uploader: Uploader = new Uploader();
   uploadedimages: any;
+  
+  fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable'];
+  copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable'];
+  formkey: Array<String> = ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable'];
+  tempformfield: Array<String> = [];
+  checkboxfield = [
+    { key: 'region', checkedstatus: false },
+    { key: 'name', checkedstatus: false },
+    { key: 'amountforsale', checkedstatus: false },
+    { key: 'amountunit', checkedstatus: false },
+    { key: 'priceperunit', checkedstatus: false },
+    { key: 'pricenegotiable', checkedstatus: false },
+  ];
+  checkeditems: Array<String> = [];
+  checked = 'checked';
+  isChecked: boolean;
   constructor(
     private admin: AdminService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private modalService: BsModalService,
-    private http: HttpClient
+    private http: HttpClient,
+    private cs: ControlService,
+    private accs: AdminConfigControlService
   ) {
     this.subcategoryForm = this.formBuilder.group({
       subcatname: ['', Validators.required],
@@ -73,6 +96,7 @@ export class EditSubCategoryComponent implements OnInit {
     this.bsModalRef.content.closeBtnName = 'Close';
   }
   ngOnInit() {
+    this.createForm();
     this.admin.getActiveCategories().subscribe(
       response => {
         if (response.status) {
@@ -93,6 +117,7 @@ export class EditSubCategoryComponent implements OnInit {
             this.subcategory = response.data.subcategory;
             this.subcatname = this.subcategory['subcatname'];
             this.catid = this.subcategory['catid']['_id'];
+            this.subcatid = this.subcategory['_id'];
             this.status = this.subcategory['status'];
             this.defaultimage = this.subcategory['defaultimage'];
           } else {
@@ -106,7 +131,132 @@ export class EditSubCategoryComponent implements OnInit {
           console.log(error);
         }
       );
+      this.admin.getformfields(params.id).subscribe(
+        response => {
+          if (response.status === 'success') {
+            let itemtosplice: Array<any> = [];
+            console.log(response.data[0].form);
+            // let itemtosplice: Array<any> = [];
+            for (let item in response.data[0].form) {
+               if (response.data[0].form[item].fieldname) {
+               // const actualindex = _.findIndex(
+                 // this.formkey, function (o) { console.log('fieldname', o); 
+                 // return o === response.data[0].form[item].fieldname; });
+                 // tslint:disable-next-line:forin
+                 for (let keyindex in this.formkey) {
+                   const actualindex = parseInt(keyindex, 10);
+                   console.log('response.data[0].form[item].fieldname', response.data[0].form[item].fieldname);
+                   if (this.formkey[actualindex] === response.data[0].form[item].fieldname) {
+                      // add prefilled button from database
+                      if (response.data[0].form[item].isrequired === true)  {
+                        // status checked
+                        this.formbaseelements.push(
+                                    this.accs.getEditCheckbox(this.formkey[actualindex],
+                                      this.copyfieldbuttons[actualindex], 'checked'));
+                      } else {
+                        // eempty
+                        this.formbaseelements.push(
+                          this.accs.getEditCheckbox(this.formkey[actualindex], this.copyfieldbuttons[actualindex], ''));
+                      }
+                      this.newadForm = this.cs.toFormGroup(this.formbaseelements);
+                      // console.log('splice index', actualindex);
+                      // this.tempformkey.splice(actualindex, 1);
+                      // this.fieldbuttons.splice(actualindex, 1);
+                      itemtosplice.push(actualindex);
+                      // console.log('this.fieldbuttons', this.fieldbuttons);
+                   }
+                 }
+               }
+            }
+            // console.log('itemtosplice', itemtosplice);
+            // tslint:disable-next-line:forin
+            for ( let sitem in itemtosplice) {
+              // console.log('itemtosplice[sitem]', itemtosplice[sitem]);
+              // console.log(this.fieldbuttons);
+              // this.fieldbuttons[parseInt(itemtosplice[sitem], 10)] = '---';
+              this.tempformfield.push(this.fieldbuttons[itemtosplice[sitem]]);
+              // this.fieldbuttons.splice(itemtosplice[sitem], 1);
+              console.log('itemtosplice[sitem]', itemtosplice[sitem]);
+              
+
+            }
+            // let temparr: Array<any> = [];
+            // for (let item in this.tempformfield) {
+            //   for
+            // }
+            let temparray = _.difference(this.fieldbuttons, this.tempformfield);
+            console.log('this.tempformfield', this.tempformfield);
+            this.fieldbuttons = [];
+            this.fieldbuttons = temparray;
+            // console.log(this.fieldbuttons);
+            // let removeditems = _.remove(this.fieldbuttons, function(n) {
+            //   return n === '---';
+            // });
+            // console.log(this.fieldbuttons);
+            // console.log('sjdkf', itemtosplice);
+       } else {
+        console.log('error', response);
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
     });
+  }
+  createForm() {
+    this.formbaseelements.push(this.accs.getCheckbox(this.formkey[0], this.copyfieldbuttons[0]));
+    this.newadForm = this.cs.toFormGroup(this.formbaseelements);
+    // this.fieldbuttons.splice(0, 1);
+    this.newadForm.controls[this.formbaseelements[0].key].setValue('required', { onlySelf: true });
+    // this is to fix the formgroup null error
+    this.formbaseelements.splice(0, 1);
+    delete this.newadForm.controls['category'];
+    delete this.newadForm.value['category'];
+  }
+  addfield(index, value) {
+    const actualindex = _.findIndex(this.copyfieldbuttons, function (o) { return o === value; });
+    this.formbaseelements.push(this.accs.getCheckbox(this.formkey[actualindex], this.copyfieldbuttons[actualindex]));
+
+    this.newadForm = this.cs.toFormGroup(this.formbaseelements);
+    this.fieldbuttons.splice(index, 1);
+  }
+
+  persistchkstatus(checkstatus) {
+    const afterpatchingstatus = _.forEach(this.formbaseelements, function (value, index) {
+      if (value.key === checkstatus.key) {
+        value.status = checkstatus.checkedstatus ? 'checked' : '';
+        value.value = checkstatus.checkedstatus ? 'required' : '';
+
+      }
+    });
+    this.formbaseelements = [];
+    this.formbaseelements = afterpatchingstatus;
+    const chkboxtoupdate = _.findIndex(this.checkboxfield, function (o) { return o.key === checkstatus.key; });
+    Object.assign(this.checkboxfield[chkboxtoupdate], checkstatus);
+  }
+  trackByFn(index, item) {
+    return item;
+  }
+  removeField(formkeyname) {
+    // reset checkboxfield status
+    const chkboxtoupdate = _.findIndex(this.checkboxfield, function (o) { return o.key === formkeyname.key; });
+    this.checkboxfield[chkboxtoupdate].checkedstatus = false;
+
+    // console.log('this.formbaseelements before remove', this.formbaseelements);
+
+    // remove from form base elements
+    const formBaseElementAfterRemove = _.remove(this.formbaseelements, function(item) {
+      // console.log('item', item.key, 'formkeyname' + formkeyname);
+      return item.key !== formkeyname.key;
+    });
+    this.formbaseelements = [];
+    this.formbaseelements = formBaseElementAfterRemove;
+
+    // add fields back to options
+    this.fieldbuttons.push(formkeyname.label);
+    // console.log('formbaseelements after remove', this.formbaseelements);
+    // reset status
   }
   refreshdata() {
     this.subcategory.length = 0;
@@ -143,6 +293,19 @@ export class EditSubCategoryComponent implements OnInit {
   //   this.hasAnotherDropZoneOver = e;
   // }
   updateSubcategoryDetails() {
+    let selectedFormField: Array<any> = [];
+    selectedFormField = this.formbaseelements.map(item => {
+      const itemrow = { fieldname: '' , isrequired: true};
+      itemrow.fieldname = item.key;
+      itemrow.isrequired = item.status === 'checked' ? true : false;
+      return itemrow;
+    });
+    const newformdata = {
+      subcatid: this.subcatid,
+      formname: 'addnewproduct',
+      form: selectedFormField
+    };
+    // console.log('selectedformfields', selectedFormField );
     if (this.subcategoryForm.valid) {
       this.message = '';
       this.message_type = '';
@@ -152,6 +315,11 @@ export class EditSubCategoryComponent implements OnInit {
         status: this.subcategoryForm.value.status,
         defaultimage: typeof this.uploadedimages !== undefined && this.uploadedimages ? this.uploadedimages : this.defaultimage,
       };
+      this.admin.updateFormFields(newformdata).subscribe(res => {
+      },
+      error => {
+        console.log(error);
+      });
       this.route.params.subscribe(params => {
         // if (typeof this.imagedata !== undefined && this.imagedata) {
         this.admin

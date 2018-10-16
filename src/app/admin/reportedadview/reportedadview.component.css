@@ -1,0 +1,59 @@
+.card {
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+
+.goturlbtn {
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 40px;
+    padding: 0 25px;
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 3px;
+    background-color: #35b035;
+}
+.msgblk {
+    width:100%; 
+    box-shadow:0 0 3px #aaa; 
+    height:auto;
+    color:#666;
+}
+.msghead{
+    width:100%; 
+    padding:10px; 
+    float:left; 
+    background:#1ca8dd; 
+    color:#fff; 
+    font-size:30px;
+}
+
+.detailslbl {
+    font-size:14px;
+    float:left; 
+    width:100%;
+}
+.dateblk {
+    font-size:14px;
+    float:right;  
+    padding:10px; 
+    text-align:right;
+}
+.msgblk  .description {
+    width:100%; padding:0px; float:left;
+}
+
+.msgblk  .description .commentblk{
+    width:100%;float:left;background:#efefef;
+}
+.msgblk  .commentlbl {
+    float:left; text-align:left;padding:10px;width:50%;color:#888;font-weight:600;
+}
+
+.msgblk .msgdetails {
+    width:100%;float:left;
+}
+.msgblk .msgdetails .msgtext {
+    float:left; text-align:left;padding:10px;color:#888;
+}

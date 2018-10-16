@@ -10,20 +10,20 @@ import { HeaderCommonModule } from '../header-common/header-common.module';
 import { ReportadComponent } from './reportad/reportad.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-@NgModule({
-	imports: [
-		CommonModule,
-		SingleproductRoutingModule,
-		// HeadersecondaryModule,
-		HeaderCommonModule,
-		FooterModule,
-		FormsModule,
-		ReactiveFormsModule,
-		NgSelectModule,
-		ModalModule.forRoot()
 
-	],
-	declarations: [ProductComponent, ReportadComponent],
-	providers: [ProductService],
+@NgModule({
+  imports: [
+    CommonModule,
+    SingleproductRoutingModule,
+    // HeadersecondaryModule,
+    HeaderCommonModule,
+    FooterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    ModalModule.forRoot()
+  ],
+  declarations: [ProductComponent, ReportadComponent],
+  providers: [ProductService]
 })
-export class SingleproductModule { }
+export class SingleproductModule {}

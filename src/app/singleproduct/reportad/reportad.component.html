@@ -89,12 +89,13 @@
                   <div class="row">
                       <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 reasonoption">
                           <span class="label-text">Country Code <span>*</span></span>
-                                  <ng-select [searchable]="false"  #countrycodeSelect [items]="countrycode"
+                                  <ng-select [searchable]="true"  #countrycodeSelect [items]="countrycode"
                                   [selectOnTab]="true"
                                   bindLabel="c_text"
                                   bindValue="_id"
                                   placeholder="Select countrycode"
-                                  formControlName="countrycode">
+                                  formControlName="countrycode"
+                                 >
                                 </ng-select>
                                 <div *ngIf="!reportadForm.valid && formsubmitted" class="error-msg">
                                       <div class="text-danger" *ngIf="reportadForm.controls['countrycode'].pristine || reportadForm.controls['countrycode'].errors?.required">Country code is required.</div> 
@@ -103,9 +104,10 @@
                       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                           
                           <span class="label-text">Phone Number <span>*</span></span>
-                          <input type="number"  class="input-info" formControlName="phoneno">
+                          <input type="tel"  class="input-info" formControlName="phoneno" placeholder="123-456-7890">
                           <div *ngIf="reportadForm.invalid && formsubmitted" class="error-msg">
                               <div class="text-danger" *ngIf="!!reportadForm.controls['phoneno'].pristine || !!reportadForm.controls['phoneno'].errors?.required">Phone number is required.</div>
+                              <div class="text-danger" *ngIf="reportadForm.controls['phoneno'].dirty && !!reportadForm.controls['phoneno'].errors?.patternInvalid?.regexp">Phone Number is invalid.(e.g 123-456-7890)</div>
                           </div>
                       </div>
                   </div>

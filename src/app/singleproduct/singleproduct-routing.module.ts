@@ -9,13 +9,13 @@ const routes: Routes = [
     component: ProductComponent
   },
   {
-		path: 'ReportadComponent',
-		component: ReportadComponent
-	}
+    path: 'ReportadComponent',
+    component: ReportadComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SingleproductRoutingModule { }
+export class SingleproductRoutingModule {}

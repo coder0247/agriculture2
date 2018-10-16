@@ -129,3 +129,35 @@ ul.actiongroup li {
 h5.note-title.note-bg {
     margin-bottom: 0;
 }
+
+ul.controlnames li {
+    display: inline-block;
+    background: #35b035;
+    margin: 3px 10px;
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+.dynamicform {
+    border: 1px dashed #ddd;
+}
+.dynamicform h3 {
+    background: #828388;
+}
+.controls {
+    display: inline-block;
+    padding: 1px;
+    /* background: #05ccc1; */
+}
+
+.field {
+    display: inline-block;
+    min-width: 24%;
+    padding: 0 10px;
+}
+.form-row:nth-child(odd) {
+    background-color: #dddddd;
+}
+.form-row:nth-child(even) {
+    background-color: #ffffff;
+}

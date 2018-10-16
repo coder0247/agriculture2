@@ -1,48 +1,22 @@
 <div class="col-xs-12 col-sm-4 col-md-4">
 	<div class="widget widget-recent-post">
-		<h5 class="widgettitle">New arrivals</h5>
+		<h5 class="widgettitle">New Arrivals</h5>
 		<ul class="list-recent-posts">
-			<li class="product-item" *ngFor="let product of new_products">
+			<li class="product-item" *ngFor="let item of new_products; let i = index;">
 				<div class="thumb">
-					<a routerLink="product/detail/{{ product._id }}">
-						<img src="{{ product.pimage }}" alt="">
+					<a routerLink="product/detail/{{ item.productid._id }}">
+						<img src="{{ item.productid.pimage }}" alt="">
 					</a>
 				</div>
 				<div class="info">
-					<a routerLink="product/detail/{{ product._id }}" class="product-name">
-						{{ product.pname | titlecase}}
+					<a routerLink="product/detail/{{ item.productid._id }}" class="product-name">
+						{{ item.productid.pname | titlecase}}
 					</a>
 					<div class="price">
-						<span>${{ product.saleamount }}</span>
+						<span class="ins">${{ item.productid.saleamount }}</span>
 					</div>
 				</div>
 			</li>
-			<!-- <li class="product-item">
-				<div class="thumb">
-					<a href="detail.html">
-						<img src="images/small/2.jpg" alt="">
-					</a>
-				</div>
-				<div class="info">
-					<a href="detail.html" class="product-name">Bravia KLV-32W562D 32 Inch Full HD LED 3D Smart TV</a>
-					<div class="price">
-						<span>$1000</span>
-					</div>
-				</div>
-			</li>
-			<li class="product-item">
-				<div class="thumb">
-					<a href="detail.html">
-						<img src="images/small/4.jpg" alt="">
-					</a>
-				</div>
-				<div class="info">
-					<a href="detail.html" class="product-name"> Bravia KDL 40W600B 40 Inch Full HD LED Television Price in India</a>
-					<div class="price">
-						<span>$850</span>
-					</div>
-				</div>
-			</li> -->
 		</ul>
 	</div>
 </div>

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = require('../config');
 const Category = require('../model/category');
 const Subcategory = require('../model/subcategory');
-
+const Form = require ('../model/form');
 exports.categoryList = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -103,7 +103,7 @@ exports.deleteSubcategory = function(req, res) {
 exports.addCategory = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) { 
         if (err) throw err;
-
+   
         var newCategory = new Category();
         newCategory.catname = req.body.catname;
         newCategory.status = req.body.status;
@@ -249,7 +249,47 @@ exports.updateSubCategoryDetails = function( req, res) {
         });
     });
 };
-    
+exports.addFormFields = function (req, res) {
+    mongoose.connect(config.dbUrl, function( err ){
+        if (err) throw err;
+        // console.log('bodyparameter', req.body);
+        var addnewform =  new Form;
+        addnewform.subcatid = req.body.subcatid;
+        addnewform.formname = req.body.formname;
+        for ( var formfield = 0; formfield < req.body.form.length; formfield++) {
+            addnewform.form.push(req.body.form[formfield]);
+        }
+        addnewform.save(function (err, nnnn) {
+            return res.status(200).json({
+                status: true,
+                message: 'Form added successfully',
+            });
+        });
+    });
+}    
+exports.updateFormFields = function (req, res) {
+    mongoose.connect(config.dbUrl, function( err ){
+        if (err) throw err;
+        // console.log('bodyparameter', req.body);
+        Form.findOneAndDelete({
+            'subcatid': req.body.subcatid
+        }, function (error, featured_subcategory) {
+            var addnewform =  new Form;
+            addnewform.subcatid = req.body.subcatid;
+            addnewform.formname = req.body.formname;
+            for ( var formfield = 0; formfield < req.body.form.length; formfield++) {
+                addnewform.form.push(req.body.form[formfield]);
+            }
+            addnewform.save(function (err, nnnn) {
+                return res.status(200).json({
+                    status: true,
+                    message: 'Update Form successfully',
+                });
+            });
+        });
+       
+    });
+}    
 exports.addSubCategory = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -266,6 +306,7 @@ exports.addSubCategory = function (req, res) {
                     status: true,
                     message: 'Subategory added successfully',
                     data: { 'subcategory': subcategory },
+                    subcatid:  subcategory._id
                 });
             } else {
                 return res.status(200).json({

@@ -8,7 +8,7 @@ const config = require('../config');
 exports.categoryList = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Category.find({}, function (err, category) {
+        Category.find({'status': 1}, function (err, category) {
             if (err) throw err;
             if (category.length > 0) {
                 return res.status(200).json({
@@ -39,7 +39,7 @@ exports.subCategoryList = function (req, res) {
             });
           }
         Subcategory.find({
-            catid: req.params.catid
+            catid: req.params.catid, status: 1
         }, function (err, subcategory) {
             if (err) throw err;
             if (subcategory.length > 0) {

@@ -5,6 +5,7 @@ const Amountunit = require ('../model/amountunit');
 const MostViewed = require ('../model/mostviewed');
 const mongoose = require('mongoose');
 const config = require('../config');
+const Form = require ('../model/form');
 var dashdata = {
     activeadscount: 0,
     archiveadscount: 0,
@@ -352,5 +353,27 @@ exports.addNewProduct = function (req, res) {
 
             }
         });
+    });
+};
+exports.getformfields = function (req, res) {
+
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        Form.find({subcatid: req.params.subcatid}).exec(function (err, formfields) {
+            if (err) throw err;
+            if (formfields.length > 0) {
+                return res.status(200).json({
+                    status: 'success',
+                    data: formfields
+                });
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: 'Fetch Failed',
+
+                })
+            }
+        });
+        
     });
 };

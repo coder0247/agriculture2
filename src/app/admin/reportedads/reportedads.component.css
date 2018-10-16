@@ -371,3 +371,20 @@ ul {
 aside.lg-side {
     margin-top: 10px;
 }
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 8px 10px;
+    cursor: pointer;
+}
+table.dataTable tr.unread td {
+    background: none repeat scroll 0 0 #f7f7f7;
+    font-weight: 600;
+}
+table.dataTable tr td.unread {
+    background: none repeat scroll 0 0 #f7f7f7;
+    font-weight: 600;
+}
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 0.5em;
+    border: 1px solid #ddd;
+}

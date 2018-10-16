@@ -8,7 +8,8 @@ const Pages = require('../model/pages');
 const MBestseller = require('../model/mbestseller');
 const Mmostviewed = require('../model/mmostviewed');
 const Monsale = require('../model/monsale');
-const Mnewarrivals = require('../model/mnewarrivals')
+const Mnewarrivals = require('../model/mnewarrivals');
+
 exports.getPageContent = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -32,6 +33,7 @@ exports.getPageContent = function (req, res) {
 exports.featured = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
+
         Featured.find({}).populate({ path: 'categoryid' }).populate({ path: 'subcatid' }).populate({ path: 'productid' }).exec(function (err, featured) {
             if (err) throw err;
             if (featured.length > 0) {
@@ -229,6 +231,7 @@ exports.newArrivalByLimit = function (req, res) {
         
     });
 };
+
 // exports.newArrivalByLimit = function (req, res) {
 //     var limit = req.params.limit || 7;
 //     limit = parseInt(limit);

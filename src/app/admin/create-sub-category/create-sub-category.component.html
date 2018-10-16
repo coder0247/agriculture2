@@ -14,6 +14,7 @@
 				<span class="help-block" *ngIf="isFieldValid(subcategoryForm, 'subcatname')">Subcategory name is required</span>
 			</div>
 		</div>
+
 		<div class="form-group" [ngClass]="displayFieldCss(subcategoryForm, 'catid')">
 			<label class="control-label col-sm-3" for="catid">Category:</label>
 			<div class="col-sm-9">
@@ -34,6 +35,7 @@
 				<span class="help-block" *ngIf="isFieldValid(subcategoryForm, 'status')">Subcategory status is required</span>
 			</div>
 		</div>
+	
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<!-- <button type="submit" class="btn btn-success" [disabled]="!subcategoryForm.valid">Submit</button> -->
@@ -41,6 +43,27 @@
 			</div>
 		</div>
 	</form>
+	<form  [formGroup]="newadForm">
+			<div class="dynamicform">
+					<h3>Add Form Fields</h3>
+					<div class="controls">
+						<ul class="controlnames">
+							<li *ngFor="let field of fieldbuttons; let i=index" (click)="addfield(i, field)" id="{{i}}">
+									{{field}} <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+							</li>
+						</ul>
+					</div>
+					<div class="formcontent">
+							<div *ngFor="let formbaseelement of formbaseelements; trackBy: trackByFn" class="form-row">
+									
+					<app-formfields (removeformfield)="removeField($event)" (checkboxevent) = "persistchkstatus($event)" [formbase]="formbaseelement" [newadForm]="newadForm"></app-formfields>		
+								
+								</div>
+						
+					</div>
+				</div>
+	</form>
+
 </div>
 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 		<h3>Subcategory Image</h3>

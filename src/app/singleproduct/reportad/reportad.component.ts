@@ -50,7 +50,7 @@ export class ReportadComponent implements OnInit {
        // tslint:disable-next-line
        email: new FormControl('', [Validators.required, patternValidator(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
       fullname: new FormControl('', Validators.required),
-      phoneno: new FormControl('', Validators.required),
+      phoneno: new FormControl('', [Validators.required, patternValidator(/^[0-9]{3}\-[0-9]{3}\-[0-9]{4}$/)]),
       reason: new FormControl('', Validators.required),
       countrycode: new FormControl('', Validators.required),
       msg: new FormControl('', Validators.required),

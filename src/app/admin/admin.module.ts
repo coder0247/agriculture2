@@ -22,7 +22,7 @@ import { RoutingState } from './../service/routingState';
 // import { ImagePreview } from '../directive/image-preview.directive';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ModalModule } from 'ngx-bootstrap';
-import { CroperpopupComponent } from './croperpopup/croperpopup.component';
+
 import { ReportedadsComponent } from './reportedads/reportedads.component';
 import { ReportedadviewComponent } from './reportedadview/reportedadview.component';
 import { TruncatePipe } from '../pipe/truncate.pipe';
@@ -36,15 +36,23 @@ import { MakebestsellerComponent } from './makebestseller/makebestseller.compone
 import { MakemostviewedComponent } from './makemostviewed/makemostviewed.component';
 import { MakeonsaleComponent } from './makeonsale/makeonsale.component';
 import { MakenewarrivalsComponent } from './makenewarrivals/makenewarrivals.component';
+import { DataTablesModule } from 'angular-datatables';
+import { FormfieldsComponent } from './formfields/formfields.component';
+import { AdminConfigControlService } from '../service/adminconfigcontrol';
+
+import { ControlService } from './configformfield/service/control.service';
+import { CroperpopupComponent } from './croperpopup/croperpopup.component';
 @NgModule({
   imports: [
-    CommonModule,
+
+  CommonModule,
     CKEditorModule,
     AdminRoutingModule,
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     ModalModule.forRoot(),
-    ImageCropperModule
+    ImageCropperModule,
+    DataTablesModule
   ],
   declarations: [
     LayoutComponent,
@@ -73,8 +81,9 @@ import { MakenewarrivalsComponent } from './makenewarrivals/makenewarrivals.comp
     MakebestsellerComponent,
     MakemostviewedComponent,
     MakeonsaleComponent,
-    MakenewarrivalsComponent
+    MakenewarrivalsComponent,
+    FormfieldsComponent
   ],
-  providers: [AdminService, RoutingState]
+  providers: [AdminService, RoutingState, AdminConfigControlService, ControlService]
 })
 export class AdminModule {}

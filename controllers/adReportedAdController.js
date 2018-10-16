@@ -16,7 +16,7 @@ exports.reportedAdList = function (req, res) {
             if (reportedadlist.length > 0) {
                 return res.status(200).json({
                     status: 'success',
-                    data: { 'reportedadlist': reportedadlist }
+                    data: reportedadlist
                 });
             } else {
                 return res.status(200).json({
@@ -28,10 +28,10 @@ exports.reportedAdList = function (req, res) {
     });
 }
 exports.reportedAdMsg = function (req, res) {
-    mongoose.connect(config.dbUrl, function (err) {
+    mongoose.connect(config.dbUrl, function (err) { 
         if (err) throw err;
 //        Msgs.find({ 'sellerid': req.body.userid }).sort('-date').populate({ path: 'from', select: 'firstname lastname' }).exec(function (err, inbox) {
-        ReportedAds.find({'_id': req.params.reportadid}).exec(function (err, reportadmsg) {
+        ReportedAds.find({'_id': req.params.reportadid}).populate({ path: 'reportadregion', select: 'c_fullname'}).populate({ path: 'reportreason', select: 'reason'}).exec(function (err, reportadmsg) {
             if (reportadmsg.length > 0) {
                 Product.find({'adid': reportadmsg[0].adid }, function(error, productinfo){
                     if (productinfo.length > 0) {
@@ -57,6 +57,24 @@ exports.reportedAdMsg = function (req, res) {
     });
 }
 
+exports.updateReportAdViewStatus = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) { 
+        if (err) throw err;
+        ReportedAds.findByIdAndUpdate({ _id: req.params.reportadid }, { $set: {viewstatus: true} }, function (error, reportedadview) {
+            if (reportedadview) {
+                return res.status(200).json({
+                    status: 'success',
+                    data: "Status Update"
+                });
+            } else {
+                return res.status(200).json({
+                    status: 'Failed',
+                    message: 'Error Updating Status'
+                })
+            }
+        });
+    });
+}
 // exports.activeSubCategoriesList = function (req, res) {
 //     mongoose.connect(config.dbUrl, function (err) {
 //         if (err) throw err;

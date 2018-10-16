@@ -6,8 +6,8 @@ var connection = mongoose.createConnection(config.dbUrl);
 autoIncrement.initialize(connection);
 // create a schema
 const productSchema = new Schema({
-    pname: { type: String, required: true },
-    adid: { type: Number, required: true, unique: true },
+    pname: { type: String },
+    adid: { type: Number, required: true, unique: false },
     unitprice: { type: String },
     pimage: { type: String },
     amtunit: { type: String },
@@ -20,9 +20,9 @@ const productSchema = new Schema({
 
 const Product = mongoose.model('Products', productSchema);
 productSchema.plugin(autoIncrement.plugin, {
-    model: 'Product',
+    model: Product,
     field: 'adid',
-    startAt: 1111,
+    startAt: 1163,
     incrementBy: 1
 });
 module.exports = Product;

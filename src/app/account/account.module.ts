@@ -1,3 +1,4 @@
+import { AddnewproductfrmComponent } from './addnewproductfrm/addnewproductfrm.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -27,9 +28,13 @@ import { PopupComponent } from './popup/popup.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { PagerService } from './../service/pager.service';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ControlService } from './../form/service/control.service';
+import { FormControlService } from './../service/formcontrols.service';
+import { FvalidationService } from '../service/fvalidation';
+
 @NgModule({
   imports: [
-CommonModule,
+  CommonModule,
     AccountRoutingModule,
     HeaderCommonModule,
     FooterModule,
@@ -55,9 +60,10 @@ CommonModule,
                     EditadComponent,
                     EditadsComponent,
                     PopupComponent,
-                    ChangepasswordComponent
+                    ChangepasswordComponent,
+                    AddnewproductfrmComponent
                   ],
 
-                    providers: [ProductService , PagerService],
+                    providers: [ProductService , PagerService , ControlService, FormControlService, FvalidationService],
 })
 export class AccountModule { }
