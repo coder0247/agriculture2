@@ -23,7 +23,9 @@
                                          </div> -->
                                          <!-- {{formbaseelements | json}} -->
                                          <div class="row">
-                                        
+                                            <div class="col-md-12" *ngIf="!formbaseelements.length">
+                                              Loading...
+                                            </div>
                                             <app-addnewproductfrm [formbase]="formbaseelements[0]" [newadForm]="newadForm" (selectoptcat)="getSubcatList($event)"></app-addnewproductfrm>
                                             <app-addnewproductfrm [formbase]="formbaseelements[1]" [newadForm]="newadForm" (selectoptsubcat)="getSubcatimages($event)"></app-addnewproductfrm>
                                          </div>
@@ -45,10 +47,13 @@
                                                 <div class="row" *ngIf="dynFormitem.key==='productname'">
                                                     <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
                                                 </div>
+                                                <div class="row" *ngIf="dynFormitem.key==='description'">
+                                                  <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                </div>
                                                </div>
                                                <div class="row" *ngIf="formbaseelements[pricenegradio1]">
                                                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
-                                                      <span class="label-text">Price Negotiable</span>
+                                                      <span class="label-text priceneg">Price Negotiable</span>
                                                       <div class="widget widget-categories">
                                                           <ul class="list-categories">
                                                               <li>
@@ -63,7 +68,12 @@
                                                   </div>
                                                </div>
                                               
-                                             
+                                               <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                          
+                                                  <div class="row" *ngIf="dynFormitem.key==='currency'">
+                                                      <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                  </div>
+                                                 </div>
                                               
                                         <div class="row">
                                             <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
@@ -85,7 +95,10 @@
 
                                     </div>
                                     <div class="group-button">
-                                            <button href="#" class="button submit" >Submit</button>
+                                            <button href="#" class="button submit" [disabled]="submitting">
+                                              <span *ngIf="submitting">Please Wait ...</span>
+                                              <span *ngIf="!submitting">submit</span>
+                                            </button>
                                           </div>
 
                                 </form>

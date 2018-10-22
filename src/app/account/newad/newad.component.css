@@ -137,3 +137,6 @@ margin:0;
 .tsidebar input[type="checkbox"] {
     display: none;
 }
+.priceneg {
+    margin-bottom: 18px;
+}

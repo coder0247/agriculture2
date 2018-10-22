@@ -36,7 +36,19 @@
         </div>
       </div>
     </div>
-
+    <div class="col-xs-12 " *ngSwitchCase="'currency'">
+        <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+        <!-- {{formbase | json}} -->
+  
+        <ng-select [searchable]="false" #currencySelect [items]="formbase.options" [selectOnTab]="true" bindLabel="currencyname"
+          bindValue="_id" placeholder="Select currency" [formControlName]="formbase.key"></ng-select>
+        <div *ngIf="formbase.required">
+          <div *ngIf="!isValid && forcevalidation" class="error-msg">
+            <div *ngIf="newadForm.controls['currency'].pristine && newadForm.controls['currency'].errors.required">currency is
+              required.</div>
+          </div>
+        </div>
+      </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngSwitchCase="'productname'">
       <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
       <input type="text" class="input-info" [formControlName]="formbase.key">
@@ -49,7 +61,18 @@
         </div>
       </div>
     </div>
-
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngSwitchCase="'description'">
+      <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+      <textarea   class="input-info input-note" [formControlName]="formbase.key" [rows]="10" [cols]="100"></textarea>
+      <div *ngIf="formbase.required">
+        <div *ngIf="!isValid && forcevalidation" class="error-msg">
+          <div *ngIf="newadForm.controls['description'].pristine && newadForm.controls['description'].errors?.required">Description
+            is required.</div>
+          <div *ngIf="newadForm.controls['description'].dirty && newadForm.controls['description'].errors?.required">Description
+            is required.</div>
+        </div>
+      </div>
+    </div>
     <div *ngSwitchCase="'saleamount'">
       <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
       <input type="number" [min]=1 class="input-info" [formControlName]="formbase.key">

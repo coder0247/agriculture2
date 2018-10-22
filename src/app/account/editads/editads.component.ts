@@ -76,6 +76,7 @@ export class EditadsComponent implements OnInit {
   }
   editproductdetails(productinfo) {
     //  console.log('productid', productid);
+    localStorage.removeItem('productinfo');
     localStorage.setItem('productinfo', JSON.stringify(productinfo));
     this.router.navigate(['user/account/editad']);
   }
@@ -114,6 +115,8 @@ export class EditadsComponent implements OnInit {
                   category_id: item.subcatid.catid._id,
                   subcatid: item.subcatid._id,
                   adid: productinfo.adid,
+                  currency: productinfo.currencytype,
+                  pdesc: productinfo.pdesc,
                   negotiable: productinfo.negotiable,
                   updated_at: productinfo.updated_at,
                   created_at: productinfo.created_at

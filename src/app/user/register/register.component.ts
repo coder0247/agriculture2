@@ -57,6 +57,7 @@ constructor(private authservice: AuthService, private homepage: HomeService) {
           this.showloading = false;
           this.success = true;
           this.error = false;
+          this.formsubmitted = false;
           this.registerForm.reset();
         } else {
           this.showloading = false;

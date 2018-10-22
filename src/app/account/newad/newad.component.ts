@@ -32,7 +32,6 @@ export class NewadComponent implements OnInit {
   @Input() formbaseelements: FormBase<any>[] = [];
   imagedata: any;
   formElements: Array<any> = [];
-  
   public hasBaseDropZoneOver = false;
   public hasAnotherDropZoneOver = false;
   showimageerror = false;
@@ -54,6 +53,7 @@ export class NewadComponent implements OnInit {
  pricenegradio2: any;
  showcatloading = false;
  showfrmloading = false;
+ submitting = false;
 constructor( private productservice: ProductService,
               private route: ActivatedRoute,
               private router: Router,
@@ -139,13 +139,19 @@ getSaleAmount(isrequired) {
 getUnitPrice(isrequired) {
   this.formbaseelements.push(this.formcontrolservice.unitpricefield(isrequired));
 }
+getProductDescription(isrequired) {
+  this.formbaseelements.push(this.formcontrolservice.productdescfield(isrequired));
+}
+getCurrency() {
+  this.formbaseelements.push(this.formcontrolservice.currencyfield());
+}
 
 priceneg() {
-  let radio = this.formcontrolservice.priceneg();
+  const radio = this.formcontrolservice.priceneg();
 
-  let item = this.formbaseelements.push(radio[0]);
+  const item = this.formbaseelements.push(radio[0]);
  this.pricenegradio1 = item - 1;
-  let vitem = this.formbaseelements.push(radio[1]);
+  const vitem = this.formbaseelements.push(radio[1]);
   this.pricenegradio2 = vitem - 1;
   // this.newadForm. = this.cs.toFormGroup(this.radiobutton);
 }
@@ -155,7 +161,7 @@ getSubcatList(catid) {
   if (this.formbaseelements.length === 2) {
     this.formbaseelements.splice(1, 1);
   } else {
-    this.formbaseelements.splice(2, this.formbaseelements.length -1);
+    this.formbaseelements.splice(2, this.formbaseelements.length - 1);
   }
   // console.log('aaaa', this.formbaseelements);
   this.homepage.getSubcatListByCatID(catid._id).subscribe(res => {
@@ -208,6 +214,12 @@ getSubcatimages(e) {
           case 'pricenegotiable':
           this.priceneg();
           break;
+          case 'description':
+          this.getProductDescription(this.formElements[item].isrequired);
+          break;
+          case 'currency':
+          this.getCurrency();
+          break;
         default:
           break;
       }
@@ -220,8 +232,7 @@ getSubcatimages(e) {
     this.showfrmloading = false;
   }
 }, (err) => {
-  
-  console.log(err);
+    console.log(err);
 });
 }
   // public fileOverBase(e: any): void {
@@ -245,8 +256,8 @@ getSubcatimages(e) {
   }
 
   addnewproduct(templatenewaddposted) {
-    console.log('1111', this.newadForm.value);
-    console.log('2222', this.formElements);
+    // console.log('1111', this.newadForm.value);
+    // console.log('2222', this.formElements);
     const userid = localStorage.getItem('id');
     // console.log('this.uploadedimages', this.uploadedimages);
     let productimage;
@@ -264,17 +275,21 @@ getSubcatimages(e) {
       'amtunit': this.newadForm.value.amtunit,
       'unitprice': this.newadForm.value.unitprice,
       'productname': this.newadForm.value.productname,
+      'description': this.newadForm.value.description,
+      'currencytype': this.newadForm.value.currency,
       'productimage': productimage,
       'userid' : userid
     };
    if (this.newadForm.valid) {
+     this.submitting = true;
     this.productservice.addNewProduct(newproduct).subscribe(res => {
       if (res['status'] === 'success') {
         this.showimageerror = false;
         this.showAlert(templatenewaddposted);
         this.uploader.queue.length = 0;
         this.forcevalidation = false;
-        this.newadForm.reset();
+        // this.newadForm.reset();
+        this.submitting = false;
       }
     }, (error) => {
       console.log(error);

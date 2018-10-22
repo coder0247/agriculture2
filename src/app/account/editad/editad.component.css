@@ -118,18 +118,25 @@ h5.note-title.note-bg {
     float: left;
 }
 .tsidebar .widget {
-    
-    margin-bottom: 20px;
+
     display: inline-block;
 }
-.tsidebar .widget > ul > li {
+.tsidebar .widget> ul {
+padding:0;
+margin:0;
+}
+.tsidebar .widget > ul > li , .tsidebar .widget > ul > li > *{
     list-style: none;
-    display: inline;
+    float:left;
     margin-left: 19px;
+    line-height: 0px;
 }
 .tsidebar .widget > ul > li .label-text {
     margin-left: 10px; 
 }
 .tsidebar input[type="checkbox"] {
     display: none;
+}
+.priceneg {
+    margin-bottom: 18px;
 }

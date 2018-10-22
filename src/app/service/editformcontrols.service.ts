@@ -6,7 +6,7 @@ import { Radio } from '../form/formcontrol/radio';
 import { Textareabox } from '../form/formcontrol/textareabox';
 
 @Injectable()
-export class FormControlService {
+export class EditFormControlService {
   // TODO: get from a remote source of category subcategory metadata
   // TODO: make asynchronous
   getTextBox() {}
@@ -55,27 +55,27 @@ export class FormControlService {
         options: []
       }),
       new Dropdown({
-        key: 'amtunit',
+        key: 'amountunit',
         label: 'Amount Unit',
         required: true,
         options: []
       }),
           new Textbox({
-      key: 'productname',
+      key: 'name',
       label: 'Name',
       value: '',
       required: true,
       order: 1
     }),
     new Textbox({
-      key: 'saleamount',
+      key: 'amountforsale',
       label: 'Amount For Sale',
       value: '',
       required: true,
       order: 1
     }),
     new Textbox({
-      key: 'unitprice',
+      key: 'priceperunit',
       label: 'Price Per Unit',
       value: '',
       required: true,
@@ -89,13 +89,13 @@ export class FormControlService {
       order: 1
     }),
     new Radio({
-      key: 'priceneg',
+      key: 'pricenegotiable',
       label: 'Price Negotiable',
       value: 'yes',
       type: 'radio'
     }),
         new Radio({
-          key: 'priceneg',
+          key: 'pricenegotiable',
           label: 'Price Negotiable',
           value: 'no',
           type: 'radio'
@@ -118,7 +118,7 @@ export class FormControlService {
   saleamountfield(isrequired) {
     const adnewformcontrols: FormBase<any> =
     new Textbox({
-      key: 'saleamount',
+      key: 'amountforsale',
       label: 'Amount For Sale',
       value: '',
       required: isrequired,
@@ -130,7 +130,7 @@ export class FormControlService {
   unitpricefield(isrequired) {
     const adnewformcontrols: FormBase<any> =
     new Textbox({
-      key: 'unitprice',
+      key: 'priceperunit',
       label: 'Price Per Unit',
       value: '',
       required: isrequired,
@@ -142,7 +142,7 @@ export class FormControlService {
   productnamefield(isrequired) {
     const adnewformcontrols: FormBase<any> =
     new Textbox({
-      key: 'productname',
+      key: 'name',
       label: 'Name',
       value: '',
       required: isrequired,
@@ -177,7 +177,7 @@ export class FormControlService {
   amountunitfield(amountunitlist, isrequired) {
     const adnewformcontrols: FormBase<any> =
       new Dropdown({
-        key: 'amtunit',
+        key: 'amountunit',
         label: 'Amount Unit',
         required: isrequired,
         options: amountunitlist
@@ -199,13 +199,13 @@ export class FormControlService {
   priceneg() {
     const adnewformcontrols: FormBase<any>[] = [
       new Radio({
-        key: 'priceneg',
+        key: 'pricenegotiable',
         label: 'Price Negotiable',
         value: 'yes',
         type: 'radio'
       }),
       new Radio({
-        key: 'priceneg',
+        key: 'pricenegotiable',
         label: 'Price Negotiable',
         value: 'no',
         type: 'radio'

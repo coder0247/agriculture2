@@ -5,11 +5,11 @@ import { FvalidationService } from './../../service/fvalidation';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-addnewproductfrm',
-  templateUrl: './addnewproductfrm.component.html',
-  styleUrls: ['./addnewproductfrm.component.css']
+  selector: 'app-editproductfrm',
+  templateUrl: './editproductfrm.component.html',
+  styleUrls: ['./editproductfrm.component.css']
 })
-export class AddnewproductfrmComponent  {
+export class EditproductfrmComponent  {
   @Input() formbase: FormBase<any>;
   @Input() newadForm: FormGroup;
   forcevalidation: boolean;

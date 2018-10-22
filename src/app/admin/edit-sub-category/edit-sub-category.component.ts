@@ -8,7 +8,6 @@ import {
   FormControl
 } from '@angular/forms';
 import { Utils } from '../utils/utils';
- 
 import * as _ from 'lodash';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Uploader } from '../../entities/uploader';
@@ -49,10 +48,12 @@ export class EditSubCategoryComponent implements OnInit {
   tempimagename: any;
   uploader: Uploader = new Uploader();
   uploadedimages: any;
-  
-  fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable'];
-  copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable'];
-  formkey: Array<String> = ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable'];
+
+  // tslint:disable-next-line:max-line-length
+  fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description'];
+  // tslint:disable-next-line:max-line-length
+  copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description'];
+  formkey: Array<String> = ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable', 'currency', 'description'];
   tempformfield: Array<String> = [];
   checkboxfield = [
     { key: 'region', checkedstatus: false },
@@ -61,6 +62,8 @@ export class EditSubCategoryComponent implements OnInit {
     { key: 'amountunit', checkedstatus: false },
     { key: 'priceperunit', checkedstatus: false },
     { key: 'pricenegotiable', checkedstatus: false },
+    { key: 'currency', checkedstatus: false },
+    { key: 'description', checkedstatus: false },
   ];
   checkeditems: Array<String> = [];
   checked = 'checked';
@@ -80,12 +83,7 @@ export class EditSubCategoryComponent implements OnInit {
       catid: ['', Validators.required],
       status: ['1', Validators.required]
     });
-
-    // this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
   }
-  // onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
-  //   this.imagedata = JSON.parse(response); // success server response
-  // }
   showCroperWindow(event) {
     const initialState = {
       modaldata: [event]
@@ -139,9 +137,6 @@ export class EditSubCategoryComponent implements OnInit {
             // let itemtosplice: Array<any> = [];
             for (let item in response.data[0].form) {
                if (response.data[0].form[item].fieldname) {
-               // const actualindex = _.findIndex(
-                 // this.formkey, function (o) { console.log('fieldname', o); 
-                 // return o === response.data[0].form[item].fieldname; });
                  // tslint:disable-next-line:forin
                  for (let keyindex in this.formkey) {
                    const actualindex = parseInt(keyindex, 10);
@@ -159,41 +154,21 @@ export class EditSubCategoryComponent implements OnInit {
                           this.accs.getEditCheckbox(this.formkey[actualindex], this.copyfieldbuttons[actualindex], ''));
                       }
                       this.newadForm = this.cs.toFormGroup(this.formbaseelements);
-                      // console.log('splice index', actualindex);
-                      // this.tempformkey.splice(actualindex, 1);
-                      // this.fieldbuttons.splice(actualindex, 1);
                       itemtosplice.push(actualindex);
-                      // console.log('this.fieldbuttons', this.fieldbuttons);
                    }
                  }
                }
             }
-            // console.log('itemtosplice', itemtosplice);
+
             // tslint:disable-next-line:forin
             for ( let sitem in itemtosplice) {
-              // console.log('itemtosplice[sitem]', itemtosplice[sitem]);
-              // console.log(this.fieldbuttons);
-              // this.fieldbuttons[parseInt(itemtosplice[sitem], 10)] = '---';
               this.tempformfield.push(this.fieldbuttons[itemtosplice[sitem]]);
-              // this.fieldbuttons.splice(itemtosplice[sitem], 1);
-              console.log('itemtosplice[sitem]', itemtosplice[sitem]);
-              
-
             }
-            // let temparr: Array<any> = [];
-            // for (let item in this.tempformfield) {
-            //   for
-            // }
+
             let temparray = _.difference(this.fieldbuttons, this.tempformfield);
-            console.log('this.tempformfield', this.tempformfield);
+            // console.log('this.tempformfield', this.tempformfield);
             this.fieldbuttons = [];
             this.fieldbuttons = temparray;
-            // console.log(this.fieldbuttons);
-            // let removeditems = _.remove(this.fieldbuttons, function(n) {
-            //   return n === '---';
-            // });
-            // console.log(this.fieldbuttons);
-            // console.log('sjdkf', itemtosplice);
        } else {
         console.log('error', response);
           }
@@ -285,13 +260,6 @@ export class EditSubCategoryComponent implements OnInit {
       );
     });
   }
-  // public fileOverBase(e: any): void {
-  //   this.hasBaseDropZoneOver = e;
-  // }
-
-  // public fileOverAnother(e: any): void {
-  //   this.hasAnotherDropZoneOver = e;
-  // }
   updateSubcategoryDetails() {
     let selectedFormField: Array<any> = [];
     selectedFormField = this.formbaseelements.map(item => {
@@ -345,9 +313,6 @@ export class EditSubCategoryComponent implements OnInit {
               console.log(error);
             }
           );
-        // } else {
-        // 	this.showimageerror = true;
-        // }
       });
     } else {
       Utils.validateAllFormFields(this.subcategoryForm);
@@ -408,7 +373,6 @@ export class EditSubCategoryComponent implements OnInit {
     if (event.target.files && event.target.files.length > 0) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      // console.log('file details', event.target.files[0]);
       // this.currentfilesize = Math.floor(parseFloat(event.target.files[0].size) / 1024) ;
       if (event.target.files[0].type === 'image/jpeg') {
      if (Math.floor(parseFloat(event.target.files[0].size) / 1024) > 300) {
@@ -420,21 +384,8 @@ export class EditSubCategoryComponent implements OnInit {
         this.bsModalRef.content.onClose.subscribe(result => {
           if (result === true) {
            let blob = this.dataURItoBlob(this.bsModalRef.content.croppedImage);
-
-          //  console.log('ok', this.bsModalRef.content.croppedImage);
-          // const filename =  Date.now() + 'fname.jpg';
-          const filename = event.target.files[0].name;
-          // console.log('_.head(this.uploader.queue.length)', this.uploader.queue.length);
-
-               this.uploader.queue.push(new UploadQueue(new File([blob], filename, {type: 'image/jpeg', lastModified: Date.now()})));
-
-          //  console.log(this.uploader.queue);
-          // if (_.head(this.uploader.queue) !== undefined && this.uploader.queue.length > 6) {
-          //   this.uploader.queue.pop();
-          //   this.showAlert(exceededuploadlimit);
-          //   return;
-          // }
-          //  console.log('Total Count:' + this.uploader.queue.length);
+           const filename = event.target.files[0].name;
+           this.uploader.queue.push(new UploadQueue(new File([blob], filename, {type: 'image/jpeg', lastModified: Date.now()})));
           }
         });
       };
@@ -445,16 +396,12 @@ export class EditSubCategoryComponent implements OnInit {
       this.showAlert(templateproductimg);
       return;
     }
-
     }
-
   }
 
   // upload
   upload(id, ) {
-    if (id === null) {
-      return;
-    }
+      if (id === null) { return; }
       const selectedFile = this.uploader.queue.find(s => s.id === id);
       if (selectedFile) {
         const formData = new FormData();

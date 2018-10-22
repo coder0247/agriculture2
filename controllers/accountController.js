@@ -171,13 +171,15 @@ exports.amountUnitList = function (req, res) {
 exports.updateProduct = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        console.log(req.body.pricetype === "true"? "negtrue": "negfalse");
+        // console.log(req.body.pricetype === "true"? "negtrue": "negfalse");
         let productupdateinfo = {
             pname : req.body.productname,
             unitprice : req.body.unitprice,
             pimage : req.body.productimage,
             amtunit : req.body.amtunit,
             saleamount : req.body.saleamount, 
+            pdesc : req.body.pdesc,
+            currencytype : req.body.currencytype, 
             negotiable: req.body.pricetype === "true" ? true: false,
             updated_at: Date.now()
         }
@@ -320,10 +322,12 @@ exports.addNewProduct = function (req, res) {
         if (err) throw err;
         var newProduct = new Product();
         newProduct.pname = req.body.productname;
+        newProduct.pdesc = req.body.description;
         newProduct.unitprice = req.body.unitprice;
         newProduct.pimage = req.body.productimage;
         newProduct.amtunit = req.body.amtunit;
         newProduct.saleamount = req.body.saleamount;
+        newProduct.currencytype = req.body.currencytype;
         newProduct.status = "1";
         newProduct.save(function (error, product) {
             if (error) {

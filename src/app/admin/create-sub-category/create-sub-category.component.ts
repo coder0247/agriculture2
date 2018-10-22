@@ -55,17 +55,22 @@ export class CreateSubCategoryComponent implements OnInit {
   //   { key: 'amountunit', checkedstatus: false },
   //   { key: 'priceperunit', checkedstatus: false },
   // ];
-  fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable'];
-  copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable'];
-  formkey: Array<String> = ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable'];
-  checkboxfield = [
-    { key: 'region', checkedstatus: false },
-    { key: 'name', checkedstatus: false },
-    { key: 'amountforsale', checkedstatus: false },
-    { key: 'amountunit', checkedstatus: false },
-    { key: 'priceperunit', checkedstatus: false },
-    { key: 'pricenegotiable', checkedstatus: false },
-  ];
+ // tslint:disable-next-line:max-line-length
+ fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description'];
+ // tslint:disable-next-line:max-line-length
+ copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description'];
+ formkey: Array<String> = ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable', 'currency', 'description'];
+ tempformfield: Array<String> = [];
+ checkboxfield = [
+   { key: 'region', checkedstatus: false },
+   { key: 'name', checkedstatus: false },
+   { key: 'amountforsale', checkedstatus: false },
+   { key: 'amountunit', checkedstatus: false },
+   { key: 'priceperunit', checkedstatus: false },
+   { key: 'pricenegotiable', checkedstatus: false },
+   { key: 'currency', checkedstatus: false },
+   { key: 'description', checkedstatus: false },
+ ];
   checkeditems: Array<String> = [];
   checked = 'checked';
   isChecked: boolean;

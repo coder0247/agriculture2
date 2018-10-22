@@ -60,6 +60,7 @@ export class HeaderprimaryComponent implements OnInit {
         subcategory: [subcategoryid],
         region: [regionid]
       });
+      this.searchForm.controls['category'].markAsDirty({ onlySelf: true });
     } else {
       this.selecthascontent = false;
       this.searchForm = fb.group({
@@ -68,6 +69,17 @@ export class HeaderprimaryComponent implements OnInit {
         region: []
       });
     }
+   if ( subcategoryid !== '') {
+    this.searchForm.controls['subcategory'].markAsDirty({ onlySelf: true });
+   }
+   if (regionid !== '') {
+    this.searchForm.controls['region'].markAsDirty({ onlySelf: true });
+   }
+    this.searchForm.patchValue({
+      category: categoryid,
+      subcategory: subcategoryid,
+      region: regionid,
+    });
   }
   mmenutoggleClass() {
   // console.log('menu click', this.mmenu.nativeElement.classList);
@@ -171,6 +183,7 @@ export class HeaderprimaryComponent implements OnInit {
       res => {
         if (res.status === 'success') {
           this.subCats = res.data.subcategory;
+
         }
       },
       err => {
@@ -181,22 +194,33 @@ export class HeaderprimaryComponent implements OnInit {
 
   submitForm() {
     const credentials = this.searchForm.value;
+    console.log('credentials', credentials);
     // tslint:disable-next-line:max-line-length
     this.categoryerror = false;
     this.subcategoryerror = false;
     this.regionerror = false;
-    if (credentials.category === null) {
+    if (credentials.category === '') {
    this.categoryerror = true;
  }
- if (credentials.subcategory === null) {
+ if (credentials.subcategory === '') {
    this.subcategoryerror = true;
  }
- if (credentials.region === null) {
+ if (credentials.region === '') {
    this.regionerror = true;
  }
+ console.log('re ressor', this.regionerror);
  localStorage.setItem('regionid', credentials.region);
  localStorage.setItem('subcategoryid', credentials.subcategory);
-    this.router.navigate(['/search', 'subcategory', credentials.subcategory, 'region', credentials.region ]);
+ if (!!this.categoryerror && !!this.subcategoryerror && !!this.regionerror ) {
+  this.router.navigate([
+    '/search',
+    'subcategory',
+    credentials.subcategory,
+    'region',
+    credentials.region
+  ]);
+}
+    // this.router.navigate(['/search', 'subcategory', credentials.subcategory, 'region', credentials.region ]);
 
   }
 }

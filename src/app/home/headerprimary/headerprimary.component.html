@@ -188,6 +188,7 @@
 												 placeholder="Select category" formControlName="category" (change)="getSubcatList($event._id)"
 												 >
 												</ng-select>
+												
 											</div>
 											<div class="form-group col-md-3 cropoption subcategory-list">
 												<ng-select [searchable]="false" #cropsSelect [items]="subCats" [selectOnTab]="true" bindLabel="subcatname" bindValue="_id"

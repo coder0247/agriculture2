@@ -3992,6 +3992,7 @@ body.home5 {
   line-height: 20px;
   margin: 0 0 30px;
 }
+
 .top-control {
   background-color: #eee;
   padding: 10px 20px;
@@ -4306,6 +4307,13 @@ body.home5 {
   padding-bottom: 35px;
   border-bottom: solid 1px #e6e6e6;
 }
+.details-info div.description {
+  font-size: 14px;
+  color: #000000;
+  padding-bottom: 10px;
+  border-bottom: 0px;
+}
+
 .details-info .price {
   font-size: 18px;
   font-weight: 600;
@@ -7524,7 +7532,7 @@ AUTO CLEAR
 .ng-select.ng-dirty .ng-placeholder {
   display: none;
 }
-.editproductdetail .ng-select .ng-placeholder, .addnewproduct .ng-select .ng-placeholder {
+.editproductdetail .ng-select.ng-dirty .ng-placeholder, .addnewproduct .ng-select.ng-dirty .ng-placeholder {
   display: none !important;
 }
 .editproductdetail .ng-select span, .addnewproduct .ng-select span {
@@ -7654,7 +7662,11 @@ AUTO CLEAR
   box-shadow: none !important;
 }
 .register-form .ng-select .ng-placeholder {
+  line-height: 2.5em;
+  width: 100%;
   display: block;
+  text-indent: 1em;
+  color: #a7a5a5;
 }
 .customClass .tooltip-inner {
   background: rgb(241, 241, 4);
@@ -7785,8 +7797,11 @@ AUTO CLEAR
   min-height: auto; 
 }
 }
-.selecthascontent   .ng-placeholder {
+/* .selecthascontent   .ng-placeholder {
   display: none !important;
+} */
+.selecthascontent .ng-select.ng-pristine .ng-placeholder {
+	display: block
 }
 .overlaypanelscreen {
   top: 0;

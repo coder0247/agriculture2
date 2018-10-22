@@ -57,9 +57,10 @@
             </div> -->
 					</div>
 					<div class="details-info col-xs-12 col-sm-12 col-md-6 col-lg-6">
-							<div class="price margintop-0">
+							<div class="price margintop-0" *ngIf="!!singleproduct.pname">
 									<span>{{singleproduct.pname | titlecase}}</span>
 								</div>
+
 						<h4><strong>Ad ID:</strong> {{singleproduct.adid}}</h4>
 						<h4><strong>Posted at :</strong> {{singleproduct.updated_at | date:'y-MM-dd'}}</h4>
 						<!-- <a href="javascript:void(0)" class="product-name">{{singleproduct.pname | titlecase}}</a> -->
@@ -78,9 +79,12 @@
 						<div class="price">
 								<span>Details</span>
 						</div>
-						<div class="price"  style="margin-top: 10px;">
+						<div class="description"  style="margin-top: 10px;" *ngIf="!!singleproduct.pdesc">
+								{{singleproduct.pdesc}}
+						</div>
+						<div class="price"  style="margin-top: 10px;" *ngIf="!!singleproduct.currencytype">
 							
-								<h4>Price: ${{singleproduct.saleamount}}</h4>
+								<h4>Price: {{singleproduct.saleamount}} {{singleproduct.currencytype | uppercase}}</h4>
 				
 						</div>
 						<div class="price" style="margin-top: 10px;">
@@ -88,7 +92,7 @@
 							<h4  *ngIf="!singleproduct.negotiable">Price negotiable : No</h4>
 							<h4  *ngIf="singleproduct.negotiable">Price negotiable : Yes</h4>
 						</div>
-						<div class="price"><span>
+						<div class="price" *ngIf="!!productlocation"><span>
 							Location
 						</span>
 						<h4>{{productlocation}}</h4>
@@ -170,7 +174,7 @@
 										<strong class="label-text">Your Message <span>*</span></strong>
 										<textarea rows="8" class="input-info input-note" formControlName="comment" required></textarea>
 										<div *ngIf="sendMsgForm.invalid" class="error-msg">
-												<div class="text-danger" *ngIf="msgerror">Comment is required.</div>
+												<div class="text-danger" *ngIf="msgerror">Message is required.</div>
 											</div>
 										<div class="group-button margin-0">
 											<button href="#" class="button submit"  (click)="sendMsg()">Send Message</button>

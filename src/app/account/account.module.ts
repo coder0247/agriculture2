@@ -29,12 +29,14 @@ import { ChangepasswordComponent } from './changepassword/changepassword.compone
 import { PagerService } from './../service/pager.service';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ControlService } from './../form/service/control.service';
-import { FormControlService } from './../service/formcontrols.service';
+import { EditFormControlService } from './../service/editformcontrols.service';
 import { FvalidationService } from '../service/fvalidation';
+import { EditproductfrmComponent } from './editproductfrm/editproductfrm.component';
 
 @NgModule({
   imports: [
-  CommonModule,
+
+CommonModule,
     AccountRoutingModule,
     HeaderCommonModule,
     FooterModule,
@@ -61,9 +63,10 @@ import { FvalidationService } from '../service/fvalidation';
                     EditadsComponent,
                     PopupComponent,
                     ChangepasswordComponent,
-                    AddnewproductfrmComponent
+                    AddnewproductfrmComponent,
+                    EditproductfrmComponent
                   ],
 
-                    providers: [ProductService , PagerService , ControlService, FormControlService, FvalidationService],
+                    providers: [ProductService , PagerService , ControlService, EditFormControlService, FvalidationService],
 })
 export class AccountModule { }

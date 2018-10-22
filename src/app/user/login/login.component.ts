@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem( 'lastname' , res.data.lastname);
           localStorage.setItem( 'isadmin' , res.data.is_admin);
           localStorage.setItem( 'id' , res.data.id);
+          this.formsubmitted = false;
           this.router.navigate(['/']);
         } else {
           this.showloading = false;
