@@ -32,7 +32,7 @@ import { ControlService } from './../form/service/control.service';
 import { EditFormControlService } from './../service/editformcontrols.service';
 import { FvalidationService } from '../service/fvalidation';
 import { EditproductfrmComponent } from './editproductfrm/editproductfrm.component';
-
+import { FormControlService } from './../service/formcontrols.service';
 @NgModule({
   imports: [
 
@@ -67,6 +67,7 @@ CommonModule,
                     EditproductfrmComponent
                   ],
 
-                    providers: [ProductService , PagerService , ControlService, EditFormControlService, FvalidationService],
+                    providers: [ProductService , PagerService , ControlService,
+                      FormControlService, EditFormControlService, FvalidationService],
 })
 export class AccountModule { }
