@@ -4664,7 +4664,7 @@ body.home5 {
 .content-form .input-note {
   line-height: inherit;
   height: auto;
-  padding: 10px 20px;
+  padding: 10px 5px;
 }
 .content-form .title {
   font-size: 14px;
@@ -4953,10 +4953,6 @@ body.home5 {
   color: #666;
   line-height: 20px;
   margin: 0 0 20px;
-}
-.about-info ul, .about-info ol {
-  margin: auto auto 10px auto;
-  padding-left: 14px;
 }
 .about-content {
   text-align: center;
@@ -6661,7 +6657,7 @@ hr{margin: 6px 0;}
 }
 @media (max-width: 767px) {
   /*HEADER LAYOUT1*/
-
+  
   .topbar,
   .main-header .top-header .midle-content {
     display: none;
@@ -7710,6 +7706,9 @@ AUTO CLEAR
 .top-minus-4 div {
   top: 2px;
 }
+.top-minus-20 div {
+  top: -20px !important;
+}
 .modal-dialog {
   width: auto;
   margin: 30px auto;
@@ -7798,7 +7797,7 @@ AUTO CLEAR
 }
 .main-content-list .content-offset, .main-content-grid .content-offset {
   margin-top: 0px;
-  min-height: auto;
+  min-height: auto; 
 }
 }
 /* .selecthascontent   .ng-placeholder {
@@ -7898,6 +7897,10 @@ box-shadow: none !important;
   line-height: 20px;
   margin: 0 0 20px;
 }
+.about-info ul, .about-info ol {
+  margin: auto auto 10px auto;
+  padding-left: 14px;
+}
 .reasonoption .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
   left: 5px !important;
 }
@@ -7909,4 +7912,32 @@ box-shadow: none !important;
   -webkit-text-security: none;
   color: rgb(156, 152, 152);
   pointer-events: none !important;
+}
+
+/* bootstrap classes override */
+.form-control:focus {
+  border-color: #ccc;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 40px;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: unset;
+  -o-transition: unset;
+  transition: unset;
+  margin-bottom: 25px;
+
 }
