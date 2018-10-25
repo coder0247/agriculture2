@@ -32,7 +32,7 @@ export class ForgotpassComponent implements OnInit {
   }
 contactus() {
     this.formsubmitted = true;
-    console.log(this.forgotPassForm.value);
+
     if (this.forgotPassForm.valid) {
       this.loading = true;
       this.authservice.forgotPassword(this.forgotPassForm.value).subscribe(
