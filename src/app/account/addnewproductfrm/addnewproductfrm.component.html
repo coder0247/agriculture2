@@ -2,10 +2,15 @@
 
   <div [ngSwitch]="formbase?.key">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngSwitchCase="'category'">
-      <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+        <span class="label-text">{{formbase.label}}<span>*</span></span>
+        <select class="form-control" [formControlName]="formbase.key" (change)="getSubcatList($event)"> 
+            <option value="" selected="selected">Select category</option>
+            <option *ngFor="let item of formbase['options']" value="{{item._id}}">{{item.catname}}</option>
+          </select>
+      <!-- <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
       <ng-select [searchable]="false" #categorySelect [items]="formbase.options" [selectOnTab]="true" bindLabel="catname"
         bindValue="_id" placeholder="Select category" [formControlName]="formbase.key" (change)="getSubcatList($event)">
-      </ng-select>
+      </ng-select> -->
       <div *ngIf="!isValid && forcevalidation" class="error-msg">
           <div *ngIf="newadForm.controls['category'].pristine && newadForm.controls['category'].errors.required">Category is required.</div>
         </div>
@@ -14,10 +19,13 @@
 
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngSwitchCase="'subcatnames'">
       <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
-      <ng-select [searchable]="false" #cropsSelect [items]="formbase.options" [selectOnTab]="true" bindLabel="subcatname"
+      <!-- <ng-select [searchable]="false" #cropsSelect [items]="formbase.options" [selectOnTab]="true" bindLabel="subcatname"
         bindValue="_id" placeholder="Select subcategory" [formControlName]="formbase.key" (change)="getSubcatimages($event)">
-      </ng-select>
-
+      </ng-select> -->
+      <select class="form-control" [formControlName]="formbase.key" (change)="getSubcatimages($event)"> 
+          <option [value]="'none'" [selected]="'selected'">Select Subcategory</option>
+          <option *ngFor="let item of formbase['options']" value="{{item._id}}">{{item.subcatname}}</option>
+        </select>
       <div *ngIf="!isValid && forcevalidation" class="error-msg">
    
           <div *ngIf="newadForm.controls['subcatnames'].pristine && newadForm.controls['subcatnames'].errors.required">Subcategory is required.</div>
@@ -26,9 +34,12 @@
     <div class="col-xs-12 " *ngSwitchCase="'region'">
       <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
       <!-- {{formbase | json}} -->
-
-      <ng-select [searchable]="false" #regionSelect [items]="formbase.options" [selectOnTab]="true" bindLabel="regionname"
-        bindValue="_id" placeholder="Select region" [formControlName]="formbase.key"></ng-select>
+      <select class="form-control" [formControlName]="formbase.key"> 
+          <option [value]="" [selected]="'selected'">Select Region</option>
+          <option *ngFor="let item of formbase['options']" value="{{item._id}}">{{item.regionname}}</option>
+        </select>
+      <!-- <ng-select [searchable]="false" #regionSelect [items]="formbase.options" [selectOnTab]="true" bindLabel="regionname"
+        bindValue="_id" placeholder="Select region" [formControlName]="formbase.key"></ng-select> -->
       <div *ngIf="formbase.required">
         <div *ngIf="!isValid && forcevalidation" class="error-msg">
           <div *ngIf="newadForm.controls['region'].pristine && newadForm.controls['region'].errors.required">Region is
@@ -39,9 +50,12 @@
     <div class="col-xs-12 " *ngSwitchCase="'currency'">
         <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
         <!-- {{formbase | json}} -->
-  
-        <ng-select [searchable]="false" #currencySelect [items]="formbase.options" [selectOnTab]="true" bindLabel="currencyname"
-          bindValue="_id" placeholder="Select currency" [formControlName]="formbase.key"></ng-select>
+        <select class="form-control" [formControlName]="formbase.key"> 
+            <option value="" selected="selected">Select currency</option>
+            <option *ngFor="let item of formbase['options']" value="{{item._id}}">{{item.currencyname}}</option>
+          </select>
+        <!-- <ng-select [searchable]="false" #currencySelect [items]="formbase.options" [selectOnTab]="true" bindLabel="currencyname"
+          bindValue="_id" placeholder="Select currency" [formControlName]="formbase.key"></ng-select> -->
         <div *ngIf="formbase.required">
           <div *ngIf="!isValid && forcevalidation" class="error-msg">
             <div *ngIf="newadForm.controls['currency'].pristine && newadForm.controls['currency'].errors.required">currency is
@@ -87,9 +101,13 @@
     </div>
     <div *ngSwitchCase="'amtunit'">
       <span class="label-text">{{formbase.label}}<span *ngIf="formbase.required">*</span></span>
-      <ng-select [searchable]="false" #amountforsale [items]="formbase.options" [selectOnTab]="true" bindLabel="amountunit"
+      <!-- <ng-select [searchable]="false" #amountforsale [items]="formbase.options" [selectOnTab]="true" bindLabel="amountunit"
         bindValue="_id" placeholder="Select Amount Unit" [formControlName]="formbase.key">
-      </ng-select>
+      </ng-select> -->
+      <select class="form-control" [formControlName]="formbase.key"> 
+          <option [value]="" [selected]="'selected'">Select Amount Unit</option>
+          <option *ngFor="let item of formbase['options']" value="{{item._id}}">{{item.amountunit}}</option>
+        </select>
       <div *ngIf="formbase.required">
         <div *ngIf="!isValid && forcevalidation" class="error-msg">
           <div *ngIf="newadForm.controls['amtunit'].pristine && newadForm.controls['amtunit'].errors.required">Amount

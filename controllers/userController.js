@@ -2,6 +2,7 @@ const User = require('../model/user');
 var crypt = require("apache-crypt");
 const mongoose = require('mongoose');
 const config = require('../config');
+const nodemailer = require('nodemailer');
 exports.logout = function (req, res) {
     if (req.session) {
         // delete session object
@@ -63,6 +64,7 @@ exports.register = function (req, res ) {
         newUser.region = req.body.region;
         newUser.email = req.body.email;
         newUser.newsletter = !!req.body.newsletter;
+        newUser.usercountrycode = req.body.countrycode;
         newUser.password = crypt(req.body.password);
         newUser.save(function (error, product) {
             if (error) {
@@ -87,7 +89,7 @@ exports.register = function (req, res ) {
 exports.userDetails = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        User.find({'_id' : req.params.userid}, 'firstname lastname phonenumber email region', function (err, userdetails) {
+        User.find({'_id' : req.params.userid}, 'firstname lastname phonenumber email region usercountrycode', function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0) {
                 return res.status(200).json({
@@ -106,7 +108,75 @@ exports.userDetails = function (req, res) {
         })
     });
 };
+exports.forgotpass = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        // console.log( req.body);
+        User.find({'email' : req.body.email}, function (err, userdetails) {
+            if (err) throw err;
+            if (userdetails.length > 0) {
+                
+                let newpassword = {
+                    password: crypt('123456'),
+                };
+                User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: newpassword }, function (error, passwordreset) {
+                    if (req.session) {
+                        // delete session object
+                        req.session.destroy(function (err) {
+                                res.clearCookie('user_sid');
+                        });
+                    }
+                    nodemailer.createTestAccount((err, account) => {
+                        // create reusable transporter object using the default SMTP transport
+                        let transporter = nodemailer.createTransport({
+                            host: 'smtp.strato.de',
+                            port: 465,
+                            secure: true, // true for 465, false for other ports
+                            auth: {
+                                user: 'support@kilimosafi.com', // generated ethereal user
+                                pass: 'Service2018$' // generated ethereal password
+                            }
+                        });
+                    
+                        // setup email data with unicode symbols
+                        let mailOptions = {
+                            from: '"Agriculture" <support@kilimosafi.com>', // sender address
+                            to: req.body.email, // list of receivers
+                            subject: 'Forgot Password', // Subject line
+                            text: 'Below is new password. After login please reset the password to new one', // plain text body
+                            html: '<b>Password: </b>' + '123456'// html body
+                        };
+                    
+                        // send mail with defined transport object
+                        transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                                return console.log(error);
+                            }
+                            console.log('Message sent: %s', info.messageId);
+                            // Preview only available when sending through an Ethereal account
+                            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                    
+                            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+                            // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+                        });
+                    });
+                    return res.status(200).json({
+                        status: 'success',
+                        data: 'Please check your email, we have sent you a new password'
+                    });
+                });
 
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    data: 'Invalid Email/Password',
+
+                })
+            }
+
+        })
+    });
+};
 exports.restUserPassword = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -151,7 +221,8 @@ exports.editProfile = function (req, res) {
             lastname: req.body.lastname,
             phonenumber: req.body.phoneno,
             email: req.body.email,
-            region: req.body.region
+            region: req.body.region, 
+            usercountrycode: req.body.countrycode
         };
         User.findByIdAndUpdate({ _id : req.body.userid }, { $set: setprofiledata }, function (error, profileupdated) {
             return res.status(200).json({

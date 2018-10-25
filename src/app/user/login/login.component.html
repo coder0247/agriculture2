@@ -21,7 +21,7 @@
       </div>
       <div class="check-box">
         <input type="checkbox" class="login-check" id="login-check"> <label class="text-label" for="login-check">Remember me</label>
-        <!-- <a href="#" class="forgot">Fogot your password ?</a> -->
+        <a href="javascript:void(0)" class="forgot" (click)="forgotpassword()">Fogot your password ?</a>
       </div>
       <div class="group-button">
         <button class="button submit" (click)="login()">Login <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button> 

@@ -9,7 +9,6 @@ const MBestseller = require('../model/mbestseller');
 const Mmostviewed = require('../model/mmostviewed');
 const Monsale = require('../model/monsale');
 const Mnewarrivals = require('../model/mnewarrivals');
-
 exports.getPageContent = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -34,7 +33,7 @@ exports.featured = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
 
-        Featured.find({}).populate({ path: 'categoryid' }).populate({ path: 'subcatid' }).populate({ path: 'productid' }).exec(function (err, featured) {
+        Featured.find({status: true}).populate({ path: 'categoryid' }).populate({ path: 'subcatid' }).populate({ path: 'productid' }).exec(function (err, featured) {
             if (err) throw err;
             if (featured.length > 0) {
                 return res.status(200).json({
@@ -57,7 +56,7 @@ exports.bestSellByLimit = function (req, res) {
 
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        MBestseller.find({}).populate({ path: 'productid' }).limit(limit).exec(function (err, bestsellerproducts) {
+        MBestseller.find({status: true}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, bestsellerproducts) {
             if (err) throw err;
             if (bestsellerproducts.length > 0) {
                 return res.status(200).json({
@@ -140,7 +139,7 @@ exports.mostViewedByLimit = function (req, res) {
 
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Mmostviewed.find({}).populate({ path: 'productid' }).limit(limit).exec(function (err, mostviewed) {
+        Mmostviewed.find({}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, mostviewed) {
             if (err) throw err;
             if (mostviewed.length > 0) {
                 return res.status(200).json({
@@ -151,6 +150,30 @@ exports.mostViewedByLimit = function (req, res) {
                 return res.status(200).json({
                     status: 'fail',
                     message: 'Fetch Failed',
+
+                })
+            }
+        });
+        
+    });
+};
+exports.onSaleByLimit = function (req, res) {
+    var limit = req.params.limit || 7;
+    limit = parseInt(limit);
+
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        Monsale.find({}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, monsale) {
+            if (err) throw err;
+            if (monsale.length > 0) {
+                return res.status(200).json({
+                    status: 'success',
+                    data: { 'monsale': monsale }
+                });
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: err,
 
                 })
             }
@@ -213,7 +236,7 @@ exports.newArrivalByLimit = function (req, res) {
 
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Mnewarrivals.find({}).populate({ path: 'productid' }).limit(limit).exec(function (err, newarrival) {
+        Mnewarrivals.find({}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, newarrival) {
             if (err) throw err;
             if (newarrival.length > 0) {
                 return res.status(200).json({

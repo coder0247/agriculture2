@@ -31,15 +31,21 @@
 																</div>
 															  </div>
 															  <div class="row">
-															  
+																		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+																				<span class="label-text">Country Code<span>*</span></span>
+																				<select class="form-control" formControlName="countrycode"> 
+																						<option *ngFor="let item of countrycode" value="{{item._id}}">{{item.c_text}}</option>
+																					</select>
+																		</div>
 																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-																  <span class="label-text">Phone Number <span>*</span></span>
-																  <input type="number"  class="input-info" formControlName="phoneno" required min="0" oninput="validity.valid||(value='');">
-																  <div *ngIf="editProfileForm.invalid && formsubmitted" class="error-msg">
-																	  <div class="text-danger" *ngIf="!!editProfileForm.controls['phoneno'].errors?.required">Phone number is required.</div>
-																  </div>
+																		<span class="label-text">Phone Number <span>*</span></span>
+																		<input type="tel"  class="input-info" formControlName="phoneno" placeholder="123-456-7890">
+																		<div *ngIf="editProfileForm.invalid && formsubmitted" class="error-msg">
+																				<div class="text-danger" *ngIf="!!editProfileForm.controls['phoneno'].pristine || !!editProfileForm.controls['phoneno'].errors?.required">Phone number is required.</div>
+																				<div class="text-danger" *ngIf="editProfileForm.controls['phoneno'].dirty && !!editProfileForm.controls['phoneno'].errors?.patternInvalid?.regexp">Phone Number is invalid.(e.g 123-456-7890)</div>
+																		</div>
 																</div>
-																<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 regionoption">
+																<!-- <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 regionoption">
 																  <span class="label-text">Region<span>*</span></span>
 																  <ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
 																										 placeholder="" formControlName="region">
@@ -48,19 +54,37 @@
 																					<div class="text-danger" *ngIf="!!editProfileForm.controls['region'].errors?.required">Region is required.</div> 
 																				</div>
 															  
-																</div>
+																</div> -->
 															  </div>
 															  <!-- <span class="label-text">Last name <span>*</span></span>
 															  <input type="text"  class="input-info" formControlName="lastname" required>
 															  <div *ngIf="editProfileForm.controls['lastname'].errors && !editProfileForm.controls['lastname'].pristine" class="error-msg">
 																  <div class="text-danger" [hidden]="!editProfileForm.controls['lastname'].errors.required">Last Name is required.</div>
-															  </div> -->
-															  <span class="label-text">Email Address <span>*</span></span>
-															  <input type="email" class="input-info" formControlName="email" required>
-															  <div *ngIf="editProfileForm.invalid && formsubmitted" class="error-msg">
-																  <div class="text-danger" *ngIf="!!editProfileForm.controls['email'].errors?.required">Email is required.</div>
-																  <div class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && !!editProfileForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
-															  </div>
+																</div> -->
+																<div class="row">
+																		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 regionoption">
+																				<span class="label-text">Email Address <span>*</span></span>
+																				<input type="email" class="input-info" formControlName="email" required>
+																				<div *ngIf="editProfileForm.invalid && formsubmitted" class="error-msg">
+																					<div class="text-danger" *ngIf="!!editProfileForm.controls['email'].errors?.required">Email is required.</div>
+																					<div class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && !!editProfileForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
+																				</div>
+																		</div>
+																		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 regionoption">
+																				<span class="label-text">Region<span>*</span></span>
+																				<select class="form-control" formControlName="region"> 
+																						<option *ngFor="let item of regions" value="{{item._id}}">{{item.regionname}}</option>
+																					</select>
+																				<!-- <ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
+																													 placeholder="" formControlName="region">
+																													</ng-select> -->
+																							<div *ngIf="editProfileForm.invalid && formsubmitted" class="error-msg top-minus-4">
+																								<div class="text-danger" *ngIf="!!editProfileForm.controls['region'].errors?.required">Region is required.</div> 
+																							</div>
+																			
+																			</div>
+																</div>
+															 
 															  <!-- <div class="check-box">
 																<input type="checkbox" formControlName="newsletter" class="login-check" id="register-check"> <label class="text-label" for="register-check">Sign Up for Newsletter</label>
 															  </div>

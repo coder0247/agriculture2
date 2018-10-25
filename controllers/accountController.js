@@ -3,6 +3,11 @@ const Product = require ('../model/product');
 const Msgs = require ('../model/msg');
 const Amountunit = require ('../model/amountunit');
 const MostViewed = require ('../model/mostviewed');
+const MBestseller = require('../model/mbestseller');
+const Mmostviewed = require('../model/mmostviewed');
+const Mnewarrivals = require('../model/mnewarrivals');
+const Monsale = require('../model/monsale');
+const Featured = require('../model/featured');
 const mongoose = require('mongoose');
 const config = require('../config');
 const Form = require ('../model/form');
@@ -46,18 +51,30 @@ exports.setProductArchive = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
         Product.findByIdAndUpdate({ _id: req.params.pid }, { $set: { status: '0' } }, function (err, archiveproduct) {
-            if (archiveproduct) {
-                return res.status(200).json({
-                    status: 'success',
-                    data: { 'archiveproduct': archiveproduct },
+            MBestseller.update({productid: req.params.pid }, { status: false }, function (err, bestseller) {
+                Mmostviewed.update({productid: req.params.pid }, { status: false }, function (err, mostviewed) {
+                    Mnewarrivals.update({productid: req.params.pid }, { status: false }, function (err, newarrivals) {
+                        Monsale.update({productid: req.params.pid }, { status: false }, function (err, onsale) {
+                            Featured.update({productid: req.params.pid }, { status: false }, function (err, featured) {
+                                if (archiveproduct) {
+                                    return res.status(200).json({
+                                        status: 'success',
+                                        data: { 'archiveproduct': archiveproduct },
+                                    });
+                                } else {
+                                    return res.status(200).json({
+                                        status: 'fail',
+                                        message: archiveproduct,
+                                        err: archiveproduct.length
+                                    })
+                                }
+                            });
+                        });
+                    });
+
                 });
-            } else {
-                return res.status(200).json({
-                    status: 'fail',
-                    message: archiveproduct,
-                    err: archiveproduct.length
-                })
-            }
+            });
+           
         });
     });
 };
@@ -93,17 +110,29 @@ exports.setProductActive = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
         Product.findByIdAndUpdate({ _id: req.params.pid }, { $set: { status: '1' } }, function (err, archiveproduct) {
-            if (archiveproduct) {
-                return res.status(200).json({
-                    status: 'success',
-                    data: { 'archiveproduct': archiveproduct },
+            MBestseller.update({productid: req.params.pid }, { status: true }, function (err, bestseller) {
+                Mmostviewed.update({productid: req.params.pid }, { status: true }, function (err, mostviewed) {
+                    Mnewarrivals.update({productid: req.params.pid }, { status: true }, function (err, newarrivals) {
+                        Monsale.update({productid: req.params.pid }, { status: true }, function (err, onsale) {
+                            Featured.update({productid: req.params.pid }, { status: true }, function (err, featured) {
+                                if (archiveproduct) {
+                                    return res.status(200).json({
+                                        status: 'success',
+                                        data: { 'archiveproduct': archiveproduct },
+                                    });
+                                } else {
+                                    return res.status(200).json({
+                                        status: 'fail',
+                                        message: 'failed'
+                                    })
+                                }
+                            });
+                        });
+                    });
+
                 });
-            } else {
-                return res.status(200).json({
-                    status: 'fail',
-                    message: 'failed'
-                })
-            }
+            });
+            
         });
     });
 }
@@ -136,6 +165,11 @@ exports.userDashboard = function (req, res) {
                     });
                 });
 
+            } else {
+                return res.status(200).json({
+                    status: 'success',
+                    data: dashdata
+                });
             }
 
         });
@@ -180,7 +214,7 @@ exports.updateProduct = function (req, res) {
             saleamount : req.body.saleamount, 
             pdesc : req.body.pdesc,
             currencytype : req.body.currencytype, 
-            negotiable: req.body.pricetype === "true" ? true: false,
+            negotiable: req.body.pricetype === true ? true: false,
             updated_at: Date.now()
         }
         let mappingtableupdate = {
@@ -209,17 +243,26 @@ exports.updateProduct = function (req, res) {
         });
     });
 }
-exports.removeProduct = function (req, res) {
+exports.removeProduct = function (req, res) { 
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
         Product.findOneAndDelete({ _id: req.params.product_id },function (err) {
             if (err) throw err;
             MappingTbl.deleteOne({ productid: req.params.product_id }, function (err) {
                 if (err) return handleError(err);
-                MostViewed.deleteOne({ productid: req.params.product_id }, function (err) {
-                    return res.status(200).json({
-                        status: 'success',
-                        data: { 'delete': 'delete successfully ' },
+                MBestseller.deleteOne({productid: req.params.product_id }, function (err, bestseller) {
+                    Mmostviewed.deleteOne({productid: req.params.product_id }, function (err, mostviewed) {
+                        Mnewarrivals.deleteOne({productid: req.params.product_id }, function (err, newarrivals) {
+                            Monsale.deleteOne({productid: req.params.product_id }, function (err, onsale) {
+                                Featured.deleteOne({productid: req.params.product_id }, function (err, featured) {
+                                    return res.status(200).json({
+                                        status: 'success',
+                                        data: { 'delete': 'delete successfully ' },
+                                    });
+                                });
+                            });
+                        });
+    
                     });
                 });
               });
@@ -240,10 +283,8 @@ exports.inbox = function (req, res) {
                 return res.status(200).json({
                     status: 'fail',
                     message: 'Fetch Failed',
-
                 })
             }
-
         })
     });
 }
@@ -328,6 +369,7 @@ exports.addNewProduct = function (req, res) {
         newProduct.amtunit = req.body.amtunit;
         newProduct.saleamount = req.body.saleamount;
         newProduct.currencytype = req.body.currencytype;
+        newProduct.negotiable = req.body.priceneg === 'no' ? false: true;
         newProduct.status = "1";
         newProduct.save(function (error, product) {
             if (error) {

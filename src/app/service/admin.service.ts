@@ -153,16 +153,43 @@ export class AdminService {
         catchError(this.handleError)
       );
   }
-
-  updateCategoryDetails(category_id: string, formData: any): Observable<any> {
+/*
+addSubcategory(formData: any, formfields: any): Observable<any> {
     return this.http
-      .put(apiUrl + 'admin/category/' + category_id, formData, httpOptions)
+      .post(apiUrl + 'admin/subcategory/', formData, httpOptions)
       .pipe(
+        mergeMap(subcatid => {
+         formfields.subcatid = subcatid['subcatid'];
+         return this.http.post(apiUrl + 'admin/addformfields/', formfields, httpOptions);
+        }),
         map(this.extractData),
         catchError(this.handleError)
       );
   }
 
+*/
+  // updateCategoryDetails(category_id: string, formData: any): Observable<any> {
+  //   return this.http
+  //     .put(apiUrl + 'admin/category/' + category_id, formData, httpOptions)
+  //     .pipe(
+  //       map(this.extractData),
+  //       catchError(this.handleError)
+  //     );
+  // }
+
+  updateCategoryDetails(category_id: string, formData: any): Observable<any> {
+    return this.http
+      .put(apiUrl + 'admin/category/' + category_id, formData, httpOptions)
+      .pipe(
+        mergeMap(category => {
+          console.log(category);
+          const activestatus = formData.status === '1' ? true : false;
+          return this.http.get(apiUrl + 'homeprodcatwisestatus/' + category['data']['catid'] + '/' + activestatus, httpOptions);
+         }),
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   addCategory(formData: any): Observable<any> {
     return this.http
       .post(apiUrl + 'admin/category/', formData, httpOptions)
@@ -190,17 +217,16 @@ export class AdminService {
       );
   }
 
-  updateSubcategoryDetails(
-    subcategory_id: string,
-    formData: any
-  ): Observable<any> {
+  updateSubcategoryDetails( subcategory_id: string, formData: any ): Observable<any> {
+
     return this.http
-      .put(
-        apiUrl + 'admin/subcategory/' + subcategory_id,
-        formData,
-        httpOptions
-      )
+      .put( apiUrl + 'admin/subcategory/' + subcategory_id, formData, httpOptions  )
       .pipe(
+         map(this.extractData),
+        mergeMap(subcat => {
+          const activestatus = formData.status === '1' ? true : false;
+          return this.http.get(apiUrl + 'homeprodsubcatwisestatus/' + subcat['data']['subcategory']._id + '/' + activestatus, httpOptions);
+         }),
         map(this.extractData),
         catchError(this.handleError)
       );

@@ -20,36 +20,52 @@
         </div>
       </div>
       <div class="row">
-      
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <span class="label-text">Phone Number <span>*</span></span>
-          <input type="number"  class="input-info" formControlName="phoneno" required min="0" oninput="validity.valid||(value='');">
-          <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
-              <div class="text-danger" *ngIf="!!registerForm.controls['phoneno'].pristine || !!registerForm.controls['phoneno'].errors?.required">Phone number is required.</div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <span class="label-text">Country Code<span>*</span></span>
+              <select class="form-control" formControlName="countrycode"> 
+                  <option value="none" selected>Select country code</option>
+                  <option *ngFor="let item of countrycode" value="{{item._id}}">{{item.c_text}}</option>
+                </select>
+                <div *ngIf="!registerForm.valid && formsubmitted" class="error-msg top-minus-20">
+                    <div class="text-danger" *ngIf="registerForm.controls['countrycode'].pristine || registerForm.controls['countrycode'].errors?.required">Country code is required.</div> 
+                    </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <span class="label-text">Phone Number <span>*</span></span>
+              <input type="tel"  class="input-info" formControlName="phoneno" placeholder="123-456-7890">
+              <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+                <div class="text-danger" *ngIf="!!registerForm.controls['phoneno'].pristine || !!registerForm.controls['phoneno'].errors?.required">Phone number is required.</div>
+                <div class="text-danger" *ngIf="registerForm.controls['phoneno'].dirty && !!registerForm.controls['phoneno'].errors?.patternInvalid?.regexp">Phone Number is invalid.(e.g 123-456-7890)</div>
+              </div>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 regionoption">
-          <span class="label-text">Region<span>*</span></span>
-          <ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
-												 placeholder="Select region" formControlName="region">
-												</ng-select>
-                        <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg top-minus-4">
-                            <div class="text-danger" *ngIf="!!registerForm.controls['region'].pristine || !!registerForm.controls['region'].errors?.required">Region is required.</div> 
-                        </div>
-      
-        </div>
-      </div>
       <!-- <span class="label-text">Last name <span>*</span></span>
       <input type="text"  class="input-info" formControlName="lastname" required>
       <div *ngIf="registerForm.controls['lastname'].errors && !registerForm.controls['lastname'].pristine" class="error-msg">
           <div class="text-danger" [hidden]="!registerForm.controls['lastname'].errors.required">Last Name is required.</div>
       </div> -->
-      <span class="label-text">Email Address <span>*</span></span>
-      <input type="email" class="input-info" formControlName="email" required>
-      <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
-          <div class="text-danger" *ngIf="!!registerForm.controls['email'].pristine || !!registerForm.controls['email'].errors?.required">Email is required.</div>
-          <div class="text-danger" *ngIf="registerForm.controls['email'].dirty && !!registerForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
+      <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <span class="label-text">Email Address <span>*</span></span>
+              <input type="email" class="input-info" formControlName="email" required>
+              <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+                  <div class="text-danger" *ngIf="!!registerForm.controls['email'].pristine || !!registerForm.controls['email'].errors?.required">Email is required.</div>
+                  <div class="text-danger" *ngIf="registerForm.controls['email'].dirty && !!registerForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
+              </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <span class="label-text">Region<span>*</span></span>
+              <select class="form-control" formControlName="region"> 
+                  <option value="none" selected>Select Region</option>
+                  <option *ngFor="let item of regions" value="{{item._id}}">{{item.regionname}}</option>
+              </select>
+                <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg top-minus-20">
+                    <div class="text-danger" *ngIf="!!registerForm.controls['region'].pristine || !!registerForm.controls['region'].errors?.required">Region is required.</div> 
+                </div>
+          </div>
+          
       </div>
+      
       <div class="check-box">
         <input type="checkbox" formControlName="newsletter" class="login-check" id="register-check"> <label class="text-label" for="register-check">Sign Up for Newsletter</label>
       </div>
@@ -76,8 +92,8 @@
     
       </div>
       <div class="group-button">
-        <button class="button submit"  (click)="register()">SUBMIT <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
-        <span class="successmsg" [ngClass]="{'bg-danger': error, 'bg-success': success}"  *ngIf="!!usermsg" >{{usermsg}}</span>
+        <button class="button submit"  [disabled]="showloading" (click)="register()">SUBMIT <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
+        <span class="successmsg" [ngClass]="{'bg-danger': error, 'bg-success': success}"  *ngIf="!!usermsg"  >{{usermsg}}</span>
       </div>		
     </div>
     </form>

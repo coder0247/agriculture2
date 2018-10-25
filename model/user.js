@@ -11,7 +11,8 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   newsletter: { type: Boolean, default: false },
   is_admin: { type: Boolean, default: false },
-  created_at: { type: Date, default: Date.now }
+  created_at: { type: Date, default: Date.now },
+  usercountrycode: { type: Schema.Types.ObjectId, ref: 'IntlCodes' },
 }, { collection: 'user' });
 
 const User = mongoose.model('User', userSchema);

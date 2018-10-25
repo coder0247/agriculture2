@@ -36,6 +36,14 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+  forgotPassword(data): Observable<any> {
+    // console.log('service userid', userid);
+    return this.http.post(apiUrl + 'user/forgotpass/', data)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   editProfile(data): Observable<any> {
     return this.http.post(apiUrl + 'user/editprofile', data)
       .pipe(
@@ -62,6 +70,12 @@ export class AuthService {
         map(this.extractData),
         catchError(this.handleError)
       );
+  }
+  intlcodes(): Observable<any> {
+    return this.http.get(apiUrl + 'intlcodes', httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
   }
   // getProducts(): Observable<any> {
   //   return this.http.get(apiUrl, httpOptions).pipe(

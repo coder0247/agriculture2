@@ -45,7 +45,8 @@
 		"script-loader": "^0.7.2",
 		"systemjs": "0.19.27",
 		"uid-generator": "^1.0.0",
-		"zone.js": "^0.8.26"
+		"zone.js": "^0.8.26",
+		"nodemailer": "^4.6.8"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^0.6.8",

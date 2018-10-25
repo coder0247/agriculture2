@@ -48,6 +48,22 @@ const routes: Routes = [
     loadChildren: '../app/about/about.module#AboutModule'
   },
   {
+    path: 'privacy',
+    loadChildren: '../app/privacypolicy/privacypolicy.module#PrivacypolicyModule'
+  },
+  {
+    path: 'termscondition',
+    loadChildren: '../app/termscondition/termscondition.module#TermsconditionModule'
+  },
+  {
+    path: 'sitemap',
+    loadChildren: '../app/sitemap/sitemap.module#SitemapModule'
+  },
+  {
+    path: 'termsofuse',
+    loadChildren: '../app/termsofuse/termsofuse.module#TermsofuseModule'
+  },
+  {
     path: 'contact',
     loadChildren: '../app/contact/contact.module#ContactModule'
   },

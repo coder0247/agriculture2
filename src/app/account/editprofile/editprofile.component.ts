@@ -12,7 +12,7 @@ import { NgOption } from '@ng-select/ng-select';
   styleUrls: ['./editprofile.component.css']
 })
 export class EditprofileComponent implements OnInit {
-  regions: NgOption[];
+  regions: any;
   editProfileForm: FormGroup;
   formsubmitted = false;
   showloading = false;
@@ -21,9 +21,11 @@ export class EditprofileComponent implements OnInit {
   success = false;
   userdetails: any;
   detailsloading = true;
+  countrycode: any;
   constructor(  private route: ActivatedRoute, private router: Router, private authservice: AuthService, private homepage: HomeService) { }
 
   ngOnInit() {
+    this.getCountryCodeList();
     const userid = localStorage.getItem('id');
     this.homepage.getRegionList()
     .subscribe(res => {
@@ -45,14 +47,24 @@ export class EditprofileComponent implements OnInit {
         'firstname': res.data[0].firstname,
         'lastname': res.data[0].lastname,
         'phoneno': res.data[0].phonenumber,
-        'region': res.data[0].region
+        'region': res.data[0].region,
+        'countrycode': res.data[0].usercountrycode
         });
       }
     }, (err) => {
       console.log(err);
     });
-    
-
+  }
+  getCountryCodeList() {
+    this.authservice.intlcodes()
+    .subscribe(res => {
+       if (res.status === 'success') {
+         this.countrycode = res.data.intlcodes;
+        // console.log('intlcode', res.data.intlcodes);
+       }
+      }, (err) => {
+        console.log(err);
+      });
   }
   private createForm() {
     this.editProfileForm = new FormGroup({
@@ -60,8 +72,9 @@ export class EditprofileComponent implements OnInit {
        email: new FormControl('Loading...', [Validators.required, patternValidator(/^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
       firstname: new FormControl('Loading...', Validators.required),
       lastname: new FormControl('Loading...', Validators.required),
-      phoneno: new FormControl('', Validators.required),
+      phoneno: new FormControl('', [Validators.required, patternValidator(/^[0-9]{3}\-[0-9]{3}\-[0-9]{4}$/)]),
       region: new FormControl('Loading...', Validators.required),
+      countrycode: new FormControl('', Validators.required)
     });
   }
 
@@ -74,7 +87,8 @@ export class EditprofileComponent implements OnInit {
       'firstname': this.editProfileForm.value.firstname,
       'lastname': this.editProfileForm.value.lastname,
       'phoneno': this.editProfileForm.value.phoneno,
-      'region': this.editProfileForm.value.region
+      'region': this.editProfileForm.value.region,
+      'countrycode': this.editProfileForm.value.countrycode
     };
     this.showloading = false;
     this.usermsg = '';

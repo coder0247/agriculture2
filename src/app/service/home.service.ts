@@ -36,7 +36,12 @@ export class HomeService {
       catchError(this.handleError)
     );
   }
-
+  intlcodes(): Observable<any> {
+    return this.http.get(apiUrl + 'intlcodes', httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
   getPageContent(page): Observable<any> {
     return this.http.get(apiUrl + 'page/' +  page).pipe(
       map(this.extractData),

@@ -58,7 +58,7 @@ export class ReportadComponent implements OnInit {
   }
   senddata() {
   this.formsubmitted = true;
-  let reportaddata = {
+  const reportaddata = {
     adid: this.modaldata[0],
     countrycode: this.reportadForm.value.countrycode,
     email: this.reportadForm.value.email,
@@ -77,7 +77,7 @@ export class ReportadComponent implements OnInit {
         this.replymsg = res.data['msg'];
         this.formsubmitted = false;
         this.reportadForm.reset();
-        setTimeout(()=>this.bsModalRef.hide(), 6000);
+        setTimeout(() => this.bsModalRef.hide(), 6000);
       } else {
         this.loading = false;
         this.replymsg = res.data['msg'];

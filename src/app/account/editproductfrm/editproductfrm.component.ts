@@ -14,11 +14,14 @@ export class EditproductfrmComponent  {
   @Input() newadForm: FormGroup;
   forcevalidation: boolean;
   subscription: Subscription;
+  checkboxstatus: any;
   constructor( private fvalid: FvalidationService) {
     this.subscription = this.fvalid.message.subscribe(res => {
       // console.log('this.forcevalidation', res);
       this.forcevalidation = res;
     });
+    const productdetails = JSON.parse(localStorage.getItem('productinfo'));
+    this.checkboxstatus = productdetails.negotiable === true ? 'yes' : 'no';
   }
   @Output() selectoptcat = new EventEmitter();
   @Output() selectoptsubcat = new EventEmitter();

@@ -27,7 +27,7 @@ exports.makeProductMostviewed = function (req, res) {
 exports.makeProductNotMostviewed = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        MMostviewed.findOneAndDelete({ productid: req.params.productid },function (err) {
+        MMostvieweda.findOneAndDelete({ productid: req.params.productid },function (err) {
             if (err) throw err;
             return res.status(200).json({
                 status: true,

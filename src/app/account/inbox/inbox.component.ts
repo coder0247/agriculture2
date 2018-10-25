@@ -10,6 +10,7 @@ import { MsgService } from '../../service/msg.service';
 export class InboxComponent implements OnInit {
   inbox: Array<any> = [];
   loadingmsg = false;
+  noinboxmsg = false;
   constructor(private route: ActivatedRoute, private router: Router, private msg: MsgService) { }
 
   ngOnInit() {
@@ -23,9 +24,14 @@ export class InboxComponent implements OnInit {
         if (res['status'] === 'success') {
           this.inbox = res.data.inbox;
           this.loadingmsg = false;
+          this.noinboxmsg = false;
+        } else {
+          this.loadingmsg = false;
+          this.noinboxmsg = true;
         }
       }, (err) => {
         this.loadingmsg = false;
+        this.noinboxmsg = false;
         console.log(err);
       });
 

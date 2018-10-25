@@ -3,6 +3,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { patternValidator } from '../../sharedfn/userfn';
 import { AuthService } from '../../service/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { ForgotpassComponent } from './../forgotpass/forgotpass.component';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,7 +17,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   formsubmitted = false;
   showloading = false;
-  constructor(private authservice: AuthService, private route: ActivatedRoute, private router: Router) {
+  bsModalRef: BsModalRef;
+  // tslint:disable-next-line:max-line-length
+  constructor(private authservice: AuthService, private route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
 
   }
   ngOnInit() {
@@ -53,4 +59,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  forgotpassword() {
+    this.bsModalRef = this.modalService.show(ForgotpassComponent);
+    this.bsModalRef.content.closeBtnName = 'Close';
+  }
 }

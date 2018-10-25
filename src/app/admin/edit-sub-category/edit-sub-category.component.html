@@ -6,6 +6,7 @@
 <app-message *ngIf="message" [message]="message" [type]="message_type"></app-message>
  
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	<div *ngIf="loading">Loading...</div>
 	<form [formGroup]="subcategoryForm" (submit)="updateSubcategoryDetails()" class="form-horizontal">
 		<div class="form-group" [ngClass]="displayFieldCss(subcategoryForm, 'subcatname')">
 			<label class="control-label col-sm-3" for="subcatname">Subcategory Name:</label>
@@ -38,14 +39,16 @@
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<!-- <button type="submit" class="btn btn-success" [disabled]="!subcategoryForm.valid">Submit</button> -->
-				<button type="submit" class="btn btn-success">Submit</button>
+				<button type="submit" class="btn btn-success">
+					<span *ngIf="submitting">Please Wait ...</span>
+					<span *ngIf="!submitting">Submit</span></button>
 			</div>
 		</div>
 	</form>
 	<form  [formGroup]="newadForm">
 			<div class="dynamicform">
-					<h3>Add Form Fields</h3>
-					<div class="controls">
+					<h3>Add Form Fields <span *ngIf="showfieldsloading">Loading...</span></h3>
+					<div class="controls" *ngIf="!showfieldsloading">
 						<ul class="controlnames">
 							<li *ngFor="let field of fieldbuttons; let i=index" (click)="addfield(i, field)" id="{{i}}">
 									{{field}} <i class="fa fa-plus-square-o" aria-hidden="true"></i>

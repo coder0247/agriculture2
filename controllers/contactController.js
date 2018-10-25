@@ -9,6 +9,7 @@ exports.contact = function (req, res) {
         contactdetails.email = req.body.email;
         contactdetails.phonenumber = req.body.phoneno;
         contactdetails.msg = req.body.msg;
+        contactdetails.usercountrycode = req.body.countrycode;
         contactdetails.save(function (error) {
             if (error) {
                 return res.status(200).json({

@@ -111,14 +111,14 @@
       </div>
       <div *ngSwitchCase="'pricenegotiable'">
         <div *ngIf="formbase.value==='yes'">
-          <input [name]="formbase.key" [type]="formbase.type" [formControlName]="formbase.key" [checked]="formbase.value==='yes'? '': 'checked'"
+          <input [name]="formbase.key" [type]="formbase.type" [formControlName]="formbase.key" [checked]="checkboxstatus === formbase.value? 'checked': ''"
             [value]="formbase.value" (change)="formbase.value.yes = true"><label for="r1" class="label-text" >{{formbase.value |
             titlecase}}</label>
   
         </div>
         <div *ngIf="formbase.value==='no'">
   
-          <input [name]="formbase.key" [type]="formbase.type" [formControlName]="formbase.key" [checked]="formbase.value==='no'? 'checked': ''"
+          <input [name]="formbase.key" [type]="formbase.type" [formControlName]="formbase.key" [checked]="checkboxstatus === formbase.value? 'checked': ''"
             [value]="formbase.value" (change)="formbase.value.no = false"><label for="r2" class="label-text">{{formbase.value |
             titlecase}}</label>
         </div>

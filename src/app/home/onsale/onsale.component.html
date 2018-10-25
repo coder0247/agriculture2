@@ -2,7 +2,7 @@
 	<div class="widget widget-recent-post">
 		<h5 class="widgettitle">Onsale Products</h5>
 		<ul class="list-recent-posts">
-			<li class="product-item" *ngFor="let item of best_sell_products; let i = index;">
+			<li class="product-item" *ngFor="let item of on_sale_products; let i = index;">
 				<div class="thumb">
 					<a routerLink="product/detail/{{ item.productid._id }}">
 						<img src="{{ item.productid.pimage }}" alt="">

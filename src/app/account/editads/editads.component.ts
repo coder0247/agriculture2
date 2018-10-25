@@ -21,16 +21,18 @@ export class EditadsComponent implements OnInit {
   pager: any = {};
   pageSize = 9;
   pagedItems: any[];
+  isdeleting = 'block';
   constructor(
     private product: ProductService,
     private route: ActivatedRoute,
     private router: Router,
     private modalService: BsModalService,
     private renderer: Renderer2,
-    private pageservice: PagerService
+    private pageservice: PagerService,
+    private elRef: ElementRef
   ) {}
 
-  deleteproduct(productid , event , productindex) {
+  deleteproduct(productid , event , productindex, editbtnid) {
     const initialState = {
       modaldata: [productid]
     };
@@ -40,7 +42,11 @@ export class EditadsComponent implements OnInit {
       if (result === true) {
         // console.log(event.srcElement.attributes.id);
         // console.log(event);
+        const hElement: HTMLElement = this.elRef.nativeElement;
+        const editbutton = hElement.getElementsByClassName(editbtnid);
         this.renderer.setAttribute(event.srcElement, 'disabled', 'disabled');
+        this.renderer.setAttribute(editbutton[0], 'disabled', 'disabled');
+        this.isdeleting = 'none';
         this.confirmdelete(productid, productindex);
 
       }
@@ -67,10 +73,12 @@ export class EditadsComponent implements OnInit {
     .subscribe(res => {
         if (res['status'] === 'success') {
           this.pagedItems.splice(productindex, 1);
+          this.isdeleting = 'block';
        } else {
-
+        this.isdeleting = 'block';
        }
       }, (err) => {
+        this.isdeleting = 'block';
         console.log(err);
       });
   }

@@ -9,6 +9,7 @@ import { MsgService } from '../../service/msg.service';
 export class SentComponent implements OnInit {
   sentmsg: Array<any> = [];
   loadingmsg = false;
+  noinboxmsg = false;
   constructor(private route: ActivatedRoute, private router: Router, private msg: MsgService) { }
 
   ngOnInit() {
@@ -22,9 +23,14 @@ export class SentComponent implements OnInit {
         if (res['status'] === 'success') {
           this.sentmsg = res.data.sentmsg;
           this.loadingmsg = false;
+          this.noinboxmsg = false;
+        } else {
+          this.loadingmsg = false;
+          this.noinboxmsg = true;
         }
       }, (err) => {
         this.loadingmsg = false;
+        this.noinboxmsg = false;
         console.log(err);
       });
 

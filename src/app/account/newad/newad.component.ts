@@ -155,7 +155,7 @@ priceneg() {
   this.pricenegradio2 = vitem - 1;
   // this.newadForm. = this.cs.toFormGroup(this.radiobutton);
 }
-getSubcatList(catid) {
+getSubcatList(e) {
   // console.log('catid', catid);
   this.showcatloading = true;
   if (this.formbaseelements.length === 2) {
@@ -164,7 +164,9 @@ getSubcatList(catid) {
     this.formbaseelements.splice(2, this.formbaseelements.length - 1);
   }
   // console.log('aaaa', this.formbaseelements);
-  this.homepage.getSubcatListByCatID(catid._id).subscribe(res => {
+  console.log('e.target.value', e.target.value);
+  if (e.target.value !== '') {
+  this.homepage.getSubcatListByCatID(e.target.value).subscribe(res => {
     if (res.status === 'success') {
       // this.formbaseelements[this.formselementsubcat_idx] = res.data.subcategory;
       this.formbaseelements.push(this.formcontrolservice.subcategoryfield(res.data.subcategory));
@@ -177,16 +179,23 @@ getSubcatList(catid) {
   }, (err) => {
     console.log(err);
   });
+} else {
+  this.formbaseelements.splice(1, this.formbaseelements.length - 1);
+  this.productimage = '';
+  this.defaultproductimage = '';
+  this.showcatloading = false;
+}
 }
 getSubcatimages(e) {
-  // console.log('subcat details', e);
   this.formbaseelements.splice(2, this.formbaseelements.length - 1);
+  // console.log('get subcat images', e.target.value);
+  if (e.target.value !== 'none') {
   this.pricenegradio1 = null;
   this.pricenegradio2 = null;
   this.showfrmloading = true;
- this.productimage = e.defaultimage;
- this.defaultproductimage = e.defaultimage;
- this.homepage.getformfields(e._id).subscribe(res => {
+ this.productimage = this.formbaseelements[1]['options'][parseInt(e.target.selectedIndex, 10) - 1].defaultimage;
+ this.defaultproductimage = this.formbaseelements[1]['options'][parseInt(e.target.selectedIndex, 10) - 1].defaultimage;
+ this.homepage.getformfields(e.target.value).subscribe(res => {
   if (res.status === 'success') {
     // console.log('form data', res.data);
     // this.subCats = res.data;
@@ -234,6 +243,12 @@ getSubcatimages(e) {
 }, (err) => {
     console.log(err);
 });
+} else {
+  this.formbaseelements.splice(2, this.formbaseelements.length - 1);
+  this.productimage = '';
+  this.defaultproductimage = '';
+  this.showcatloading = false;
+}
 }
   // public fileOverBase(e: any): void {
   //   this.hasBaseDropZoneOver = e;
@@ -256,10 +271,20 @@ getSubcatimages(e) {
   }
 
   addnewproduct(templatenewaddposted) {
-    // console.log('1111', this.newadForm.value);
-    // console.log('2222', this.formElements);
+    console.log('this.newadForm.value', this.newadForm.value);
+    /*
+      amtunit: "5b4debdd5580971bc49e89d4"
+      category: "5b56cd9ecb50b83ff77b516e"
+      currency: "usd"
+      description: "lorem lorem lorem"
+      priceneg: "yes"
+      productname: "some testproduct"
+      region: "5b45cf40364504e1dff51c5c"
+      saleamount: 11
+      subcatnames: "5bc44733da3f0033ec1b7c0a"
+      unitprice: 12
+    */
     const userid = localStorage.getItem('id');
-    // console.log('this.uploadedimages', this.uploadedimages);
     let productimage;
     if (typeof this.uploadedimages !== undefined && this.uploadedimages) {
       productimage = this.uploadedimages;
@@ -278,6 +303,7 @@ getSubcatimages(e) {
       'description': this.newadForm.value.description,
       'currencytype': this.newadForm.value.currency,
       'productimage': productimage,
+      'priceneg': this.newadForm.value.priceneg,
       'userid' : userid
     };
    if (this.newadForm.valid) {
@@ -294,8 +320,6 @@ getSubcatimages(e) {
     }, (error) => {
       console.log(error);
     });
-   } else {
-     console.log('form valid', this.newadForm);
    }
   }
     // FILE UPLOAD CODE
@@ -341,11 +365,11 @@ getSubcatimages(e) {
 
   onSelectChange(event, template, templateproductimg) {
     const image = new Image();
-    console.log('event.target.files', event.target.files);
+    // console.log('event.target.files', event.target.files);
     if (event.target.files && event.target.files.length > 0) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      console.log('file details', event.target.files[0]);
+      // console.log('file details', event.target.files[0]);
       // this.currentfilesize = Math.floor(parseFloat(event.target.files[0].size) / 1024) ;
       if (event.target.files[0].type === 'image/jpeg') {
      if (Math.floor(parseFloat(event.target.files[0].size) / 1024) > 300) {
@@ -371,7 +395,7 @@ getSubcatimages(e) {
           //   this.showAlert(exceededuploadlimit);
           //   return;
           // }
-           console.log('Total Count:' + this.uploader.queue.length);
+          //  console.log('Total Count:' + this.uploader.queue.length);
           }
         });
       };
@@ -397,7 +421,7 @@ getSubcatimages(e) {
         const formData = new FormData();
         formData.append('filename', selectedFile.file.name);
         formData.append('file', selectedFile.file);
-        console.log('selectedFile.file', selectedFile.file);
+        // console.log('selectedFile.file', selectedFile.file);
         const uploadReq = new HttpRequest('POST', `/api/upload`, formData, {
           reportProgress: true,
         });
@@ -437,6 +461,6 @@ getSubcatimages(e) {
     // this.uploadedimages.splice(idx, 1);
     this.uploader.queue.length = 0;
     this.uploadedimages = '';
-    console.log('queue', this.uploader.queue, this.uploadedimages);
+    // console.log('queue', this.uploader.queue, this.uploadedimages);
   }
 }

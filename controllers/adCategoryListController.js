@@ -186,7 +186,7 @@ exports.updateCategoryDetails = function (req, res) {
                 return res.status(200).json({
                     status: true,
                     message: 'Category updated successfully',
-                    data: { 'category': category },
+                    data: { 'category': category , 'catid': category._id},
                 });
             } else {
                 return res.status(200).json({

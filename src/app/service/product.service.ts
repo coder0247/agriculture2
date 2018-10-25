@@ -173,7 +173,14 @@ export class ProductService {
       catchError(this.handleError)
     );
   }
-
+  getonSaleProductList(limit: any) {
+    limit = limit || '';
+    return this.http.get(apiUrl + 'onsalelist/' + limit, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+  
   getMostViewedProductList(limit: any) {
     limit = limit || '';
     return this.http.get(apiUrl + 'mostviewed/' + limit, httpOptions).pipe(
