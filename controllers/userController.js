@@ -115,7 +115,7 @@ exports.forgotpass = function (req, res) {
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0) {
-                
+
                 let newpassword = {
                     password: crypt('123456'),
                 };
@@ -134,10 +134,10 @@ exports.forgotpass = function (req, res) {
                             secure: true, // true for 465, false for other ports
                             auth: {
                                 user: 'support@kilimosafi.com', // generated ethereal user
-                                pass: 'Service2018$' // generated ethereal password
+                                pass: 'Support2018$' // generated ethereal password
                             }
                         });
-                    
+
                         // setup email data with unicode symbols
                         let mailOptions = {
                             from: '"Agriculture" <support@kilimosafi.com>', // sender address
@@ -146,7 +146,7 @@ exports.forgotpass = function (req, res) {
                             text: 'Below is new password. After login please reset the password to new one', // plain text body
                             html: '<b>Password: </b>' + '123456'// html body
                         };
-                    
+
                         // send mail with defined transport object
                         transporter.sendMail(mailOptions, (error, info) => {
                             if (error) {
@@ -155,7 +155,7 @@ exports.forgotpass = function (req, res) {
                             console.log('Message sent: %s', info.messageId);
                             // Preview only available when sending through an Ethereal account
                             console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                    
+
                             // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
                             // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
                         });
@@ -184,7 +184,7 @@ exports.restUserPassword = function (req, res) {
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0  && userdetails[0].password == crypt(req.body.currentpassword, userdetails[0].password)) {
-                
+
                 let newpassword = {
                     password: crypt(req.body.password),
                 };
@@ -221,16 +221,15 @@ exports.editProfile = function (req, res) {
             lastname: req.body.lastname,
             phonenumber: req.body.phoneno,
             email: req.body.email,
-            region: req.body.region, 
+            region: req.body.region,
             usercountrycode: req.body.countrycode
         };
         User.findByIdAndUpdate({ _id : req.body.userid }, { $set: setprofiledata }, function (error, profileupdated) {
             return res.status(200).json({
                 status: true,
-                message: {'profile' : 'profile updated successfully' }, 
+                message: {'profile' : 'profile updated successfully' },
                 extra: profileupdated
             });
         });
     });
 };
-
