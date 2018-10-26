@@ -26,14 +26,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="group-button">
+					<div class="group-button mar0">
 							<button class="button submit" (click)="contactus()">
 								<span *ngIf="loading">Please Wait ...</span>
 								<span *ngIf="!loading">Submit</span>
 							</button>
-							
+							<span class="successmsg bg-success" *ngIf="sentsuccess"><strong>Success :</strong> {{replymsg}}</span>
+					<span class="successmsg bg-danger" *ngIf="errorusername"><strong>Error :</strong> {{replymsg}}</span>
 						</div>
-					<span class="successmsg bg-success" *ngIf="sentsuccess"><strong>Success :</strong> {{replymsg}}</span>
+					
+					
 				</div>
 		 </form>
 	</div>

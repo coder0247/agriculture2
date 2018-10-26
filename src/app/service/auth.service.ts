@@ -28,6 +28,13 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+  verify(verifyid): Observable<any> {
+    return this.http.get(apiUrl + 'verify/' + verifyid, httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   resetUserPassword(data): Observable<any> {
     // console.log('service userid', userid);
     return this.http.post(apiUrl + 'user/resetuserpass/', data)

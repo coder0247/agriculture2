@@ -9,5 +9,6 @@ app.get('/api/user/details/:userid', userController.userDetails);
 app.post('/api/user/resetuserpass', userController.restUserPassword);
 app.post('/api/user/editprofile', userController.editProfile);
 app.post('/api/user/forgotpass', userController.forgotpass);
+app.get('/api/verify/:msgid', userController.verify);
 
 module.exports = app;

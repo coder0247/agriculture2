@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('../config');
+const nodemailer = require('nodemailer');
 const Contact = require('../model/contact');
 exports.contact = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
@@ -17,11 +18,48 @@ exports.contact = function (req, res) {
                     data: { 'error': error }
                 });
             } else {
-                return res.status(200).json({
-                    status: 'success',
-                    data: {'msg': "We will contact you shortly." },
-
+                nodemailer.createTestAccount((err, account) => {
+                    // create reusable transporter object using the default SMTP transport
+                    let transporter = nodemailer.createTransport({
+                        host: config.mail.host,
+                        port: config.mail.port,
+                        secure: config.mail.secure, // true for 465, false for other ports
+                        auth: {
+                            user: config.mail.user, // generated ethereal user
+                            pass: config.mail.pass // generated ethereal password
+                        }
+                    });
+                
+                    // setup email data with unicode symbols
+                    let mailOptions = {
+                        from: '"Agriculture" <support@kilimosafi.com>', // sender address
+                        to: 'support@kilimosafi.com', // list of receivers
+                        subject: 'Contact us', // Subject line
+                        text: '', // plain text body
+                        html: '<table>'+
+                        '<tr><td>Name</td>'+'<td>'+ req.body.fullname +'</td></tr>'+
+                        '<tr><td>Email</td>'+'<td>'+ req.body.email +'</td></tr>'+
+                        '<tr><td>Phone</td>'+'<td>'+ req.body.phoneno +'</td></tr>'+
+                        '<tr><td>Message</td>'+'<td>'+ req.body.msg +'</td></tr>'+
+                        '</table>'
+                    };
+                
+                    // send mail with defined transport object
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            return console.log(error);
+                        }
+                        return res.status(200).json({
+                            status: 'success',
+                            data: {'msg': "We will contact you shortly." },
+        
+                        });
+                        // console.log('Message sent: %s', info.messageId);
+                        // // Preview only available when sending through an Ethereal account
+                        // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                    });
                 });
+               
             }
         });
 

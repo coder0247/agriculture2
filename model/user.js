@@ -13,6 +13,8 @@ const userSchema = new Schema({
   is_admin: { type: Boolean, default: false },
   created_at: { type: Date, default: Date.now },
   usercountrycode: { type: Schema.Types.ObjectId, ref: 'IntlCodes' },
+  verified : { type: Boolean, default: false },
+  verifcode: { type: String, required: false } 
 }, { collection: 'user' });
 
 const User = mongoose.model('User', userSchema);

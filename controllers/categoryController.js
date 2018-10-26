@@ -16,7 +16,7 @@ exports.productListByCat = function (req, res) {
 
             });
           }
-            Subcategory.find({ 'catid': req.params.id }, function (err, subcatfound) {
+            Subcategory.find({ 'catid': req.params.id }).sort('subcatname').exec(function (err, subcatfound) {
                 if (err) throw err;
                 if (subcatfound.length > 0) {
                     var maproductarray = subcatfound.map(obj => {

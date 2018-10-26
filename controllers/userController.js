@@ -1,8 +1,10 @@
 const User = require('../model/user');
 var crypt = require("apache-crypt");
+var generator = require('generate-password');
 const mongoose = require('mongoose');
 const config = require('../config');
 const nodemailer = require('nodemailer');
+const uuidv5 = require('uuid/v5');
 exports.logout = function (req, res) {
     if (req.session) {
         // delete session object
@@ -66,26 +68,95 @@ exports.register = function (req, res ) {
         newUser.newsletter = !!req.body.newsletter;
         newUser.usercountrycode = req.body.countrycode;
         newUser.password = crypt(req.body.password);
-        newUser.save(function (error, product) {
+        newUser.save(function (error, register) {
             if (error) {
                 return res.status(200).json({
                     status: 'Failed',
                     data: { 'error': error },
-                    dup : "The email address you have entered is already registered"
-
+                    dup : "The email address you have entered is already registered",
+                    
                 });
             } else {
-                return res.status(200).json({
-                    status: 'success',
-                    data: { 'error': false, 'msg': "Registered Successfully" },
+                const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
+                var verificationcode = uuidv5(req.body.email, MY_NAMESPACE);
+                // console.log('verificationcode', verificationcode);
+                nodemailer.createTestAccount((err, account) => {
+                    // create reusable transporter object using the default SMTP transport
+                    let transporter = nodemailer.createTransport({
+                        host: config.mail.host,
+                        port: config.mail.port,
+                        secure: config.mail.secure, // true for 465, false for other ports
+                        auth: {
+                            user: config.mail.user, // generated ethereal user
+                            pass: config.mail.pass // generated ethereal password
+                        }
+                    });
+                
+                    // setup email data with unicode symbols
+                    let mailOptions = {
+                        from: '"Agriculture" <support@kilimosafi.com>', // sender address
+                        to: req.body.email, // list of receivers
+                        subject: 'Verify your email address', // Subject line
+                        text: '', // plain text body
+                        html: req.body.firstname + '<br>' +
+                       'Welcome to Agriculture Platform! To verify your email so that you can post Ad and contact seller, click the following link:<br>'+
 
+                        config.siteUrl+'/verify/'+ verificationcode +'<br>'+
+                        
+                        'Thanks for joining the Agriculture Platform.'
+                    };
+                
+                    // send mail with defined transport object
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            return console.log(error);
+                        }
+                        let vcode = {
+                            verifcode: verificationcode,
+                        };
+                        User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
+                            return res.status(200).json({
+                                status: 'success',
+                                data: { 'error': false, 'msg': "Registered Successfully" },
+                            });
+                        });
+                        // console.log('Message sent: %s', info.messageId);
+                        // // Preview only available when sending through an Ethereal account
+                        // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                    });
                 });
-            }
+               
+            } //else
         });
 
     });
 };
+exports.verify = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        User.find({'verifcode' : req.params.msgid}, '_id firstname', function (err, userdetails) {
+            if (err) throw err;
+            if (userdetails.length > 0) {
+                let verifiedstatus = {
+                    verified: true,
+                };
+                User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: verifiedstatus }, function (error, verificationcode) {
+                    return res.status(200).json({
+                        status: 'success',
+                        data: 'verification successfull' ,
+                    });
+                });
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: 'Fetch Failed',
 
+                })
+            }
+
+        })
+    });
+};
 exports.userDetails = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -111,14 +182,20 @@ exports.userDetails = function (req, res) {
 exports.forgotpass = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        // console.log( req.body);
+        console.log( req.body.email);
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0) {
-
+                var genpassword = generator.generate({
+                    length: 10,
+                    numbers: true,
+                    symbols: true
+                });
+                console.log('password', genpassword);
                 let newpassword = {
-                    password: crypt('123456'),
+                    password: crypt(genpassword),
                 };
+                console.log('password', newpassword.password);
                 User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: newpassword }, function (error, passwordreset) {
                     if (req.session) {
                         // delete session object
@@ -129,15 +206,15 @@ exports.forgotpass = function (req, res) {
                     nodemailer.createTestAccount((err, account) => {
                         // create reusable transporter object using the default SMTP transport
                         let transporter = nodemailer.createTransport({
-                            host: 'smtp.strato.de',
-                            port: 465,
-                            secure: true, // true for 465, false for other ports
+                            host: config.mail.host,
+                            port: config.mail.port,
+                            secure: config.mail.secure, // true for 465, false for other ports
                             auth: {
-                                user: 'support@kilimosafi.com', // generated ethereal user
-                                pass: 'Support2018$' // generated ethereal password
+                                user: config.mail.user, // generated ethereal user
+                                pass: config.mail.pass // generated ethereal password
                             }
                         });
-
+                    
                         // setup email data with unicode symbols
                         let mailOptions = {
                             from: '"Agriculture" <support@kilimosafi.com>', // sender address
@@ -146,7 +223,7 @@ exports.forgotpass = function (req, res) {
                             text: 'Below is new password. After login please reset the password to new one', // plain text body
                             html: '<b>Password: </b>' + '123456'// html body
                         };
-
+                    
                         // send mail with defined transport object
                         transporter.sendMail(mailOptions, (error, info) => {
                             if (error) {
@@ -155,9 +232,6 @@ exports.forgotpass = function (req, res) {
                             console.log('Message sent: %s', info.messageId);
                             // Preview only available when sending through an Ethereal account
                             console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
-                            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-                            // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
                         });
                     });
                     return res.status(200).json({
@@ -169,7 +243,7 @@ exports.forgotpass = function (req, res) {
             } else {
                 return res.status(200).json({
                     status: 'fail',
-                    data: 'Invalid Email/Password',
+                    data: 'Email is not registered with us.',
 
                 })
             }
@@ -184,7 +258,7 @@ exports.restUserPassword = function (req, res) {
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0  && userdetails[0].password == crypt(req.body.currentpassword, userdetails[0].password)) {
-
+                
                 let newpassword = {
                     password: crypt(req.body.password),
                 };
@@ -221,15 +295,16 @@ exports.editProfile = function (req, res) {
             lastname: req.body.lastname,
             phonenumber: req.body.phoneno,
             email: req.body.email,
-            region: req.body.region,
+            region: req.body.region, 
             usercountrycode: req.body.countrycode
         };
         User.findByIdAndUpdate({ _id : req.body.userid }, { $set: setprofiledata }, function (error, profileupdated) {
             return res.status(200).json({
                 status: true,
-                message: {'profile' : 'profile updated successfully' },
+                message: {'profile' : 'profile updated successfully' }, 
                 extra: profileupdated
             });
         });
     });
 };
+

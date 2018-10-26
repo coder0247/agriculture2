@@ -13,5 +13,9 @@ button.close{
     outline: none;  
 }
 .modal-lg {
-    width: 800px;
+    width: 650px;
+}
+.successmsg{
+    padding: 10px;
+    margin-left: 10px;
 }

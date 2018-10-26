@@ -67,6 +67,10 @@ const routes: Routes = [
     path: 'contact',
     loadChildren: '../app/contact/contact.module#ContactModule'
   },
+  {
+    path: 'verify/:msgid',
+    loadChildren: '../app/verify/verify.module#VerifyModule'
+  },
   // {
   //   path: '',
   //   redirectTo: '',

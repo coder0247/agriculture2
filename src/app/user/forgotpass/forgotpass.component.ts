@@ -3,6 +3,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { patternValidator } from '../../sharedfn/userfn';
 import { AuthService } from '../../service/auth.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-forgotpass',
@@ -14,6 +15,7 @@ export class ForgotpassComponent implements OnInit {
   forgotPassForm: FormGroup;
   replymsg = '';
   sentsuccess = false;
+  errorusername = false;
   formsubmitted = false;
   loading = false;
   constructor(public bsModalRef: BsModalRef, private authservice: AuthService) {}
@@ -32,7 +34,8 @@ export class ForgotpassComponent implements OnInit {
   }
 contactus() {
     this.formsubmitted = true;
-
+    this.sentsuccess = false;
+    this.errorusername = false;
     if (this.forgotPassForm.valid) {
       this.loading = true;
       this.authservice.forgotPassword(this.forgotPassForm.value).subscribe(
@@ -42,10 +45,12 @@ contactus() {
             this.loading = false;
             this.replymsg = res.data;
             this.formsubmitted = false;
+            this.errorusername = false;
           } else {
             this.loading = false;
             this.replymsg = res.data;
             this.sentsuccess = false;
+            this.errorusername = true;
           }
         },
         err => {

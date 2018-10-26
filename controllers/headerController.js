@@ -8,12 +8,12 @@ const config = require('../config');
 exports.categoryList = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Category.find({'status': 1}, function (err, category) {
+        Category.find({'status': 1}).sort('catname').exec(function (err, category) {
             if (err) throw err;
             if (category.length > 0) {
                 return res.status(200).json({
                     status: 'success',
-                    data: { 'category': category },
+                    data: { 'category': category }
                 });
 
             } else {
@@ -40,7 +40,7 @@ exports.subCategoryList = function (req, res) {
           }
         Subcategory.find({
             catid: req.params.catid, status: 1
-        }, function (err, subcategory) {
+        }).sort('subcatname').exec(function (err, subcategory) {
             if (err) throw err;
             if (subcategory.length > 0) {
                 return res.status(200).json({
@@ -62,7 +62,7 @@ exports.subCategoryList = function (req, res) {
 exports.regionList = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Region.find({}, function (err, region) {
+        Region.find({}).sort('regionname').exec(function (err, region) {
             if (err) throw err;
             if (region.length > 0) {
                 return res.status(200).json({
