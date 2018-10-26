@@ -37,6 +37,7 @@ exports.sigin = function (req, res) {
                     firstname: user[0].firstname,
                     lastname: user[0].lastname,
                     is_admin: user[0].is_admin,
+                    verified: user[0].verified
                 };
                 req.session.auth = true;
                 req.session.is_admin = user[0].is_admin;
@@ -74,7 +75,7 @@ exports.register = function (req, res ) {
                     status: 'Failed',
                     data: { 'error': error },
                     dup : "The email address you have entered is already registered",
-                    
+
                 });
             } else {
                 const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
@@ -91,7 +92,7 @@ exports.register = function (req, res ) {
                             pass: config.mail.pass // generated ethereal password
                         }
                     });
-                
+
                     // setup email data with unicode symbols
                     let mailOptions = {
                         from: '"Agriculture" <support@kilimosafi.com>', // sender address
@@ -102,10 +103,10 @@ exports.register = function (req, res ) {
                        'Welcome to Agriculture Platform! To verify your email so that you can post Ad and contact seller, click the following link:<br>'+
 
                         config.siteUrl+'/verify/'+ verificationcode +'<br>'+
-                        
+
                         'Thanks for joining the Agriculture Platform.'
                     };
-                
+
                     // send mail with defined transport object
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
@@ -125,7 +126,7 @@ exports.register = function (req, res ) {
                         // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
                     });
                 });
-               
+
             } //else
         });
 
@@ -214,7 +215,7 @@ exports.forgotpass = function (req, res) {
                                 pass: config.mail.pass // generated ethereal password
                             }
                         });
-                    
+
                         // setup email data with unicode symbols
                         let mailOptions = {
                             from: '"Agriculture" <support@kilimosafi.com>', // sender address
@@ -223,7 +224,7 @@ exports.forgotpass = function (req, res) {
                             text: 'Below is new password. After login please reset the password to new one', // plain text body
                             html: '<b>Password: </b>' + '123456'// html body
                         };
-                    
+
                         // send mail with defined transport object
                         transporter.sendMail(mailOptions, (error, info) => {
                             if (error) {
@@ -258,7 +259,7 @@ exports.restUserPassword = function (req, res) {
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0  && userdetails[0].password == crypt(req.body.currentpassword, userdetails[0].password)) {
-                
+
                 let newpassword = {
                     password: crypt(req.body.password),
                 };
@@ -295,16 +296,15 @@ exports.editProfile = function (req, res) {
             lastname: req.body.lastname,
             phonenumber: req.body.phoneno,
             email: req.body.email,
-            region: req.body.region, 
+            region: req.body.region,
             usercountrycode: req.body.countrycode
         };
         User.findByIdAndUpdate({ _id : req.body.userid }, { $set: setprofiledata }, function (error, profileupdated) {
             return res.status(200).json({
                 status: true,
-                message: {'profile' : 'profile updated successfully' }, 
+                message: {'profile' : 'profile updated successfully' },
                 extra: profileupdated
             });
         });
     });
 };
-

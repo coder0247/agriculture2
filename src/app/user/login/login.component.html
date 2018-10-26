@@ -9,7 +9,7 @@
       <span class="label-text">Email <span>*</span></span>
       <input type="email" class="input-info" formControlName="email" required>
       <div *ngIf="loginForm.invalid && formsubmitted" class="error-msg">
-       
+
           <div class="text-danger" *ngIf="!!loginForm.controls['email'].pristine || !!loginForm.controls['email'].errors?.required">Email is required.</div>
           <div class="text-danger" *ngIf="loginForm.controls['email'].dirty && !!loginForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
           <!-- {{!!loginForm.controls['email'].errors.required | json}} -->
@@ -24,10 +24,11 @@
         <a href="javascript:void(0)" class="forgot" (click)="forgotpassword()">Fogot your password ?</a>
       </div>
       <div class="group-button">
-        <button class="button submit" (click)="login()">Login <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button> 
+        <button class="button submit" (click)="login()">Login <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
       </div>
     </form>
     </div>
     <div class="alert alert-danger" role="alert" *ngIf="error"> <strong>Error : </strong> Invalid Username / Password </div>
+    <div class="alert alert-danger" role="alert" *ngIf="shownotverified"> <strong>Error : </strong> You have not verified your email. </div>
+
   </div>
-  
