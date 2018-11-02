@@ -18,7 +18,6 @@ export class FeaturedsmallComponent implements OnInit {
   bsModalRef: BsModalRef;
   catelist: Array<any> = [];
   featurelist: Array<any> = [];
-
   agricultural_services: Array<any> = [];
   agro_jobs: Array<any> = [];
   farm_lands: Array<any> = [];
@@ -213,13 +212,8 @@ mouseleaverowl() {
   }
 
   quickview(product) {
-    const image = product.pimage;
-    const pname = product.pname;
-    const pprice = product.saleamount;
-
     const initialState = {
-      // modaldata: [image, pname, pprice]
-      modaldata: { product: product }
+      modaldata: { product: product._id }
     };
     this.bsModalRef = this.modalService.show(QuickviewComponent, {
       initialState

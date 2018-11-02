@@ -5,7 +5,7 @@ const Product = require('../model/product');
 exports.searchResult = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        MappingTbl.find({ subcatid: req.params.subCatId, regionid: req.params.regionId }, function (err, mappingfound) {
+        MappingTbl.find({ subcatid: req.params.subCatId }, function (err, mappingfound) {
             if (mappingfound.length > 0) {
                 var reformattedArray = mappingfound.map(obj => {
                     return obj.productid;

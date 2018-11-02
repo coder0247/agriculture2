@@ -8,8 +8,7 @@
 		</div>
 		<div class="row">
 				<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset" *ngIf="!singleproduct">
-						<!-- <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset"> -->
-						<div class="about-product row">
+					<div class="about-product row">
 							<!-- {{singleproduct | json}} -->
 							<div class="details-thumb col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								<div class="prodimgbox shine"></div>
@@ -45,10 +44,41 @@
 					<!-- {{singleproduct | json}} -->
 					<div class="details-thumb col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<h4 class="imgloading" *ngIf="showloading">Loading...</h4>
-						<div class="details-item">
-							<img src="{{singleproduct.pimage}}" alt="">
+						<div class="details-thumb">
+							<!-- <img src="{{singleproduct.pimage}}" alt=""> -->
+							<owl-carousel #owlElement  [options]="{thumbs: true, dots: false, autoplay: false, smartSpeed:800, navigation: true ,
+								responsive: { '0': {  items: 1},
+											  '480': { items: 2 },
+											  '768': { items: 1 },
+											  '1024': { items: 1 },
+											  '1200': { items: 1 }
+											}
+											}" [items]="singleproduct.pimage"  [carouselClasses]="['owl-carousel', 'nav-style3', 'has-thumbs']">
+
+								<div class="item" *ngFor="let image of singleproduct.pimage;let i = index">
+									
+									<div class="details-item">
+			
+									<img [src]="image" alt=""> 
+									</div>
+								</div>
+								
+							</owl-carousel>
+							
+							<div class="owl-thumbs">
+									<button class="owl-thumb-item" *ngFor="let image of singleproduct.pimage;let i = index" (click)="gotoitem(i)"><img [ngClass]="{'thumbactive': i==slideindex}" [src]="image" alt=""></button>
+									<div class="owl-nav"> 
+										<div class="owl-prev"  (click)="prevprod()"></div>
+										<div class="owl-next"  (click)="nextprod()"></div>
+									</div>
+								</div>
+								
 						</div>
-						<!-- <div class="owl-carousel nav-style3 has-thumbs" data-autoplay="false" data-nav="true" data-dots="false" data-loop="true" data-slidespeed="800" data-margin="0"  data-responsive = '{"0":{"items":1}, "480":{"items":2}, "768":{"items":1}, "1024":{"items":1}, "1200":{"items":1}}'>
+			<!-- 
+				<div class="owl-carousel nav-style3 has-thumbs" data-autoplay="false" 
+				data-nav="true" data-dots="false" data-loop="true" data-slidespeed="800" 
+				data-margin="0"  
+				data-responsive = '{"0":{"items":1}, "480":{"items":2}, "768":{"items":1}, "1024":{"items":1}, "1200":{"items":1}}'>
               <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
               <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
               <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
@@ -79,9 +109,7 @@
 						<div class="price">
 								<span>Details</span>
 						</div>
-						<div class="description"  style="margin-top: 10px;" *ngIf="!!singleproduct.pdesc">
-								{{singleproduct.pdesc}}
-						</div>
+						
 						<div class="price"  style="margin-top: 10px;" *ngIf="!!singleproduct.currencytype">
 							
 								<h4>Price: {{singleproduct.saleamount}} {{singleproduct.currencytype | uppercase}}</h4>
@@ -92,10 +120,20 @@
 							<h4  *ngIf="!singleproduct.negotiable">Price negotiable : No</h4>
 							<h4  *ngIf="singleproduct.negotiable">Price negotiable : Yes</h4>
 						</div>
+						<div class="price" style="margin-top: 10px;">
+							
+							<h4  *ngIf="!!singleproduct.unitprice">Price Per Unit : {{singleproduct.unitprice}} / {{singleproduct.amtunit.amountunit}}</h4>
+							<h4  *ngIf="!!singleproduct.condition">Condition : {{singleproduct.condition}}</h4>
+							<h4  *ngIf="!!singleproduct.manufacture">Manufacture : {{singleproduct.manufacture}}</h4>
+							<h4  *ngIf="!!singleproduct.yearmfg">Year of manufacture : {{singleproduct.yearmfg}}</h4>
+							<h4  *ngIf="!!singleproduct.productstatus">Status : {{singleproduct.productstatus}}</h4>
+						</div>
+						
 						<div class="price" *ngIf="!!productlocation"><span>
 							Location
 						</span>
-						<h4>{{productlocation}}</h4>
+						<h4>Country: {{productlocation.country}}</h4>
+						<h4>City: {{productlocation.city}}</h4>
 					</div>
 						<!-- <div class="availability">Availability: <a href="#">in Stock</a></div> -->
 						<div class="group-social">
@@ -134,269 +172,124 @@
                                 <a class="plus" href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
               </div>
             </div> -->
-						<div class="group-button">
-							<div class="inner" *ngIf="!showsellerDetails">
-								<a (click)="gotosigin()" class="add-to-cart">
-									<span class="text">Show Seller Details</span>
-									<span class="icon">
-										<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-									</span>
-								</a>
-								<!-- <a href="#" class="compare-button"><i class="fa fa-exchange" aria-hidden="true"></i></a>
-                <a href="#" class="wishlist-button"><i class="fa fa-heart-o" aria-hidden="true"></i></a> -->
-							</div>
-						</div>
-						<div class="content-form" *ngIf="showsellerDetails">
-							<div class=" info-content">
-								<div class="contact-form">
-									<h4 class="main-title">Seller Info</h4>
-									<!-- <p class="des">Maecenas dolor elit, semper a sem sed, pulvinar molestie lacus. Aliquam dignissim, elit non mattis ultrices, neque odio ultricies tellus, eu porttitor nisl ipsum eu massa.</p> -->
-									<div class="row">
-										<div class="col-xs-12">
-											<strong class="label-text">Seller Name</strong>
-											<span class="label-text">
-												{{sellerdetails.name}}
-											</span>
-											<hr>
-										</div>
-										<div class="col-xs-12">
-											<strong class="label-text">Seller Email Address </strong>
-											<span class="label-text">
-												{{sellerdetails.email}}
-											</span>
-											<hr>
-										</div>
-									</div>
-									<!-- <span class="label-text">Phone Number</span>
-					  <input type="text" class="input-info">	 -->
-					  <h3 *ngIf="showmsgsent" class="thank-you">Thank you for contacting.</h3>
-									<form [formGroup]="sendMsgForm" method="POST">
-										<strong class="label-text">Your Message <span>*</span></strong>
-										<textarea rows="8" class="input-info input-note" formControlName="comment" required></textarea>
-										<div *ngIf="sendMsgForm.invalid" class="error-msg">
-												<div class="text-danger" *ngIf="msgerror">Message is required.</div>
-											</div>
-										<div class="group-button margin-0">
-											<button href="#" class="button submit"  (click)="sendMsg()">Send Message</button>
-										</div>
-									</form>
-
-								</div>
-							</div>
-						</div>
+						
 						
 					</div>
 					
 				</div>
-				<div class="row">
-						<div class="col-md-12">
-								<div class="disclaimer">
-										<span>Disclaimer:</span>
-										WE VALUE YOUR SAFETY ABOVE EVERYTHING. NEVER PAY MONEY BEFORE VIEWING A PROPERTY, PLEASE REPORT ANY USER REQUESTING UPFRONT PAYMENT USING THE REPORT ABUSE BUTTON ON THIS PAGE. FOR MORE TOP TIPS ON KEEPING SAFE, SEE OUR SAFETY PAGES.
-								</div>
-								<div class="pull-right">
-									<button class="btn btn-danger" (click) ="reportAd(singleproduct.adid)">
-											<i class="fa fa-exclamation-circle" aria-hidden="true"></i>	Report Ad
-									</button>
-									
-								</div>
-						</div>
-				</div>
-				<!-- <div class="kt-tab nav-tab-style2">
+				
+				<div class="kt-tab nav-tab-style2">
 					<ul class="nav list-nav">
-						<li class="active">
-							<a data-animated="fadeIn" data-toggle="pill" href="#tab1">Description</a>
+						<li  *ngIf="!!singleproduct.pdesc" [ngClass]="{'active': desctab}">
+							<a data-animated="fadeIn" data-toggle="pill" href="javascript:void(0)" (click)="showdesc()">Description</a>
 						</li>
-						<li>
-							<a data-animated="zoomInUp" data-toggle="pill" href="#tab2">Addtional Infomation</a>
+						<li  *ngIf="!!singleproduct.addinfo" [ngClass]="{'active': addinfotab}">
+							<a data-animated="zoomInUp" data-toggle="pill" href="javascript:void(0)" (click)="addinfo()">Addtional Infomation</a>
 						</li>
-						<li>
-							<a data-animated="rotateInDownLeft" data-toggle="pill" href="#tab3">Reviews</a>
+						<li [ngClass]="{'active': sellerinfotab}">
+							<a data-animated="rotateInDownLeft" data-toggle="pill" href="javascript:void(0)" (click)="sellerinfo()">Seller Info</a>
 						</li>
 					</ul>
 					<div class="tab-content">
-						<div id="tab1" class="tab-panel active ">
-							<div class="description">
-								<p>Lorem ipsum dolor sit amet, an munere tibique consequat mel, congue albucius no qui, at everti meliore erroribus
-									sea. Vero graeco cotidieque ea duo, in eirmod insolens interpretaris nam. Pro at nostrud percipit definitiones,
-									eu tale porro cum. Sea ne accusata voluptatibus. Ne cum falli dolor voluptua, duo ei sonet choro facilisis, labores
-									officiis torquatos cum ei.</p>
-								<p>Cum altera mandamus in, mea verear disputationi et. Vel regione discere ut, legere expetenda ut eos. In nam nibh
-									invenire similique. Atqui mollis ea his, ius graecis accommodare te. No eam tota nostrum cotidieque. Est cu nibh
-									clita. Sed an nominavi, et duo corrumpit constituto, duo id rebum lucilius. Te eam iisque deseruisse, ipsum euismod
-									his at. Eu putent habemus voluptua sit, sit cu rationibus scripserit, modus voluptaria ex per. Aeque dicam consulatu
-									eu his, probatus neglegentur disputationi sit et. Ei nec ludus epicuri petentium, vis appetere maluisset ad. Et
-									hinc exerci utinam cum. Sonet saperet nominavi est at, vel eu sumo tritani. Cum ex minim legere.</p>
-								<p>Eos cu utroque inermis invenire, eu pri alterum antiopam. Nisl erroribus definitiones nec an, ne mutat scripserit
-									est. Eros veri ad pri. An soleat maluisset per. Has eu idque similique, et blandit scriptorem necessitatibus mea.
-									Vis quaeque ocurreret ea.cu bus scripserit, modus voluptaria ex per. Aeque dicam consulatu eu his, probatus neglegentur
-									disputationi sit et. Ei nec ludus epicuri petentium, vis appetere maluisset ad. Et hinc exerci utinam cum. Sonet
-									saperet nominavi est at, vel eu sumo tritani.</p>
+						<div *ngIf="!!singleproduct.pdesc" [ngClass]="{'tab-panel': true, 'active': desctab}">
+							<div class="description" >
+								{{singleproduct.pdesc}}
 							</div>
 						</div>
-						<div id="tab2" class="tab-panel">
+						<div *ngIf="!!singleproduct.addinfo"  [ngClass]="{'tab-panel': true, 'active': addinfotab}">
 							<div class="additional">
 								<div class="row">
-									<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-										<p>Lorem ipsum dolor sit amet isse potenti sesquam ante aliquet lacusemper elit. Cras neque nulla convallis non comodo
-											euismod nonsese isse potent.</p>
-										<ul>
-											<li>Soft-touch jersey</li>
-											<li>Crew neck </li>
-											<li>Logo print</li>
-											<li>Regular fit - true to size</li>
-										</ul>
-										<ul>
-											<li>Machine wash</li>
-											<li>100% Cotton</li>
-											<li>Our model wears a size Medium and is 185.5cm/6'1" tall</li>
-										</ul>
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<p>{{singleproduct.addinfo}}</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div id="tab3" class="tab-panel">
+						<div [ngClass]="{'tab-panel': true, 'active': sellerinfotab}">
 							<div class="custom-review">
 								<div class="row">
-									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 										<div class="customer-review">
-											<h3 class="title supper-title">CUSTOMER REVIEWS
-												<span class="count">( 2 Reviews )</span>
-											</h3>
-											<ul class="list-review">
-												<li class="review-item">
-													<div class="character">
-														<div class="rating">
-															<ul class="list-star">
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star-half-o" aria-hidden="true"></i>
-																	</a>
-																</li>
-															</ul>
+																	
+											<div class="content-form" *ngIf="showsellerDetails">
+												<div class=" info-content">
+													<div class="contact-form">
+														<h4 class="main-title">Seller Info</h4>
+														<!-- <p class="des">Maecenas dolor elit, semper a sem sed, pulvinar molestie lacus. Aliquam dignissim, elit non mattis ultrices, neque odio ultricies tellus, eu porttitor nisl ipsum eu massa.</p> -->
+														<div class="row">
+															<div class="col-xs-12">
+																<strong class="label-text">Name</strong>
+																<span class="label-text">
+																	{{sellerdetails.name}}
+																</span>
+																<hr>
+															</div>
+															<div class="col-xs-12">
+																<strong class="label-text">Email Address </strong>
+																<span class="label-text">
+																	{{sellerdetails.email}}
+																</span>
+																<hr>
+															</div>
 														</div>
-														<a href="#" class="author">Christiana Doe</a>
-														<div class="time-review">20 Dec 2015</div>
-													</div>
-													<div class="review-content">
-														<h3 class="title">What a Beautiful Design</h3>
-														<p class="content">Cras neque nulla, convallis non commodo et, euismod nonsese. At vero eos et accusamus et iusto odio dignimos
-															ducimus qui blanditiis praesentium voluptatum</p>
-													</div>
-												</li>
-												<li class="review-item">
-													<div class="character">
-														<div class="rating">
-															<ul class="list-star">
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star" aria-hidden="true"></i>
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		<i class="fa fa-star-half-o" aria-hidden="true"></i>
-																	</a>
-																</li>
-															</ul>
+														<div class="row">
+															<div class="col-xs-12">
+																<strong class="label-text">Country </strong>
+																<span class="label-text">
+																	{{sellerdetails.country}}
+																</span>
+																<hr>
+															</div>
+															<div class="col-xs-12">
+																<strong class="label-text">City </strong>
+																<span class="label-text">
+																	{{sellerdetails.city}}
+																</span>
+																<hr>
+															</div>
 														</div>
-														<a href="#" class="author">Jonathan Doe</a>
-														<div class="time-review">20 Dec 2015</div>
+														<!-- <span class="label-text">Phone Number</span>
+										  <input type="text" class="input-info">	 -->
+										  <h3 *ngIf="showmsgsent" class="thank-you">Thank you for contacting.</h3>
+														<form [formGroup]="sendMsgForm" method="POST">
+															<strong class="label-text">Your Message <span>*</span></strong>
+															<textarea rows="8" class="input-info input-note" formControlName="comment" required></textarea>
+															<div *ngIf="sendMsgForm.invalid" class="error-msg">
+																	<div class="text-danger" *ngIf="msgerror">Message is required.</div>
+																</div>
+															<div class="group-button margin-0">
+																<button href="#" class="button submit"  (click)="sendMsg()">
+																	<span *ngIf="showmsgsending">Please Wait ...</span>
+																	<span *ngIf="!showmsgsending">Send Message</span>
+																</button>
+															</div>
+														</form>
+					
 													</div>
-													<div class="review-content">
-														<h3 class="title">Amazing Minimal theme</h3>
-														<p class="content">Cras neque nulla, convallis non commodo et, euismod nonsese. At vero eos et accusamus et iusto odio dignimos
-															ducimus qui blanditiis praesentium voluptatum</p>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-										<div class="add-review">
-											<h3 class="title supper-title">ADD A REVIEW</h3>
-											<div class="row">
-												<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-													<input type="text" class="input-info" placeholder="Your name">
-												</div>
-												<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-													<input type="text" class="input-info" placeholder="Your email">
 												</div>
 											</div>
-											<textarea rows="6" class="input-info input-content" placeholder="Your review"></textarea>
-											<div class="rating">
-												<span class="text">Your rating</span>
-												<ul class="list-star">
-													<li>
-														<a href="#">
-															<i class="fa fa-star-o" aria-hidden="true"></i>
-														</a>
-													</li>
-													<li>
-														<a href="#">
-															<i class="fa fa-star-o" aria-hidden="true"></i>
-														</a>
-													</li>
-													<li>
-														<a href="#">
-															<i class="fa fa-star-o" aria-hidden="true"></i>
-														</a>
-													</li>
-													<li>
-														<a href="#">
-															<i class="fa fa-star-o" aria-hidden="true"></i>
-														</a>
-													</li>
-													<li>
-														<a href="#">
-															<i class="fa fa-star-o" aria-hidden="true"></i>
-														</a>
-													</li>
-												</ul>
-											</div>
-											<a href="#" class="submit">SUBMIT</a>
 										</div>
 									</div>
+								
 								</div>
 							</div>
 						</div>
 					</div>
-				</div> -->
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+							<div class="disclaimer">
+									<span>Disclaimer:</span>
+									WE VALUE YOUR SAFETY ABOVE EVERYTHING. NEVER PAY MONEY BEFORE VIEWING A PROPERTY, PLEASE REPORT ANY USER REQUESTING UPFRONT PAYMENT USING THE REPORT ABUSE BUTTON ON THIS PAGE. FOR MORE TOP TIPS ON KEEPING SAFE, SEE OUR SAFETY PAGES.
+							</div>
+							<div class="pull-right">
+								<button class="btn btn-danger" (click) ="reportAd(singleproduct.adid)">
+										<i class="fa fa-exclamation-circle" aria-hidden="true"></i>	Report Ad
+								</button>
+								
+							</div>
+					</div>
+			</div>
 			</div>
 			<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 sidebar">
 				<!-- <div class="equal-container widget-featrue-box">

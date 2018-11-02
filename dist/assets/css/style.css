@@ -5425,8 +5425,8 @@ body.home5 {
 }
 
 .kt-popup-quickview {
-  width: 820px;
-  height: 420px;
+  /* width: 820px;
+  height: 420px; */
   margin: 0 auto;
   background-color: #fff;
   position: relative;
@@ -7943,4 +7943,26 @@ box-shadow: none !important;
 }
 .mar0{
   margin: 0px !important;
+}
+
+/* edit products */
+ul.prevuploadedimages li {
+  float: left;
+  margin: 5px 5px;
+  list-style: none;
+  position: relative;
+}
+.prodblockedit {
+  max-width: 135px;
+}
+.prodblockedit a {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  background: green;
+  height: 23px;
+  width: 23px;
+  color: white;
+  text-align: center;
+  border-radius: 100%;
 }

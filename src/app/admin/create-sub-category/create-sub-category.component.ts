@@ -56,10 +56,11 @@ export class CreateSubCategoryComponent implements OnInit {
   //   { key: 'priceperunit', checkedstatus: false },
   // ];
  // tslint:disable-next-line:max-line-length
- fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description'];
+ fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description', 'status', 'Year of manufacture', 'City', 'Country', 'Condition', 'Addition Information', 'Manufacture'];
  // tslint:disable-next-line:max-line-length
- copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description'];
- formkey: Array<String> = ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable', 'currency', 'description'];
+ copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description', 'status', 'Year of manufacture', 'City', 'Country', 'Condition', 'Addition Information', 'Manufacture'];
+ // tslint:disable-next-line:max-line-length
+ formkey: Array<String> = ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable', 'currency', 'description', 'status', 'yearmfg', 'city', 'country', 'condition', 'addinfo', 'manufacture' ];
  tempformfield: Array<String> = [];
  checkboxfield = [
    { key: 'region', checkedstatus: false },
@@ -70,6 +71,13 @@ export class CreateSubCategoryComponent implements OnInit {
    { key: 'pricenegotiable', checkedstatus: false },
    { key: 'currency', checkedstatus: false },
    { key: 'description', checkedstatus: false },
+   { key: 'status', checkedstatus: false },
+   { key: 'yearmfg', checkedstatus: false },
+   { key: 'city', checkedstatus: false },
+   { key: 'country', checkedstatus: false },
+   { key: 'condition', checkedstatus: false },
+   { key: 'addinfo', checkedstatus: false },
+   { key: 'manufacture', checkedstatus: false },
  ];
   checkeditems: Array<String> = [];
   checked = 'checked';

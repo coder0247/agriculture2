@@ -15,6 +15,7 @@ export class EditproductfrmComponent  {
   forcevalidation: boolean;
   subscription: Subscription;
   checkboxstatus: any;
+  commercialpvtstatus: any;
   constructor( private fvalid: FvalidationService) {
     this.subscription = this.fvalid.message.subscribe(res => {
       // console.log('this.forcevalidation', res);
@@ -22,10 +23,16 @@ export class EditproductfrmComponent  {
     });
     const productdetails = JSON.parse(localStorage.getItem('productinfo'));
     this.checkboxstatus = productdetails.negotiable === true ? 'yes' : 'no';
+    // console.log('productdetails.productstatus', productdetails.productstatus);
+    this.commercialpvtstatus = productdetails.productstatus;
   }
   @Output() selectoptcat = new EventEmitter();
   @Output() selectoptsubcat = new EventEmitter();
+  @Output() selectcities = new EventEmitter();
 
+  getCities = (evt) => {
+    this.selectcities.emit(evt);
+  }
   // type: String = 'checkbox';
   getSubcatList = (evt) => {
     // console.log('category change', evt);

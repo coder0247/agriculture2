@@ -23,19 +23,74 @@
             <div *ngIf="newadForm.controls['subcatnames'].pristine && newadForm.controls['subcatnames'].errors.required">Subcategory is required.</div>
           </div>
       </div>
-      <div class="col-xs-12 " *ngSwitchCase="'region'">
-        <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
-        <!-- {{formbase | json}} -->
-  
-        <ng-select [searchable]="false" #regionSelect [items]="formbase.options" [selectOnTab]="true" bindLabel="regionname"
-          bindValue="_id" placeholder="Select region" [formControlName]="formbase.key"></ng-select>
-        <div *ngIf="formbase.required">
-          <div *ngIf="!isValid && forcevalidation" class="error-msg">
-            <div *ngIf="newadForm.controls['region'].pristine && newadForm.controls['region'].errors.required">Region is
-              required.</div>
+      <div *ngSwitchCase="'country'">
+          <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+          <select class="form-control" [formControlName]="formbase.key"  (change)="getCities($event)"> 
+              <option  value="null">Select Country</option>
+              <option *ngFor="let item of formbase['options']" value="{{item}}">{{item}}</option>
+          </select>
+            <div *ngIf="!isValid && forcevalidation"  class="error-msg top-minus-20">
+                <div *ngIf="newadForm.controls['country'].pristine && newadForm.controls['country'].errors.required">Country is  required.</div>
+            </div>
+        </div>
+        <div  *ngSwitchCase="'city'">
+            <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+            <select class="form-control" [formControlName]="formbase.key" > 
+                <option [ngValue]="null" [disabled]="true">Select city</option>
+                <option *ngFor="let item of formbase['options']" [ngValue]="item">{{item}}</option>
+            </select>
+              <div *ngIf="!isValid && forcevalidation"  class="error-msg top-minus-20">
+                  <div *ngIf="!newadForm.controls['city'].pristine && newadForm.controls['city'].errors.required">City is  required.</div>
+              </div>
+          </div>
+      <div *ngSwitchCase="'condition'">
+          <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+          <select class="form-control" [formControlName]="formbase.key"  (change)="getCities($event)"> 
+              <option  [ngValue]="null" [disabled]="true">Condition</option>
+              <option *ngFor="let item of formbase['options']" [ngValue]="item">{{item}}</option>
+          </select>
+          <div *ngIf="formbase.required">
+            <div *ngIf="!isValid && forcevalidation"  class="error-msg top-minus-20">
+                <div *ngIf="newadForm.controls['condition'].pristine && newadForm.controls['condition'].errors.required">Condition is  required.</div>
+            </div>
           </div>
         </div>
-      </div>
+        <div  *ngSwitchCase="'yearmfg'">
+            <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+            <select class="form-control" [formControlName]="formbase.key" > 
+                <option [ngValue]="null" [disabled]="true">Year of manufacture</option>
+                <option *ngFor="let item of formbase['options']" [ngValue]="item">{{item}}</option>
+            </select>
+            <div *ngIf="formbase.required">
+              <div *ngIf="!isValid && forcevalidation"  class="error-msg top-minus-20">
+                  <div *ngIf="newadForm.controls['yearmfg'].pristine && newadForm.controls['yearmfg'].errors.required">Year of manufacture is  required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngSwitchCase="'manufacture'">
+              <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+              <input type="text" class="input-info" [formControlName]="formbase.key">
+              <div *ngIf="formbase.required">
+                <div *ngIf="!isValid && forcevalidation" class="error-msg">
+                  <div *ngIf="newadForm.controls['manufacture'].pristine && newadForm.controls['manufacture'].errors?.required">Manufacture
+                    is required.</div>
+                  <div *ngIf="newadForm.controls['manufacture'].dirty && newadForm.controls['manufacture'].errors?.required">Manufacture
+                    is required.</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngSwitchCase="'addinfo'">
+                <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+                <textarea   class="input-info input-note" [formControlName]="formbase.key" [rows]="5" [cols]="100"></textarea>
+                <div *ngIf="formbase.required">
+                  <div *ngIf="!isValid && forcevalidation" class="error-msg">
+                    <div *ngIf="newadForm.controls['addinfo'].pristine && newadForm.controls['addinfo'].errors?.required">Additional Information
+                      is required.</div>
+                    <div *ngIf="newadForm.controls['addinfo'].dirty && newadForm.controls['addinfo'].errors?.required">Additional Information
+                      is required.</div>
+                  </div>
+                </div>
+              </div>
       <div class="col-xs-12 " *ngSwitchCase="'currency'">
           <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
           <!-- {{formbase | json}} -->
@@ -60,7 +115,7 @@
               is required.</div>
           </div>
         </div>
-      </div>
+      </div> 
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngSwitchCase="'description'">
         <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
         <textarea   class="input-info input-note" [formControlName]="formbase.key"></textarea>
@@ -123,5 +178,19 @@
             titlecase}}</label>
         </div>
       </div>
+      <div *ngSwitchCase="'status'">
+          <div *ngIf="formbase.value==='commercial'">
+            <input [name]="formbase.key" [type]="formbase.type" [formControlName]="formbase.key" [checked]="commercialpvtstatus == formbase.value? 'checked': ''"
+              [value]="formbase.value"><label for="r1" class="label-text" >{{formbase.value |
+              titlecase}}</label>
+    
+          </div>
+          <div *ngIf="formbase.value==='private'">
+    
+            <input [name]="formbase.key" [type]="formbase.type" [formControlName]="formbase.key" [checked]="commercialpvtstatus == formbase.value ? 'checked': ''"
+              [value]="formbase.value" ><label for="r2" class="label-text">{{formbase.value |
+              titlecase}}</label>
+          </div>
+        </div>
     </div>
   </div>

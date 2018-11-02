@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpHeaders
+  HttpHeaders,
+  HttpRequest
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
@@ -11,7 +12,7 @@ const httpOptions = {
 };
 // const user = JSON.parse(localStorage.getItem('user'));
 // console.log(user.name); + 'token/' + user.token +
-const apiUrl = '/api/'; 
+const apiUrl = '/api/';
 
 @Injectable({
   providedIn: 'root'
@@ -115,12 +116,10 @@ export class ProductService {
       );
   }
 
-  getSearchResult(subcatid, regionid) {
+  getSearchResult(subcatid) {
     return this.http
       .get(
-        apiUrl + 'search/subcategory/' + subcatid + '/region/' + regionid,
-        httpOptions
-      )
+        apiUrl + 'search/subcategory/' + subcatid, httpOptions  )
       .pipe(
         map(this.extractData),
         catchError(this.handleError)
@@ -132,6 +131,11 @@ export class ProductService {
       map(this.extractData),
       catchError(this.handleError)
     );
+  }
+  geteproductDetails1(productid) {
+    return new HttpRequest('GET', apiUrl + 'product/' + productid, httpOptions, {
+      reportProgress: true
+    });
   }
 
   saveProductViewedStatus(productid, client_ip) {

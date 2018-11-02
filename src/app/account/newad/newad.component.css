@@ -82,7 +82,7 @@ ul.actiongroup li {
     border: 1px dashed #ddd;
     padding: 0px !important;
     margin-top: 8px;
-    min-width: 401px;
+    min-width: 100%;
     display: inline-block;
     margin-bottom: 9px;
 }

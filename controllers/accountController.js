@@ -2,7 +2,7 @@ const MappingTbl = require('../model/mappingtbl');
 const Product = require ('../model/product');
 const Msgs = require ('../model/msg');
 const Amountunit = require ('../model/amountunit');
-const MostViewed = require ('../model/mostviewed');
+
 const MBestseller = require('../model/mbestseller');
 const Mmostviewed = require('../model/mmostviewed');
 const Mnewarrivals = require('../model/mnewarrivals');
@@ -361,16 +361,40 @@ exports.singleSent = function (req, res) {
 exports.addNewProduct = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
+        /*
+        subcat: this.newadForm.value.subcatnames,
+
+
+
+
+
+
+
+
+        addinfo: this.newadForm.value.addinfo,
+        city: this.newadForm.value.city,
+        country: this.newadForm.value.country,
+        manufacture: this.newadForm.value.manufacture,
+        * status: this.newadForm.value.status,
+        yearmfg: this.newadForm.value.yearmfg,
+        userid: userid
+        */ 
         var newProduct = new Product();
         newProduct.pname = req.body.productname;
         newProduct.pdesc = req.body.description;
         newProduct.unitprice = req.body.unitprice;
-        newProduct.pimage = req.body.productimage;
+        newProduct.pimage = req.body.productimage[0];
         newProduct.amtunit = req.body.amtunit;
         newProduct.saleamount = req.body.saleamount;
         newProduct.currencytype = req.body.currencytype;
+        newProduct.condition = req.body.condition;
         newProduct.negotiable = req.body.priceneg === 'no' ? false: true;
         newProduct.status = "1";
+        newProduct.productstatus = req.body.status;
+        newProduct.addinfo = req.body.addinfo;
+        newProduct.manufacture = req.body.manufacture;
+        newProduct.yearmfg = req.body.yearmfg;
+        
         newProduct.save(function (error, product) {
             if (error) {
                 return res.status(200).json({
@@ -381,7 +405,8 @@ exports.addNewProduct = function (req, res) {
                 var mappingtbl = new MappingTbl();
                 mappingtbl.subcatid = req.body.subcat;
                 mappingtbl.productid = product._id;
-                mappingtbl.regionid = req.body.region;
+                mappingtbl.country = req.body.country;
+                mappingtbl.city = req.body.city;
                 mappingtbl.userid = req.body.userid;
                 mappingtbl.save(function (error, mappingtbl) {
                     if (error) {

@@ -20,13 +20,17 @@ export class AddnewproductfrmComponent  {
       this.forcevalidation = res;
     });
   }
+  // custom events
   @Output() selectoptcat = new EventEmitter();
   @Output() selectoptsubcat = new EventEmitter();
-
+  @Output() selectcities = new EventEmitter();
   // type: String = 'checkbox';
   getSubcatList = (evt) => {
     // console.log('category change', evt);
     this.selectoptcat.emit(evt);
+  }
+  getCities = (evt) => {
+    this.selectcities.emit(evt);
   }
   getSubcatimages = (evt) => {
     // console.log('subcategory change', evt);

@@ -25,9 +25,10 @@ export class ResultComponent implements OnInit {
     private modalService: BsModalService
   ) {}
 
-  quickview(image, pname, pprice) {
+  quickview(product) {
+
     const initialState = {
-      modaldata: [image, pname, pprice]
+      modaldata: { product: product._id }
     };
     this.bsModalRef = this.modalService.show(QuickviewComponent, {
       initialState
@@ -41,7 +42,7 @@ export class ResultComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.showloading = true;
       this.product
-        .getSearchResult(params['subcatid'], params['regionid'])
+        .getSearchResult(params['subcatid'])
         .subscribe(
           res => {
             if (res['status'] === 'success') {

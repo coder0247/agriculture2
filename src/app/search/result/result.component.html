@@ -52,7 +52,7 @@
 						<div class="product-item layout1 col-ts-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 no-padding" *ngFor="let item of products">
 							<div class="product-inner equal-elem">
 								<div class="thumb">
-									<button href="#" class="quickview-button" (click)="quickview(item.pname, item.pimage, item.saleamount,  item.amtunit, item.unitprice)">
+									<button href="#" class="quickview-button" (click)="quickview(item)">
 										<span class="icon">
 											<i class="fa fa-eye" aria-hidden="true"></i>
 										</span> Quick View</button>
@@ -172,17 +172,18 @@
 					<h5 class="widgettitle">New Products</h5>
 					<ul class="list-recent-posts">
 						<li class="product-item" *ngFor="let product of new_products">
+							
 							<div class="thumb">
-								<a href="javascript:void()" (click)="showproductdetails(product._id)">
-									<img src="{{ product.pimage }}" alt="">
+								<a href="javascript:void()" (click)="showproductdetails(product.productid._id)">
+									<img src="{{ product.productid.pimage[0] }}" alt="">
 								</a>
 							</div>
 							<div class="info">
-								<a routerLink="product/detail/{{ product._id }}" class="product-name">
-									{{ product.pname }}
+								<a routerLink="/product/detail/{{product.productid._id }}" class="product-name">
+									{{ product.productid.pname }}
 								</a>
 								<div class="price">
-									<span class="ins">${{ product.saleamount }}</span>
+									<span class="ins">{{ product.productid.saleamount }} {{product.productid.amtunit.amountunit}}</span>
 								</div>
 							</div>
 						</li>

@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const mappingtblSchema = new Schema({
   subcatid: { type: Schema.Types.ObjectId, ref: 'Subcategory' },
   productid: { type: Schema.Types.ObjectId, ref: 'Products'},
-  regionid: { type: Schema.Types.ObjectId, ref: 'Regions' },
+  city: { type: String},
+  country: { type: String},
   userid : { type: Schema.Types.ObjectId },
 }, { collection : 'mappingtbl' });
 

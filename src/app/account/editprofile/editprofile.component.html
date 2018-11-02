@@ -70,19 +70,16 @@
 																					<div class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && !!editProfileForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
 																				</div>
 																		</div>
-																		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 regionoption">
+																		<!-- <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 regionoption">
 																				<span class="label-text">Region<span>*</span></span>
 																				<select class="form-control" formControlName="region"> 
 																						<option *ngFor="let item of regions" value="{{item._id}}">{{item.regionname}}</option>
 																					</select>
-																				<!-- <ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
-																													 placeholder="" formControlName="region">
-																													</ng-select> -->
 																							<div *ngIf="editProfileForm.invalid && formsubmitted" class="error-msg top-minus-4">
 																								<div class="text-danger" *ngIf="!!editProfileForm.controls['region'].errors?.required">Region is required.</div> 
 																							</div>
 																			
-																			</div>
+																			</div> -->
 																</div>
 															 
 															  <!-- <div class="check-box">

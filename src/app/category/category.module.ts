@@ -13,6 +13,7 @@ import { HeaderCommonComponent } from '../header-common/header-common.component'
 import { HeaderCommonModule } from '../header-common/header-common.module';
 // End of dependices for common header
 import { PagerService } from './../service/pager.service';
+import { OwlModule } from 'ngx-owl-carousel';
 @NgModule({
 	imports: [
 		CommonModule,
@@ -22,7 +23,8 @@ import { PagerService } from './../service/pager.service';
 		FooterModule,
 		FormsModule,
 		ReactiveFormsModule,
-		NgSelectModule
+		NgSelectModule,
+		OwlModule
 	],
 	declarations: [ProductListComponent, BannerComponent, QuickviewComponent],
 	providers: [ProductService, PagerService],

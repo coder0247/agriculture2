@@ -83,9 +83,9 @@ export class ProductListComponent implements OnInit {
     ];
   }
 
-  quickview(pname, pimage, saleamount, amtunit, unitprice) {
+  quickview(product) {
     const initialState = {
-      modaldata: [pname, pimage, saleamount, amtunit, unitprice]
+      modaldata: { product: product}
     };
     this.bsModalRef = this.modalService.show(QuickviewComponent, {
       initialState

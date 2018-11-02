@@ -10,18 +10,127 @@
 		<button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
-		<!-- {{modaldata | json}} -->
-		<!-- [ "Green Okra", "file-1531900835736.jpg", "100", "5b4debdd5580971bc49e89d4", "22" ] -->
-		<!-- <ul *ngIf="list.length">
-      <li *ngFor="let item of list">{{item}}</li>
-    </ul> -->
+
 		<div class="row">
+				<div class="details-info col-xs-12 col-sm-12" *ngIf="!singleproduct">
+						<h4>Loading ...</h4>
+						<div class="progress" >
+								<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': progress + '%' }">
+								  <span class="sr-only">100% Complete</span>
+								</div>
+							  </div>
+				</div>
 			<div class="details-info col-xs-12 col-sm-6">
-				<a href="javascript:void(0)" (click)="showproductdetails(modaldata.product._id)" class="product-name">
+				<!-- <a href="javascript:void(0)" (click)="showproductdetails(modaldata.product._id)" class="product-name">
 					<img src="{{ modaldata.product.pimage }}" alt="{{ modaldata.product.pname }}" />
-				</a>
+				</a> -->
+				
+				<div class="kt-popup-quickview " *ngIf="singleproduct">
+						<div class="details-thumb">
+								<div class="owl-thumbs">
+										<button class="owl-thumb-item" *ngFor="let image of singleproduct.pimage;let i = index" (click)="gotoitem(i)"><img [ngClass]="{'thumbactive': i==slideindex}" [src]="image" alt=""></button>
+										
+									</div>
+						<owl-carousel #owlElement  [options]="{thumbs: true, dots: false, autoplay: false, smartSpeed:800, navigation: true ,
+							responsive: { '0': {  items: 1},
+											'480': { items: 2 },
+											'768': { items: 1 },
+											'1024': { items: 1 },
+											'1200': { items: 1 }
+										}
+										}"  [carouselClasses]="['owl-carousel', 'nav-style3', 'has-thumbs']">
+
+							<div class="item" *ngFor="let image of singleproduct.pimage;let i = index">
+								
+								<div class="details-item">
+		
+								<img [src]="image" alt=""> 
+								</div>
+							</div>
+							
+						</owl-carousel>
+						<div class="owl-nav"> 
+								<div class="owl-prev"  (click)="prevprod()"></div>
+								<div class="owl-next"  (click)="nextprod()"></div>
+							</div>
+							<!-- <div class="owl-carousel nav-style4 has-thumbs" data-autoplay="false" data-nav="true" data-dots="false" data-loop="false" data-slidespeed="800">
+								<div class="details-item"><img src="" alt=""></div>
+								<div class="details-item"><img src="images/product25.jpg" alt=""></div>
+								<div class="details-item"><img src="images/product25.jpg" alt=""></div>
+							</div> -->
+						</div>
+						
+					</div>
 			</div>
-			<div class="details-info col-xs-12 col-sm-6">
+			<div class="details-info col-xs-12 col-sm-5 col-sm-offset-1" *ngIf="singleproduct">
+					<div class="price margintop-0" *ngIf="!!singleproduct.pname">
+							<span>{{singleproduct.pname | titlecase}}</span>
+						</div>
+
+				<h4><strong>Ad ID:</strong> {{singleproduct.adid}}</h4>
+				<h4><strong>Posted at :</strong> {{singleproduct.updated_at | date:'y-MM-dd'}}</h4>
+				<div class="price">
+						<span>Details</span>
+				</div>
+				
+				<div class="price"  style="margin-top: 10px;" *ngIf="!!singleproduct.currencytype">
+					
+						<h4>Price: {{singleproduct.saleamount}} {{singleproduct.currencytype | uppercase}}</h4>
+		
+				</div>
+				<div class="price" style="margin-top: 10px;">
+					
+					<h4  *ngIf="!singleproduct.negotiable">Price negotiable : No</h4>
+					<h4  *ngIf="singleproduct.negotiable">Price negotiable : Yes</h4>
+				</div>
+				<div class="price" style="margin-top: 10px;">
+					
+					<h4  *ngIf="!!singleproduct.unitprice">Price Per Unit : {{singleproduct.unitprice}} / {{singleproduct.amtunit.amountunit}}</h4>
+					<h4  *ngIf="!!singleproduct.condition">Condition : {{singleproduct.condition}}</h4>
+					<h4  *ngIf="!!singleproduct.manufacture">Manufacture : {{singleproduct.manufacture}}</h4>
+					<h4  *ngIf="!!singleproduct.yearmfg">Year of manufacture : {{singleproduct.yearmfg}}</h4>
+					<h4  *ngIf="!!singleproduct.productstatus">Status : {{singleproduct.productstatus}}</h4>
+				</div>
+				
+				<div class="price" *ngIf="!!productlocation"><span>
+					Location
+				</span>
+				<h4>Country: {{productlocation.country}}</h4>
+				<h4>City: {{productlocation.city}}</h4>
+			</div>
+				<div class="group-social">
+					<ul class="list-socials">
+						<li>
+							<a href="#">
+								<i class="fa fa-facebook" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-twitter" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-google-plus" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-instagram" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-pinterest" aria-hidden="true"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			
+			</div>
+			<!-- https://res.cloudinary.com/minati/image/upload/v1540972534/gq4hdwtjwgfulyksygwt.png -->
+			<!-- <div class="details-info col-xs-12 col-sm-6">
 				<a href="javascript:void(0)" (click)="showproductdetails(modaldata.product._id)" class="product-name">{{ modaldata.product.pname }}</a>
 
 				<div class="price">
@@ -38,7 +147,7 @@
 						</a>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

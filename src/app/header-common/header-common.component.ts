@@ -108,7 +108,6 @@ export class HeaderCommonComponent implements OnInit {
         subcategory: [subcategoryid],
         region: [regionid]
       });
-  
     } else {
       this.selecthascontent = false;
       this.searchForm = this.fb.group({
@@ -141,17 +140,17 @@ export class HeaderCommonComponent implements OnInit {
     );
 
     // regions
-    this.homepage.getRegionList().subscribe(
-      res => {
-        if (res.status === 'success') {
-          // console.log(res);
-          this.regions = res.data.regions;
-        }
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    // this.homepage.getRegionList().subscribe(
+    //   res => {
+    //     if (res.status === 'success') {
+    //       // console.log(res);
+    //       this.regions = res.data.regions;
+    //     }
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
 
     if (categoryid !== '') {
       this.homepage.getSubcatListByCatID(categoryid).subscribe(
@@ -258,28 +257,20 @@ export class HeaderCommonComponent implements OnInit {
 
   submitForm() {
     const credentials = this.searchForm.value;
-    
     this.categoryerror = false;
     this.subcategoryerror = false;
-    this.regionerror = false;
     if (credentials.category === '') {
       this.categoryerror = true;
     }
     if (credentials.subcategory === '') {
       this.subcategoryerror = true;
     }
-    if (credentials.region === '') {
-      this.regionerror = true;
-    }
-    localStorage.setItem('regionid', credentials.region);
     localStorage.setItem('subcategoryid', credentials.subcategory);
-    if (!this.categoryerror && !this.subcategoryerror && !this.regionerror ) {
+    if (!this.categoryerror && !this.subcategoryerror ) {
       this.router.navigate([
         '/search',
         'subcategory',
-        credentials.subcategory,
-        'region',
-        credentials.region
+        credentials.subcategory
       ]);
     }
   }

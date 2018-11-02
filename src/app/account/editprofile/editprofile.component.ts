@@ -27,15 +27,15 @@ export class EditprofileComponent implements OnInit {
   ngOnInit() {
     this.getCountryCodeList();
     const userid = localStorage.getItem('id');
-    this.homepage.getRegionList()
-    .subscribe(res => {
-      if (res.status === 'success') {
-        // console.log(res);
-        this.regions = res.data.regions;
-      }
-    }, (err) => {
-      console.log(err);
-    });
+    // this.homepage.getRegionList()
+    // .subscribe(res => {
+    //   if (res.status === 'success') {
+    //     // console.log(res);
+    //     this.regions = res.data.regions;
+    //   }
+    // }, (err) => {
+    //   console.log(err);
+    // });
     this.createForm();
 
     this.authservice.getUserDetails(userid)

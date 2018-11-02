@@ -49,9 +49,8 @@ export class FeaturedlargeComponent implements OnInit {
   }
 
   quickview(product) {
-     const initialState = {
-      // modaldata: [image, pname, pprice]
-      modaldata: { product: product }
+    const initialState = {
+      modaldata: { product: product.productid._id}
     };
     this.bsModalRef = this.modalService.show(QuickviewComponent, {
       initialState

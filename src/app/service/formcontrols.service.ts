@@ -9,21 +9,7 @@ import { Textareabox } from '../form/formcontrol/textareabox';
 export class FormControlService {
   // TODO: get from a remote source of category subcategory metadata
   // TODO: make asynchronous
-  getTextBox() {}
-  getEmailBox() {}
-  getDropDown() {
-    return new Dropdown({
-      key: 'brave',
-      label: 'Bravery Rating',
-      options: [
-        { key: 'solid', value: 'Solid' },
-        { key: 'great', value: 'Great' },
-        { key: 'good', value: 'Good' },
-        { key: 'unproven', value: 'Unproven' }
-      ],
-      order: 3
-    });
-  }
+
   categoryfield(categoryoptions) {
     const adnewformcontrols: FormBase<any>[] = [
       new Dropdown({
@@ -48,17 +34,43 @@ export class FormControlService {
         required: true,
         options: []
       }),
-      new Dropdown({
-        key: 'region',
-        label: 'Region',
-        required: true,
-        options: []
-      }),
+     
       new Dropdown({
         key: 'amtunit',
         label: 'Amount Unit',
         required: true,
         options: []
+      }),
+      new Dropdown({
+        key: 'condition',
+        label: 'Condition',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'country',
+        label: 'Country',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'city',
+        label: 'City',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'yearmfg',
+        label: 'Year of manufacture',
+        required: true,
+        options: []
+      }),
+      new Textbox({
+        key: 'manufacture',
+        label: 'Manufacture',
+        value: '',
+        required: true,
+        order: 1
       }),
           new Textbox({
       key: 'productname',
@@ -88,6 +100,25 @@ export class FormControlService {
       required: true,
       order: 1
     }),
+    new Textareabox({
+      key: 'addinfo',
+      label: 'Addition Information',
+      value: '',
+      required: true,
+      order: 1
+    }),
+    new Radio({
+      key: 'status',
+      label: 'Status',
+      value: 'comm',
+      type: 'radio'
+    }),
+    new Radio({
+      key: 'status',
+      label: 'Status',
+      value: 'pvt',
+      type: 'radio'
+    }),
     new Radio({
       key: 'priceneg',
       label: 'Price Negotiable',
@@ -108,7 +139,7 @@ export class FormControlService {
       key: 'currency',
       label: 'Currency',
       options: [
-        { _id: 'usd', currencyname: 'USD' },
+      { _id: 'usd', currencyname: 'USD' },
       { _id: 'eur', currencyname: 'EUR' },
       { _id: 'tzs', currencyname: 'TZS' }],
       required: true
@@ -151,6 +182,18 @@ export class FormControlService {
 
     return adnewformcontrols;
   }
+  mfgfield(isrequired) {
+    const adnewformcontrols: FormBase<any> =
+    new Textbox({
+      key: 'manufacture',
+      label: 'Manufacture',
+      value: '',
+      required: isrequired,
+      order: 1
+    });
+
+    return adnewformcontrols;
+  }
   productdescfield(isrequired) {
     const adnewformcontrols: FormBase<any> =
     new Textareabox({
@@ -163,6 +206,19 @@ export class FormControlService {
 
     return adnewformcontrols;
   }
+  addinfofield(isrequired) {
+    const adnewformcontrols: FormBase<any> =
+    new Textareabox({
+      key: 'addinfo',
+      label: 'Addition Information',
+      value: '',
+      required: isrequired,
+      order: 1
+    });
+
+    return adnewformcontrols;
+  }
+
   subcategoryfield(subcategoryoptions) {
     const adnewformcontrols: FormBase<any> =
       new Dropdown({
@@ -174,6 +230,58 @@ export class FormControlService {
 
     return adnewformcontrols;
   }
+  conditionfield(isrequired) {
+    const adnewformcontrols: FormBase<any> =
+      new Dropdown({
+        key: 'condition',
+        label: 'Condition',
+        options: ['Used', 'New', 'DemonstratorAdvertiser'],
+        required: isrequired,
+      });
+
+    return adnewformcontrols;
+  }
+  countryfield(countryoptions, isrequired) {
+    const adnewformcontrols: FormBase<any> =
+      new Dropdown({
+        key: 'country',
+        label: 'Country',
+        options: countryoptions,
+        required: isrequired,
+      });
+
+    return adnewformcontrols;
+  }
+  cityfield(cityoptions, isrequired) {
+    const adnewformcontrols: FormBase<any> =
+      new Dropdown({
+        key: 'city',
+        label: 'City',
+        options: cityoptions,
+        required: isrequired,
+      });
+
+    return adnewformcontrols;
+  }
+  yearmfgfield(isrequired) {
+    const d = new Date();
+    const curyear = d.getFullYear();
+    let yearstart = 1980;
+    let year: Array<any> = [];
+    while (yearstart < curyear + 1) {
+      year.push(yearstart);
+      yearstart++;
+    }
+    const adnewformcontrols: FormBase<any> =
+      new Dropdown({
+        key: 'yearmfg',
+        label: 'Year of manufacture',
+        options: year,
+        required: isrequired,
+      });
+    return adnewformcontrols;
+  }
+
   amountunitfield(amountunitlist, isrequired) {
     const adnewformcontrols: FormBase<any> =
       new Dropdown({
@@ -185,17 +293,7 @@ export class FormControlService {
 
     return adnewformcontrols;
   }
-  regionfield(regionoptions, isrequired) {
-    const adnewformcontrols: FormBase<any> =
-      new Dropdown({
-        key: 'region',
-        label: 'Region',
-        required: isrequired,
-        options: regionoptions
-      });
-
-    return adnewformcontrols;
-  }
+ 
   priceneg() {
     const adnewformcontrols: FormBase<any>[] = [
       new Radio({
@@ -208,6 +306,23 @@ export class FormControlService {
         key: 'priceneg',
         label: 'Price Negotiable',
         value: 'no',
+        type: 'radio'
+      })
+    ];
+    return adnewformcontrols;
+  }
+  statusfield() {
+    const adnewformcontrols: FormBase<any>[] = [
+      new Radio({
+        key: 'status',
+        label: 'Status ',
+        value: 'commercial',
+        type: 'radio'
+      }),
+      new Radio({
+        key: 'status',
+        label: 'Status',
+        value: 'private',
         type: 'radio'
       })
     ];

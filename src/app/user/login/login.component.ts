@@ -18,13 +18,15 @@ export class LoginComponent implements OnInit {
   formsubmitted = false;
   showloading = false;
   bsModalRef: BsModalRef;
-  shownotverified = false;
+  returnUrl: any;
   // tslint:disable-next-line:max-line-length
   constructor(private authservice: AuthService, private route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
 
   }
   ngOnInit() {
     this.createForm();
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    // console.log('loginfomr', this.returnUrl);
   }
 
   private createForm() {
@@ -41,22 +43,15 @@ export class LoginComponent implements OnInit {
       this.showloading = true;
       this.authservice.doLogin(this.loginForm.value).subscribe(res => {
         if (res['status'] === 'success') {
-          if (res.data.verified === false) {
-            this.showloading = false;
-            this.shownotverified = true;
-            this.formsubmitted = false;
-          } else {
-            this.showloading = false;
-            localStorage.setItem( 'firstname', res.data.firstname);
-            localStorage.setItem( 'email' , res.data.email);
-            localStorage.setItem( 'lastname' , res.data.lastname);
-            localStorage.setItem( 'isadmin' , res.data.is_admin);
-            localStorage.setItem( 'id' , res.data.id);
-            this.formsubmitted = false;
-            this.shownotverified = false;
-            this.router.navigate(['/']);
-          }
-
+          this.showloading = false;
+          localStorage.setItem( 'firstname', res.data.firstname);
+          localStorage.setItem( 'email' , res.data.email);
+          localStorage.setItem( 'lastname' , res.data.lastname);
+          localStorage.setItem( 'isadmin' , res.data.is_admin);
+          localStorage.setItem( 'id' , res.data.id);
+          this.formsubmitted = false;
+          this.router.navigate([this.returnUrl]);
+          // this.router.navigate(['/']);
         } else {
           this.showloading = false;
           this.error = true;

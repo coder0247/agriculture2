@@ -7,6 +7,8 @@ const msgsSchema = new Schema({
     comment: { type: String },
     sellerid: { type: Schema.Types.ObjectId, ref: 'User' },
     productid: { type: Schema.Types.ObjectId, ref: 'Products' },
+    city:{ type: String, required: true },
+    country:{ type: String, required: true },
     created_at: { type: Date, default: Date.now() },
     status: { type: Number, default: 1 },
     viewstatus: { Boolean, default: false }

@@ -29,6 +29,7 @@ const adMostViewedProduct = require('./routes/adMostViewedProduct');
 const adNewArrivalsProduct = require('./routes/adNewArrivalsProduct');
 const adOnSaleProduct = require('./routes/adOnSaleProduct');
 const adHomeProductCatwiseStatus = require('./routes/homeproduct');
+const country = require('./routes/countrycity');
 const MongoStore = require('connect-mongo')(session);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,29 +56,30 @@ app.get(/^(?!\/api).+/, function(req, res) {
     res.sendFile(path.join(__dirname + '/dist/index.html'));
   });
   //frontend
-  app.use(headerRoute);
-  app.use(footerRoute);
-  app.use(homeRoute);
-  app.use(userRoute);
-  app.use(accountRoute);
-  app.use(categoryRoute);
-  app.use(contactRoute);
-  app.use(searchRoute);
-  app.use(singleProductRoute);
-  app.use(uploadImage);
+app.use(headerRoute);
+app.use(footerRoute);
+app.use(homeRoute);
+app.use(userRoute);
+app.use(accountRoute);
+app.use(categoryRoute);
+app.use(contactRoute);
+app.use(searchRoute);
+app.use(singleProductRoute);
+app.use(uploadImage);
+app.use(country);
 
-  //admin
+//admin
 
-  app.use(adminCategory);
-  app.use(adminFeaturedProduct);
-  app.use(adminUser);
-  app.use(reportedAds);
-  app.use(pageEdit);
-  app.use(siteSettings);
-  app.use(adBestSellerProduct);
-  app.use(adMostViewedProduct);
-  app.use(adNewArrivalsProduct);
-  app.use(adOnSaleProduct);
-  app.use(adHomeProductCatwiseStatus);
+app.use(adminCategory);
+app.use(adminFeaturedProduct);
+app.use(adminUser);
+app.use(reportedAds);
+app.use(pageEdit);
+app.use(siteSettings);
+app.use(adBestSellerProduct);
+app.use(adMostViewedProduct);
+app.use(adNewArrivalsProduct);
+app.use(adOnSaleProduct);
+app.use(adHomeProductCatwiseStatus);
 
 app.listen(process.env.PORT || 4001)

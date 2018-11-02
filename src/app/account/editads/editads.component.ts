@@ -107,12 +107,11 @@ export class EditadsComponent implements OnInit {
             //   return producta._id === item.productid;
             // });
             for (let pitem in this.products) {
-              // console.log(this.products[pitem]._id);
-              if (this.products[pitem]._id === item.productid) {
+               if (this.products[pitem]._id === item.productid) {
                 let productinfo = this.products[pitem];
+                console.log('productinfo', productinfo);
                 let catsubcat = {
                   productid: item.productid,
-                  regionid: item.regionid,
                   category: item.subcatid.catid.catname,
                   subcategory: item.subcatid.subcatname,
                   pimage: productinfo.pimage,
@@ -126,6 +125,13 @@ export class EditadsComponent implements OnInit {
                   currency: productinfo.currencytype,
                   pdesc: productinfo.pdesc,
                   negotiable: productinfo.negotiable,
+                  country: item.country,
+                  city: item.city,
+                  condition: productinfo.condition,
+                  productstatus: productinfo.productstatus,
+                  addinfo: productinfo.addinfo,
+                  manufacture: productinfo.manufacture,
+                  yearmfg: productinfo.yearmfg,
                   updated_at: productinfo.updated_at,
                   created_at: productinfo.created_at
                 };

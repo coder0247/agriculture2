@@ -66,15 +66,15 @@ export class HeadersecondaryComponent implements OnInit {
 		// 		console.log(err);
 		// 	});
 		// regions
-		this.homepage.getRegionList()
-			.subscribe(res => {
-				if (res.status === 'success') {
-					// console.log(res);
-					this.regions = res.data.regions;
-				}
-			}, (err) => {
-				console.log(err);
-			});
+		// this.homepage.getRegionList()
+		// 	.subscribe(res => {
+		// 		if (res.status === 'success') {
+		// 			// console.log(res);
+		// 			this.regions = res.data.regions;
+		// 		}
+		// 	}, (err) => {
+		// 		console.log(err);
+		// 	});
 
 		// this.renderer.listen('document', 'click', () => {
 		//   if (this.parentcontent.nativeElement.classList.contains('active')) {

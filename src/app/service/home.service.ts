@@ -68,8 +68,14 @@ export class HomeService {
       catchError(this.handleError)
     );
   }
-  getRegionList(): Observable<any> {
-    return this.http.get(apiUrl + 'regionlist', httpOptions).pipe(
+  getCountryList(): Observable<any> {
+    return this.http.get(apiUrl + 'countrynames', httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+  getCityList(cityname): Observable<any> {
+    return this.http.get(apiUrl + 'getcities/' + cityname , httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

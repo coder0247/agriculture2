@@ -14,7 +14,7 @@
 								<h4 class="section-title">Featured Products	<span *ngIf="!allproducts?.length">: Loading...</span></h4>
 								</div>
 					<span *ngFor="let item of featurelist">
-
+ 
 						<tab #staticTabs *ngIf="item.productlist.length > 0" heading="{{item.categoryname}}" (select)='onSelect($event)'>
 							<owl-carousel #owlElement *ngIf= "item.productlist" [options]="{items: 5, dots: false, autoplay: false, smartSpeed:800, navigation: true ,
 								responsive: { '0': {  items: 1, margin: 0 },

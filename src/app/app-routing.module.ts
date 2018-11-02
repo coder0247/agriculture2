@@ -19,12 +19,8 @@ const routes: Routes = [
     loadChildren: '../app/user/user.module#UserModule'
   },
   {
-    path: 'search/subcategory/:subcatid/region/:regionid',
+    path: 'search/subcategory/:subcatid',
     loadChildren: '../app/search/search.module#SearchModule'
-  },
-  {
-    path: 'crop/:id',
-    loadChildren: '../app/products/products.module#ProductsModule'
   },
   {
     path: 'orders',

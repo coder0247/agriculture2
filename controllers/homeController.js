@@ -1,6 +1,5 @@
 const Featured = require('../model/featured');
 const Msgs = require('../model/msg');
-const MostViewed = require('../model/mostviewed');
 const Product = require('../model/product');
 const mongoose = require('mongoose');
 const config = require('../config');
@@ -236,7 +235,7 @@ exports.newArrivalByLimit = function (req, res) {
 
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Mnewarrivals.find({}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, newarrival) {
+        Mnewarrivals.find({}).sort('-date').populate({ path: 'productid' , populate:{ path: 'amtunit', model: 'AmountUnit' }}).limit(limit).exec(function (err, newarrival) {
             if (err) throw err;
             if (newarrival.length > 0) {
                 return res.status(200).json({

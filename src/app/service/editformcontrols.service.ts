@@ -9,21 +9,7 @@ import { Textareabox } from '../form/formcontrol/textareabox';
 export class EditFormControlService {
   // TODO: get from a remote source of category subcategory metadata
   // TODO: make asynchronous
-  getTextBox() {}
-  getEmailBox() {}
-  getDropDown() {
-    return new Dropdown({
-      key: 'brave',
-      label: 'Bravery Rating',
-      options: [
-        { key: 'solid', value: 'Solid' },
-        { key: 'great', value: 'Great' },
-        { key: 'good', value: 'Good' },
-        { key: 'unproven', value: 'Unproven' }
-      ],
-      order: 3
-    });
-  }
+
   categoryfield(categoryoptions) {
     const adnewformcontrols: FormBase<any>[] = [
       new Dropdown({
@@ -45,6 +31,18 @@ export class EditFormControlService {
       new Dropdown({
         key: 'subcatnames',
         label: 'Sub Category',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'country',
+        label: 'Country',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'city',
+        label: 'City',
         required: true,
         options: []
       }),
@@ -99,6 +97,44 @@ export class EditFormControlService {
           label: 'Price Negotiable',
           value: 'no',
           type: 'radio'
+        }),
+        new Dropdown({
+          key: 'condition',
+          label: 'Condition',
+          required: true,
+          options: []
+        }),
+        new Radio({
+          key: 'status',
+          label: 'Status',
+          value: 'commercial',
+          type: 'radio'
+        }),
+        new Radio({
+          key: 'status',
+          label: 'Status',
+          value: 'private',
+          type: 'radio'
+        }),
+        new Textareabox({
+          key: 'addinfo',
+          label: 'Addition Information',
+          value: '',
+          required: true,
+          order: 1
+        }),
+        new Textbox({
+          key: 'manufacture',
+          label: 'Manufacture',
+          value: '',
+          required: true,
+          order: 1
+        }),
+        new Dropdown({
+          key: 'yearmfg',
+          label: 'Year of manufacture',
+          required: true,
+          options: []
         })
     ];
     return adnewformcontrols;
@@ -213,5 +249,95 @@ export class EditFormControlService {
     ];
     return adnewformcontrols;
   }
+  conditionfield(isrequired) {
+    const adnewformcontrols: FormBase<any> =
+      new Dropdown({
+        key: 'condition',
+        label: 'Condition',
+        options: ['Used', 'New', 'DemonstratorAdvertiser'],
+        required: isrequired,
+      });
+    return adnewformcontrols;
+  }
+  countryfield(countryoptions, isrequired) {
+    const adnewformcontrols: FormBase<any> =
+      new Dropdown({
+        key: 'country',
+        label: 'Country',
+        options: countryoptions,
+        required: isrequired,
+      });
 
+    return adnewformcontrols;
+  }
+  cityfield(cityoptions) {
+    const adnewformcontrols: FormBase<any> =
+      new Dropdown({
+        key: 'city',
+        label: 'City',
+        options: cityoptions,
+        required: true,
+      });
+
+    return adnewformcontrols;
+  }
+statusfield() {
+    const adnewformcontrols: FormBase<any>[] = [
+      new Radio({
+        key: 'status',
+        label: 'Status ',
+        value: 'commercial',
+        type: 'radio'
+      }),
+      new Radio({
+        key: 'status',
+        label: 'Status',
+        value: 'private',
+        type: 'radio'
+      })
+    ];
+    return adnewformcontrols;
+  }
+  addinfofield(isrequired) {
+    const adnewformcontrols: FormBase<any> =
+    new Textareabox({
+      key: 'addinfo',
+      label: 'Addition Information',
+      value: '',
+      required: isrequired,
+      order: 1
+    });
+
+    return adnewformcontrols;
+  }
+  mfgfield(isrequired) {
+    const adnewformcontrols: FormBase<any> =
+    new Textbox({
+      key: 'manufacture',
+      label: 'Manufacture',
+      value: '',
+      required: isrequired,
+      order: 1
+    });
+
+    return adnewformcontrols;
+  }
+  yearmfgfield(isrequired) {
+    const d = new Date();
+    const curyear = d.getFullYear();
+    let yearstart = 1980;
+    let year: Array<any> = [];
+    while (yearstart < curyear + 1) {
+      year.push(yearstart);
+      yearstart++;
+    }
+    const adnewformcontrols: FormBase<any> =
+      new Dropdown({
+        key: 'yearmfg',
+        label: 'Year of manufacture',
+        options: year,
+        required: isrequired,
+      });
+    return adnewformcontrols;
+  }
 }

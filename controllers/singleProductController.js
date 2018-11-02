@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('../config');
-const MostViewed = require('../model/mostviewed');
+
 const MappingTbl =  require('../model/mappingtbl');
 const User = require('../model/user');
 const Product = require('../model/product');
@@ -8,40 +8,40 @@ const Msgs = require ('../model/msg');
 const ReportReason = require('../model/reportadreason');
 const IntlCodes = require('../model/intlcodes');
 const ReportedAds = require('../model/reportedads');
-exports.updateViewedStatus = function (req, res) {
-    mongoose.connect(config.dbUrl, function (err) {
-        if (err) throw err;
+// exports.updateViewedStatus = function (req, res) {
+//     mongoose.connect(config.dbUrl, function (err) {
+//         if (err) throw err;
 
-        MostViewed.findOne({
-            client_ip: req.params.clientip,
-            productid: req.params.productid,
-        }, function (error, most_viewed) {
-            if (!most_viewed) {
-                var mostViewed = new MostViewed();
-                mostViewed.client_ip = req.params.clientip;
-                mostViewed.productid = req.params.productid;
-                mostViewed.save(function (error, most_viewed) {
-                    if (error) {
-                        return res.status(200).json({
-                            status: 'fail',
-                            data: { 'error': error },
-                        });
-                    } else {
-                        return res.status(200).json({
-                            status: 'success',
-                            data: { 'error': true, 'msg': "Successfully viewed once." },
-                        });
-                    }
-                });
-            } else {
-                return res.status(200).json({
-                    status: 'fail',
-                    data: { 'error': false, 'msg': "Already visited." },
-                });
-            }
-        });
-    });
-};
+//         MostViewed.findOne({
+//             client_ip: req.params.clientip,
+//             productid: req.params.productid,
+//         }, function (error, most_viewed) {
+//             if (!most_viewed) {
+//                 var mostViewed = new MostViewed();
+//                 mostViewed.client_ip = req.params.clientip;
+//                 mostViewed.productid = req.params.productid;
+//                 mostViewed.save(function (error, most_viewed) {
+//                     if (error) {
+//                         return res.status(200).json({
+//                             status: 'fail',
+//                             data: { 'error': error },
+//                         });
+//                     } else {
+//                         return res.status(200).json({
+//                             status: 'success',
+//                             data: { 'error': true, 'msg': "Successfully viewed once." },
+//                         });
+//                     }
+//                 });
+//             } else {
+//                 return res.status(200).json({
+//                     status: 'fail',
+//                     data: { 'error': false, 'msg': "Already visited." },
+//                 });
+//             }
+//         });
+//     });
+// };
 
 exports.getSellerInfo = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
@@ -81,14 +81,14 @@ exports.productDetails = function (req, res) {
           }
         Product.find({
             '_id': req.params.id
-        }, function (err, singleproduct) {
+        }).populate({ path: 'amtunit' }).exec( function (err, singleproduct) {
             if (singleproduct.length > 0) {
                 MappingTbl.find({
                     'productid': req.params.id
-                }).populate({ path: 'regionid'}).select('regionid.regionname').exec(function (err, productregions) {
+                }).select('city country').exec(function (err, productregions) {
                     return res.status(200).json({
                         status: 'success',
-                        data: { 'singleproduct': singleproduct, 'location': productregions[0].regionid.regionname }
+                        data: { 'singleproduct': singleproduct, 'location': productregions }
                     });
                 });
                
@@ -113,7 +113,8 @@ exports.postMsg = function (req, res) {
         newmsg.comment = req.body.comment;
         newmsg.sellerid = req.body.sellerid;
         newmsg.productid = req.body.productid;
-
+        newmsg.city = req.body.city;
+        newmsg.country = req.body.country;
         newmsg.save(function (error, sendmsg) {
             if (error) {
                 return res.status(200).json({

@@ -139,7 +139,7 @@
                         <div class="sub-menu mega-menu sub-menu2">
                           <div class="row">
                             <div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4 col-lg-4" *ngFor="let subarray of morecats">
-                              
+
                                 <ul>
                                     <li *ngFor="let item of subarray">
                                       <a routerLink="/crop/{{item._id}}">{{item.cropname}}</a>
@@ -166,11 +166,11 @@
 												 formControlName="crop">
 												</ng-select>
 											</div>
-											<div class="form-group  col-md-5 regionoption">
+											<!-- <div class="form-group  col-md-5 regionoption">
 												<ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
 												 placeholder="Select region" formControlName="region">
 												</ng-select>
-											</div>
+											</div> -->
 											<button class="search-button">
 												<i class="fa fa-search" aria-hidden="true"></i>
 											</button>

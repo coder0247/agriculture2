@@ -98,9 +98,8 @@ exports.homeprodsubcatwisestatus = function (req, res) {
                 });
             } else {
                 return res.status(200).json({
-                    status: 'Fail',
-                    msg: 'Fail',
-
+                        status: true,
+                        data: { 'message': 'Updated successfully' }
                 });
             }
         });
