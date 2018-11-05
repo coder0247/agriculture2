@@ -3,3 +3,7 @@ span.successmsg {
     left: 5px;
     position: relative;
 }
+.des a {
+    text-decoration: none;
+    color: #aaa;
+}

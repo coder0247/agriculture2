@@ -15,12 +15,12 @@ var dashdata = {
     activeadscount: 0,
     archiveadscount: 0,
     inboxnewmsg: 0,
-};
+}; 
 exports.productsByUser = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
         MappingTbl.find({ userid: req.params.userid })
-        .populate({ path: 'subcatid', populate : { path: 'catid', select: 'catname subcatname' }})
+        .populate({ path: 'subcatid', populate : { path: 'catid', select: 'catname subcatname' },})
         .exec(function (err, mappingfound) {
             if (mappingfound.length > 0) {
                 var reformattedArray = mappingfound.map(obj => {
@@ -28,7 +28,7 @@ exports.productsByUser = function (req, res) {
                 });
                 Product.find({
                     '_id': { $in: reformattedArray }, 'status': '1'
-                }, function (err, docs) {
+                }).populate({ path: 'amtunit'}).exec( function (err, docs) {
                     return res.status(200).json({
                         status: 'success',
                         data: { 'product': docs },
@@ -205,7 +205,7 @@ exports.amountUnitList = function (req, res) {
 exports.updateProduct = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        // console.log(req.body.pricetype === "true"? "negtrue": "negfalse");
+       
         let productupdateinfo = {
             pname : req.body.productname,
             unitprice : req.body.unitprice,
@@ -214,14 +214,20 @@ exports.updateProduct = function (req, res) {
             saleamount : req.body.saleamount, 
             pdesc : req.body.pdesc,
             currencytype : req.body.currencytype, 
+            addinfo:  req.body.addinfo,
+            city:  req.body.city,
+            condition:  req.body.condition,
+            country:  req.body.country,
+            productstatus: req.body.productstatus,
+            manufacture: req.body.manufacture,
+            yearmfg:  req.body.yearmfg,
             negotiable: req.body.pricetype === true ? true: false,
             updated_at: Date.now()
         }
         let mappingtableupdate = {
-            subcatid : req.body.subcat,
-            regionid : req.body.region,
+            subcatid : req.body.subcat
         }
-        Product.findByIdAndUpdate({ _id: req.body.productid }, { $set: productupdateinfo }, function (error, productupdate) {
+        Product.findByIdAndUpdate({ _id: req.body.productid }, { $set: productupdateinfo }, function (errorprod, productupdate) {
             if (productupdate) {
                 MappingTbl.findByIdAndUpdate({ 'productid': req.body.productid }, { $set: mappingtableupdate }, function (error, mappingtableupdate) {
                     return res.status(200).json({
@@ -230,13 +236,11 @@ exports.updateProduct = function (req, res) {
                         data: { 'productupdate': productupdate, 'mappingtableupdate': mappingtableupdate },
                     });
                 });
-
-
             } else {
                 return res.status(200).json({
                     status: false,
                     message: 'Oops! There was an error while updating',
-                    errors: error.errors,
+                    errors: errorprod,
                     params: productupdate
                 });
             }

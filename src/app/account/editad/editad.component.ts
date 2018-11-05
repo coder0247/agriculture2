@@ -58,8 +58,12 @@ export class EditadComponent implements OnInit {
   showcatloading = false;
   showfrmloading = false;
   submitting = false;
-  uploadCountAfterRemove = 0;
+  uploadCountAfterRemove = 1;
   currentfilesize: number;
+  queuehasproduct = false;
+  maxAllowedImage = 0;
+  ordinal = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five'];
+  ifuploading = false;
   constructor(private productservice: ProductService,
     private route: ActivatedRoute,
     private router: Router,
@@ -112,19 +116,23 @@ export class EditadComponent implements OnInit {
     this.formbaseelements.splice(0, 1);
     delete this.newadForm.controls['category'];
     delete this.newadForm.value['category'];
-    this.homepage.getCatList().subscribe(res => {
-      if (res.status === 'success') {
-        this.mainCats = res.data.category;
-        if (this.mainCats.length > 0) {
-          this.selectedCategory = this.mainCats[0]._id;
-          this.formbaseelements = this.formcontrolservice.categoryfield(res.data.category);
-          this.newadForm = this.cs.toFormGroup(this.formbaseelements);
-          this.formbaseelements.splice(1, this.formbaseelements.length - 1);
-        }
-      }
-    }, (err) => {
-      console.log(err);
-    });
+    const productdetails = JSON.parse(localStorage.getItem('productinfo'));
+    this.formbaseelements = this.formcontrolservice.categoryfield(productdetails.category, productdetails.subcategory);
+    this.newadForm = this.cs.toFormGroup(this.formbaseelements);
+    this.formbaseelements.splice(1, this.formbaseelements.length - 1);
+    // this.homepage.getCatList().subscribe(res => {
+    //   if (res.status === 'success') {
+    //     this.mainCats = res.data.category;
+    //     if (this.mainCats.length > 0) {
+    //       this.selectedCategory = this.mainCats[0]._id;
+    //       this.formbaseelements = this.formcontrolservice.categoryfield(res.data.category);
+    //       this.newadForm = this.cs.toFormGroup(this.formbaseelements);
+    //       this.formbaseelements.splice(1, this.formbaseelements.length - 1);
+    //     }
+    //   }
+    // }, (err) => {
+    //   console.log(err);
+    // });
 
     const userid = localStorage.getItem('id');
     if (!userid) { this.router.navigate(['user/signin']); }
@@ -250,11 +258,11 @@ export class EditadComponent implements OnInit {
     this.defaultproductimage = productdetails === null ? '' : productdetails.pimage;
     this.homepage.getSubcatListByCatID(catid).subscribe(res => {
       if (res.status === 'success') {
-        this.formbaseelements.push(this.formcontrolservice.subcategoryfield(res.data.subcategory));
-        this.newadForm.patchValue({
-          'category': productdetails.category_id,
-          'subcatnames': productdetails.subcatid
-        });
+        this.formbaseelements.push(this.formcontrolservice.subcategoryfield(productdetails.subcategory));
+        // this.newadForm.patchValue({
+        //   'category': productdetails.category_id,
+        //   'subcatnames': productdetails.subcatid
+        // });
         this.newadForm.controls['category'].markAsDirty({ onlySelf: true });
         this.newadForm.controls['subcatnames'].markAsDirty({ onlySelf: true });
         for (let item in this.formElements) {
@@ -291,7 +299,7 @@ export class EditadComponent implements OnInit {
               case 'amountunit':
                 this.getAmountList(this.formElements[item].isrequired);
                 this.newadForm.patchValue({
-                  'amountunit': productdetails.amtunit
+                  'amountunit': productdetails.amtunitid
                 });
                 this.newadForm.controls['amountunit'].markAsDirty({ onlySelf: true });
                 break;
@@ -355,7 +363,7 @@ export class EditadComponent implements OnInit {
               case 'currency':
                 this.getCurrency();
                 this.newadForm.patchValue({
-                  'currency': productdetails.currency
+                  'currency': productdetails.currency.toUpperCase()
                 });
                 this.newadForm.controls['currency'].markAsDirty({ onlySelf: true });
                 break;
@@ -378,22 +386,31 @@ export class EditadComponent implements OnInit {
   removeprevimage(i) {
     this.defaultproductimage.splice(i, 1);
     this.uploadCountAfterRemove--;
+    this.maxAllowedImage = 5 - this.uploadCountAfterRemove;
+    if (this.uploadCountAfterRemove === 0) {
+      const productdetails = JSON.parse(localStorage.getItem('productinfo'));
+      this.productimage = [productdetails.subcatimg];
+    this.defaultproductimage = [productdetails.subcatimg];
+    this.maxAllowedImage = 5;
+    }
   }
   setSubcatimages() {
     const productdetails = JSON.parse(localStorage.getItem('productinfo'));
     this.productimage = productdetails.pimage;
     this.defaultproductimage = productdetails.pimage;
     this.uploadCountAfterRemove = productdetails.pimage.length;
+    this.maxAllowedImage = 5 - productdetails.pimage.length;
     console.log('this.uploadCountAfterRemove', this.uploadCountAfterRemove);
   }
   getSubcatimages(e) {
     this.productimage = e.defaultimage;
     this.defaultproductimage = e.defaultimage;
   }
-  addnewproduct(templatenewaddposted) {
+  addnewproduct(templatenewaddposted, templateproductimg) {
     console.log('form values', this.newadForm.value);
     const userid = localStorage.getItem('id');
     const productdetails = JSON.parse(localStorage.getItem('productinfo'));
+  
     let productimage;
     if (typeof this.uploadedimages !== undefined && this.uploadedimages) {
       productimage = this.uploadedimages;
@@ -402,41 +419,54 @@ export class EditadComponent implements OnInit {
     }
     this.forcevalidation = true;
     this.fvalid.setMessage(this.forcevalidation);
+    const allproductimages = _.concat(productimage, this.defaultproductimage)
     const updateproductdetails = {
       'productid': productdetails.productid,
-      'subcat': this.newadForm.value.subcatnames,
-      'region': this.newadForm.value.region,
+      'subcat': productdetails.subcatid,
       'saleamount': this.newadForm.value.amountforsale,
       'amtunit': this.newadForm.value.amountunit,
       'unitprice': this.newadForm.value.priceperunit,
       'productname': this.newadForm.value.name,
       'pdesc': this.newadForm.value.description,
       'currencytype': this.newadForm.value.currency,
-      'productimage': productimage,
+      'productimage':  allproductimages,
       'userid': userid,
-      'pricetype': this.newadForm.value.pricenegotiable === 'no' ? false : true
+      'pricetype': this.newadForm.value.pricenegotiable === 'no' ? false : true,
+      'productstatus': this.newadForm.value.status,
+      'manufacture': this.newadForm.value.manufacture,
+      'yearmfg': this.newadForm.value.yearmfg,
+      'addinfo': this.newadForm.value.addinfo,
+      'city': this.newadForm.value.city,
+      'condition': this.newadForm.value.condition,
+      'country': this.newadForm.value.country
     };
+    // console.log('updateproductdetails', updateproductdetails);
     if (this.newadForm.valid) {
-      this.submitting = true;
-      this.uploadsuccess = false;
-      this.updatingstatus = true;
-      this.productservice.updateProduct(updateproductdetails).subscribe(res => {
-        if (res['status'] === true) {
-          this.showimageerror = false;
-          this.uploadsuccess = true;
-          this.uploader.queue.length = 0;
-          this.forcevalidation = false;
-          this.updatingstatus = false;
-          this.defaultproductimage = productimage;
-          this.submitting = false;
-          this.showAlert(templatenewaddposted);
-        }
-      }, (error) => {
+      if (allproductimages.length === 0 ) {
+        this.showAlert(templateproductimg);
+      } else {
+        this.submitting = true;
+        this.uploadsuccess = false;
+        this.updatingstatus = true;
+        this.productservice.updateProduct(updateproductdetails).subscribe(res => {
+          if (res['status'] === true) {
+            this.showimageerror = false;
+            this.uploadsuccess = true;
+            this.uploader.queue.length = 0;
+            this.forcevalidation = false;
+            this.updatingstatus = false;
+            this.defaultproductimage = productimage;
+            this.submitting = false;
+            this.showAlert(templatenewaddposted);
+          }
+      }
+      , (error) => {
         console.log(error);
       });
 
     }
   }
+}
   // FILE UPLOAD CODE
   // getter : get overall progress
   get progress(): number {
@@ -507,9 +537,12 @@ export class EditadComponent implements OnInit {
                   })
                 )
               );
+              if (this.uploader.queue.length > 0) {
+                this.queuehasproduct = true;
+              }
               if (
                 _.head(this.uploader.queue) !== undefined &&
-                this.uploader.queue.length > 5
+                this.uploader.queue.length + this.uploadCountAfterRemove > 5
               ) {
                 this.uploader.queue.pop();
                 this.showAlert(exceededuploadlimit);
@@ -538,11 +571,13 @@ export class EditadComponent implements OnInit {
       });
       this.http.request(uploadReq).subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
+          this.ifuploading = true;
           selectedFile.progress = Math.round(
             (100 * event.loaded) / event.total
           );
         } else {
           if (event.type === HttpEventType.Response) {
+            this.ifuploading = false;
             this.uploadedimages.push(event.body['data']);
             selectedFile.message = event.body.toString();
           }
@@ -569,6 +604,9 @@ export class EditadComponent implements OnInit {
   removeSelected(idx) {
     this.uploader.queue.splice(idx, 1);
     this.uploadedimages.splice(idx, 1);
+    if ( this.uploader.queue.length === 0 &&  !!this.uploader.queue) {
+      this.queuehasproduct = false;
+    }
     // console.log('queue', this.uploader.queue, this.uploadedimages);
   }
 }

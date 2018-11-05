@@ -39,14 +39,21 @@ export class ProductService {
       catchError(this.handleError)
     );
   }
-  getProductList(id: string): Observable<any> {
-    return this.http.get(apiUrl + 'crop/' + id, httpOptions).pipe(
+  // getProductList(id: string): Observable<any> {
+  //   return this.http.get(apiUrl + 'crop/' + id, httpOptions).pipe(
+  //     map(this.extractData),
+  //     catchError(this.handleError)
+  //   );
+  // }
+  getProductListByCat(id: string): Observable<any> {
+    return this.http.get(apiUrl + 'productlistbycat/' + id, httpOptions).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
   }
-  getProductListByCat(id: string): Observable<any> {
-    return this.http.get(apiUrl + 'productlistbycat/' + id, httpOptions).pipe(
+  getProductList(variation): Observable<any> {
+    return this.http.post( apiUrl + 'productlist', variation )
+    .pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

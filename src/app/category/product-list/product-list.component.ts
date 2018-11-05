@@ -6,7 +6,10 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { QuickviewComponent } from '../quickview/quickview.component';
 import { PagerService } from '../../service/pager.service';
 import { NgOption } from '@ng-select/ng-select';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as _ from 'lodash';
+import { HomeService } from './../../service/home.service';
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -22,6 +25,7 @@ export class ProductListComponent implements OnInit {
   notfound = false;
   filterchange: any;
   pagevaluechange: any;
+  productfilterForm: FormGroup;
   // pager object
   pager: any = {};
   pageSize = 9;
@@ -35,13 +39,27 @@ export class ProductListComponent implements OnInit {
   gridstatus = true;
   liststatus =  false;
   togglestatus = false;
+  countries: any;
+  cities: any;
+  filter = {
+    country: 'Tanzania',
+    city: '',
+    subcatid: '',
+    category: '',
+  };
   constructor(
     private product: ProductService,
     private route: ActivatedRoute,
     private router: Router,
     private modalService: BsModalService,
-    private pageservice: PagerService
+    private pageservice: PagerService,
+    private homepage: HomeService
   ) {
+    this.productfilterForm = new FormGroup({
+      country: new FormControl(null),
+      city: new FormControl(null),
+      prodcat: new FormControl(null),
+    });
     this.filterdefault = '1';
     this.pagevaluedefault = '9';
     this.filterchoice = [
@@ -81,8 +99,52 @@ export class ProductListComponent implements OnInit {
         'perpagevalue': '18 per page'
       }
     ];
+    this.homepage.getCountryList()
+    .subscribe(res => {
+      if (res.status === 'success') {
+        this.countries = res.countrylist;
+        this.productfilterForm.patchValue({
+          'country': 'Tanzania'
+        });
+      }
+    }, (err) => {
+      console.log(err);
+    });
+    this.homepage.getCityList('Tanzania')
+      .subscribe(res => {
+        if (res.status === 'success') {
+          // console.log(res);
+          this.cities = res.citylist;
+          this.productfilterForm.patchValue({
+            'city': ''
+          });
+        }
+      }, (err) => {
+        console.log(err);
+      });
+   
   }
 
+  getCities(e) {
+    this.filter.country = e.target.value;
+    this.homepage.getCityList(e.target.value)
+      .subscribe(res => {
+        if (res.status === 'success') {
+          // console.log(res);
+          this.cities = res.citylist;
+        }
+      }, (err) => {
+        console.log(err);
+      });
+  }
+  updateCity(e) {
+  this.filter.city = e.target.value;
+  this.getProducts();
+  }
+  getproduct(e) {
+    this.filter.subcatid = e.target.value;
+    this.getProducts();
+}
   quickview(product) {
     const initialState = {
       modaldata: { product: product}
@@ -124,7 +186,63 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.products = '';
-    this.getAllProductbycat();
+    // this.getAllProductbycat();
+    this.getProducts();
+  }
+  getProducts() {
+       this.route.params.subscribe(params => {
+        this.filter.category = params['catid'];
+      });
+    this.showloading = true;
+      this.products = '';
+      this.filtersubcat.length = 0;
+      if (!!this.pagedItems && !!this.pagedItems.length) {
+        this.pagedItems.length = 0;
+      }
+    this.product.getProductList(this.filter).subscribe(
+      res => {
+        if (res['status'] === 'success') {
+          this.showloading = false;
+          this.notfound = false;
+          this.products = res.data.product;
+          this.products.sort(function (a, b) {
+            const nameA = a.pname.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.pname.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+          });
+          this.setPage(1);
+          this.sidecorps = res.subcat.subcat;
+          this.catname = res.cat.cat.catname;
+          this.productfilterForm.patchValue({
+            'city': this.filter.city
+          });
+          this.productfilterForm.patchValue({
+            'prodcat': this.filter.subcatid
+          });
+        } else {
+          if (!!res.pagenotfound) {
+            this.router.navigate(['/notfound']);
+          }
+          if (!!this.pagedItems && !!this.pagedItems.length) {
+            this.pagedItems.length = 0;
+            this.sidecorps.length = 0;
+            this.catname = '';
+          }
+          this.showloading = false;
+          this.notfound = true;
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
   getAllProductbycat() {
     this.route.params.subscribe(params => {
@@ -134,7 +252,7 @@ export class ProductListComponent implements OnInit {
       if (!!this.pagedItems && !!this.pagedItems.length) {
         this.pagedItems.length = 0;
       }
-      this.product.getProductListByCat(params['catid']).subscribe( 
+      this.product.getProductListByCat(params['catid']).subscribe(
         res => {
           if (res['status'] === 'success') {
             this.showloading = false;

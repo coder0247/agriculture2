@@ -10,29 +10,31 @@ export class EditFormControlService {
   // TODO: get from a remote source of category subcategory metadata
   // TODO: make asynchronous
 
-  categoryfield(categoryoptions) {
+  categoryfield(categoryoptions, subcategoryoptions) {
     const adnewformcontrols: FormBase<any>[] = [
-      new Dropdown({
+      new Textbox({
         key: 'category',
         label: 'Category',
-        options: categoryoptions,
-        required: true
+        value: categoryoptions,
+        required: true,
+        order: 1
       }),
       new Dropdown({
         key: 'currency',
         label: 'Currency',
         options: [
-          { _id: 'usd', currencyname: 'USD' },
-          { _id: 'eur', currencyname: 'EUR' },
-          { _id: 'tzs', currencyname: 'TZS' }
+          {currencyname: 'USD' },
+          { currencyname: 'EUR' },
+          { currencyname: 'TZS' }
         ],
         required: true
       }),
-      new Dropdown({
+      new Textbox({
         key: 'subcatnames',
         label: 'Sub Category',
+        value: subcategoryoptions,
         required: true,
-        options: []
+        order: 1
       }),
       new Dropdown({
         key: 'country',
@@ -46,12 +48,7 @@ export class EditFormControlService {
         required: true,
         options: []
       }),
-      new Dropdown({
-        key: 'region',
-        label: 'Region',
-        required: true,
-        options: []
-      }),
+  
       new Dropdown({
         key: 'amountunit',
         label: 'Amount Unit',
@@ -144,9 +141,9 @@ export class EditFormControlService {
       key: 'currency',
       label: 'Currency',
       options: [
-        { _id: 'usd', currencyname: 'USD' },
-      { _id: 'eur', currencyname: 'EUR' },
-      { _id: 'tzs', currencyname: 'TZS' }],
+        { currencyname: 'USD' },
+      {  currencyname: 'EUR' },
+      { currencyname: 'TZS' }],
       required: true
     });
     return adnewformcontrols;
@@ -201,12 +198,13 @@ export class EditFormControlService {
   }
   subcategoryfield(subcategoryoptions) {
     const adnewformcontrols: FormBase<any> =
-      new Dropdown({
-        key: 'subcatnames',
-        label: 'Sub Category',
-        options: subcategoryoptions,
-        required: true
-      });
+    new Textbox({
+      key: 'subcatnames',
+      label: 'Sub Category',
+      value: subcategoryoptions,
+      required: true,
+      order: 1
+    });
 
     return adnewformcontrols;
   }
@@ -221,17 +219,7 @@ export class EditFormControlService {
 
     return adnewformcontrols;
   }
-  regionfield(regionoptions, isrequired) {
-    const adnewformcontrols: FormBase<any> =
-      new Dropdown({
-        key: 'region',
-        label: 'Region',
-        required: isrequired,
-        options: regionoptions
-      });
 
-    return adnewformcontrols;
-  }
   priceneg() {
     const adnewformcontrols: FormBase<any>[] = [
       new Radio({

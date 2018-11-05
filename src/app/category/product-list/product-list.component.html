@@ -18,7 +18,7 @@
 					<div class="productloading" *ngIf="showloading">Loading...</div>
 					<div class="top-control box-has-content">
 							<div class="control">
-								<div class="filter-choice">
+								<div class="filter-choice"> 
 									   <ng-select [searchable]="false"  [items]="filterchoice" [selectOnTab]="true" bindLabel="sortbyfilter" bindValue="_id"
 									   [(ngModel)]="filterdefault" (change)="getfilteritem($event._id)">
 									  </ng-select>
@@ -99,7 +99,7 @@
 										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
 											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.totalPages)">Last</a>
 										</li>
-								</ul>
+								</ul> 
 							</div>
 						<span  *ngIf="pagedItems?.length" class="note">Showing {{pager.startIndex + 1}}-{{pager.endIndex + 1}}  of {{pager.totalItems}} result</span>
 				</div>
@@ -107,13 +107,30 @@
 			<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 sidebar">
 				<!-- <h4 class="main-title">Shop by</h4> -->
 				<div class="widget widget-categories">
-						<h5 class="widgettitle">{{catname}}</h5>
-						<ul class="list-categories">
+					    <form [formGroup]="productfilterForm">
+								<h5 class="widgettitle">Country</h5>
+								<select class="form-control" formControlName="country" (change)="getCities($event)"> 
+										<option [ngValue]="null" [disabled]="true">Select Country</option>
+										<option *ngFor="let item of countries" value="{{item}}">{{item}}</option>
+								</select>
+								<h5 class="widgettitle">City</h5>
+								<select class="form-control"  formControlName="city" (change)="updateCity($event)"> 
+										<option value="">Select All City</option>
+										<option *ngFor="let item of cities" value="{{item}}">{{item}}</option>
+								</select>
+								<h5 class="widgettitle">{{catname}}</h5>
+								<select class="form-control" ormControlName="prodcat" (change)="getproduct($event)"> 
+										<option value="">Select All</option>
+										<option *ngFor="let item of sidecorps" value="{{item._id}}">{{item.subcatname}}</option>
+								</select>
+						</form>
+						
+						<!-- <ul class="list-categories">
 							<li *ngFor="let item of sidecorps">
 								<input type="checkbox" id="{{item._id}}" name="{{item._id}}" value="{{item._id}}" (change)="getproductbysubcat($event)">
 								<label for="{{item._id}}" class="label-text">{{item.subcatname}}</label>
 							</li>
-						</ul>
+						</ul> -->
 					</div>
 				<!-- <div class="widget widget-brand">
 						<h5 class="widgettitle">Brand</h5>

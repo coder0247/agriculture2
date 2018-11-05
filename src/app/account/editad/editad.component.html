@@ -12,7 +12,7 @@
 
 
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 info-content">
-                                    <form [formGroup]="newadForm" class="addnewproduct register-form" (ngSubmit)="addnewproduct(templatenewaddposted)">
+                                    <form [formGroup]="newadForm" class="addnewproduct register-form" (ngSubmit)="addnewproduct(templatenewaddposted, templateproductimg)">
                                     <div class="contact-form">
                                         <h4 class="main-title">Product Details</h4>
                                         <h5 class="note-title">( * ) Required fields</h5>
@@ -21,8 +21,8 @@
                                             <div class="col-md-12" *ngIf="!formbaseelements.length">
                                               Loading...
                                             </div>
-                                            <app-editproductfrm [formbase]="formbaseelements[0]" [newadForm]="newadForm" (selectoptcat)="getSubcatListOnchange($event)"></app-editproductfrm>
-                                            <app-editproductfrm [formbase]="formbaseelements[1]" [newadForm]="newadForm" (selectoptsubcat)="getSubcatimages($event)"></app-editproductfrm>
+                                            <app-editproductfrm [formbase]="formbaseelements[0]" [newadForm]="newadForm"></app-editproductfrm>
+                                            <app-editproductfrm [formbase]="formbaseelements[1]" [newadForm]="newadForm"></app-editproductfrm>
                                          </div>
                                          <div class="row">
                                             <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
@@ -34,12 +34,12 @@
                                               </div>
                                               </div>
                                         </div>
-                                         <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                         <!-- <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
                                           
                                           <div class="row" *ngIf="dynFormitem.key==='region'">
                                               <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
                                           </div>
-                                         </div>
+                                         </div> -->
                                             <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
                                           
                                                 <div class="row" *ngIf="dynFormitem.key==='name'">
@@ -133,132 +133,139 @@
                                               <span *ngIf="!submitting">submit</span>
                                             </button>
                                           </div>
-
-                                </form>
+                                 </form>
                                 <!-- <div class="alert alert-success" role="alert" *ngIf="uploadsuccess">
                                         <strong>New Ad : </strong> New Ad Posted Successfully
                                     </div> -->
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 map-content" *ngIf="!!defaultproductimage">
-                                    <div *ngIf="!uploader?.queue?.length">
-                                        <h3>Current product images</h3>
-                                        <!-- <small>If you dont' have product image then this will the default products image.</small> -->
-                                        <!-- <img src="{{defaultproductimage}}" alt="default product image"> -->
-                                        <ul class="prevuploadedimages">
-                                          <li *ngFor="let item of defaultproductimage; let i = index">
-                                            <div class="prodblockedit">
-                                              <a href="javascript:void(0)" (click)="removeprevimage(i)"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                              <img src="{{item}}">
-                                            </div>
-                                          </li>
-                                        </ul>
-                                </div>
-                                 <!-- fileupload ui -->
-                                
-                                
-                               <div class="row">
-                                   <div class="col-lg-12">
-                                        <h4 class="main-title">Upload Product Images</h4>
-                                 <h5 class="note-title note-bg ">You can upload max 5 (Five) image<br />Maximum allowed image file size is <strong>300 KB</strong></h5>
-                                   </div>
-                               </div>
-                                 <div class="row">
-                                     <!-- <div class="col-lg-8">
-                                         <div class="dragdrop" appDnd (filesChangeEmiter)="onFilesChange($event)" (filesInvalidEmiter)="onFileInvalids($event)" [allowed_extensions]="['jpg','jpeg']">
-                                             <div class="uploadinfo">
-                                                 <i class="fa fa-cloud-upload"></i>
-                                                 <span>Drag File to Upload</span>
-                                             </div>
-                                         </div>
-                                     </div> -->
-                                     
-                                     <div class="col-lg-12 file">
-                                       <div class="dottedborder">
-                                           <div class="iconblk fileuploadclr">
-                                               <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                       </div>
-                                   <div class="browsebtn">
-                                        <label class="file-upload btn btn-success">
-                                           I want to upload my product images <input type="file" id="file" uploader="uploader"  (change)="onSelectChange($event, template, exceededuploadlimit)" />
-                                        </label>
-                                   </div>                                            
-                                       </div>  
-                                     </div>
-                                 </div>
-                                 <div class="row">
-                                     <div class="col-lg-12" style="margin-bottom: 40px">
-                                         <p>File in Queue: {{ uploader.queue.length }}</p>
-                                         <table class="table uploadlisting">
-                                           <thead>
-                                             <tr>
-                                               <th width="50%">Name</th>
-                                               <!-- <th ng-show="uploader.isHTML5">Size</th> -->
-                                               <th ng-show="uploader.isHTML5">Progress</th>
-                                               <th>Status</th>
-                                               <th>Actions</th>
-                                             </tr>
-                                           </thead>
-                                           <tbody>
-                                             <tr *ngFor="let item of uploader.queue; let i = index">
-                                               <td>
-                                                 <strong>{{ item.file.name }}</strong>
-                                                 <!-- Image preview -->
-                                                 <!--auto height-->
-                                                 <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
-                                                 <!--auto width-->
-                                                 <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
-                                                 <!--fixed width and height -->
-                                                 <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
-                                               </td>
-                                               <!-- <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024 | number }} MB</td> -->
-                                               <td ng-show="uploader.isHTML5">
-                                                 <div class="progress" style="margin-bottom: 0;">
-                                                   <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                                                 </div>
-                                               </td>
-                                               <td class="text-center">
-                                                 <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                                                 <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                                                 <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                                               </td>
-                                             <td nowrap>
-                                                 <ul class="actiongroup">
-                                                     <li>
-                                                         <button type="button" class="btn btn-success btn-xs" (click)="upload(item.id)" [disabled]="item.isSuccess">
-                                                             <span class="glyphicon glyphicon-upload"></span> Upload
-                                                         </button>
-                                                     </li>
-                                                     <li>
-                                                         <button type="button" class="btn btn-danger btn-xs" (click)="removeSelected(i)" [disabled]="item.isUploading">
-                                                             <span class="glyphicon glyphicon-remove"></span> Remove
-                                                         </button>
-                                                     </li>
-                                                 </ul>
-                                             </td>
-                                             </tr>
-                                           </tbody>
-                                         </table>
-                                         <div class="uploadall">
-                                           <div>
-                                             Queue progress:
-                                             <div class="progress">
-                                               <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': progress + '%' }"></div>
-                                             </div>
+                                <div *ngIf="!uploadsuccess">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 map-content" *ngIf="!!defaultproductimage">
+                                    
+                                                <div *ngIf="uploadCountAfterRemove===0 && !queuehasproduct">
+                                                        <h3>Default product image</h3>
+                                                        <small>If you don’t have a product image this image will be appeared as your product image</small>
+                                                        <img src="{{defaultproductimage[0]}}" alt="default product image">
+                                                </div>
+                                            <!-- <div *ngIf="!uploader?.queue?.length"> -->
+                                                <h3 *ngIf="uploadCountAfterRemove!==0">Current product images</h3>
+                                                <ul class="prevuploadedimages" *ngIf="uploadCountAfterRemove!==0">
+                                                  <li *ngFor="let item of defaultproductimage; let i = index">
+                                                    <div class="prodblockedit">
+                                                      <a href="javascript:void(0)" (click)="removeprevimage(i)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                      <img src="{{item}}">
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                        <!-- </div> -->
+                                         <!-- fileupload ui -->
+                                        
+                                        
+                                       <div class="row" *ngIf="maxAllowedImage!=0">
+                                           <div class="col-lg-12">
+                                                <h4 class="main-title">Upload Product Images</h4>
+                                         <h5 class="note-title note-bg ">You can upload max {{maxAllowedImage}} ({{ordinal[maxAllowedImage]}}) image<br />Maximum allowed image file size is <strong>300 KB</strong></h5>
                                            </div>
-                                           <!-- <button type="button" class="btn btn-success btn-sm" (click)="uploadAll()" [disabled]="!uploader.queue.length">
-                                             <span class="glyphicon glyphicon-upload"></span> Upload all
-                                           </button>   -->
-                                            
-                                           <button type="button" class="btn btn-danger btn-sm" (click)="removeAll()" [disabled]="!uploader.queue.length">
-                                             <span class="glyphicon glyphicon-remove"></span> Remove all
-                                           </button>
-                                     
-                                         </div>
                                        </div>
-                                 </div>
-                                  <!-- fileupload ui end -->
-                                   
+                                         <div class="row"  *ngIf="maxAllowedImage!=0">
+                                             <!-- <div class="col-lg-8">
+                                                 <div class="dragdrop" appDnd (filesChangeEmiter)="onFilesChange($event)" (filesInvalidEmiter)="onFileInvalids($event)" [allowed_extensions]="['jpg','jpeg']">
+                                                     <div class="uploadinfo">
+                                                         <i class="fa fa-cloud-upload"></i>
+                                                         <span>Drag File to Upload</span>
+                                                     </div>
+                                                 </div>
+                                             </div> -->
+                                             
+                                             <div class="col-lg-12 file">
+                                               <div class="dottedborder">
+                                                   <div class="iconblk fileuploadclr">
+                                                       <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                               </div>
+                                           <div class="browsebtn">
+                                                <label class="file-upload btn btn-success">
+                                                   I want to upload my product images <input type="file" id="file" uploader="uploader"  (change)="onSelectChange($event, template, exceededuploadlimit)" />
+                                                </label>
+                                           </div>                                            
+                                               </div>  
+                                             </div>
+                                         </div>
+                                         <div class="row"  *ngIf="maxAllowedImage!=0">
+                                             <div class="col-lg-12" style="margin-bottom: 40px">
+                                                 <p>File in Queue: {{ uploader.queue.length }}</p>
+                                                 <table class="table uploadlisting">
+                                                   <thead>
+                                                     <tr>
+                                                       <th width="50%">Name</th>
+                                                       <!-- <th ng-show="uploader.isHTML5">Size</th> -->
+                                                       <th ng-show="uploader.isHTML5">Progress</th>
+                                                       <th>Status</th>
+                                                       <th>Actions</th>
+                                                     </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                     <tr *ngFor="let item of uploader.queue; let i = index">
+                                                       <td>
+                                                         <strong>{{ item.file.name }}</strong>
+                                                         <!-- Image preview -->
+                                                         <!--auto height-->
+                                                         <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                                                         <!--auto width-->
+                                                         <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                                         <!--fixed width and height -->
+                                                         <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                                                       </td>
+                                                       <!-- <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024 | number }} MB</td> -->
+                                                       <td ng-show="uploader.isHTML5">
+                                                         <div class="progress" style="margin-bottom: 0;">
+                                                           <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                                         </div>
+                                                       </td>
+                                                       <td class="text-center">
+                                                         <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                                         <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                                         <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                                       </td>
+                                                     <td nowrap>
+                                                         <ul class="actiongroup">
+                                                             <li>
+                                                                 <button type="button" class="btn btn-success btn-xs" (click)="upload(item.id)" [disabled]="item.isSuccess">
+                                                                     <span class="glyphicon glyphicon-upload"></span> Upload
+                                                                 </button>
+                                                             </li>
+                                                             <li>
+                                                                 <button type="button" class="btn btn-danger btn-xs" (click)="removeSelected(i)" [disabled]="item.isUploading">
+                                                                     <span class="glyphicon glyphicon-remove"></span> Remove
+                                                                 </button>
+                                                             </li>
+                                                         </ul>
+                                                     </td>
+                                                     </tr>
+                                                   </tbody>
+                                                 </table>
+                                                 <div class="uploadall">
+                                                   <div>
+                                                     Queue progress:
+                                                     <div class="progress">
+                                                       <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': progress + '%' }"></div>
+                                                     </div>
+                                                   </div>
+                                                   <!-- <button type="button" class="btn btn-success btn-sm" (click)="uploadAll()" [disabled]="!uploader.queue.length">
+                                                     <span class="glyphicon glyphicon-upload"></span> Upload all
+                                                   </button>   -->
+                                                    
+                                                   <button type="button" class="btn btn-danger btn-sm" (click)="removeAll()" [disabled]="!uploader.queue.length">
+                                                     <span class="glyphicon glyphicon-remove"></span> Remove all
+                                                   </button>
+                                  
+                                                   <span *ngIf="ifuploading" class="uploadinginprog">Please Wait Uploading..</span>
+                                                 </div>
+                                               </div>
+                                         </div>
+                                          <!-- fileupload ui end -->
+                                           
+                                        </div>
                                 </div>
+                               
                             </div>
                             <ng-template #template>
                                 <div class="modal-header">
@@ -295,6 +302,17 @@
                                           <p> Ad Updated Successfully</p>
                                         </div>
                                       </ng-template>
+                                      <ng-template #exceededuploadlimit>
+                                            <div class="modal-header">
+                                              <h4 class="modal-title pull-left">Error</h4>
+                                              <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <p>Upload limit Exceeded. Only 5(Five) images are allowed.</p>
+                                            </div>
+                                        </ng-template>
 					</div>
 				</div>
       <!-- sidebar -->

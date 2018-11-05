@@ -170,9 +170,47 @@
 				</div> -->
 				<div class="widget widget-recent-post">
 					<h5 class="widgettitle">New Products</h5>
+					<ul class="list-recent-posts" *ngIf="!new_products.length">
+							<li class="product-item">
+								<div class="thumb">
+									<div class="thumblock shine"></div>
+								</div>
+								<div class="info">
+									<div class="textline shine"></div>
+									<div class="textline shine"></div>
+								</div>
+							</li>
+							<li class="product-item">
+									<div class="thumb">
+										<div class="thumblock shine"></div>
+									</div>
+									<div class="info">
+										<div class="textline shine"></div>
+										<div class="textline shine"></div>
+									</div>
+								</li>
+								<li class="product-item">
+										<div class="thumb">
+											<div class="thumblock shine"></div>
+										</div>
+										<div class="info">
+											<div class="textline shine"></div>
+											<div class="textline shine"></div>
+										</div>
+									</li>
+									<li class="product-item">
+											<div class="thumb">
+												<div class="thumblock shine"></div>
+											</div>
+											<div class="info">
+												<div class="textline shine"></div>
+												<div class="textline shine"></div>
+											</div>
+										</li>
+						</ul>
 					<ul class="list-recent-posts">
 						<li class="product-item" *ngFor="let product of new_products">
-
+							
 							<div class="thumb">
 								<a href="javascript:void()" (click)="showproductdetails(product.productid._id)">
 									<img src="{{ product.productid.pimage[0] }}" alt="">

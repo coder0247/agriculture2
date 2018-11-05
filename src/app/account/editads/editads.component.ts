@@ -109,14 +109,16 @@ export class EditadsComponent implements OnInit {
             for (let pitem in this.products) {
                if (this.products[pitem]._id === item.productid) {
                 let productinfo = this.products[pitem];
-                console.log('productinfo', productinfo);
+           
                 let catsubcat = {
                   productid: item.productid,
                   category: item.subcatid.catid.catname,
                   subcategory: item.subcatid.subcatname,
+                  subcatimg: item.subcatid.defaultimage,
                   pimage: productinfo.pimage,
                   pname: productinfo.pname,
-                  amtunit: productinfo.amtunit,
+                  amtunit: productinfo.amtunit.amountunit,
+                  amtunitid:  productinfo.amtunit._id,
                   unitprice: productinfo.unitprice,
                   saleamount: productinfo.saleamount,
                   category_id: item.subcatid.catid._id,

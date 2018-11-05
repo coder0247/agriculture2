@@ -14,10 +14,13 @@ export class FooterComponent implements OnInit {
   alreadysubs = false;
   checking = false;
   validationerror = false;
+  year: any;
   constructor(private homepage: HomeService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.createForm();
+    const d = new Date();
+    this.year = d.getFullYear();
   }
   private createForm() {
     this.subsForm = new FormGroup({

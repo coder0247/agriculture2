@@ -1,28 +1,33 @@
 <div [formGroup]="newadForm">
 
     <div [ngSwitch]="formbase?.key">
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngSwitchCase="'category'">
-        <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
-        <ng-select [searchable]="false" #categorySelect [items]="formbase.options" [selectOnTab]="true" bindLabel="catname"
-          bindValue="_id" placeholder="Select category" [formControlName]="formbase.key" (change)="getSubcatList($event)">
-        </ng-select>
-        <div *ngIf="!isValid && forcevalidation" class="error-msg">
-            <div *ngIf="newadForm.controls['category'].pristine && newadForm.controls['category'].errors.required">Category is required.</div>
-          </div>
-      </div>
-  
-  
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngSwitchCase="'subcatnames'">
-        <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
-        <ng-select [searchable]="false" #cropsSelect [items]="formbase.options" [selectOnTab]="true" bindLabel="subcatname"
-          bindValue="_id" placeholder="Select subcategory" [formControlName]="formbase.key" (change)="getSubcatimages($event)">
-        </ng-select>
-  
-        <div *ngIf="!isValid && forcevalidation" class="error-msg">
-     
-            <div *ngIf="newadForm.controls['subcatnames'].pristine && newadForm.controls['subcatnames'].errors.required">Subcategory is required.</div>
-          </div>
-      </div>
+        <div [ngSwitch]="formbase?.key">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngSwitchCase="'category'">
+                <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+              <input type="text" class="input-info" [formControlName]="formbase.key" [readOnly]=true>
+              <div *ngIf="formbase.required">
+                <div *ngIf="!isValid && forcevalidation" class="error-msg">
+                  <div *ngIf="newadForm.controls['category'].pristine && newadForm.controls['category'].errors?.required">Category
+                    is required.</div>
+                  <div *ngIf="newadForm.controls['category'].dirty && newadForm.controls['category'].errors?.required">Category
+                    is required.</div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngSwitchCase="'subcatnames'">
+                <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+                <input type="text" class="input-info" [formControlName]="formbase.key" [readOnly]=true>
+                <div *ngIf="formbase.required">
+                  <div *ngIf="!isValid && forcevalidation" class="error-msg">
+                    <div *ngIf="newadForm.controls['subcatnames'].pristine && newadForm.controls['subcatnames'].errors?.required">Subcatnames
+                      is required.</div>
+                    <div *ngIf="newadForm.controls['subcatnames'].dirty && newadForm.controls['subcatnames'].errors?.required">Subcatnames
+                      is required.</div>
+                  </div>
+                </div>
+            </div>
+   
       <div *ngSwitchCase="'country'">
           <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
           <select class="form-control" [formControlName]="formbase.key"  (change)="getCities($event)"> 
@@ -93,7 +98,17 @@
               </div>
       <div class="col-xs-12 " *ngSwitchCase="'currency'">
           <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
-          <!-- {{formbase | json}} -->
+          <select class="form-control" [formControlName]="formbase.key" > 
+              <option [ngValue]="null" [disabled]="true">Select currency</option>
+              <option *ngFor="let item of formbase['options']" [ngValue]="item.currencyname">{{item.currencyname}}</option>
+          </select>
+          <div *ngIf="formbase.required">
+            <div *ngIf="!isValid && forcevalidation"  class="error-msg top-minus-20">
+                <div *ngIf="newadForm.controls['currency'].pristine && newadForm.controls['currency'].errors.required">Currency  required.</div>
+            </div>
+          </div> 
+        <!-- <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+          
     
           <ng-select [searchable]="false" #currencySelect [items]="formbase.options" [selectOnTab]="true" bindLabel="currencyname"
             bindValue="_id" placeholder="Select currency" [formControlName]="formbase.key"></ng-select>
@@ -102,7 +117,7 @@
               <div *ngIf="newadForm.controls['currency'].pristine && newadForm.controls['currency'].errors.required">currency is
                 required.</div>
             </div>
-          </div>
+          </div> -->
         </div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngSwitchCase="'productname'">
         <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
@@ -141,7 +156,17 @@
         </div>
       </div>
       <div *ngSwitchCase="'amountunit'">
-        <span class="label-text">{{formbase.label}}<span *ngIf="formbase.required">*</span></span>
+          <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
+          <select class="form-control" [formControlName]="formbase.key" > 
+              <option [ngValue]="null" [disabled]="true">Select Amount Unit</option>
+              <option *ngFor="let item of formbase['options']" [ngValue]="item._id">{{item.amountunit}}</option>
+          </select>
+          <div *ngIf="formbase.required">
+            <div *ngIf="!isValid && forcevalidation"  class="error-msg top-minus-20">
+                <div *ngIf="newadForm.controls['amountunit'].pristine && newadForm.controls['amountunit'].errors.required">Amount Unit is  required.</div>
+            </div>
+          </div>
+        <!-- <span class="label-text">{{formbase.label}}<span *ngIf="formbase.required">*</span></span>
         <ng-select [searchable]="false" #amountforsale [items]="formbase.options" [selectOnTab]="true" bindLabel="amountunit"
           bindValue="_id" placeholder="Select Amount Unit" [formControlName]="formbase.key">
         </ng-select>
@@ -150,7 +175,7 @@
             <div *ngIf="newadForm.controls['amountunit'].pristine && newadForm.controls['amountunit'].errors.required">Amount
               Unit is required.</div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div *ngSwitchCase="'priceperunit'">
         <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
