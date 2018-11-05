@@ -18,7 +18,7 @@
 					<div class="productloading" *ngIf="showloading">Loading...</div>
 					<div class="top-control box-has-content">
 							<div class="control">
-								<div class="filter-choice"> 
+								<div class="filter-choice">
 									   <ng-select [searchable]="false"  [items]="filterchoice" [selectOnTab]="true" bindLabel="sortbyfilter" bindValue="_id"
 									   [(ngModel)]="filterdefault" (change)="getfilteritem($event._id)">
 									  </ng-select>
@@ -48,7 +48,7 @@
 											<i class="fa fa-eye" aria-hidden="true"></i>
 										</span> Quick View</button>
 									<a href="javascript:void(0)" (click)="showproductdetails(item._id)" class="thumb-link">
-										<img src="{{item.pimage}}" alt="">
+										<img src="{{item.pimage[0]}}" alt="">
 									</a>
 								</div>
 								<div class="info">
@@ -99,7 +99,7 @@
 										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
 											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.totalPages)">Last</a>
 										</li>
-								</ul> 
+								</ul>
 							</div>
 						<span  *ngIf="pagedItems?.length" class="note">Showing {{pager.startIndex + 1}}-{{pager.endIndex + 1}}  of {{pager.totalItems}} result</span>
 				</div>

@@ -21,7 +21,7 @@
 			</div> -->
 			<div>
 				<a routerLink="product/detail/{{ topSellProduct.productid._id }}" class="">
-					<img src="{{ topSellProduct.productid.pimage }}" alt="">
+					<img src="{{ topSellProduct.productid.pimage[0] }}" alt="">
 				</a>
 			</div>
 			<div class="product-item">
@@ -52,7 +52,7 @@
 					<div class="info">
 							<a routerLink="product/detail/{{ item.productid._id }}" class="product-name">
 								{{ item.productid.pname | titlecase}}
-							</a>	
+							</a>
 							<div class="price">
 								<span>${{ item.productid.saleamount }}</span>
 							</div>

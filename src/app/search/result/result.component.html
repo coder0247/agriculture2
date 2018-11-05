@@ -57,7 +57,7 @@
 											<i class="fa fa-eye" aria-hidden="true"></i>
 										</span> Quick View</button>
 									<a href="javascript:void(0)" (click)="showproductdetails(item._id)" class="thumb-link">
-										<img src="{{item.pimage}}" alt="">
+										<img src="{{item.pimage[0]}}" alt="">
 									</a>
 								</div>
 								<div class="info">
@@ -172,7 +172,7 @@
 					<h5 class="widgettitle">New Products</h5>
 					<ul class="list-recent-posts">
 						<li class="product-item" *ngFor="let product of new_products">
-							
+
 							<div class="thumb">
 								<a href="javascript:void()" (click)="showproductdetails(product.productid._id)">
 									<img src="{{ product.productid.pimage[0] }}" alt="">
