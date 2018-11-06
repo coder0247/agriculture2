@@ -119,7 +119,7 @@
 										<option *ngFor="let item of cities" value="{{item}}">{{item}}</option>
 								</select>
 								<h5 class="widgettitle">{{catname}}</h5>
-								<select class="form-control" ormControlName="prodcat" (change)="getproduct($event)"> 
+								<select class="form-control" formControlName="prodcat" (change)="getproduct($event)"> 
 										<option value="">Select All</option>
 										<option *ngFor="let item of sidecorps" value="{{item._id}}">{{item.subcatname}}</option>
 								</select>

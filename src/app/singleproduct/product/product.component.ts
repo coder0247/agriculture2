@@ -30,7 +30,9 @@ export class ProductComponent implements OnInit {
     userid: '',
     productid: '',
     country: '',
-    city: ''
+    city: '',
+    phonenumber: '',
+    countrycode: ''
   };
   showmsgsent = false;
   clientIP: any;
@@ -135,6 +137,8 @@ this.router.events.subscribe((event: Event) => {
               this.sellerdetails.country = seller.country;
               this.sellerdetails.city = seller.city;
               this.sellerdetails.userid = seller._id;
+              this.sellerdetails.phonenumber = seller.phonenumber;
+              this.sellerdetails.countrycode = seller.usercountrycode.c_phcode;
             } else {
               // this.router.navigate(['/cropnotfound']);
               if (this.singleproduct) {

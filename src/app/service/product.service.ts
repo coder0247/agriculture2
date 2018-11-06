@@ -58,6 +58,14 @@ export class ProductService {
       catchError(this.handleError)
     );
   }
+  getSubcatListByCatID(catid: any): Observable<any> {
+    return this.http
+      .get(apiUrl + 'category/' + catid + '/subcatlist', httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   getProductListBySubCat (subcatlist) {
     return this.http.post( apiUrl + 'getProductListBySubCat', subcatlist )
     .pipe(

@@ -64,6 +64,37 @@ exports.productListByCat = function (req, res) {
             })
     });
 };
+exports.subCategoryList = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        if (!!req.params.catid.match(/^[0-9a-fA-F]{24}$/) === false) {
+            return res.status(200).json({
+                status: 'Fail',
+                msg: 'Fail',
+                pagenotfound: true
+
+            });
+          }
+        Subcategory.find({
+            catid: req.params.catid, status: 1
+        }).sort('subcatname').exec(function (err, subcategory) {
+            if (err) throw err;
+            if (subcategory.length > 0) {
+                return res.status(200).json({
+                    status: 'success',
+                    data: { 'subcategory': subcategory },
+                });
+
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: 'Fetch Failed',
+                })
+            }
+
+        })
+    });
+};
 exports.productList = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -82,16 +113,27 @@ exports.productList = function (req, res) {
         var allkeys = _.omit(filter, function(value, key, object) {
             return _.isEmpty(value);
           });
-       
+       console.log('allkeys', allkeys);
+/*
+Person.
+  find({
+    occupation: /host/,
+    'name.last': 'Ghost',
+    age: { $gt: 17, $lt: 66 },
+    likes: { $in: ['vaporizing', 'talking'] }
+  }).
+*/ 
 
-        MappingTbl.find(allkeys, function (err, mappingfound) {
+Subcategory.find({ 'catid': catid }).exec(function (err, subcatids) {
+    var subcatidarray = subcatids.map(obj => {
+        return obj._id;
+    });
+        MappingTbl.find(allkeys).where('subcatid').in(subcatidarray).exec(function (err, mappingfound) {
             if (mappingfound.length > 0) {
                 var reformattedArray = mappingfound.map(obj => {
                     return obj.productid;
                 });
-                var subcatidarray = mappingfound.map(obj => {
-                    return obj.subcatid;
-                });
+                
                 Product.find({
                     '_id': { $in: reformattedArray }, 'status': '1'
                 }, function (err, docs) {
@@ -103,8 +145,8 @@ exports.productList = function (req, res) {
                             return res.status(200).json({
                                 status: 'success',
                                 data: { 'product': docs },
-                                subcat: { 'subcat': subcatfound },
-                                cat: { 'cat': catename[0] }
+                                cat: { 'cat': catename[0] },
+                                subcatids
                             });
                         });
                         });
@@ -125,7 +167,7 @@ exports.productList = function (req, res) {
                 })
             }
         });
-        
+    }); 
             // Subcategory.find({ 'catid': req.params.id }).sort('subcatname').exec(function (err, subcatfound) {
             //     if (err) throw err;
             //     if (subcatfound.length > 0) {

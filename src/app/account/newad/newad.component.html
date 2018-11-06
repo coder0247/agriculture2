@@ -23,11 +23,11 @@
                                          </div> -->
                                          <!-- {{formbaseelements | json}} -->
                                          <div class="row">
-                                            <div class="col-md-12" *ngIf="!formbaseelements.length">
+                                            <div class="col-md-12" *ngIf="!dformbaseelements.length">
                                               Loading...
                                             </div>
-                                            <app-addnewproductfrm [formbase]="formbaseelements[0]" [newadForm]="newadForm" (selectoptcat)="getSubcatList($event)"></app-addnewproductfrm>
-                                            <app-addnewproductfrm [formbase]="formbaseelements[1]" [newadForm]="newadForm" (selectoptsubcat)="getSubcatimages($event)"></app-addnewproductfrm>
+                                            <app-addnewproductfrm [formbase]="dformbaseelements[0]" [newadForm]="newadForm" (selectoptcat)="getSubcatList($event)"></app-addnewproductfrm>
+                                            <app-addnewproductfrm [formbase]="dformbaseelements[1]" [newadForm]="newadForm" (selectoptsubcat)="getSubcatimages($event)"></app-addnewproductfrm>
                                          </div>
                                          <!-- <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
                                           

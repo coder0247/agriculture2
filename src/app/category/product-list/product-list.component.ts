@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../service/product.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { QuickviewComponent } from '../quickview/quickview.component';
@@ -55,6 +55,7 @@ export class ProductListComponent implements OnInit {
     private pageservice: PagerService,
     private homepage: HomeService
   ) {
+
     this.productfilterForm = new FormGroup({
       country: new FormControl(null),
       city: new FormControl(null),
@@ -183,15 +184,35 @@ export class ProductListComponent implements OnInit {
       this.pager.endIndex + 1
     );
   }
-
+ 
   ngOnInit() {
     this.products = '';
     // this.getAllProductbycat();
     this.getProducts();
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.getProducts();
+      }
+    });
   }
   getProducts() {
+
        this.route.params.subscribe(params => {
         this.filter.category = params['catid'];
+        this.homepage.getSubcatListByCatID(params['catid']).subscribe(
+          res => {
+            if (res.status === 'success') {
+              // this.subCats = res.data.subcategory;
+              this.sidecorps = res.data.subcategory;
+              this.productfilterForm.patchValue({
+              prodcat: this.filter.subcatid
+            });
+            }
+          },
+          err => {
+            console.log(err);
+          }
+        );
       });
     this.showloading = true;
       this.products = '';
@@ -218,7 +239,7 @@ export class ProductListComponent implements OnInit {
             return 0;
           });
           this.setPage(1);
-          this.sidecorps = res.subcat.subcat;
+          // this.sidecorps = res.subcat.subcat;
           this.catname = res.cat.cat.catname;
           this.productfilterForm.patchValue({
             'city': this.filter.city
@@ -271,7 +292,7 @@ export class ProductListComponent implements OnInit {
               return 0;
             });
             this.setPage(1);
-            this.sidecorps = res.subcat.subcat;
+            // this.sidecorps = res.subcat.subcat;
             this.catname = res.cat.cat.catname;
           } else {
             if (!!res.pagenotfound) {

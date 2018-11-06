@@ -52,7 +52,7 @@ exports.getSellerInfo = function (req, res) {
             if (seller.length > 0) {
                 User.find({
                     _id: seller[0].userid
-                }, { password: 0 }, function (err, user) {
+                }, { password: 0 }).populate({path: 'usercountrycode'}).exec(function (err, user) {
                     return res.status(200).json({
                         status: 'success',
                         data: { 'sellerinfo': user },

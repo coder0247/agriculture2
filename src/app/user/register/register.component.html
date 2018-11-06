@@ -5,7 +5,7 @@
       <h5 class="note-title">All ( * ) fields are required</h5>
       <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <span class="label-text">Fist name <span>*</span></span>
+          <span class="label-text">First name <span>*</span></span>
           <input type="text"  class="input-info" formControlName="firstname" required>
           <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
               <div class="text-danger" *ngIf="!!registerForm.controls['firstname'].pristine || !!registerForm.controls['firstname'].errors?.required">First Name is required.</div>

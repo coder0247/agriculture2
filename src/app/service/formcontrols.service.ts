@@ -9,7 +9,120 @@ import { Textareabox } from '../form/formcontrol/textareabox';
 export class FormControlService {
   // TODO: get from a remote source of category subcategory metadata
   // TODO: make asynchronous
+  categoryfield1() {
+    const adnewformcontrols: FormBase<any>[] = [
 
+      new Dropdown({
+        key: 'currency',
+        label: 'Currency',
+        options: [
+          { _id: 'usd', currencyname: 'USD' },
+          { _id: 'eur', currencyname: 'EUR' },
+          { _id: 'tzs', currencyname: 'TZS' }
+        ],
+        required: true
+      }),
+ 
+
+      new Dropdown({
+        key: 'amtunit',
+        label: 'Amount Unit',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'condition',
+        label: 'Condition',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'country',
+        label: 'Country',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'city',
+        label: 'City',
+        required: true,
+        options: []
+      }),
+      new Dropdown({
+        key: 'yearmfg',
+        label: 'Year of manufacture',
+        required: true,
+        options: []
+      }),
+      new Textbox({
+        key: 'manufacture',
+        label: 'Manufacture',
+        value: '',
+        required: true,
+        order: 1
+      }),
+          new Textbox({
+      key: 'productname',
+      label: 'Name',
+      value: '',
+      required: true,
+      order: 1
+    }),
+    new Textbox({
+      key: 'saleamount',
+      label: 'Amount For Sale',
+      value: '',
+      required: true,
+      order: 1
+    }),
+    new Textbox({
+      key: 'unitprice',
+      label: 'Price Per Unit',
+      value: '',
+      required: true,
+      order: 1
+    }),
+    new Textareabox({
+      key: 'description',
+      label: 'Description',
+      value: '',
+      required: true,
+      order: 1
+    }),
+    new Textareabox({
+      key: 'addinfo',
+      label: 'Addition Information',
+      value: '',
+      required: true,
+      order: 1
+    }),
+    new Radio({
+      key: 'status',
+      label: 'Status',
+      value: 'comm',
+      type: 'radio'
+    }),
+    new Radio({
+      key: 'status',
+      label: 'Status',
+      value: 'pvt',
+      type: 'radio'
+    }),
+    new Radio({
+      key: 'priceneg',
+      label: 'Price Negotiable',
+      value: 'yes',
+      type: 'radio'
+    }),
+        new Radio({
+          key: 'priceneg',
+          label: 'Price Negotiable',
+          value: 'no',
+          type: 'radio'
+        })
+    ];
+    return adnewformcontrols;
+  }
   categoryfield(categoryoptions) {
     const adnewformcontrols: FormBase<any>[] = [
       new Dropdown({
@@ -34,7 +147,7 @@ export class FormControlService {
         required: true,
         options: []
       }),
-     
+
       new Dropdown({
         key: 'amtunit',
         label: 'Amount Unit',

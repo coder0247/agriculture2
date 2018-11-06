@@ -41,6 +41,7 @@ export class NewadComponent implements OnInit {
  
   @Input()
   formbaseelements: FormBase<any>[] = [];
+  dformbaseelements: FormBase<any>[] = [];
   imagedata: any;
   formElements: Array<any> = [];
   public hasBaseDropZoneOver = false;
@@ -68,6 +69,9 @@ export class NewadComponent implements OnInit {
   showfrmloading = false;
   submitting = false;
   currentfilesize: number;
+  // tslint:disable-next-line:max-line-length
+  defaultformelement = ['addinfo', 'amtunit', 'condition', 'country', 'city',  'currency', 'description', 'manufacture', 'priceneg', 'productname', 'saleamount', 'status',
+   'unitprice', 'yearmfg'];
   constructor(
     private productservice: ProductService,
     private route: ActivatedRoute,
@@ -89,15 +93,15 @@ export class NewadComponent implements OnInit {
     this.bsModalRef.content.closeBtnName = 'Close';
   }
   ngOnInit() {
-    this.formbaseelements.push(
+    this.dformbaseelements.push(
       new Dropdown({
         key: 'category',
         label: 'Category',
         options: []
       })
     );
-    this.newadForm = this.cs.toFormGroup(this.formbaseelements);
-    this.formbaseelements.splice(0, 1);
+    this.newadForm = this.cs.toFormGroup(this.dformbaseelements);
+    this.dformbaseelements.splice(0, 1);
     delete this.newadForm.controls['category'];
     delete this.newadForm.value['category'];
     this.homepage.getCatList().subscribe(
@@ -106,11 +110,43 @@ export class NewadComponent implements OnInit {
           this.mainCats = res.data.category;
           if (this.mainCats.length > 0) {
             this.selectedCategory = this.mainCats[0]._id;
-            this.formbaseelements = this.formcontrolservice.categoryfield(
-              res.data.category
-            );
-            this.newadForm = this.cs.toFormGroup(this.formbaseelements);
-            this.formbaseelements.splice(1, this.formbaseelements.length - 1);
+            this.dformbaseelements = this.formcontrolservice.categoryfield( res.data.category );
+            this.newadForm = this.cs.toFormGroup(this.dformbaseelements);
+            this.dformbaseelements.splice(1, this.dformbaseelements.length - 1);
+          }
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    // this.createForm();
+    const userid = localStorage.getItem('id');
+    if (!userid) {
+      this.router.navigate(['user/signin']);
+    }
+  }
+  generateForm() {
+    console.log('before ...', this.formbaseelements);
+    // this.formbaseelements.length = 0;
+    // this.formbaseelements.splice(2, this.formbaseelements.length - 1);
+    this.homepage.getCatList().subscribe(
+      res => {
+        if (res.status === 'success') {
+          this.mainCats = res.data.category;
+          if (this.mainCats.length > 0) {
+            this.selectedCategory = this.mainCats[0]._id;
+            // this.formbaseelements.splice(0, this.formbaseelements.length - 1);
+            // for ( let item of this.formcontrolservice.categoryfield1()) {
+            //   this.formbaseelements.push(item);
+            //   // console.log('hmm', item);
+            // }
+            // console.log('00000000000000000', this.formbaseelements);
+            // this.newadForm = this.cs.toFormGroup(this.formbaseelements);
+            for ( let item of this.defaultformelement) {
+              this.newadForm.addControl(item, new FormControl('', Validators.required));
+            }
+            // this.formbaseelements.splice(2, this.formbaseelements.length - 1);
           }
         }
       },
@@ -135,21 +171,6 @@ export class NewadComponent implements OnInit {
       console.log(err);
     });
 }
-
-  // getCity(isrequired) {}
-  // getRegion(isrequired) {
-  // // region list
-  // this.homepage.getRegionList()
-  // .subscribe(res => {
-  //    if (res.status === 'success') {
-  //     //  this.regions = res.data.regions;
-  //      this.formbaseelements.push(this.formcontrolservice.regionfield(res.data.regions, isrequired));
-  //      console.log('aaaa', this.formbaseelements);
-  //    }
-  //   }, (err) => {
-  //     console.log(err);
-  //   });
-  // }
   getAmountList(isrequired) {
     // amounit list
     this.homepage.getAmountUnitList().subscribe(
@@ -213,8 +234,8 @@ export class NewadComponent implements OnInit {
     // this.newadForm. = this.cs.toFormGroup(this.radiobutton);
   }
   getCitieslist(e) {
-    console.log('this.formbaseelements', this.formbaseelements);
-    console.log('city index', _.findIndex(this.formbaseelements, function(o) { return o.key === 'city'; }));
+    // console.log('this.formbaseelements', this.formbaseelements);
+    // console.log('city index', _.findIndex(this.formbaseelements, function(o) { return o.key === 'city'; }));
     this.newadForm.controls['city'].markAsPristine({ onlySelf: true });
     this.newadForm.controls['city'].markAsUntouched({ onlySelf: true });
     this.newadForm.controls['city'].markAsDirty({ onlySelf: false });
@@ -236,31 +257,32 @@ export class NewadComponent implements OnInit {
       });
   }
   getSubcatList(e) {
-   console.log('this.formbaseelements.length', this.formbaseelements.length);
+   
     this.showcatloading = true;
-    if (this.formbaseelements.length === 2) {
-      this.formbaseelements.splice(1, 1);
+    if (this.dformbaseelements.length === 2) {
+      this.dformbaseelements.splice(1, 1);
     } else {
-      this.formbaseelements.splice(1, this.formbaseelements.length - 1);
+      this.dformbaseelements.splice(1, this.dformbaseelements.length - 1);
     }
     if (e.target.value !== '') {
       this.homepage.getSubcatListByCatID(e.target.value).subscribe(
         res => {
           if (res.status === 'success') {
-            this.formbaseelements.push(
+            this.dformbaseelements.push(
               this.formcontrolservice.subcategoryfield(res.data.subcategory)
             );
             this.showcatloading = false;
-          } else {
-            this.formbaseelements.splice(2, this.formbaseelements.length);
           }
+          //  else {
+          //   this.formbaseelements.splice(2, this.formbaseelements.length);
+          // }
         },
         err => {
           console.log(err);
         }
       );
     } else {
-      this.formbaseelements.splice(1, this.formbaseelements.length - 1);
+      // this.formbaseelements.splice(1, this.formbaseelements.length - 1);
       this.productimage = '';
       this.defaultproductimage = '';
       this.showcatloading = false;
@@ -287,63 +309,95 @@ export class NewadComponent implements OnInit {
     );
   }
   getSubcatimages(e) {
-    this.formbaseelements.splice(2, this.formbaseelements.length - 1);
+    if (this.formbaseelements.length) {
+      // for ( let item of this.defaultformelement) {
+      //   if (this.newadForm.contains(item)) {
+      //     this.newadForm.removeControl(item);
+      //   }
+      // }
+
+      // this.formElements.length = 0;
+      // this.newadForm.removeControl('category');
+      // this.formbaseelements.splice(2, this.formbaseelements.length - 1);
+      this.formbaseelements.length = 0;
+      this.generateForm();
+    }
+
     if (e.target.value !== 'none') {
+
       this.pricenegradio1 = null;
       this.pricenegradio2 = null;
       this.showfrmloading = true;
-      this.productimage = this.formbaseelements[1]['options'][
+     // let optindex = _.findIndex(this.dformbaseelements, function(o) { return o.key === 'subcatnames'; });
+      this.productimage = this.dformbaseelements[1]['options'][
         parseInt(e.target.selectedIndex, 10) - 1
       ].defaultimage;
-      this.defaultproductimage = this.formbaseelements[1]['options'][parseInt(e.target.selectedIndex, 10) - 1].defaultimage;
-      console.log('this.productimage', this.productimage);
+      let controlstokeep: Array<any> = [];
+      controlstokeep.length = 0;
+      this.defaultproductimage = this.dformbaseelements[1]['options'][parseInt(e.target.selectedIndex, 10) - 1].defaultimage;
+
       this.homepage.getformfields(e.target.value).subscribe(
         res => {
           if (res.status === 'success') {
+
             this.formElements = res.data[0].form;
-            console.log('this.formElements', this.formElements);
+  
             for (let item in this.formElements) {
               if (this.formElements[item].fieldname) {
                 switch (this.formElements[item].fieldname) {
                   case 'country':
+                    controlstokeep.push('country');
+                    controlstokeep.push('city');
                     this.getCountry(this.formElements[item].isrequired);
                     break;
                   case 'name':
+                    controlstokeep.push('productname');
                     this.getProductName(this.formElements[item].isrequired);
                     break;
                   case 'amountforsale':
+                    controlstokeep.push('saleamount');
                     this.getSaleAmount(this.formElements[item].isrequired);
                     break;
                   case 'amountunit':
+                    controlstokeep.push('amtunit');
                     this.getAmountList(this.formElements[item].isrequired);
                     break;
                   case 'priceperunit':
+                    controlstokeep.push('unitprice');
                     this.getUnitPrice(this.formElements[item].isrequired);
                     break;
                   case 'pricenegotiable':
+                    controlstokeep.push('priceneg');
                     this.priceneg();
                     break;
                     case 'yearmfg':
+                    controlstokeep.push('yearmfg');
                     this.yearmfg(this.formElements[item].isrequired);
                     break;
                   case 'status':
+                  controlstokeep.push('status');
                   this.statusradio();
                   break;
                   case 'condition':
+                  controlstokeep.push('condition');
                   this.getCondition(this.formElements[item].isrequired);
                   break;
                   case 'addinfo':
+                  controlstokeep.push('addinfo');
                   this.getAddinfo(this.formElements[item].isrequired);
                   break;
                   case 'manufacture':
+                  controlstokeep.push('manufacture');
                   this.getManufacture(this.formElements[item].isrequired);
                   break;
                   case 'description':
+                  controlstokeep.push('description');
                     this.getProductDescription(
                       this.formElements[item].isrequired
                     );
                     break;
                   case 'currency':
+                  controlstokeep.push('currency');
                     this.getCurrency();
                     break;
                   default:
@@ -351,6 +405,9 @@ export class NewadComponent implements OnInit {
                 }
               }
             }
+            this.removeFormControls(controlstokeep);
+
+            controlstokeep.length = 0;
             this.showfrmloading = false;
           } else {
             this.showfrmloading = false;
@@ -365,8 +422,20 @@ export class NewadComponent implements OnInit {
       this.productimage = '';
       this.defaultproductimage = '';
       this.showcatloading = false;
+
     }
   }
+  removeFormControls(keepcontrols) {
+    const formeleremove =  _.without(this.defaultformelement, ...keepcontrols);
+    if ( formeleremove.length > 0) {
+      for ( let item of formeleremove) {
+        if (this.newadForm.contains(item)) {
+          // console.log('item', item);
+          this.newadForm.removeControl(item);
+        }
+      }
+    }
+   }
   // public fileOverBase(e: any): void {
   //   this.hasBaseDropZoneOver = e;
   // }
@@ -388,59 +457,20 @@ export class NewadComponent implements OnInit {
   }
 
   addnewproduct(templatenewaddposted, templateproductimg) {
-    console.log('this.newadForm.value', this.newadForm.value);
-    // console.log('this.productimage111', this.productimage);
-    /*
- amtunit: ""
-currencytype: ""
-description: ""
-priceneg: "no"
-productimage: Array(1)
-0: Array(3)
-0: "https://res.cloudinary.com/minati/image/upload/v1540908840/uxjihyd0deggbechbhxo.png"
-1: "https://res.cloudinary.com/minati/image/upload/v1540908840/ohkq82nhfcdxb20urvda.png"
-2: "https://res.cloudinary.com/minati/image/upload/v1540908849/jiwctleiqlxsedpcuzbe.png"
-productname: ""
-region: ""
-saleamount: ""
-subcat: "5bd8002b2b9cc82fe4feccaa"
-unitprice: ""
-userid: "5b6193e4b85809c142b2dceb"
-    */
+   
     const userid = localStorage.getItem('id');
     let productimages: any;
     if (typeof this.uploadedimages !== undefined && this.uploadedimages.length > 0) {
       productimages = this.uploadedimages;
-      // console.log('productimagescccccccccccccccc', productimages, this.uploadedimages);
+    
     } else {
       productimages = [this.productimage];
-      // console.log('productimagesbbbbbbbbbbbbbbb', productimages);
+    
     }
-    // console.log('productimagesaaaaaaaaaaaaaaaaa', productimages);
+  
     this.forcevalidation = true;
     this.fvalid.setMessage(this.forcevalidation);
-    // append these fields carefully
-    /*
-        subcatnames: "5bd8002b2b9cc82fe4feccaa"
-        region: ""
-        saleamount: ""
-        amtunit: ""
-        unitprice: ""
-        productname: ""
-        description: ""
-        currency: ""
-        [productimages]
-        priceneg: "no"
 
-        addinfo: "vb"
-        category: "5b56cd9ecb50b83ff77b516e"
-        city: "Achin"
-        condition: "Used"
-        country: "Afghanistan"
-        manufacture: ""
-        status: "pvt"
-        yearmfg: 1980
-    */
     const newproduct = {
       subcat: this.newadForm.value.subcatnames,
       saleamount: this.newadForm.value.saleamount,
