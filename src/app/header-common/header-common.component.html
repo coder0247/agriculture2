@@ -77,14 +77,14 @@
 							<form [formGroup]="searchForm" (ngSubmit)="submitForm()" class="form-inline">
 
 									<div class="search-form layout1 box-has-content">
-										
+
 										<div class="search-block1" *ngIf="mainCats; else showloading">
 												<div class="form-row">
 												<div class="form-group col-md-3 col-xs-12 cropoption  subcategory-list">
 													<ng-select [searchable]="false" #categorySelect [items]="mainCats" [selectOnTab]="true" bindLabel="catname" bindValue="_id"
 													 placeholder="Select category" formControlName="category" (change)="getSubcatList($event._id)">
 													</ng-select>
-													
+
 												</div>
 												<div class="form-group col-xs-12 col-md-3 cropoption subcategory-list">
 													<ng-select [searchable]="false" #cropsSelect [items]="subCats" [selectOnTab]="true" bindLabel="subcatname" bindValue="_id"
@@ -170,7 +170,7 @@
 							</div>
 						</div>
 
-						<div class="col-lg-8 col-md-7 col-sm-8 col-xs-12 midle-content">
+						<div class="col-lg-6 col-md-7 col-sm-8 col-xs-12 midle-content">
 
 							<form [formGroup]="searchForm" (ngSubmit)="submitForm()" class="form-inline">
 
@@ -183,19 +183,19 @@
 												 placeholder="Select category" formControlName="category" (change)="getSubcatList($event._id)">
 												</ng-select>
 											</div>
-											
+
 											<div class="form-group col-md-3 cropoption subcategory-list">
 												<ng-select [searchable]="false" #cropsSelect [items]="subCats" [selectOnTab]="true" bindLabel="subcatname" bindValue="_id"
 												 placeholder="Select subcategory" formControlName="subcategory">
 												</ng-select>
 											</div>
-											
+
 											<!-- <div class="form-group  col-md-3 regionoption region-list">
 												<ng-select [searchable]="false" #regionSelect [items]="regions" [selectOnTab]="true" bindLabel="regionname" bindValue="_id"
 												 placeholder="Select region" formControlName="region">
 												</ng-select>
 											</div> -->
-											
+
 											<button class="search-button">
 												<i class="fa fa-search" aria-hidden="true"></i>
 											</button>
@@ -228,26 +228,26 @@
 							</form>
 						</div>
 
-						<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 right-content hidden-sm hidden-xs">
-							<ul class="header-control">
-								<!-- <li class="hotline">
-									<div class="icon">
-										<i class="fa fa-phone" aria-hidden="true"></i>
-									</div>
-									<div class="content">
-										<span class="text">Call us now</span>
-										<span class="number">(080)123 4567 891</span>
-									</div>
-								</li> -->
-								<li class="box-minicart">
-									<div class="minicart ">
-										<button type="button" class="btn btn-success" (click)="postnewadd()">
-											Post New Ad
-										</button>
-									</div>
-								</li>
-							</ul>
-						</div>
+            <div class="col-lg-4 col-md-3 col-sm-4 col-xs-12 right-content hidden-sm hidden-xs">
+  								<ul class="header-control">
+  									<li class="hotline">
+  										<!-- <div class="icon">
+  											<i class="fa fa-phone" aria-hidden="true"></i>
+  										</div> -->
+  										<div class="content">
+
+  											<span class="number">(+49) 1578 8523 297</span>
+  										</div>
+  									</li>
+  									<li class="box-minicart">
+  										<div class="minicart ">
+  											<button type="button" class="btn btn-success" (click)="postnewadd()">
+  												Post New Ad
+  											</button>
+  										</div>
+  									</li>
+  								</ul>
+  							</div>
 					</div>
 				</div>
 			</div>
