@@ -29,7 +29,7 @@ const Product = mongoose.model('Products', productSchema);
 productSchema.plugin(autoIncrement.plugin, {
     model: Product,
     field: 'adid',
-    startAt: 1163,
+    startAt: 1189,
     incrementBy: 1
 });
 module.exports = Product;
