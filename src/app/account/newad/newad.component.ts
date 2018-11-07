@@ -127,7 +127,7 @@ export class NewadComponent implements OnInit {
     }
   }
   generateForm() {
-    console.log('before ...', this.formbaseelements);
+    // console.log('before ...', this.formbaseelements);
     // this.formbaseelements.length = 0;
     // this.formbaseelements.splice(2, this.formbaseelements.length - 1);
     this.homepage.getCatList().subscribe(

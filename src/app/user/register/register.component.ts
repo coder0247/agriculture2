@@ -4,7 +4,7 @@ import { patternValidator, passwordMatchValidator } from '../../sharedfn/userfn'
 import { AuthService } from '../../service/auth.service';
 import { HomeService } from '../../service/home.service';
 @Component({
-  selector: 'app-register',
+  selector: 'app-register', 
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })

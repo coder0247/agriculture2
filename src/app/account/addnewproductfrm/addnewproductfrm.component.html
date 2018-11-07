@@ -186,14 +186,14 @@
     <div *ngSwitchCase="'priceneg'">
       <div *ngIf="formbase.value==='yes'">
         <input [name]="formbase.key" [type]="formbase.type" [formControlName]="formbase.key" [checked]="formbase.value==='yes'? '': 'checked'"
-          [value]="formbase.value" (change)="formbase.value.yes = true"><label for="r1" class="label-text" >{{formbase.value |
+          [value]="formbase.value" ><label for="r1" class="label-text" >{{formbase.value |
           titlecase}}</label>
 
       </div>
       <div *ngIf="formbase.value==='no'">
 
         <input [name]="formbase.key" [type]="formbase.type" [formControlName]="formbase.key" [checked]="formbase.value==='no'? 'checked': ''"
-          [value]="formbase.value" (change)="formbase.value.no = false"><label for="r2" class="label-text">{{formbase.value |
+          [value]="formbase.value" ><label for="r2" class="label-text">{{formbase.value |
           titlecase}}</label>
       </div>
     </div>
