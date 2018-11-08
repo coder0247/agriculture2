@@ -113,7 +113,7 @@ exports.productList = function (req, res) {
         var allkeys = _.omit(filter, function(value, key, object) {
             return _.isEmpty(value);
           });
-       console.log('allkeys', allkeys);
+    //    console.log('allkeys', allkeys);
 /*
 Person.
   find({
@@ -123,11 +123,27 @@ Person.
     likes: { $in: ['vaporizing', 'talking'] }
   }).
 */ 
+/*
+_.has({a: 1, b: 2, c: 3}, "b");
+=> true
+*/ 
+var productlistfilter;
+if(_.has(allkeys, "subcatid")) {
+    productlistfilter = {
+        'catid': catid,
+        '_id': allkeys.subcatid
+    };
+} else {
+    productlistfilter = {
+        'catid': catid
+    };
+}
 
-Subcategory.find({ 'catid': catid }).exec(function (err, subcatids) {
+Subcategory.find(productlistfilter).exec(function (err, subcatids) {
     var subcatidarray = subcatids.map(obj => {
         return obj._id;
     });
+    // console.log('allsubcat', subcatidarray);
         MappingTbl.find(allkeys).where('subcatid').in(subcatidarray).exec(function (err, mappingfound) {
             if (mappingfound.length > 0) {
                 var reformattedArray = mappingfound.map(obj => {

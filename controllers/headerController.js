@@ -27,6 +27,49 @@ exports.categoryList = function (req, res) {
         })
     });
 };
+exports.AllSubcatList = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+      if(req.params.catid != ''){
+        Subcategory.find({
+            catid: req.params.catid, status: 1
+        }).sort('subcatname').exec(function (err, subcategory) {
+            if (err) throw err;
+            if (subcategory.length > 0) {
+                return res.status(200).json({
+                    status: 'success',
+                    data: { 'subcategory': subcategory },
+                });
+
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: 'Fetch Failed',
+                })
+            }
+
+        })
+      } else {
+        Subcategory.find({status: 1}).exec(function (err, subcategory) {
+            if (err) throw err;
+            if (subcategory.length > 0) {
+                return res.status(200).json({
+                    status: 'success',
+                    data: { 'subcategory': [] }
+                });
+
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: 'Fetch Failed',
+
+                })
+            }
+
+        })
+      }
+    });
+};
 exports.subCategoryList = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;

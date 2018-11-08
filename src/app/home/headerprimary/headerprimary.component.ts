@@ -12,6 +12,10 @@ import { ProductService } from '../../service/product.service';
 import { NgOption } from '@ng-select/ng-select';
 import { AuthService } from '../../service/auth.service';
 import { Location } from '@angular/common';
+import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from 'rxjs/operators'
+import { Subject, Observable, of, concat } from 'rxjs';
+import { AutocompService } from './../../service/autocomp.service';
+
 @Component({
   selector: 'app-headerprimary',
   templateUrl: './headerprimary.component.html',
@@ -37,6 +41,9 @@ export class HeaderprimaryComponent implements OnInit {
   selecthascontent = false;
   // creates instance of FormGroup called authForm
   searchForm: FormGroup;
+  subcatAC$: Observable<any>;
+  subcatACLoading = false;
+  subcatACinput$ = new Subject<string>();
   constructor(
     private homepage: HomeService,
     @Inject(FormBuilder) fb: FormBuilder,
@@ -45,33 +52,38 @@ export class HeaderprimaryComponent implements OnInit {
     private router: Router,
     public auth: AuthService,
     private _location: Location,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private autocomp: AutocompService
   ) {
-    const subcategoryid = localStorage.getItem('subcategoryid') !== null ? localStorage.getItem('subcategoryid') : '';
     const categoryid = localStorage.getItem('categoryid') !== null ? localStorage.getItem('categoryid') : '';
-    if (categoryid !== '') {
-      this.selecthascontent = true;
-      this.getSubcatList(categoryid);
-      this.searchForm = fb.group({
-        category: [categoryid],
-        subcategory: [subcategoryid]
-      });
-      this.searchForm.controls['category'].markAsDirty({ onlySelf: true });
-    } else {
-      this.selecthascontent = false;
-      this.searchForm = fb.group({
-        category: [],
-        subcategory: []
-      });
-    }
-    if (subcategoryid !== '') {
-      this.searchForm.controls['subcategory'].markAsDirty({ onlySelf: true });
-    }
-
-    this.searchForm.patchValue({
-      category: categoryid,
-      subcategory: subcategoryid
+    this.searchForm = fb.group({
+      category: [],
+      subcategory: []
     });
+    // if (categoryid !== '') {
+    //   this.selecthascontent = true;
+    //   this.getSubcatList(categoryid);
+    //   this.searchForm = fb.group({
+    //     category: [categoryid],
+    //     subcategory: []
+    //   });
+    //   this.searchForm.controls['category'].markAsDirty({ onlySelf: true });
+    // } else {
+    //   this.selecthascontent = false;
+    //   this.searchForm = fb.group({
+    //     category: [],
+    //     subcategory: []
+    //   });
+    // }
+    // if (subcategoryid !== '') {
+    //   this.searchForm.controls['subcategory'].markAsDirty({ onlySelf: true });
+    // }
+    if (categoryid !== '') {
+      this.searchForm.patchValue({
+        category: categoryid
+      });
+      this.searchForm.controls['category'].markAsTouched({ onlySelf: true });
+    }
   }
   mmenutoggleClass() {
     // console.log('menu click', this.mmenu.nativeElement.classList);
@@ -94,6 +106,7 @@ export class HeaderprimaryComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.loadsubcatAC();
     this.checksession();
     this.homepage.getCatList().subscribe(
       res => {
@@ -109,6 +122,20 @@ export class HeaderprimaryComponent implements OnInit {
       }
     );
   }
+  private loadsubcatAC() {
+    this.subcatAC$ = concat(
+        of([]), // default items
+        this.subcatACinput$.pipe(
+           debounceTime(200),
+           distinctUntilChanged(),
+           tap(() => this.subcatACLoading = true),
+           switchMap(term => this.autocomp.getsubcategorylist(term).pipe(
+               catchError(() => of([])), // empty list on error
+               tap(() => this.subcatACLoading = false)
+           ))
+        )
+    );
+}
   routing() {
     const pattern = /(inbox|newad|activeads|archiveads|sent|profile|view|viewsent)$/;
     return pattern.test(this._location.path());
@@ -158,40 +185,34 @@ export class HeaderprimaryComponent implements OnInit {
 
   getSubcatList(catid) {
     localStorage.setItem('categoryid', catid);
-    this.homepage.getSubcatListByCatID(catid).subscribe(
-      res => {
-        if (res.status === 'success') {
-          this.subCats = res.data.subcategory;
+    this.loadsubcatAC();
+    // this.homepage.getSubcatListByCatID(catid).subscribe(
+    //   res => {
+    //     if (res.status === 'success') {
+    //       this.subCats = res.data.subcategory;
 
-        }
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    //     }
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
   }
 
   submitForm() {
     const credentials = this.searchForm.value;
+    // console.log('search', credentials);
     // tslint:disable-next-line:max-line-length
     this.categoryerror = false;
-    this.subcategoryerror = false;
-    if (credentials.category === '') {
+    if (credentials.category === null) {
       this.categoryerror = true;
     }
-    if (credentials.subcategory === '') {
-      this.subcategoryerror = true;
-    }
-    localStorage.setItem('subcategoryid', credentials.subcategory);
-
-    if (!this.categoryerror && !this.subcategoryerror) {
+    if (this.categoryerror !== null && this.subcategoryerror !== null) {
       this.router.navigate([
         '/search',
         'subcategory',
-        credentials.subcategory
+        credentials.subcategory._id
       ]);
     }
-    // this.router.navigate(['/search', 'subcategory', credentials.subcategory, 'region', credentials.region ]);
-
-  }
+}
 }

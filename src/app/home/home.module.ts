@@ -24,9 +24,12 @@ import { FooterModule } from '../footer/footer.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap';
 import { QuickviewComponent } from './quickview/quickview.component';
+import { AutocompService } from './../service/autocomp.service';
+
 @NgModule({
 	imports: [
-		CommonModule,
+
+	CommonModule,
 		HomeRoutingModule,
 		AccordionModule.forRoot(),
 		CarouselModule.forRoot(),
@@ -41,6 +44,6 @@ import { QuickviewComponent } from './quickview/quickview.component';
 	declarations: [
 		HomepageComponent, SliderComponent, TopsellingComponent, HeaderprimaryComponent, FeaturedsmallComponent,
 		FeaturedlargeComponent, BannerComponent, BrandsComponent, MostviewedComponent, OnsaleComponent, NewarrivalsComponent, QuickviewComponent],
-	providers: [HomeService, ProductService],
+	providers: [HomeService, ProductService, AutocompService],
 })
 export class HomeModule { }

@@ -1281,7 +1281,7 @@ input {
 }
 .header.layout3 .search-form .search-block .search-info {
   width: 100%;
-  border-radius: 0;
+  /* border-radius: 0; */
 }
 .header.layout3
   .search-form
@@ -7412,10 +7412,7 @@ AUTO CLEAR
 .search-form .search-block .search-button {
   border: 0px;
 }
-.ng-dropdown-panel {
-  left: 0px;
-  text-align: left;
-}
+
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
   background-color: #f0f2f5 !important;
 }
@@ -7423,6 +7420,7 @@ AUTO CLEAR
   font-size: 13px !important;
   line-height: 24px !important;
   padding: 0 10px 0 20px !important;
+  color: #666
 }
 
 .cropoption > .ng-select.ng-select-single .ng-select-container {
@@ -7529,9 +7527,7 @@ AUTO CLEAR
   border-right: 1px solid #e6e6e6;
 }
 
-.ng-select.ng-dirty .ng-placeholder {
-  display: none;
-}
+
 .editproductdetail .ng-select.ng-dirty .ng-placeholder, .addnewproduct .ng-select.ng-dirty .ng-placeholder {
   display: none !important;
 }
@@ -7687,9 +7683,7 @@ AUTO CLEAR
   border: 0px !important;
 }
 
-.ng-dropdown-panel.ng-select-bottom {
-  top: 43px !important;
-}
+
 .details-thumb .details-item {
   border: solid 1px #e6e6e6;
   display: inline-block;
@@ -7965,4 +7959,60 @@ ul.prevuploadedimages li {
   color: white;
   text-align: center;
   border-radius: 100%;
+}
+
+.category-list .ng-select {
+  display: inline-block;
+}
+.search-form .search-choice {
+  border: 1px solid #ddd;
+  width: 160px !important;
+}
+ .ng-select.ng-touched  .ng-placeholder {
+  display: none;
+}
+.category-list .ng-dropdown-panel {
+  right: 0px;
+  left: -6px;
+  text-align: left;
+  top: 32px;
+  min-width: 214px;
+}
+.subcataclist .ng-dropdown-panel{
+  right: 0px;
+  left: 2px;
+  text-align: left;
+  top: 41px;
+  min-width: 214px;
+}
+.subcataclist .ng-select .ng-spinner-loader {
+  top: 12px;
+}
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value, 
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-placeholder {
+  color :#888;
+  font-size:13px;
+}
+.category-list  .ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: #999 transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 2.5px;
+}
+
+.category-list  .ng-select.ng-select-opened > .ng-select-container .ng-arrow {
+  top: -2px;
+  border-color: transparent transparent #999;
+  border-width: 0 5px 5px;
+}
+.category-list {
+  padding: 0 5px;
+}
+.category-list .ng-select {
+  display: block;
+}
+.hotline .icon {
+  margin-top: 0px;
+}
+.header-control li {
+  vertical-align: middle;
 }

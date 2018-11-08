@@ -27,7 +27,7 @@ const productSchema = new Schema({
 
 const Product = mongoose.model('Products', productSchema);
 productSchema.plugin(autoIncrement.plugin, {
-    model: Product,
+    model: 'Products',
     field: 'adid',
     startAt: 1601,
     incrementBy: 1

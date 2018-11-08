@@ -20,6 +20,10 @@ import { ProductService } from '../service/product.service';
 import { NgOption } from '@ng-select/ng-select';
 import { AuthService } from '../service/auth.service';
 import { Location } from '@angular/common';
+import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from 'rxjs/operators'
+import { Subject, Observable, of, concat } from 'rxjs';
+
+import { AutocompService } from '../service/autocomp.service';
 
 @Component({
   selector: 'app-header-common',
@@ -55,6 +59,9 @@ export class HeaderCommonComponent implements OnInit {
   crop: any;
   region: any;
   selecthascontent = false;
+  subcatAC$: Observable<any>;
+  subcatACLoading = false;
+  subcatACinput$ = new Subject<string>();
   constructor(
     private homepage: HomeService,
     private renderer: Renderer2,
@@ -63,7 +70,8 @@ export class HeaderCommonComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public auth: AuthService,
-    private _location: Location
+    private _location: Location,
+    private autocomp: AutocompService
   ) {}
   mmenutoggleClass() {
     // console.log('menu click', this.mmenu.nativeElement.classList);
@@ -87,44 +95,12 @@ export class HeaderCommonComponent implements OnInit {
   }
   ngOnInit() {
     this.checksession();
-    const regionid =
-      localStorage.getItem('regionid') !== 'null'
-        ? localStorage.getItem('regionid')
-        : '';
-    const subcategoryid =
-      localStorage.getItem('subcategoryid') !== 'null'
-        ? localStorage.getItem('subcategoryid')
-        : '';
-    const categoryid =
-      localStorage.getItem('categoryid') !== 'null'
-        ? localStorage.getItem('categoryid')
-        : '';
-// console.log(categoryid, subcategoryid, regionid );
-    if (categoryid !== '' && subcategoryid !== '' && regionid !== '') {
-      this.selecthascontent = true;
-      // this.getSubcatList(categoryid);
-      this.searchForm = this.fb.group({
-        category: [categoryid],
-        subcategory: [subcategoryid],
-        region: [regionid]
-      });
-    } else {
-      this.selecthascontent = false;
-      this.searchForm = this.fb.group({
-        category: [],
-        subcategory: [],
-        region: []
-      });
-    }
-    if ( categoryid !== '') {
-      this.searchForm.controls['category'].markAsDirty({ onlySelf: true });
-     }
-    if ( subcategoryid !== '') {
-      this.searchForm.controls['subcategory'].markAsDirty({ onlySelf: true });
-     }
-     if (regionid !== '') {
-      this.searchForm.controls['region'].markAsDirty({ onlySelf: true });
-     }
+    this.loadsubcatAC();
+    const categoryid = localStorage.getItem('categoryid') !== null ? localStorage.getItem('categoryid') : '';
+    this.searchForm = this.fb.group({
+      category: [],
+      subcategory: []
+    });
     this.homepage.getCatList().subscribe(
       res => {
         if (res.status === 'success') {
@@ -138,50 +114,23 @@ export class HeaderCommonComponent implements OnInit {
         console.log(err);
       }
     );
-
-    // regions
-    // this.homepage.getRegionList().subscribe(
-    //   res => {
-    //     if (res.status === 'success') {
-    //       // console.log(res);
-    //       this.regions = res.data.regions;
-    //     }
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // );
-
     if (categoryid !== '') {
-      this.homepage.getSubcatListByCatID(categoryid).subscribe(
-        res => {
-          if (res.status === 'success') {
-            this.subCats = res.data.subcategory;
-            this.searchForm.patchValue({
-              category: categoryid,
-              subcategory: subcategoryid,
-              region: regionid,
-            });
-
-          }
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.searchForm.patchValue({
+        category: categoryid
+      });
+      this.searchForm.controls['category'].markAsTouched({ onlySelf: true });
     }
-    // this.validateAllFormFields(this.searchForm);
   }
-  validateAllFormFields(formGroup: any) {
-    Object.keys(formGroup.controls).forEach(field => {
-        const control = formGroup.get(field);
-        if (control instanceof FormControl) {
-            control.markAsTouched({ onlySelf: true });
-        } else if (control instanceof FormGroup) {
-            this.validateAllFormFields(control);
-        }
-    });
-}
+//   validateAllFormFields(formGroup: any) {
+//     Object.keys(formGroup.controls).forEach(field => {
+//         const control = formGroup.get(field);
+//         if (control instanceof FormControl) {
+//             control.markAsTouched({ onlySelf: true });
+//         } else if (control instanceof FormGroup) {
+//             this.validateAllFormFields(control);
+//         }
+//     });
+// }
   routing() {
     const pattern = /(inbox|newad|activeads|archiveads|sent|profile|view|viewsent)$/;
     return pattern.test(this._location.path());
@@ -231,18 +180,33 @@ export class HeaderCommonComponent implements OnInit {
 
   getSubcatList(catid) {
     localStorage.setItem('categoryid', catid);
-    this.homepage.getSubcatListByCatID(catid).subscribe(
-      res => {
-        if (res.status === 'success') {
-          this.subCats = res.data.subcategory;
-        }
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.loadsubcatAC();
+    // localStorage.setItem('categoryid', catid);
+    // this.homepage.getSubcatListByCatID(catid).subscribe(
+    //   res => {
+    //     if (res.status === 'success') {
+    //       this.subCats = res.data.subcategory;
+    //     }
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
   }
-
+  private loadsubcatAC() {
+    this.subcatAC$ = concat(
+        of([]), // default items
+        this.subcatACinput$.pipe(
+           debounceTime(200),
+           distinctUntilChanged(),
+           tap(() => this.subcatACLoading = true),
+           switchMap(term => this.autocomp.getsubcategorylist(term).pipe(
+               catchError(() => of([])), // empty list on error
+               tap(() => this.subcatACLoading = false)
+           ))
+        )
+    );
+}
   toggleClass() {
     if (this.parentcontent.nativeElement.classList.contains('nonactive')) {
       this.renderer.removeClass(this.parentcontent.nativeElement, 'nonactive');
@@ -257,21 +221,18 @@ export class HeaderCommonComponent implements OnInit {
 
   submitForm() {
     const credentials = this.searchForm.value;
+    // console.log('search', credentials);
+    // tslint:disable-next-line:max-line-length
     this.categoryerror = false;
-    this.subcategoryerror = false;
-    if (credentials.category === '') {
+    if (credentials.category === null) {
       this.categoryerror = true;
     }
-    if (credentials.subcategory === '') {
-      this.subcategoryerror = true;
-    }
-    localStorage.setItem('subcategoryid', credentials.subcategory);
-    if (!this.categoryerror && !this.subcategoryerror ) {
+    if (this.categoryerror !== null && this.subcategoryerror !== null) {
       this.router.navigate([
         '/search',
         'subcategory',
-        credentials.subcategory
+        credentials.subcategory._id
       ]);
     }
-  }
+}
 }
