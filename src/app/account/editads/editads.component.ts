@@ -118,7 +118,7 @@ export class EditadsComponent implements OnInit {
                   pimage: productinfo.pimage,
                   pname: productinfo.pname,
                   amtunit: !!productinfo.amtunit? productinfo.amtunit.amountunit:  '',
-                  amtunitid:  !!productinfo.amtunit._id? productinfo.amtunit._id: '',
+                  amtunitid:  !!productinfo.amtunit? productinfo.amtunit._id: '',
                   unitprice: !!productinfo.unitprice? productinfo.unitprice: '',
                   saleamount: !!productinfo.saleamount? productinfo.saleamount: '',
                   category_id: item.subcatid.catid._id,
