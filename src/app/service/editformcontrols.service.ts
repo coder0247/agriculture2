@@ -16,7 +16,7 @@ export class EditFormControlService {
         key: 'category',
         label: 'Category',
         value: categoryoptions,
-        required: true,
+        required: false,
         order: 1
       }),
       new Dropdown({
@@ -27,60 +27,60 @@ export class EditFormControlService {
           { currencyname: 'EUR' },
           { currencyname: 'TZS' }
         ],
-        required: true
+        required: false
       }),
       new Textbox({
         key: 'subcatnames',
         label: 'Sub Category',
         value: subcategoryoptions,
-        required: true,
+        required: false,
         order: 1
       }),
       new Dropdown({
         key: 'country',
         label: 'Country',
-        required: true,
+        required: false,
         options: []
       }),
       new Dropdown({
         key: 'city',
         label: 'City',
-        required: true,
+        required: false,
         options: []
       }),
-  
+
       new Dropdown({
         key: 'amountunit',
         label: 'Type of Unit',
-        required: true,
+        required: false,
         options: []
       }),
           new Textbox({
       key: 'name',
       label: 'Name',
       value: '',
-      required: true,
+      required: false,
       order: 1
     }),
     new Textbox({
       key: 'amountforsale',
       label: 'Amount For Sale',
       value: '',
-      required: true,
+      required: false,
       order: 1
     }),
     new Textbox({
       key: 'priceperunit',
       label: 'Price Per Unit',
       value: '',
-      required: true,
+      required: false,
       order: 1
     }),
     new Textareabox({
       key: 'description',
       label: 'Description',
       value: '',
-      required: true,
+      required: false,
       order: 1
     }),
     new Radio({
@@ -98,7 +98,7 @@ export class EditFormControlService {
         new Dropdown({
           key: 'condition',
           label: 'Condition',
-          required: true,
+          required: false,
           options: []
         }),
         new Radio({
@@ -117,20 +117,20 @@ export class EditFormControlService {
           key: 'addinfo',
           label: 'Addition Information',
           value: '',
-          required: true,
+          required: false,
           order: 1
         }),
         new Textbox({
           key: 'manufacture',
           label: 'Manufacture',
           value: '',
-          required: true,
+          required: false,
           order: 1
         }),
         new Dropdown({
           key: 'yearmfg',
           label: 'Year of manufacture',
-          required: true,
+          required: false,
           options: []
         })
     ];
@@ -144,7 +144,7 @@ export class EditFormControlService {
         { currencyname: 'USD' },
       {  currencyname: 'EUR' },
       { currencyname: 'TZS' }],
-      required: true
+      required: false
     });
     return adnewformcontrols;
   }
@@ -264,7 +264,7 @@ export class EditFormControlService {
         key: 'city',
         label: 'City',
         options: cityoptions,
-        required: true,
+        required: false,
       });
 
     return adnewformcontrols;
