@@ -80,7 +80,7 @@ exports.register = function (req, res ) {
         newsletter: ""
         password: "123456"
         phoneno: "02134567890"
-        */ 
+        */
         newUser.save(function (error, register) {
             if (error) {
                 return res.status(200).json({
@@ -88,7 +88,7 @@ exports.register = function (req, res ) {
                     data: { 'error': error },
                     dup : "The email address you have entered is already registered",
                     body: req.body
-                    
+
                 });
             } else {
                 const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
@@ -96,56 +96,56 @@ exports.register = function (req, res ) {
                 let vcode = {
                     verifcode: verificationcode,
                 };
-                User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
-                    return res.status(200).json({
-                        status: 'success',
-                        data: { 'error': false, 'msg': "Registered Successfully" },
-                    });
-                });
-                // console.log('verificationcode', verificationcode);
-                // nodemailer.createTestAccount((err, account) => {
-                //     // create reusable transporter object using the default SMTP transport
-                //     let transporter = nodemailer.createTransport({
-                //         host: config.mail.host,
-                //         port: config.mail.port,
-                //         secure: config.mail.secure, // true for 465, false for other ports
-                //         auth: {
-                //             user: config.mail.user, // generated ethereal user
-                //             pass: config.mail.pass // generated ethereal password
-                //         }
-                //     });
-                
-                //     // setup email data with unicode symbols
-                //     let mailOptions = {
-                //         from: '"Agriculture" <support@kilimosafi.com>', // sender address
-                //         to: req.body.email, // list of receivers
-                //         subject: 'Verify your email address', // Subject line
-                //         text: '', // plain text body
-                //         html: req.body.firstname + '<br>' +
-                //        'Welcome to Agriculture Platform! To verify your email so that you can post Ad and contact seller, click the following link:<br>'+
-
-                //         config.siteUrl+'/verify/'+ verificationcode +'<br>'+
-                        
-                //         'Thanks for joining the Agriculture Platform.'
-                //     };
-                
-                //     // send mail with defined transport object
-                //     transporter.sendMail(mailOptions, (error, info) => {
-                //         if (error) {
-                //             return console.log(error);
-                //         }
-                //         let vcode = {
-                //             verifcode: verificationcode,
-                //         };
-                //         User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
-                //             return res.status(200).json({
-                //                 status: 'success',
-                //                 data: { 'error': false, 'msg': "Registered Successfully" },
-                //             });
-                //         });
+                // User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
+                //     return res.status(200).json({
+                //         status: 'success',
+                //         data: { 'error': false, 'msg': "Registered Successfully" },
                 //     });
                 // });
-               
+                // console.log('verificationcode', verificationcode);
+                nodemailer.createTestAccount((err, account) => {
+                    // create reusable transporter object using the default SMTP transport
+                    let transporter = nodemailer.createTransport({
+                        host: config.mail.host,
+                        port: config.mail.port,
+                        secure: config.mail.secure, // true for 465, false for other ports
+                        auth: {
+                            user: config.mail.user, // generated ethereal user
+                            pass: config.mail.pass // generated ethereal password
+                        }
+                    });
+
+                    // setup email data with unicode symbols
+                    let mailOptions = {
+                        from: '"Agriculture" <support@kilimosafi.com>', // sender address
+                        to: req.body.email, // list of receivers
+                        subject: 'Verify your email address', // Subject line
+                        text: '', // plain text body
+                        html: req.body.firstname + '<br>' +
+                       'Welcome to Agriculture Platform! To verify your email so that you can post Ad and contact seller, click the following link:<br>'+
+
+                        config.siteUrl+'/verify/'+ verificationcode +'<br>'+
+
+                        'Thanks for joining the Agriculture Platform.'
+                    };
+
+                    // send mail with defined transport object
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            return console.log(error);
+                        }
+                        let vcode = {
+                            verifcode: verificationcode,
+                        };
+                        User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
+                            return res.status(200).json({
+                                status: 'success',
+                                data: { 'error': false, 'msg': "Registered Successfully" },
+                            });
+                        });
+                    });
+                });
+
             } //else
         });
 
@@ -234,7 +234,7 @@ exports.forgotpass = function (req, res) {
                                 pass: config.mail.pass // generated ethereal password
                             }
                         });
-                    
+
                         // setup email data with unicode symbols
                         let mailOptions = {
                             from: '"Agriculture" <support@kilimosafi.com>', // sender address
@@ -243,7 +243,7 @@ exports.forgotpass = function (req, res) {
                             text: 'Below is new password. After login please reset the password to new one', // plain text body
                             html: '<b>Password: </b>' + '123456'// html body
                         };
-                    
+
                         // send mail with defined transport object
                         transporter.sendMail(mailOptions, (error, info) => {
                             if (error) {
@@ -278,7 +278,7 @@ exports.restUserPassword = function (req, res) {
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0  && userdetails[0].password == crypt(req.body.currentpassword, userdetails[0].password)) {
-                
+
                 let newpassword = {
                     password: crypt(req.body.password),
                 };
@@ -315,16 +315,15 @@ exports.editProfile = function (req, res) {
             lastname: req.body.lastname,
             phonenumber: req.body.phoneno,
             email: req.body.email,
-            region: req.body.region, 
+            region: req.body.region,
             usercountrycode: req.body.countrycode
         };
         User.findByIdAndUpdate({ _id : req.body.userid }, { $set: setprofiledata }, function (error, profileupdated) {
             return res.status(200).json({
                 status: true,
-                message: {'profile' : 'profile updated successfully' }, 
+                message: {'profile' : 'profile updated successfully' },
                 extra: profileupdated
             });
         });
     });
 };
-
