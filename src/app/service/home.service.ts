@@ -54,6 +54,12 @@ export class HomeService {
       catchError(this.handleError)
     );
   }
+  getAllCatSubcatList(): Observable<any> {
+    return this.http.get(apiUrl + 'catsubcatlist', httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
   getSubcatListByCatID(catid: any): Observable<any> {
     return this.http
       .get(apiUrl + 'category/' + catid + '/subcatlist', httpOptions)

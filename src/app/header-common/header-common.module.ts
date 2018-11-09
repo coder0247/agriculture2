@@ -6,6 +6,7 @@ import { ProductService } from '../service/product.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HeaderCommonComponent } from './header-common.component';
 import { AutocompService } from '../service/autocomp.service';
+import { HomeService } from '../service/home.service';
 const routes: Routes = [
   {
     path: '',
@@ -22,6 +23,6 @@ const routes: Routes = [
   ],
   declarations: [HeaderCommonComponent],
   exports: [HeaderCommonComponent, CommonModule, RouterModule],
-  providers: [ProductService, AutocompService],
+  providers: [ProductService, AutocompService, HomeService],
 })
 export class HeaderCommonModule { }

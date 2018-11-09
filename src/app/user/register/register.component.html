@@ -100,7 +100,7 @@
       </div>
       <div class="group-button">
         <button class="button submit"  [disabled]="showloading" (click)="register()">SUBMIT <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
-        <span class="successmsg" [ngClass]="{'bg-danger': error, 'bg-success': success}"  *ngIf="!!usermsg"  >{{usermsg}}</span>
+        <span class="successmsg" [ngClass]="{'bg-success': error, 'bg-success': success}"  *ngIf="!!usermsg"  >{{usermsg}}</span>
       </div>		
     </div>
     </form>

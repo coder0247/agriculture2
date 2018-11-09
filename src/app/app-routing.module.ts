@@ -23,6 +23,10 @@ const routes: Routes = [
     loadChildren: '../app/search/search.module#SearchModule'
   },
   {
+    path: 'products/:subcatid',
+    loadChildren: '../app/productlist/productlist.module#ProductListModule'
+  },
+  {
     path: 'orders',
     loadChildren: '../app/orders/orders.module#OrdersModule'
   },

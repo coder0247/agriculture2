@@ -472,9 +472,9 @@ input {
 .main-header .top-header {
   padding: 35px 0 30px;
 }
-.main-header .logo {
+/* .main-header .logo {
   padding-top: 8px;
-}
+} */
 .header.layout1 .main-header .header-control {
   margin-top: -4px;
 }
@@ -1278,6 +1278,7 @@ input {
 /*HEADER LAYOUT3*/
 .header.layout3 .vertical-content {
   padding-bottom: 24px;
+  z-index: 99999;
 }
 .header.layout3 .search-form .search-block .search-info {
   width: 100%;
@@ -7881,9 +7882,9 @@ border: solid 1px #e6e6e6 !important;
 -moz-box-shadow: none !important;
 box-shadow: none !important;
 }
-.reasonoption > .ng-select.ng-select-single .ng-select-container {
+/* .reasonoption > .ng-select.ng-select-single .ng-select-container {
   margin-bottom: 25px;
-}
+} */
 
 .about-info .info .des, .about-info .info  p {
   font-size: 14px;
@@ -7992,6 +7993,7 @@ ul.prevuploadedimages li {
 .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-placeholder {
   color :#888;
   font-size:13px;
+  /* margin: 0 auto; */
 }
 .category-list  .ng-select .ng-arrow-wrapper .ng-arrow {
   border-color: #999 transparent transparent;

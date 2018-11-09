@@ -158,7 +158,7 @@
       <div *ngSwitchCase="'amountunit'">
           <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
           <select class="form-control" [formControlName]="formbase.key" > 
-              <option [ngValue]="null" [disabled]="true">Select Amount Unit</option>
+              <option [ngValue]="null" [disabled]="true">Select Type of Unit</option>
               <option *ngFor="let item of formbase['options']" [ngValue]="item._id">{{item.amountunit}}</option>
           </select>
           <div *ngIf="formbase.required">

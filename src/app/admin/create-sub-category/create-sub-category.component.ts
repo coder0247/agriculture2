@@ -56,9 +56,9 @@ export class CreateSubCategoryComponent implements OnInit {
   //   { key: 'priceperunit', checkedstatus: false },
   // ];
  // tslint:disable-next-line:max-line-length
- fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description', 'status', 'Year of manufacture', 'City', 'Country', 'Condition', 'Addition Information', 'Manufacture'];
+ fieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Type of Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description', 'status', 'Year of manufacture', 'City', 'Country', 'Condition', 'Addition Information', 'Manufacture'];
  // tslint:disable-next-line:max-line-length
- copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Amount Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description', 'status', 'Year of manufacture', 'City', 'Country', 'Condition', 'Addition Information', 'Manufacture'];
+ copyfieldbuttons: Array<String> = ['Region', 'Name', 'Amount for sale', 'Type of Unit', 'Price per unit', 'Price Negotiable', 'Currency', 'Description', 'status', 'Year of manufacture', 'City', 'Country', 'Condition', 'Addition Information', 'Manufacture'];
  // tslint:disable-next-line:max-line-length
  formkey: Array<String> = ['region', 'name', 'amountforsale', 'amountunit', 'priceperunit', 'pricenegotiable', 'currency', 'description', 'status', 'yearmfg', 'city', 'country', 'condition', 'addinfo', 'manufacture' ];
  tempformfield: Array<String> = [];

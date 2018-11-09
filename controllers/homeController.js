@@ -31,8 +31,8 @@ exports.getPageContent = function (req, res) {
 exports.featured = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-
-        Featured.find({status: true}).populate({ path: 'categoryid' }).populate({ path: 'subcatid' }).populate({ path: 'productid' }).exec(function (err, featured) {
+ 
+        Featured.find({status: true}).populate({ path: 'categoryid' }).populate({ path: 'subcatid' }).populate({ path: 'productid', populate : { path: 'amtunit' } }).exec(function (err, featured) {
             if (err) throw err;
             if (featured.length > 0) {
                 return res.status(200).json({

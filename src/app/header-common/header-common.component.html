@@ -37,7 +37,7 @@
 		<div class="header-mobile">
 					<div class="container">
 						<div class="logo-mob">
-								<a routerLink="/"><img src="assets/images/logo.jpg" alt="" style="width: 139px"></a>
+								<a routerLink="/"><img src="assets/images/logo.png" alt="agripata" ></a>
 						</div>
 						<a #cogactive href="javascript:void(0)" (click)="mconfigtoggleClass()" class="header-top-menu-mobile"><span class="fa fa-cog" aria-hidden="true"></span></a><a class="menu-bar menu-toggle" href="javascript:void(0)" (click)="mmenutoggleClass()"><span class="icon"><span></span><span></span><span></span></span><span class="text">Menu</span></a>
 						<div  #mobileconfig class="mobile-config">
@@ -170,7 +170,7 @@
 					<div class="row">
 						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 left-content hidden-xs hidden-sm">
 							<div class="logo">
-							<a routerLink="/"><img src="assets/images/logo.jpg" alt="Agriculture" style="width: 139px"></a>
+							<a routerLink="/"><img src="assets/images/logo.png" alt="agripata" ></a>
 							</div>
 						</div>
 
@@ -256,28 +256,22 @@
 									</div>
 									<div class="vertical-content hidden-content" #hiddencontent>
 										<ul class="vertical-menu ovic-clone-mobile-menu" *ngIf="mainCats ; else sidebarloading">
-
-											<li *ngFor="let item of mainCats;let i = index">
-												<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}" (click)="toggleClass()">
-													<span class="icon"></span>{{item.catname}}</a>
-											</li>
-
-											<!-- <li class="menu-item-has-children has-megamenu">
-                          <a href="#" class="ovic-menu-item-title" title="More..."><span class="icon"></span> More...</a>
-                          <a href="#" class="toggle-sub-menu"></a>
-                          <div class="sub-menu mega-menu sub-menu2">
-                            <div class="row">
-                              <div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4 col-lg-4" *ngFor="let subarray of morecats">
-
-                                  <ul>
-                                      <li *ngFor="let item of subarray">
-                                        <a routerLink="/crop/{{item._id}}">{{item.cropname}}</a>
-                                      </li>
-                                  </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </li> -->
+											<li class="menu-item-has-children has-megamenu" *ngFor="let cats of catsubcatlist;let i = index">
+												<a routerLink="/category/{{cats.catid}}" class="ovic-menu-item-title" title="{{cats.catname}}">
+													<span class="icon"></span>{{cats.catname}}</a>
+													<a href="#" class="toggle-sub-menu"></a>
+													<div class="sub-menu sub-menu1 mega-menu">
+														<div class="row">
+															<!-- {{cats | json}} -->
+															<div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4" *ngFor="let subcatitemlist of cats.subcatlist">
+																<!-- {{subcatitemlist | json}} -->
+																<ul>
+																	<li *ngFor="let item of subcatitemlist"><a routerLink="/products/{{item._id}}">{{item.subcatname}}</a></li>
+																</ul>
+															</div>
+															</div>
+													</div>
+												</li>
 										</ul>
 										<ng-template #sidebarloading>Loading...</ng-template>
 										<!-- <div class="view-all-categori">

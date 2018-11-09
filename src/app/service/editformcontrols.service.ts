@@ -51,7 +51,7 @@ export class EditFormControlService {
   
       new Dropdown({
         key: 'amountunit',
-        label: 'Amount Unit',
+        label: 'Type of Unit',
         required: true,
         options: []
       }),
@@ -212,7 +212,7 @@ export class EditFormControlService {
     const adnewformcontrols: FormBase<any> =
       new Dropdown({
         key: 'amountunit',
-        label: 'Amount Unit',
+        label: 'Type of Unit',
         required: isrequired,
         options: amountunitlist
       });

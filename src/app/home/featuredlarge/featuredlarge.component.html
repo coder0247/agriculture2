@@ -31,7 +31,7 @@
 							{{ topSellProduct.productid.pname | titlecase}}
 						</a>
 						<div class="price">
-							<span class="ins">${{ topSellProduct.productid.saleamount }}</span>
+							<span class="ins">{{ topSellProduct.productid.saleamount }} {{topSellProduct.productid.currencytype| uppercase}}</span>
 						</div>
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 								{{ item.productid.pname | titlecase}}
 							</a>	
 							<div class="price">
-								<span>${{ item.productid.saleamount }}</span>
+								<span>{{ item.productid.saleamount }} {{item.productid.currencytype | uppercase}}</span>
 							</div>
 						</div>
 					<!-- <div class="info">

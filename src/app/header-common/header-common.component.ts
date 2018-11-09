@@ -62,6 +62,7 @@ export class HeaderCommonComponent implements OnInit {
   subcatAC$: Observable<any>;
   subcatACLoading = false;
   subcatACinput$ = new Subject<string>();
+  catsubcatlist: Array<any> = [];
   constructor(
     private homepage: HomeService,
     private renderer: Renderer2,
@@ -120,6 +121,21 @@ export class HeaderCommonComponent implements OnInit {
       });
       this.searchForm.controls['category'].markAsTouched({ onlySelf: true });
     }
+    this.homepage.getAllCatSubcatList().subscribe(
+      res => {
+        if (res.status === 'success') {
+          //  _.filter(subcategory, {'catid' : '5b56cd9ecb50b83ff77b5166'})
+          for ( let catitem of res.data.category) {
+            // tslint:disable-next-line:max-line-length
+            this.catsubcatlist.push({'catid': catitem._id , 'catname': catitem.catname, 'subcatlist': _.chunk(_.filter(res.data.subcategory, {'catid' : catitem._id}), 6 )});
+          }
+          // console.log(this.catsubcatlist);
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 //   validateAllFormFields(formGroup: any) {
 //     Object.keys(formGroup.controls).forEach(field => {

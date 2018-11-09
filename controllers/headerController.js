@@ -4,7 +4,7 @@ const Test = require('../model/test');
 const Region = require('../model/region');
 const mongoose = require('mongoose');
 const config = require('../config');
-
+var _ = require('underscore');
 exports.categoryList = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -15,6 +15,52 @@ exports.categoryList = function (req, res) {
                     status: 'success',
                     data: { 'category': category }
                 });
+
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: 'Fetch Failed',
+
+                })
+            }
+
+        })
+    });
+};
+exports.catsubcatList = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        Category.find({'status': 1}).sort('catname').exec(function (err, category) {
+            if (err) throw err;
+            if (category.length > 0) {
+                var catidarray = category.map(obj => {
+                    return obj._id;
+                });
+           
+                Subcategory.find({
+                    status: 1
+                }).sort('subcatname').where('catid').in(catidarray).exec(function (err, subcategory) {
+                    if (err) throw err;
+                    if (subcategory.length > 0) {
+                                              
+                        
+                        return res.status(200).json({
+                            status: 'success',
+                            data: { 'subcategory': subcategory , category: category },
+                        });
+        
+                    } else {
+                        return res.status(200).json({
+                            status: 'fail',
+                            message: 'Fetch Failed',
+                        })
+                    }
+        
+                });
+                // return res.status(200).json({
+                //     status: 'success',
+                //     data: { 'category': category }
+                // });
 
             } else {
                 return res.status(200).json({
@@ -57,7 +103,6 @@ exports.AllSubcatList = function (req, res) {
                     status: 'success',
                     data: { 'subcategory': [] }
                 });
-
             } else {
                 return res.status(200).json({
                     status: 'fail',
