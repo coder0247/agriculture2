@@ -219,7 +219,7 @@ exports.userDetails = function (req, res) {
 exports.forgotpass = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        const MY_NAMESPACE = '9a681z64-41e8-461e-77e1-da01ee2f4759';
+        const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ee1f3341';
         var resetcode = uuidv5(req.body.email, MY_NAMESPACE);
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
