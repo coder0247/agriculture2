@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const config = require('../config');
 const nodemailer = require('nodemailer');
 const uuidv5 = require('uuid/v5');
+const Newsletter = require('../model/newsletter');
 exports.logout = function (req, res) {
     if (req.session) {
         // delete session object
@@ -27,7 +28,7 @@ exports.sigin = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
         User.find({
-            email: req.body.email
+            email: req.body.email, verified : true
         }, function (err, user) {
             if (err) throw err;
             if (user.length === 1 && user[0].password == crypt(req.body.password, user[0].password)) {
@@ -45,6 +46,7 @@ exports.sigin = function (req, res) {
                     data: loggedinuser,
                     auth: true
                 })
+                
             } else {
                 return res.status(200).json({
                     status: 'fail',
@@ -110,13 +112,13 @@ exports.register = function (req, res ) {
                         to: req.body.email, // list of receivers
                         subject: 'AgriPata - Email Verification', // Subject line
                         text: '', // plain text body
-                        html: 'Dear ' + req.body.firstname + '<br>' +
-                       'thank you for your registration at AgriPata with the following data<br>' +
-                       'To complete your registration at AgriPata please follow this link:'+
+                        html: 'Dear ' + req.body.firstname + '<br><br>' +
+                       'thank you for your registration at AgriPata with the following data<br><br><br>' +
+                       'To complete your registration at AgriPata please follow this link:<br><br>'+
 
-                        config.siteUrl+'/verify/'+ verificationcode +'<br>'+
+                        config.siteUrl+'verify/'+ verificationcode +'<br>'+
                         
-                        'Your sincerely<br>Your AgriPata team'
+                        'Your sincerely<br><br>Your AgriPata team'
                     };
                 
                     // send mail with defined transport object
@@ -244,7 +246,7 @@ exports.forgotpass = function (req, res) {
                             text: '', // plain text body
                              html:  'Dear ' + userdetails[0].firstname + '<br><br>'+ 
                              'Please click on the following link and create a new password afterwards' +'<br><br>' +
-                              config.siteUrl+'/reset/password/'+ resetcode +'<br>'+
+                              config.siteUrl+'reset/password/'+ resetcode +'<br>'+
                              'Your sincerely<br>Your AgriPata team'
                         };
                     

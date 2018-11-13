@@ -61,12 +61,12 @@ exports.subscribe = function (req, res) {
                     let mailOptions = {
                         from: '"AgriPata" <support@agripata.com>', // sender address
                         to: req.body.email, // list of receivers
-                        subject: 'AgriPata - Email Verification', // Subject line
+                        subject: 'AgriPata - Email Subscription', // Subject line
                         text: '', // plain text body
                         html: 'Dear Agripata user,' + '<br>' +
                        'thank you for your interest in AgriPata and for subscribing to the newsletter!<br>' +
                        'To complete your registration at AgriPata please follow this link:'+
-                        '<a href="'+config.siteUrl+'/newsletter/verify/'+ verificationcode+'" target="_blank"> Confirm newsletter registration now</a>'
+                        '<a href="'+config.siteUrl+'newsletter/verify/'+ verificationcode+'" target="_blank"> Confirm newsletter registration now</a>'
                         +'<br>'+
                         ' If you didn\'t register this e-mail address for the newsletter, please ignore this e-mail and you won\'t receive newsletters from us.' + '<br>' +
                         'Your sincerely<br>Your AgriPata team'
