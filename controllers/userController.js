@@ -71,6 +71,7 @@ exports.register = function (req, res ) {
         newUser.country = req.body.country;
         newUser.city = req.body.city;
         newUser.password = crypt(req.body.password);
+        newUser.resetcode='';
 
         newUser.save(function (error, register) {
             if (error) {
@@ -255,6 +256,12 @@ exports.forgotpass = function (req, res) {
                             if (error) {
                                 return console.log(error);
                             }
+                            User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: resetcode }, function (error, verificationcode) {
+                              return res.status(200).json({
+                                  status: 'success',
+                                  data: 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.'
+                              });
+                            });
                             // console.log('Message sent: %s', info.messageId);
                             // Preview only available when sending through an Ethereal account
                             // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
@@ -262,10 +269,7 @@ exports.forgotpass = function (req, res) {
                     });
 
                 // });
-                    return res.status(200).json({
-                        status: 'success',
-                        data: 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.'
-                    });
+
             } else {
                 return res.status(200).json({
                     status: 'fail',
