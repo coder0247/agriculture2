@@ -222,6 +222,9 @@ exports.forgotpass = function (req, res) {
         if (err) throw err;
         const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ee1f3341';
         var resetcode = uuidv5(req.body.email, MY_NAMESPACE);
+        let vcode = {
+            resetcode: resetcode,
+        };
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0) {
@@ -256,7 +259,7 @@ exports.forgotpass = function (req, res) {
                             if (error) {
                                 return console.log(error);
                             }
-                            User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: resetcode }, function (error, verificationcode) {
+                            User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: vcode }, function (error, verificationcode) {
                               return res.status(200).json({
                                   status: 'success',
                                   data: 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.'
