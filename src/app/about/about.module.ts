@@ -13,8 +13,8 @@ import { HomeService } from '../service/home.service';
     AboutRoutingModule,
     HeaderCommonModule,
     FooterModule,
-		FormsModule,
-		ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [AboutpageComponent],
   providers: [HomeService],

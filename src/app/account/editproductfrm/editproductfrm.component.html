@@ -96,7 +96,7 @@
                   </div>
                 </div>
               </div>
-      <div class="col-xs-12 " *ngSwitchCase="'currency'">
+      <div  *ngSwitchCase="'currency'">
           <span class="label-text">{{formbase.label}} <span *ngIf="formbase.required">*</span></span>
           <select class="form-control" [formControlName]="formbase.key" > 
               <option [ngValue]="null" [disabled]="true">Select currency</option>

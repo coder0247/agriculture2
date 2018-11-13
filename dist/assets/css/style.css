@@ -8018,3 +8018,11 @@ ul.prevuploadedimages li {
 .header-control li {
   vertical-align: middle;
 }
+.table-inbox tr.unread td {
+  background: none repeat scroll 0 0 #f7f7f7;
+  font-weight: 600;
+}
+.table-inbox tr td.unread {
+  background: none repeat scroll 0 0 #f7f7f7;
+  font-weight: 600;
+}

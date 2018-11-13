@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { patternValidator, passwordMatchValidator } from '../../sharedfn/userfn';
 import { AuthService } from '../../service/auth.service';
 import { HomeService } from '../../service/home.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 @Component({
   selector: 'app-register', 
   templateUrl: './register.component.html',
@@ -18,7 +20,8 @@ export class RegisterComponent implements OnInit {
   error = false;
   success = false;
   countrycode: any;
-  constructor(private authservice: AuthService, private homepage: HomeService) {
+  bsModalRef: BsModalRef;
+  constructor(private authservice: AuthService, private homepage: HomeService, private modalService: BsModalService) {
 
   }
   ngOnInit() {
@@ -34,6 +37,10 @@ export class RegisterComponent implements OnInit {
       });
     this.createForm();
   }
+  showAlert(template: TemplateRef<any>) {
+    this.bsModalRef = this.modalService.show(template);
+  }
+ 
   getCountryCodeList() {
     this.homepage.intlcodes()
       .subscribe(res => {
@@ -72,7 +79,7 @@ export class RegisterComponent implements OnInit {
         console.log(err);
       });
   }
-  public register() {
+  public register(templateregsuccess) {
     this.formsubmitted = true;
     if (this.registerForm.valid) {
       this.showloading = true;
@@ -83,6 +90,7 @@ export class RegisterComponent implements OnInit {
           this.success = true;
           this.error = false;
           this.formsubmitted = false;
+          this.showAlert(templateregsuccess);
           this.registerForm.reset();
         } else {
           this.showloading = false;

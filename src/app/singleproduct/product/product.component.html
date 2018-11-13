@@ -112,8 +112,8 @@
 						
 						<div class="price"  style="margin-top: 10px;" *ngIf="!!singleproduct.currencytype">
 							
-								<h4>Price: {{singleproduct.saleamount}} {{singleproduct.currencytype | uppercase}}</h4>
-				
+								<h4>Price per unit: {{singleproduct.unitprice}} {{singleproduct.currencytype | uppercase}}</h4>
+								
 						</div>
 						<div class="price" style="margin-top: 10px;">
 							
@@ -122,7 +122,7 @@
 						</div>
 						<div class="price" style="margin-top: 10px;">
 							
-							<h4  *ngIf="!!singleproduct.unitprice">Price Per Unit : {{singleproduct.unitprice}} / {{singleproduct.amtunit.amountunit}}</h4>
+							<h4  *ngIf="!!singleproduct.unitprice">Amount of Sale : {{singleproduct.saleamount}}  {{singleproduct.amtunit.amountunit}}</h4>
 							<h4  *ngIf="!!singleproduct.condition">Condition : {{singleproduct.condition}}</h4>
 							<h4  *ngIf="!!singleproduct.manufacture">Manufacture : {{singleproduct.manufacture}}</h4>
 							<h4  *ngIf="!!singleproduct.yearmfg">Year of manufacture : {{singleproduct.yearmfg}}</h4>
@@ -424,7 +424,7 @@
 									{{ item.productid.pname | titlecase}}
 								</a>
 								<div class="price">
-									<span class="ins">{{ item.productid.saleamount }} {{item.productid.currencytype| uppercase}}</span>
+									<span class="ins">{{ item.productid.unitprice }} {{item.productid.currencytype| uppercase}}</span>
 								</div>
 							</div>
 						</li>

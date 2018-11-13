@@ -440,7 +440,7 @@ export class EditadComponent implements OnInit {
       'condition': this.newadForm.value.condition,
       'country': this.newadForm.value.country
     };
-    // console.log('updateproductdetails', updateproductdetails);
+    console.log('updateproductdetails', this.newadForm);
     if (this.newadForm.valid) {
       if (allproductimages.length === 0 ) {
         this.showAlert(templateproductimg);

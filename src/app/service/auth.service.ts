@@ -35,6 +35,13 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+  nwverify(verifyid): Observable<any> {
+    return this.http.get(apiUrl + 'nwverify/' + verifyid, httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   resetUserPassword(data): Observable<any> {
     // console.log('service userid', userid);
     return this.http.post(apiUrl + 'user/resetuserpass/', data)
@@ -43,6 +50,15 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+  restpasswordverify(data): Observable<any> {
+    // console.log('service userid', userid);
+    return this.http.post(apiUrl + 'user/restpasswordverify/', data)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
+  
   forgotPassword(data): Observable<any> {
     // console.log('service userid', userid);
     return this.http.post(apiUrl + 'user/forgotpass/', data)

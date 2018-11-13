@@ -69,18 +69,7 @@ exports.register = function (req, res ) {
         newUser.country = req.body.country;
         newUser.city = req.body.city;
         newUser.password = crypt(req.body.password);
-        /*
-        city: "Mumbai"
-        confirm_password: "123456"
-        country: "India"
-        countrycode: "5bb49e6de7179a1193d9bf85"
-        email: "refam1@yahoo.com"
-        firstname: "refam"
-        lastname: "dimfam"
-        newsletter: ""
-        password: "123456"
-        phoneno: "02134567890"
-        */
+ 
         newUser.save(function (error, register) {
             if (error) {
                 return res.status(200).json({
@@ -88,7 +77,7 @@ exports.register = function (req, res ) {
                     data: { 'error': error },
                     dup : "The email address you have entered is already registered",
                     body: req.body
-
+                    
                 });
             } else {
                 const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
@@ -114,29 +103,28 @@ exports.register = function (req, res ) {
                             pass: config.mail.pass // generated ethereal password
                         }
                     });
-
+                
                     // setup email data with unicode symbols
                     let mailOptions = {
-                        from: '"Agriculture" <support@kilimosafi.com>', // sender address
+                        from: '"AgriPata" <support@agripata.com>', // sender address
                         to: req.body.email, // list of receivers
-                        subject: 'Verify your email address', // Subject line
+                        subject: 'AgriPata - Email Verification', // Subject line
                         text: '', // plain text body
-                        html: req.body.firstname + '<br>' +
-                       'Welcome to Agriculture Platform! To verify your email so that you can post Ad and contact seller, click the following link:<br>'+
+                        html: 'Dear ' + req.body.firstname + '<br>' +
+                       'thank you for your registration at AgriPata with the following data<br>' +
+                       'To complete your registration at AgriPata please follow this link:'+
 
                         config.siteUrl+'/verify/'+ verificationcode +'<br>'+
-
-                        'Thanks for joining the Agriculture Platform.'
+                        
+                        'Your sincerely<br>Your AgriPata team'
                     };
-
+                
                     // send mail with defined transport object
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
                             return console.log(error);
                         }
-                        let vcode = {
-                            verifcode: verificationcode,
-                        };
+                       
                         User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
                             return res.status(200).json({
                                 status: 'success',
@@ -145,7 +133,7 @@ exports.register = function (req, res ) {
                         });
                     });
                 });
-
+               
             } //else
         });
 
@@ -161,6 +149,33 @@ exports.verify = function (req, res) {
                     verified: true,
                 };
                 User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: verifiedstatus }, function (error, verificationcode) {
+                    return res.status(200).json({
+                        status: 'success',
+                        data: 'verification successfull' ,
+                    });
+                });
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    message: 'Fetch Failed',
+
+                })
+            }
+
+        })
+    });
+};
+
+exports.nwverify = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        Newsletter.find({'verifcode' : req.params.nwcode}, function (err, nwdetails) {
+            if (err) throw err;
+            if (nwdetails.length > 0) {
+                let verifiedstatus = {
+                    verified: true,
+                };
+                Newsletter.findByIdAndUpdate({ _id : nwdetails[0]._id }, { $set: verifiedstatus }, function (error, verificationcode) {
                     return res.status(200).json({
                         status: 'success',
                         data: 'verification successfull' ,
@@ -206,23 +221,7 @@ exports.forgotpass = function (req, res) {
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0) {
-                var genpassword = generator.generate({
-                    length: 10,
-                    numbers: true,
-                    symbols: true
-                });
-                console.log('password', genpassword);
-                let newpassword = {
-                    password: crypt(genpassword),
-                };
-                console.log('password', newpassword.password);
-                User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: newpassword }, function (error, passwordreset) {
-                    if (req.session) {
-                        // delete session object
-                        req.session.destroy(function (err) {
-                                res.clearCookie('user_sid');
-                        });
-                    }
+         
                     nodemailer.createTestAccount((err, account) => {
                         // create reusable transporter object using the default SMTP transport
                         let transporter = nodemailer.createTransport({
@@ -234,32 +233,37 @@ exports.forgotpass = function (req, res) {
                                 pass: config.mail.pass // generated ethereal password
                             }
                         });
-
+                        const MY_NAMESPACE = '9a681z64-41e8-461e-77e1-da01ee2f4759';
+                        var resetcode = uuidv5(req.body.email, MY_NAMESPACE);
+                     
                         // setup email data with unicode symbols
                         let mailOptions = {
-                            from: '"Agriculture" <support@kilimosafi.com>', // sender address
+                            from: '"AgriPata" <support@agripata.com>', // sender address
                             to: req.body.email, // list of receivers
                             subject: 'Forgot Password', // Subject line
-                            text: 'Below is new password. After login please reset the password to new one', // plain text body
-                            html: '<b>Password: </b>' + '123456'// html body
+                            text: '', // plain text body
+                             html:  'Dear ' + userdetails[0].firstname + '<br><br>'+ 
+                             'Please click on the following link and create a new password afterwards' +'<br><br>' +
+                              config.siteUrl+'/reset/password/'+ resetcode +'<br>'+
+                             'Your sincerely<br>Your AgriPata team'
                         };
-
+                    
                         // send mail with defined transport object
                         transporter.sendMail(mailOptions, (error, info) => {
                             if (error) {
                                 return console.log(error);
                             }
-                            console.log('Message sent: %s', info.messageId);
+                            // console.log('Message sent: %s', info.messageId);
                             // Preview only available when sending through an Ethereal account
-                            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
                         });
                     });
+                    
+                // });
                     return res.status(200).json({
                         status: 'success',
-                        data: 'Please check your email, we have sent you a new password'
+                        data: 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.'
                     });
-                });
-
             } else {
                 return res.status(200).json({
                     status: 'fail',
@@ -278,7 +282,7 @@ exports.restUserPassword = function (req, res) {
         User.find({'email' : req.body.email}, function (err, userdetails) {
             if (err) throw err;
             if (userdetails.length > 0  && userdetails[0].password == crypt(req.body.currentpassword, userdetails[0].password)) {
-
+                
                 let newpassword = {
                     password: crypt(req.body.password),
                 };
@@ -306,7 +310,42 @@ exports.restUserPassword = function (req, res) {
         })
     });
 };
+exports.restPasswordEmailink = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        // console.log( req.body);
+        User.find({'resetcode' : req.body.resetcode}, function (err, userdetails) {
+            if (err) throw err;
+            if (userdetails.length > 0 && userdetails[0].verifiedstatus == true) {
+                
+                let newpassword = {
+                    password: crypt(req.body.password),
+                    resetcode: ''
+                };
+                User.findByIdAndUpdate({ _id : userdetails[0]._id }, { $set: newpassword }, function (error, passwordreset) {
+                    if (req.session) {
+                        // delete session object
+                        req.session.destroy(function (err) {
+                                res.clearCookie('user_sid');
+                        });
+                    }
+                    return res.status(200).json({
+                        status: 'success',
+                        data: 'Password updated successfully'
+                    });
+                });
 
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    data: 'Invalid url',
+
+                })
+            }
+
+        })
+    });
+};
 exports.editProfile = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -315,15 +354,16 @@ exports.editProfile = function (req, res) {
             lastname: req.body.lastname,
             phonenumber: req.body.phoneno,
             email: req.body.email,
-            region: req.body.region,
+            region: req.body.region, 
             usercountrycode: req.body.countrycode
         };
         User.findByIdAndUpdate({ _id : req.body.userid }, { $set: setprofiledata }, function (error, profileupdated) {
             return res.status(200).json({
                 status: true,
-                message: {'profile' : 'profile updated successfully' },
+                message: {'profile' : 'profile updated successfully' }, 
                 extra: profileupdated
             });
         });
     });
 };
+

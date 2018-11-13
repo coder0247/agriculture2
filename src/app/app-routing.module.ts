@@ -27,6 +27,14 @@ const routes: Routes = [
     loadChildren: '../app/productlist/productlist.module#ProductListModule'
   },
   {
+    path: 'reset/password/:resetpwid',
+    loadChildren: '../app/resetpassword/resetpassword.module#ResetpasswordModule'
+  },
+  {
+    path: 'newsletter/verify/:nwcode',
+    loadChildren: '../app/nwverify/nwverify.module#NwverifyModule'
+  },
+  {
     path: 'orders',
     loadChildren: '../app/orders/orders.module#OrdersModule'
   },

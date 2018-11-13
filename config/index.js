@@ -4,7 +4,7 @@ const mail = {
     host: 'smtp.strato.de',
     port: 465,
     secure: true,
-    user: 'support@kilimosafi.com',
+    user: 'support@agripata.com',
     pass: 'Support2018$'
     };
 

@@ -35,106 +35,126 @@
                                               <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
                                           </div>
                                          </div> -->
-                                        
-                                         <div class="row">
-                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='country'" >
-                                                  <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm" (selectcities)="getCitieslist($event)"></app-addnewproductfrm>
-                                              </div>
-                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='city'" >
-                                                  <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                              </div>
-                                              </div>
-                                           
-                                            
-                                        </div>
-                                        <div class="row">
-                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='condition'" >
-                                                  <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                              </div>
-                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='yearmfg'" >
-                                                  <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                              </div>
-                                              </div>
-                                        </div>
-                                              <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                                  <div class="row" *ngIf="dynFormitem.key==='addinfo'">
-                                                      <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                                  </div>
-                                              </div>
-                                              
-                                            
-                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                                <div class="row" *ngIf="dynFormitem.key==='manufacture'">
-                                                    <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                                </div>
+                                         <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
                                                 <div class="row" *ngIf="dynFormitem.key==='productname'">
-                                                    <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                        <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
                                                 </div>
                                                 <div class="row" *ngIf="dynFormitem.key==='description'">
-                                                  <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                        <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
                                                 </div>
-                                               </div>
-                                               <div class="row" *ngIf="formbaseelements[pricenegradio1]">
-                                                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
-                                                      <span class="label-text priceneg">Price Negotiable</span>
-                                                      <div class="widget widget-categories">
-                                                          <ul class="list-categories">
-                                                              <li>
-                                                                    <app-addnewproductfrm [formbase]="formbaseelements[pricenegradio1]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                                              </li>
-                                                              <li>
-                                                                  <app-addnewproductfrm [formbase]="formbaseelements[pricenegradio2]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                                            </li>
-                                                             </ul>
-                                                      </div>
-                                                    
-                                                  </div>
-                                               </div>
-                                               <div class="row" *ngIf="formbaseelements[statusradio1]">
-                                     
-                                                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
-                                                      <span class="label-text priceneg">Status</span>
-                                                      <div class="widget widget-categories">
-                                                          <ul class="list-categories">
-                                                              <li>
-                                                                    <app-addnewproductfrm [formbase]="formbaseelements[statusradio1]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                                              </li>
-                                                              <li>
-                                                                  <app-addnewproductfrm [formbase]="formbaseelements[statusradio2]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                                            </li>
-                                                             </ul>
-                                                      </div>
-                                                    
-                                                  </div>
-                                               </div>
-                                               
-                                               <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                          
-                                                  <div class="row" *ngIf="dynFormitem.key==='currency'">
+                                          </div>
+                                          <div class="row">
+                                                <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='condition'" >
                                                       <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
                                                   </div>
+                                                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='yearmfg'" >
+                                                      <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                  </div>
+                                                  </div>
+                                            </div>
+                                            <div class="row" *ngIf="formbaseelements[pricenegradio1]">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
+                                                        <span class="label-text priceneg">Price Negotiable</span>
+                                                        <div class="widget widget-categories">
+                                                            <ul class="list-categories">
+                                                                <li>
+                                                                      <app-addnewproductfrm [formbase]="formbaseelements[pricenegradio1]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                                </li>
+                                                                <li>
+                                                                    <app-addnewproductfrm [formbase]="formbaseelements[pricenegradio2]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                              </li>
+                                                               </ul>
+                                                        </div>
+                                                      
+                                                    </div>
                                                  </div>
+                                                 <div class="row" *ngIf="formbaseelements[statusradio1]">
+                                     
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
+                                                            <span class="label-text priceneg">Status</span>
+                                                            <div class="widget widget-categories">
+                                                                <ul class="list-categories">
+                                                                    <li>
+                                                                          <app-addnewproductfrm [formbase]="formbaseelements[statusradio1]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                                    </li>
+                                                                    <li>
+                                                                        <app-addnewproductfrm [formbase]="formbaseelements[statusradio2]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                                  </li>
+                                                                   </ul>
+                                                            </div>
+                                                          
+                                                        </div>
+                                                     </div>
+                                     
+                                        
                                               
+                                           
+                                              
+
+                                           
+                                            
+                                               
+                                               
+                                               <!-- <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                          
+                                                  <div class="row" *ngIf="dynFormitem.key==='currency'">
+                                                     
+                                                  </div>
+                                                 </div> -->
+                                                 <div class="row">
+                                                 <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                        <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='saleamount'">
+                                                  
+                                                                <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                            </div>
+                                                            <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='amtunit'">
+                                                    
+                                                                    <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                                </div>
+                                                            
+                                                 </div>
+                                                </div>
                                         <div class="row">
                                             <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                                <div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4" *ngIf="dynFormitem.key==='saleamount'">
-                                                  
-                                                    <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
-                                                </div>
-                                                <div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  *ngIf="dynFormitem.key==='amtunit'">
+                                                    <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='unitprice'">
                                                     
-                                                    <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                            <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                    </div>
                                                 </div>
-                                                <div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  *ngIf="dynFormitem.key==='unitprice'">
-                                                    
-                                                    <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='currency'">
+                                                        <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
                                                 </div>
+                                                
                                               </div>
                                         </div>
 
-
+                                        <div class="row">
+                                                <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='country'" >
+                                                      <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm" (selectcities)="getCitieslist($event)"></app-addnewproductfrm>
+                                                  </div>
+                                                  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='city'" >
+                                                      <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                  </div>
+                                                  </div>
+                                               
+                                                
+                                            </div>
+                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                    <div class="row" *ngIf="dynFormitem.key==='manufacture'">
+                                                        <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                    </div>
+                                                    
+                                                  
+                                                   </div>
+                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                    <div class="row" *ngIf="dynFormitem.key==='addinfo'">
+                                                        <app-addnewproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-addnewproductfrm>
+                                                    </div>
+                                                </div>
+                                                
                                     </div>
                                     <div class="group-button">
                                             <button href="#" class="button submit" [disabled]="submitting">

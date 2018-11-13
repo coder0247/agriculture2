@@ -457,17 +457,14 @@ export class NewadComponent implements OnInit {
   }
 
   addnewproduct(templatenewaddposted, templateproductimg) {
-   
     const userid = localStorage.getItem('id');
     let productimages: any;
     if (typeof this.uploadedimages !== undefined && this.uploadedimages.length > 0) {
       productimages = this.uploadedimages;
-    
     } else {
       productimages = [this.productimage];
-    
     }
-  
+
     this.forcevalidation = true;
     this.fvalid.setMessage(this.forcevalidation);
 
@@ -537,7 +534,7 @@ export class NewadComponent implements OnInit {
       this.uploader.queue.push(new UploadQueue(file));
     }
   }
-
+ 
   onFileInvalids(fileList: Array<File>) {
     // TODO handle invalid files here
   }

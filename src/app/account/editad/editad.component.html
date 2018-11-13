@@ -24,6 +24,14 @@
                                             <app-editproductfrm [formbase]="formbaseelements[0]" [newadForm]="newadForm"></app-editproductfrm>
                                             <app-editproductfrm [formbase]="formbaseelements[1]" [newadForm]="newadForm"></app-editproductfrm>
                                          </div>
+                                         <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                            <div class="row" *ngIf="dynFormitem.key==='name'">
+                                                <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                            </div>
+                                            <div class="row" *ngIf="dynFormitem.key==='description'">
+                                                <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                              </div>
+                                         </div>
                                          <div class="row">
                                             <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
                                               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='country'" >
@@ -34,96 +42,99 @@
                                               </div>
                                               </div>
                                         </div>
+                                        <div class="row">
+                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='condition'" >
+                                                  <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                              </div>
+                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='yearmfg'" >
+                                                  <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                              </div>
+                                              </div>
+                                        </div>
+                                        <div class="row" *ngIf="formbaseelements[pricenegradio1]">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
+                                                <span class="label-text priceneg">Price Negotiable</span>
+                                                <div class="widget widget-categories">
+                                                    <ul class="list-categories">
+                                                        <li>
+                                                              <app-editproductfrm [formbase]="formbaseelements[pricenegradio1]" [newadForm]="newadForm"></app-editproductfrm>
+                                                        </li>
+                                                        <li>
+                                                            <app-editproductfrm [formbase]="formbaseelements[pricenegradio2]" [newadForm]="newadForm"></app-editproductfrm>
+                                                      </li>
+                                                       </ul>
+                                                </div>
+                                              
+                                            </div>
+                                         </div>
+                                         <div class="row" *ngIf="!!formbaseelements[statusradio1]">
+                               
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
+                                                <span class="label-text priceneg">Status</span>
+                                                <div class="widget widget-categories">
+                                                 
+                                                    <ul class="list-categories">
+                                                        <li>
+                                                              <app-editproductfrm [formbase]="formbaseelements[statusradio1]" [newadForm]="newadForm"></app-editproductfrm>
+                                                        </li>
+                                                        <li>
+                                                            <app-editproductfrm [formbase]="formbaseelements[statusradio2]" [newadForm]="newadForm"></app-editproductfrm>
+                                                      </li>
+                                                       </ul>
+                                                </div>
+                                              
+                                            </div>
+                                         </div>
                                          <!-- <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
                                           
                                           <div class="row" *ngIf="dynFormitem.key==='region'">
                                               <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
                                           </div>
                                          </div> -->
+                                         <div class="row">
                                             <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='amountforsale'">
                                           
-                                                <div class="row" *ngIf="dynFormitem.key==='name'">
                                                     <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
                                                 </div>
+                                               
+                                                <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='amountunit'">
+                                            
+                                                    <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                                </div>
+                                            </div>
+                                         </div>
+                                <div class="row">
+                                    <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                        <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='priceperunit'">
+                                            
+                                            <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                        </div>
+                                      </div>     
+                                      <div  *ngFor="let dynFormitem of formbaseelements;let i = index"> 
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='currency'">
+                                            <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                        </div>
+                                      </div>
+                                </div>
+                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                          
+                                              
                                                 <div class="row" *ngIf="dynFormitem.key==='manufacture'">
                                                     <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
                                                 </div>
-                                                <div class="row" *ngIf="dynFormitem.key==='description'">
-                                                  <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
-                                                </div>
+                                               
                                                </div>
-                                               <div class="row" *ngIf="formbaseelements[pricenegradio1]">
-                                                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
-                                                      <span class="label-text priceneg">Price Negotiable</span>
-                                                      <div class="widget widget-categories">
-                                                          <ul class="list-categories">
-                                                              <li>
-                                                                    <app-editproductfrm [formbase]="formbaseelements[pricenegradio1]" [newadForm]="newadForm"></app-editproductfrm>
-                                                              </li>
-                                                              <li>
-                                                                  <app-editproductfrm [formbase]="formbaseelements[pricenegradio2]" [newadForm]="newadForm"></app-editproductfrm>
-                                                            </li>
-                                                             </ul>
-                                                      </div>
-                                                    
-                                                  </div>
-                                               </div>
-                                               <div class="row" *ngIf="!!formbaseelements[statusradio1]">
-                                     
-                                                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
-                                                      <span class="label-text priceneg">Status</span>
-                                                      <div class="widget widget-categories">
-                                                       
-                                                          <ul class="list-categories">
-                                                              <li>
-                                                                    <app-editproductfrm [formbase]="formbaseelements[statusradio1]" [newadForm]="newadForm"></app-editproductfrm>
-                                                              </li>
-                                                              <li>
-                                                                  <app-editproductfrm [formbase]="formbaseelements[statusradio2]" [newadForm]="newadForm"></app-editproductfrm>
-                                                            </li>
-                                                             </ul>
-                                                      </div>
-                                                    
-                                                  </div>
-                                               </div>
-                                               <div class="row">
-                                                  <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='condition'" >
-                                                        <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
-                                                    </div>
-                                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='yearmfg'" >
-                                                        <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
-                                                    </div>
-                                                    </div>
-                                              </div>
+                                               
+                                               
                                                     <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
                                                         <div class="row" *ngIf="dynFormitem.key==='addinfo'">
                                                             <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
                                                         </div>
                                                     </div>
-                                               <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                          
-                                                  <div class="row" *ngIf="dynFormitem.key==='currency'">
-                                                      <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
-                                                  </div>
-                                                 </div>
-                                              
-                                        <div class="row">
-                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
-                                                <div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4" *ngIf="dynFormitem.key==='amountforsale'">
-                                                  
-                                                    <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
-                                                </div>
-                                                <div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  *ngIf="dynFormitem.key==='amountunit'">
-                                                    
-                                                    <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
-                                                </div>
-                                                <div  class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  *ngIf="dynFormitem.key==='priceperunit'">
-                                                    
-                                                    <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
-                                                </div>
-                                              </div>
-                                        </div>
+                                           
+                                                
 
 
                                     </div>

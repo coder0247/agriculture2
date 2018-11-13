@@ -3,9 +3,8 @@ import { Http, Response } from '@angular/http';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../../service/admin.service';
-// import 'rxjs/add/operator/map';
-import { map } from 'rxjs/operators';
 
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reportedads',
@@ -39,13 +38,13 @@ export class ReportedadsComponent implements OnInit {
       this.loadingmsg = false;
       console.log(err);
     });
-    
 
   }
   viewreportmsg(id) {
     // localStorage.setItem('msgid', id);
-    this.router.navigate(['admin/reportedads/view/',id]);
+    this.router.navigate(['admin/reportedads/view/', id]);
   }
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();

@@ -4,7 +4,7 @@
   </button>
 </div> -->
 
-
+ 
 <div class="modal-content modal-lg">
 	<div class="modal-body">
 		<button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
@@ -75,7 +75,7 @@
 				
 				<div class="price"  style="margin-top: 10px;" *ngIf="!!singleproduct.currencytype">
 					
-						<h4>Price: {{singleproduct.saleamount}} {{singleproduct.currencytype | uppercase}}</h4>
+						<h4>Price per unit: {{singleproduct.unitprice}} {{singleproduct.currencytype | uppercase}}</h4>
 		
 				</div>
 				<div class="price" style="margin-top: 10px;">
@@ -85,7 +85,7 @@
 				</div>
 				<div class="price" style="margin-top: 10px;">
 					
-					<h4  *ngIf="!!singleproduct.unitprice">Price Per Unit : {{singleproduct.unitprice}} / {{singleproduct.amtunit.amountunit}}</h4>
+					<h4  *ngIf="!!singleproduct.unitprice">Amount of Sale : {{singleproduct.saleamount}}  {{singleproduct.amtunit.amountunit}}</h4>
 					<h4  *ngIf="!!singleproduct.condition">Condition : {{singleproduct.condition}}</h4>
 					<h4  *ngIf="!!singleproduct.manufacture">Manufacture : {{singleproduct.manufacture}}</h4>
 					<h4  *ngIf="!!singleproduct.yearmfg">Year of manufacture : {{singleproduct.yearmfg}}</h4>

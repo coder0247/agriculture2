@@ -99,9 +99,30 @@
     
       </div>
       <div class="group-button">
-        <button class="button submit"  [disabled]="showloading" (click)="register()">SUBMIT <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
-        <span class="successmsg" [ngClass]="{'bg-success': error, 'bg-success': success}"  *ngIf="!!usermsg"  >{{usermsg}}</span>
-      </div>		
+        <button class="button submit"  [disabled]="showloading" (click)="register(templateregsuccess)">SUBMIT <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
+        <!-- <span class="successmsg" [ngClass]="{'bg-success': error, 'bg-success': success}"  *ngIf="!!usermsg"  >{{usermsg}}</span> -->
+      </div>
+	
     </div>
     </form>
+    <ng-template #templateregsuccess>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Registration successful</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="info-box">
+                <span class="info-box-icon bg-green">
+                    <i class="fa fa-check"></i></span>
+    
+                <div class="info-box-content">
+                  <span class="info-box-text">Your registration has been successful! You will receive a confirmation mail shortly containing the link to activate your account!</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>   
+          <!-- <p><span><i class="fa fa-times"></i></span>Your registration has been successful! You will receive a confirmation mail shortly containing the link to activate your account!</p> -->
+        </div>
+      </ng-template>
   </div>

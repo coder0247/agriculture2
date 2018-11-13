@@ -33,7 +33,7 @@ import { EditFormControlService } from './../service/editformcontrols.service';
 import { FvalidationService } from '../service/fvalidation';
 import { EditproductfrmComponent } from './editproductfrm/editproductfrm.component';
 import { FormControlService } from './../service/formcontrols.service';
-
+import { DataTablesModule } from 'angular-datatables';
 @NgModule({
   imports: [
     CommonModule,
@@ -44,7 +44,8 @@ import { FormControlService } from './../service/formcontrols.service';
     ReactiveFormsModule,
     NgSelectModule,
     ModalModule.forRoot(),
-    ImageCropperModule
+    ImageCropperModule,
+    DataTablesModule
   ],
   declarations: [
                     DashboardComponent,
