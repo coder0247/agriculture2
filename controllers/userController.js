@@ -318,7 +318,7 @@ exports.restPasswordEmailink = function (req, res) {
         // console.log( req.body);
         User.find({'resetcode' : req.body.resetcode}, function (err, userdetails) {
             if (err) throw err;
-            if (userdetails.length > 0 && userdetails[0].verifiedstatus == true) {
+            if (userdetails.length > 0 ) {
 
                 let newpassword = {
                     password: crypt(req.body.password),
