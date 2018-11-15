@@ -90,12 +90,8 @@ export class EditadsComponent implements OnInit {
   }
   activeads() {
     const userid = localStorage.getItem('id');
-    // if (!userid) {
-    //   this.router.navigate(['user/signin']);
-    //   }
-
     this.showloading = true;
-    // console.log('params[id]', params['id']);
+
     this.product.getProductListByUser(userid).subscribe(
       res => {
         if (res['status'] === 'success') {
@@ -103,13 +99,11 @@ export class EditadsComponent implements OnInit {
           this.notfound = false;
           this.products = res.data['product'];
           for (let item of res.mapping) {
-            // let productinfo = _.find(res.data['product'], function(producta) {
-            //   return producta._id === item.productid;
-            // });
+
             for (let pitem in this.products) {
                if (this.products[pitem]._id === item.productid) {
                 let productinfo = this.products[pitem];
-           
+
                 let catsubcat = {
                   productid: item.productid,
                   category: item.subcatid.catid.catname,
@@ -117,15 +111,15 @@ export class EditadsComponent implements OnInit {
                   subcatimg: item.subcatid.defaultimage,
                   pimage: productinfo.pimage,
                   pname: productinfo.pname,
-                  amtunit: !!productinfo.amtunit? productinfo.amtunit.amountunit:  '',
-                  amtunitid:  !!productinfo.amtunit? productinfo.amtunit._id: '',
-                  unitprice: !!productinfo.unitprice? productinfo.unitprice: '',
-                  saleamount: !!productinfo.saleamount? productinfo.saleamount: '',
+                  amtunit: !!productinfo.amtunit ? productinfo.amtunit.amountunit :  '',
+                  amtunitid:  !!productinfo.amtunit ? productinfo.amtunit._id : '',
+                  unitprice: !!productinfo.unitprice ? productinfo.unitprice : '',
+                  saleamount: !!productinfo.saleamount ? productinfo.saleamount : '',
                   category_id: item.subcatid.catid._id,
                   subcatid: item.subcatid._id,
                   adid: productinfo.adid ,
-                  currency: !!productinfo.currencytype? productinfo.currencytype: '' ,
-                  pdesc: !!productinfo.pdesc? productinfo.pdesc: '',
+                  currency: !!productinfo.currencytype ? productinfo.currencytype : '' ,
+                  pdesc: !!productinfo.pdesc? productinfo.pdesc : '',
                   negotiable: productinfo.negotiable,
                   country: item.country,
                   city: item.city,

@@ -1,4 +1,4 @@
-const siteUrl = 'https://kilimosafi2018.herokuapp.com/';
+const siteUrl = 'https://www.agripata.com/';
 const dbUrl = "mongodb://agrilive:agrilive123@ds133533.mlab.com:33533/agrilive";
 const mail = {
     host: 'smtp.strato.de',

@@ -57,9 +57,9 @@
 						<div class="product-details">
 							<img src="{{ product.pimage }}">
 							<h5>{{ product.pname }}</h5>
-							<button class="btn btn-success btn-block" (click)="makeProductNewArrival(product)" *ngIf="!product.is_newarrival; else newarrivalButtonElseBlock">Make New Arrivals</button>
+							<button class="btn btn-success btn-block" (click)="makeProductNewArrival(product, $event)" *ngIf="!product.is_newarrival; else newarrivalButtonElseBlock">Make New Arrivals</button>
 							<ng-template #newarrivalButtonElseBlock>
-								<button class="btn btn-primary btn-block" (click)="makeProductNotNewArrival(product)">Not New Arrivals</button>
+								<button class="btn btn-primary btn-block" (click)="makeProductNotNewArrival(product, $event)">Not New Arrivals</button>
 							</ng-template>
 						</div>
 					</div>

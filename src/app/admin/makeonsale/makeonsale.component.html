@@ -57,9 +57,9 @@
 						<div class="product-details">
 							<img src="{{ product.pimage }}">
 							<h5>{{ product.pname }}</h5>
-							<button class="btn btn-success btn-block" (click)="makeProductOnSale(product)" *ngIf="!product.is_onsale; else onsaleButtonElseBlock">Make On Sale</button>
+							<button class="btn btn-success btn-block" (click)="makeProductOnSale(product, $event)" *ngIf="!product.is_onsale; else onsaleButtonElseBlock">Make On Sale</button>
 							<ng-template #onsaleButtonElseBlock>
-								<button class="btn btn-primary btn-block" (click)="makeProductNotOnSale(product)">Not On Sale</button>
+								<button class="btn btn-primary btn-block" (click)="makeProductNotOnSale(product, $event)">Not On Sale</button>
 							</ng-template>
 						</div>
 					</div>

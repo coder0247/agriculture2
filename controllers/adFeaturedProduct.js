@@ -7,42 +7,18 @@ exports.makeProductFeatured = function (req, res) {
         if (err) throw err;
 
         Featured.findOne({
-            'subcatid': req.params.subcatid
+            'productid': req.params.productid
         }, function (error, featured_subcategory) {
-            if (featured_subcategory) { //Update old data for subcategory
-                var product_id = req.params.productid;
-                var product_ids = featured_subcategory.productid;
-
-                var found = product_ids.find((element) => {
-                    return element.toString() === product_id.toString();
+            if ( featured_subcategory ) {
+                return res.status(200).json({
+                    status: false,
+                    message: 'This product is already featured.'
                 });
-
-                if (found) {
-                    return res.status(200).json({
-                        status: false,
-                        message: 'This product is already featured.'
-                    });
-                } else { //Insert new product id in sub document array
-                    featured_subcategory.productid.push(product_id);
-                    featured_subcategory.save(function (err, featured) {
-                        if (featured) {
-                            return res.status(200).json({
-                                status: true,
-                                message: 'Featured successfully.'
-                            });
-                        } else {
-                            return res.status(200).json({
-                                status: false,
-                                message: 'Oops! An error occurred while making featured.'
-                            });
-                        }
-                    });
-                }
-            } else { //Insert new record for subcategory
+            } else {
                 var newFeatured = new Featured();
                 newFeatured.categoryid = req.params.categoryid;
                 newFeatured.subcatid = req.params.subcatid;
-                newFeatured.productid.push(req.params.productid);
+                newFeatured.productid= req.params.productid;
                 newFeatured.save(function (error, featured) {
                     if (featured) {
                         return res.status(200).json({
@@ -55,8 +31,9 @@ exports.makeProductFeatured = function (req, res) {
                             message: 'Oops! An error occurred while making featured.'
                         });
                     }
-                });
+                }); 
             }
+            // new code
         });
     });
 };
@@ -66,37 +43,16 @@ exports.makeProductUnFeatured = function (req, res) {
         if (err) throw err;
 
         Featured.findOne({
-            'subcatid': req.params.subcatid
+            'productid': req.params.productid
         }, function (error, featured_subcategory) {
-            if (featured_subcategory) { //Update old data for subcategory
-                var product_id = req.params.productid;
-                var product_ids = featured_subcategory.productid;
 
-                var found = product_ids.find((element) => {
-                    return element.toString() === product_id.toString();
-                });
-
-                if (found) {
-                    featured_subcategory.productid.pull(product_id);
-                    featured_subcategory.save(function (err, featured) {
-                        if (featured) {
-                            return res.status(200).json({
-                                status: true,
-                                message: 'Unfeatured successfully.'
-                            });
-                        } else {
-                            return res.status(200).json({
-                                status: false,
-                                message: 'Oops! An error occurred while making unfeatured.'
-                            });
-                        }
-                    });
-                } else {
+            if (!!featured_subcategory.productid) { 
+                Featured.deleteOne({productid: req.params.productid }, function (err, featureddelete) {
                     return res.status(200).json({
-                        status: false,
-                        message: 'Oops! Product is not featured. Make it featured first.'
+                        status: true,
+                        message: 'Unfeatured successfully.'
                     });
-                }
+                });
             } else {
                 return res.status(200).json({
                     status: false,

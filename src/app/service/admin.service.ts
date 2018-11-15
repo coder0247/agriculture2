@@ -38,6 +38,38 @@ export class AdminService {
     // return an observable with a user-facing error message
     return throwError('Something bad happened; please try again later.');
   }
+  getUserDetails(userid): Observable<any> {
+    // admin/getuserdetails/5b6193e4b85809c142b2dceb
+    return this.http.get(apiUrl + 'admin/getuserdetails/' + userid, httpOptions).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+  updateUserStatus(actiontype, userid): Observable<any> {
+    // admin/getuserdetails/5b6193e4b85809c142b2dceb
+    // active
+    console.log('actiontype', actiontype);
+    if ( actiontype === '1') {
+      return this.http.get(apiUrl + 'admin/activateuser/' + userid, httpOptions).pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+    }
+    // Deactivate
+    if ( actiontype === '2') {
+      return this.http.get(apiUrl + 'admin/deactivateuser/' + userid, httpOptions).pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+    }
+    // delete
+    if ( actiontype === '3') {
+      return this.http.get(apiUrl + 'admin/deleteuser/' + userid, httpOptions).pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+    }
+  }
   getformfields(subcatid): Observable<any> {
     return this.http.get(apiUrl + 'getformfields/' + subcatid, httpOptions).pipe(
       map(this.extractData),
@@ -49,6 +81,15 @@ export class AdminService {
       map(this.extractData),
       catchError(this.handleError)
     );
+  }
+
+  deleteProduct(product_id: string): Observable<any> {
+    return this.http
+      .delete(apiUrl + 'removeproduct/' + product_id, httpOptions)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
   }
 
   logout(): Observable<any> {

@@ -32,8 +32,8 @@ exports.contact = function (req, res) {
                 
                     // setup email data with unicode symbols
                     let mailOptions = {
-                        from: '"Agriculture" <support@kilimosafi.com>', // sender address
-                        to: 'support@kilimosafi.com', // list of receivers
+                        from: '"'+req.body.fullname+'" <'+req.body.email+'>', // sender address
+                        to: config.mail.user, // list of receivers
                         subject: 'Contact us', // Subject line
                         text: '', // plain text body
                         html: '<table>'+
@@ -41,7 +41,8 @@ exports.contact = function (req, res) {
                         '<tr><td>Email</td>'+'<td>'+ req.body.email +'</td></tr>'+
                         '<tr><td>Phone</td>'+'<td>'+ req.body.phoneno +'</td></tr>'+
                         '<tr><td>Message</td>'+'<td>'+ req.body.msg +'</td></tr>'+
-                        '</table>'
+                        '</table>'+
+                        '<br><br><br><br><br>Your sincerely<br><br>Your AgriPata team'
                     };
                 
                     // send mail with defined transport object

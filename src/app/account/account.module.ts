@@ -34,6 +34,7 @@ import { FvalidationService } from '../service/fvalidation';
 import { EditproductfrmComponent } from './editproductfrm/editproductfrm.component';
 import { FormControlService } from './../service/formcontrols.service';
 import { DataTablesModule } from 'angular-datatables';
+import { DeletemyaccountComponent } from './deletemyaccount/deletemyaccount.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -65,7 +66,8 @@ import { DataTablesModule } from 'angular-datatables';
                     PopupComponent,
                     ChangepasswordComponent,
                     AddnewproductfrmComponent,
-                    EditproductfrmComponent
+                    EditproductfrmComponent,
+                    DeletemyaccountComponent
                   ],
 
                     providers: [

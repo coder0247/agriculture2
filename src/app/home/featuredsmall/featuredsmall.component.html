@@ -11,7 +11,7 @@
 				</div> -->
 				<tabset class="featured">
 						<div class="section-head box-has-content">
-								<h4 class="section-title">Featured Products	<span *ngIf="!allproducts?.length">: Loading...</span></h4>
+								<h4 class="section-title">Featured Products	<span *ngIf="!featurelist?.length">: Loading...</span></h4>
 								</div>
 					<span *ngFor="let item of featurelist">
  
@@ -26,6 +26,7 @@
 											}
 											}" [items]="images" [carouselClasses]= "owlclasses">
 									<div class="row-item" *ngFor="let products of item.productlist;let i = index">
+										
 								<div class="product-item layout1" *ngFor="let product of products;let j = index">
 
 									<div class="product-inner equal-elem" (mouseover)="mousehoverowl()" (mouseleave)="mouseleaverowl()">

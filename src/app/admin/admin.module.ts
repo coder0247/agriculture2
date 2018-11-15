@@ -42,9 +42,14 @@ import { AdminConfigControlService } from '../service/adminconfigcontrol';
 
 import { ControlService } from './configformfield/service/control.service';
 import { CroperpopupComponent } from './croperpopup/croperpopup.component';
+import { DeleteproductComponent } from './deleteproduct/deleteproduct.component';
+import { PagerService } from './../service/pager.service';
+import { PopupComponent } from './popup/popup.component';
+import { QuickviewComponent } from './quickview/quickview.component';
+import { OwlModule } from 'ngx-owl-carousel';
+import { UseractionComponent } from './useraction/useraction.component';
 @NgModule({
   imports: [
-
   CommonModule,
     CKEditorModule,
     AdminRoutingModule,
@@ -52,7 +57,8 @@ import { CroperpopupComponent } from './croperpopup/croperpopup.component';
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     ModalModule.forRoot(),
     ImageCropperModule,
-    DataTablesModule
+    DataTablesModule,
+    OwlModule
   ],
   declarations: [
     LayoutComponent,
@@ -82,8 +88,12 @@ import { CroperpopupComponent } from './croperpopup/croperpopup.component';
     MakemostviewedComponent,
     MakeonsaleComponent,
     MakenewarrivalsComponent,
-    FormfieldsComponent
+    FormfieldsComponent,
+    DeleteproductComponent,
+    PopupComponent,
+    QuickviewComponent,
+    UseractionComponent
   ],
-  providers: [AdminService, RoutingState, AdminConfigControlService, ControlService]
+  providers: [AdminService, RoutingState, AdminConfigControlService, ControlService, PagerService]
 })
 export class AdminModule {}

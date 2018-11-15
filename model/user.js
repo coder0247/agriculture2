@@ -16,7 +16,8 @@ const userSchema = new Schema({
   country:{ type: String, required: true },
   verified : { type: Boolean, default: false },
   verifcode: { type: String, required: false } ,
-  resetcode: { type: String, required: false}
+  resetcode: { type: String, required: false},
+  active: { type: Boolean, default: true },
 }, { collection: 'user' });
 
 const User = mongoose.model('User', userSchema);

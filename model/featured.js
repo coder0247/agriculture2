@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const featuredSchema = new Schema({
     categoryid: { type: Schema.Types.ObjectId, ref: 'Category' },
     subcatid: { type: Schema.Types.ObjectId, ref: 'Subcategory' },
-    productid: [{ type: Schema.Types.ObjectId, ref: 'Products' }],
+    productid: { type: Schema.Types.ObjectId, ref: 'Products' },
     created_at: { type: Date, default: Date.now() },
     status: { type: Boolean, default: true}
 }, { collection: 'featured' });

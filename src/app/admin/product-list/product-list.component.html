@@ -73,9 +73,9 @@
 						<div class="product-details">
 							<img src="{{ product.pimage }}">
 							<h5>{{ product.pname }}</h5>
-							<button class="btn btn-success btn-block" (click)="makeProductFeatured(product)" *ngIf="!product.is_featured; else featureButtonElseBlock">Make Featured</button>
+							<button class="btn btn-success btn-block" (click)="makeProductFeatured(product , $event)" *ngIf="!product.is_featured; else featureButtonElseBlock">Make Featured</button>
 							<ng-template #featureButtonElseBlock>
-								<button class="btn btn-primary btn-block" (click)="makeProductUnfeatured(product)">Make Unfeatured</button>
+								<button class="btn btn-primary btn-block" (click)="makeProductUnfeatured(product, $event)">Make Unfeatured</button>
 							</ng-template>
 						</div>
 					</div>

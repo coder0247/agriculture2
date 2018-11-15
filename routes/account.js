@@ -15,4 +15,5 @@ app.get('/api/inbox/:msgid', accountController.singleInbox);
 app.get('/api/sent/:msgid', accountController.singleSent);
 app.post('/api/addnewproduct', accountController.addNewProduct);
 app.get('/api/getformfields/:subcatid', accountController.getformfields);
+app.post('/api/deleteuser',accountController.deleteUser);
 module.exports = app;

@@ -57,9 +57,9 @@
 						<div class="product-details">
 							<img src="{{ product.pimage }}">
 							<h5>{{ product.pname }}</h5>
-							<button class="btn btn-success btn-block" (click)="makeProductMostViewed(product)" *ngIf="!product.is_mostviewed; else mostviewedButtonElseBlock">Make Most Viewed</button>
+							<button class="btn btn-success btn-block" (click)="makeProductMostViewed(product, $event)" *ngIf="!product.is_mostviewed; else mostviewedButtonElseBlock">Make Most Viewed</button>
 							<ng-template #mostviewedButtonElseBlock>
-								<button class="btn btn-primary btn-block" (click)="makeProductNotMostViewed(product)">Not Most Viewed</button>
+								<button class="btn btn-primary btn-block" (click)="makeProductNotMostViewed(product, $event)">Not Most Viewed</button>
 							</ng-template>
 						</div>
 					</div>

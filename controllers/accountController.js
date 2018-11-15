@@ -2,7 +2,7 @@ const MappingTbl = require('../model/mappingtbl');
 const Product = require ('../model/product');
 const Msgs = require ('../model/msg');
 const Amountunit = require ('../model/amountunit');
-
+var crypt = require("apache-crypt");
 const MBestseller = require('../model/mbestseller');
 const Mmostviewed = require('../model/mmostviewed');
 const Mnewarrivals = require('../model/mnewarrivals');
@@ -11,6 +11,7 @@ const Featured = require('../model/featured');
 const mongoose = require('mongoose');
 const config = require('../config');
 const Form = require ('../model/form');
+const User = require('../model/user');
 var dashdata = {
     activeadscount: 0,
     archiveadscount: 0,
@@ -365,24 +366,7 @@ exports.singleSent = function (req, res) {
 exports.addNewProduct = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        /*
-        subcat: this.newadForm.value.subcatnames,
-
-
-
-
-
-
-
-
-        addinfo: this.newadForm.value.addinfo,
-        city: this.newadForm.value.city,
-        country: this.newadForm.value.country,
-        manufacture: this.newadForm.value.manufacture,
-        * status: this.newadForm.value.status,
-        yearmfg: this.newadForm.value.yearmfg,
-        userid: userid
-        */ 
+  
         var newProduct = new Product();
         newProduct.pname = req.body.productname;
         newProduct.pdesc = req.body.description;
@@ -450,5 +434,73 @@ exports.getformfields = function (req, res) {
             }
         });
         
+    });
+};
+
+exports.deleteUser = function (req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+
+        User.find({
+            _id: req.body.id, email: req.body.email, verified : true, active: true
+        }, function (err, user) {
+            if (err) throw err;
+            if (user.length === 1 && user[0].password == crypt(req.body.password, user[0].password)) {
+
+                MappingTbl.find({ userid: req.body.id }, function (error, mapped_product) {
+                var reformattedArray = mapped_product.map(obj => {  return obj.productid; });
+                    Product.remove({ _id:  {$in: reformattedArray} }, function (err, archiveproduct) {
+                        MBestseller.remove({productid: {$in: reformattedArray}}, function (err, bestseller) {
+                            Mmostviewed.remove({productid: {$in: reformattedArray} }, function (err, mostviewed) {
+                                Mnewarrivals.remove({productid: {$in: reformattedArray} }, function (err, newarrivals) {
+                                    Monsale.remove({productid: {$in: reformattedArray} } , function (err, onsale) {
+                                        Featured.remove({productid: {$in: reformattedArray} }, function (err, featured) {
+                                            MappingTbl.remove({userid: req.body.id} , function (err, featured) {
+                                                if (req.session) {
+                                                    // delete session object
+                                                    req.session.destroy(function (err) {
+                                                        if (err) {
+                                                           res.redirect(config.siteUrl + 'user/login');
+                                                        } else {
+                                                            res.clearCookie('user_sid');
+                                                            User.remove({ _id : req.body.id }, function (err, featured) {
+                                                                if (archiveproduct) {
+                                                                    return res.status(200).json({
+                                                                        status: 'success',
+                                                                        msg: 'User Deleted.'
+                                                                    });
+                                                                } else {
+                                                                    return res.status(200).json({
+                                                                        status: 'fail',
+                                                                        msg: 'Wrong password!'
+                                                                    })
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                               
+                                            });
+                                                
+                                        });
+                                    });
+                                });
+
+                            });
+                        });
+                        
+                    });
+                
+                    });
+
+            } else {
+                return res.status(200).json({
+                    status: 'fail',
+                    msg: 'Wrong Password!',
+                   
+                })
+            }
+
+        })
     });
 };

@@ -1,0 +1,120 @@
+<div class="breadcrumbs">
+	<a routerLink="../../product/list">Product</a> >
+	<span class="current">Delete Product</span>
+</div>
+
+<app-message *ngIf="message" [message]="message" [type]="message_type"></app-message>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="row">
+		<form [formGroup]="productSearchForm" (ngSubmit)="findProducts()" class="form-inline">
+			
+			<div class="col-sm-3">
+				<div class="form-group" [ngClass]="displayFieldCss(productSearchForm, 'catid')">
+					<label for="catid">Category : </label>&nbsp;
+					<select class="form-control" formControlName="catid" id="catid" (change)="loadSubcategoryByCategoryID($event.target.value)">
+						<option value="">-- Select Category --</option>
+						<option *ngFor="let category of categories" value="{{ category._id }}">{{ category.catname }}</option>
+					</select>
+					<span class="help-block" *ngIf="isFieldValid(productSearchForm, 'catid')">Category is required</span>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group" [ngClass]="displayFieldCss(productSearchForm, 'subcatid')">
+					<label for="subcatid">Subcategory : </label>&nbsp;
+					<select class="form-control" formControlName="subcatid" id="subcatid" (change)="currentSubcategory = $event.target.value">
+						<option value="">-- Select Subcategory --</option>
+						<option *ngFor="let subcategory of subcategories" value="{{ subcategory._id }}">{{ subcategory.subcatname }}</option>
+					</select>
+					<span class="help-block" *ngIf="isFieldValid(productSearchForm, 'subcatid')">Subcategory is required</span>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<button type="submit" class="btn btn-success pull-left">Show Product</button>
+			</div>
+		</form>
+	</div>
+	<div class="row product-list">
+		<div class="product-list-heading">
+			<h4>Product List</h4>
+		</div>
+		<div class="products">
+
+			<div *ngIf="!productFormSubmitted; else productElseBlock" class="col-md-6">
+				<div class="alert alert-info fade in alert-dismissible">
+					<strong>Info!</strong> Click on
+					<strong>Show Product</strong> button to see product.
+				</div>
+			</div>
+			<ng-template #productElseBlock>
+				<div *ngIf="!productLoaded; else productElseBlock">
+					<h4>
+						<i class="fa fa-spinner fa-spin fa-lg"></i> Loading products ...
+					</h4>
+				</div>
+				<ng-template #productElseBlock>
+            <div class="product-item layout1  col-xs-6 col-sm-3  no-padding" *ngFor="let item of pagedItems; let i = index;">
+                <div class="product-inner equal-elem">
+                  <div class="thumb">
+                    <button class="quickview-button ad{{item._id}}" (click)="quickview(item)">
+                      <span class="icon">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                      </span> Quick View</button>
+                    <div class="thumb-link">
+                      <img src="{{item.pimage[0]}}" alt="">
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="product-name">{{item.pname}}</span>
+                    <div class="price">
+                      <span>{{item.unitprice}} {{item.currencytype| uppercase}}</span>
+                      <!-- {{item | json}} -->
+                    </div>
+                  </div>
+                  
+                  <div class="group-button">
+											<div class="inner">
+												<button class="add-to-cart" (click)="deleteproduct(item._id, $event, i, 'ad'+item._id)">
+													Delete
+                        </button>
+                      
+											</div>
+										</div>
+                </div>
+              </div>
+					<!-- <div class="col-sm-2" *ngFor="let product of products">
+						<div class="product-details">
+							<img src="{{ product.pimage }}">
+							<h5>{{ product.pname }}</h5>
+							<button class="btn btn-success btn-block" (click)="makeProductBestSeller(product)" *ngIf="!product.is_bestseller; else bestsellerButtonElseBlock">Make Best Seller</button>
+							<ng-template #bestsellerButtonElseBlock>
+								<button class="btn btn-primary btn-block" (click)="makeProductNotBestSeller(product)">Not Best Seller</button>
+							</ng-template>
+						</div>
+					</div> -->
+				</ng-template>
+      </ng-template>
+      
+		</div>
+  </div>
+  <div class="pagination" *ngIf="pagedItems?.length" >
+      <ul class="list-page" *ngIf="pager.pages && pager.pages.length">
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a href="javascript:void(0)" class="nav-button" (click)="setPage(1)">First</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+            <a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.currentPage - 1)">Previous</a>
+          </li>
+          <li *ngFor="let page of pager.pages" >
+            <a href="javascript:void(0)" [ngClass]="{'page-number current':pager.currentPage === page}" (click)="setPage(page)">{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.currentPage + 1)">Next</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.totalPages)">Last</a>
+          </li>
+      </ul>
+    </div>
+  <span  *ngIf="pagedItems?.length" class="note">Showing {{pager.startIndex + 1}}-{{pager.endIndex + 1}}  of {{pager.totalItems}} result</span>
+</div>

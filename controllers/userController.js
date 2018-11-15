@@ -28,7 +28,7 @@ exports.sigin = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
         User.find({
-            email: req.body.email, verified : true
+            email: req.body.email, verified : true, active: true
         }, function (err, user) {
             if (err) throw err;
             if (user.length === 1 && user[0].password == crypt(req.body.password, user[0].password)) {
@@ -109,7 +109,7 @@ exports.register = function (req, res ) {
 
                     // setup email data with unicode symbols
                     let mailOptions = {
-                        from: '"AgriPata" <support@agripata.com>', // sender address
+                        from: '"AgriPata" <'+config.mail.user+'>', // sender address
                         to: req.body.email, // list of receivers
                         subject: 'AgriPata - Email Verification', // Subject line
                         text: '', // plain text body
@@ -244,7 +244,7 @@ exports.forgotpass = function (req, res) {
 
                         // setup email data with unicode symbols
                         let mailOptions = {
-                            from: '"AgriPata" <support@agripata.com>', // sender address
+                            from: '"AgriPata" <'+config.mail.user+'>', // sender address
                             to: req.body.email, // list of receivers
                             subject: 'Forgot Password', // Subject line
                             text: '', // plain text body

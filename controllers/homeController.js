@@ -8,6 +8,7 @@ const MBestseller = require('../model/mbestseller');
 const Mmostviewed = require('../model/mmostviewed');
 const Monsale = require('../model/monsale');
 const Mnewarrivals = require('../model/mnewarrivals');
+var _ = require('underscore');
 exports.getPageContent = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -28,16 +29,33 @@ exports.getPageContent = function (req, res) {
         })
     });
 }
+
 exports.featured = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
  
-        Featured.find({status: true}).populate({ path: 'categoryid' }).populate({ path: 'subcatid' }).populate({ path: 'productid', populate : { path: 'amtunit' } }).exec(function (err, featured) {
+        Featured.find({status: true}).populate({ path: 'categoryid' }).populate({ path: 'productid', populate : { path: 'amtunit' } }).exec(function (err, featured) {
+        
+            var categoryNameArray = featured.map(obj =>{ 
+                    return obj.categoryid.catname;
+            });
+            
+            var morelsit =  _.uniq(categoryNameArray).map( catname => {
+
+                var maybesome = featured.map(obj2 =>{
+                    if (obj2.categoryid.catname == catname) {
+                        return obj2.productid;
+                    }
+                });
+                return {'categoryname': catname, 'productlist': _.chunk(maybesome.filter(Boolean), 2)};
+            });
+     
             if (err) throw err;
             if (featured.length > 0) {
                 return res.status(200).json({
                     status: 'success',
-                    data: { 'featured': featured }
+                    data: { 'featured': morelsit }
+                    // reformattedArray: _.uniq(reformattedArray)
                 });
             } else {
                 return res.status(200).json({
@@ -138,7 +156,7 @@ exports.mostViewedByLimit = function (req, res) {
 
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Mmostviewed.find({}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, mostviewed) {
+        Mmostviewed.find({status: true}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, mostviewed) {
             if (err) throw err;
             if (mostviewed.length > 0) {
                 return res.status(200).json({
@@ -162,7 +180,7 @@ exports.onSaleByLimit = function (req, res) {
 
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Monsale.find({}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, monsale) {
+        Monsale.find({status: true}).sort('-date').populate({ path: 'productid' }).limit(limit).exec(function (err, monsale) {
             if (err) throw err;
             if (monsale.length > 0) {
                 return res.status(200).json({
@@ -235,7 +253,7 @@ exports.newArrivalByLimit = function (req, res) {
 
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
-        Mnewarrivals.find({}).sort('-date').populate({ path: 'productid' , populate:{ path: 'amtunit', model: 'AmountUnit' }}).limit(limit).exec(function (err, newarrival) {
+        Mnewarrivals.find({status: true}).sort('-date').populate({ path: 'productid' , populate:{ path: 'amtunit', model: 'AmountUnit' }}).limit(limit).exec(function (err, newarrival) {
             if (err) throw err;
             if (newarrival.length > 0) {
                 return res.status(200).json({

@@ -73,7 +73,8 @@ export class HeaderCommonComponent implements OnInit {
     public auth: AuthService,
     private _location: Location,
     private autocomp: AutocompService
-  ) {}
+  ) {
+  }
   mmenutoggleClass() {
     // console.log('menu click', this.mmenu.nativeElement.classList);
     if (this.mmenu.nativeElement.classList.contains('open')) {
@@ -239,11 +240,18 @@ export class HeaderCommonComponent implements OnInit {
     const credentials = this.searchForm.value;
     // console.log('search', credentials);
     // tslint:disable-next-line:max-line-length
-    this.categoryerror = false;
+    // console.log('credentials', credentials);
+    this.categoryerror = true;
+    this.subcategoryerror = true;
+    
     if (credentials.category === null) {
-      this.categoryerror = true;
+      this.categoryerror = false;
     }
-    if (this.categoryerror !== null && this.subcategoryerror !== null) {
+    if (credentials.subcategory === null) {
+      this.subcategoryerror = false;
+    }
+    console.log('---', this.categoryerror, this.subcategoryerror );
+    if (this.categoryerror  && this.subcategoryerror ) {
       this.router.navigate([
         '/search',
         'subcategory',

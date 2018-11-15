@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { Subject } from 'rxjs';
-
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -12,7 +12,7 @@ export class UserListComponent implements OnInit {
   userLoaded = false;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
-  constructor(private admin: AdminService) {}
+  constructor(private admin: AdminService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.dtOptions = {
@@ -38,5 +38,8 @@ export class UserListComponent implements OnInit {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+  getUserDetails(id) {
+    this.router.navigate(['/admin/user/detail/' + id]);
   }
 }

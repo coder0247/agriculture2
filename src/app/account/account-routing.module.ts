@@ -15,6 +15,8 @@ import { EditadComponent } from './editad/editad.component';
 import { EditadsComponent } from './editads/editads.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { CroperpopupComponent } from './croperpopup/croperpopup.component';
+import { DeletemyaccountComponent } from './deletemyaccount/deletemyaccount.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -80,7 +82,12 @@ const routes: Routes = [
   {
     path: 'viewsent',
     component: SentmsgComponent
+  },
+  {
+    path: 'deletemyaccount',
+    component: DeletemyaccountComponent
   }
+
 ];
 
 @NgModule({

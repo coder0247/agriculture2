@@ -25,7 +25,7 @@ exports.homeprodcatwisestatus = function (req, res) {
                 var reformattedArray = subcategory.map(obj => {
                     return obj._id;
                 });
-                MappingTbl.find({
+                MappingTbl.find({ 
                     'subcatid': { $in: reformattedArray }
                 }, 'productid').populate({ path: 'productid', select: '_id', match: { "status": "1" } }).exec(function (err, docs) {
                     var bestsellerproductArray = docs.map(obj => {

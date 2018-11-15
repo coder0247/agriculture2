@@ -4,76 +4,33 @@
 		<!-- <a data-prenttitle="" class="ovic-menu-prev-panel" href="#ovic-menu-panel-main" data-cur-panel="#ovic-menu-panel-1" data-target="#ovic-menu-panel-main"></a> -->
 		<a class="ovic-menu-close-btn ovic-menu-close-panels" href="javascript:void(0)" (click)="mmenutoggleClass()">x</a>
 	</div>
-    <div class="ovic-menu-panels">
-        <div id="ovic-menu-panel-main" class="ovic-menu-panel ovic-menu-panel-main ovic-menu-panel-opened">
-				<!-- <ul class="vertical-menu ovic-clone-mobile-menu" *ngIf="mainCats ; else sidebarloading">
-
-						<li *ngFor="let item of mainCats;let i = index">
-							<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}">
-								<span class="icon"></span>{{item.catname}}</a>
-						</li> -->
-            <ul class="depth-01">
-					<!-- <li *ngFor="let item of mainCats;let i = index">
-							<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}">
-								<span class="icon"></span>{{item.catname}}</a>
-						</li> -->
-						<li class="menu-item-has-children has-megamenu">
-							<a class="ovic-menu-next-panel" href="#ovic-menu-panel-0" data-target="#ovic-menu-panel-0"></a>
-							<a href="#" class="ovic-menu-item-title" title="Laptop &amp; Computer"><span class="icon"><img src="images/icon3.png" alt=""></span> Laptop &amp; Computer</a>
-							<a href="#" class="toggle-sub-menu"></a>
-						</li>
-						<!-- <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-								<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home">HOME</a>
+	<div class="ovic-menu-panels">
+			<div id="ovic-menu-panel-main" class="ovic-menu-panel ovic-menu-panel-main ovic-menu-panel-opened">
+					<!-- <ul class="vertical-menu ovic-clone-mobile-menu" *ngIf="mainCats ; else sidebarloading">
+	
+							<li *ngFor="let item of mainCats;let i = index">
+								<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}">
+									<span class="icon"></span>{{item.catname}}</a>
 							</li> -->
-                <li class="menu-item clone-menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-						<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home">HOME</a>
-                </li>
-				<li class="menu-item clone-menu-item" routerLinkActive="active">
-						<a routerLink="/about" class="kt-item-title ovic-menu-item-title" title="Home">About Us</a>
-				</li>
-			
-                <li class="menu-item clone-menu-item">	<a routerLink="/contact" class="kt-item-title ovic-menu-item-title" title="Home">Contact Us</a></li>
-            </ul>
-        </div>
-		<div id="ovic-menu-panel-0" class="ovic-menu-panel ovic-menu-sub-panel ovic-menu-hidden" data-parent-panel="ovic-menu-panel-main"><div class="sub-menu sub-menu1 mega-menu" style="width: 870px;">
-				<div class="row">
-					<div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4">
-						<h5 class="title widgettitle">Electronics</h5>
-						<ul>
-							<li><a href="#">Home Audio &amp; Theater</a></li>
-							<li><a href="#">Camera &amp; Video</a></li>
-							<li><a href="#">Headphone</a></li>
-							<li><a href="#">Video Game</a></li>
-							<li><a href="#">Bluetooth &amp; Wireless</a></li>
-							<li><a href="#">TV &amp; Video</a></li>
-						</ul>
-					</div>
-					<div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4">
-						<h5 class="title widgettitle">Computers</h5>
-						<ul>
-							<li><a href="#">Computer &amp; Tablet</a></li>
-							<li><a href="#">Monitors</a></li>
-							<li><a href="#">Networking</a></li>
-							<li><a href="#">Drivers</a></li>
-						</ul>
-					</div>
-					<div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4"></div>
-					</div>
-				<div class="row">
-					<div class="widget-custom-menu col-xs-12 col-sm-12 col-md-4">
-						<h5 class="title widgettitle">Laptops</h5>
-						<ul>
-							<li><a href="#">Software</a></li>
-							<li><a href="#">Camera &amp; Video</a></li>
-							<li><a href="#">Networking</a></li>
-							<li><a href="#">Bluetooth &amp; Wireless</a></li>
-							<li><a href="#">Printer &amp; Ink</a></li>
-						</ul>
-					</div>
-				</div>
-			</div></div>
+				<ul class="depth-01" *ngIf="catsubcatlist ; else sidebarloading">
+							<li *ngFor="let cats of catsubcatlist;let i = index">
+								<a routerLink="/category/{{cats.catid}}" class="ovic-menu-item-title" title="{{cats.catname}}">
+									<span class="icon"></span>{{cats.catname}}</a>
+							</li>
+					<li class="menu-item clone-menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+							<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home">HOME</a>
+					</li>
+					<li class="menu-item clone-menu-item" routerLinkActive="active">
+							<a routerLink="/about" class="kt-item-title ovic-menu-item-title" title="Home">About Us</a>
+					</li>
+					<li class="menu-item clone-menu-item">	<a routerLink="/contact" class="kt-item-title ovic-menu-item-title" title="Home">Contact Us</a></li>
+				</ul>
+			</div>
+	
+	
+		</div>
+   
 
-    </div>
 </div>
 <header>
 	<div class="header layout3 no-prepend-box-sticky header-home4">

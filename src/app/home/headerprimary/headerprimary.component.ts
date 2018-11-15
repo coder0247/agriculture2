@@ -61,24 +61,6 @@ export class HeaderprimaryComponent implements OnInit {
       category: [],
       subcategory: []
     });
-    // if (categoryid !== '') {
-    //   this.selecthascontent = true;
-    //   this.getSubcatList(categoryid);
-    //   this.searchForm = fb.group({
-    //     category: [categoryid],
-    //     subcategory: []
-    //   });
-    //   this.searchForm.controls['category'].markAsDirty({ onlySelf: true });
-    // } else {
-    //   this.selecthascontent = false;
-    //   this.searchForm = fb.group({
-    //     category: [],
-    //     subcategory: []
-    //   });
-    // }
-    // if (subcategoryid !== '') {
-    //   this.searchForm.controls['subcategory'].markAsDirty({ onlySelf: true });
-    // }
     if (categoryid !== '') {
       this.searchForm.patchValue({
         category: categoryid
@@ -220,11 +202,15 @@ export class HeaderprimaryComponent implements OnInit {
     const credentials = this.searchForm.value;
     // console.log('search', credentials);
     // tslint:disable-next-line:max-line-length
-    this.categoryerror = false;
+    this.categoryerror = true;
+    this.subcategoryerror = true;
     if (credentials.category === null) {
-      this.categoryerror = true;
+      this.categoryerror = false;
     }
-    if (this.categoryerror !== null && this.subcategoryerror !== null) {
+    if (credentials.subcategory === null) {
+      this.subcategoryerror = false;
+    }
+    if (this.categoryerror  && this.subcategoryerror ) {
       this.router.navigate([
         '/search',
         'subcategory',

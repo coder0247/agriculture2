@@ -5,28 +5,19 @@
 	</div>
     <div class="ovic-menu-panels">
         <div id="ovic-menu-panel-main" class="ovic-menu-panel ovic-menu-panel-main ovic-menu-panel-opened">
-				<!-- <ul class="vertical-menu ovic-clone-mobile-menu" *ngIf="mainCats ; else sidebarloading">
-
-						<li *ngFor="let item of mainCats;let i = index">
-							<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}">
-								<span class="icon"></span>{{item.catname}}</a>
-						</li> -->
-            <ul class="depth-01" *ngIf="mainCats ; else sidebarloading">
-					<li *ngFor="let item of mainCats;let i = index">
-							<a routerLink="/category/{{item._id}}" class="ovic-menu-item-title" title="{{item.catname}}">
-								<span class="icon"></span>{{item.catname}}</a>
+				<ul class="depth-01" *ngIf="catsubcatlist ; else sidebarloading">
+						<li *ngFor="let cats of catsubcatlist;let i = index">
+							<a (click)="mmenutoggleClass()" routerLink="/category/{{cats.catid}}" class="ovic-menu-item-title" title="{{cats.catname}}">
+								<span class="icon"></span>{{cats.catname}}</a>
 						</li>
-						<!-- <li class="menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-								<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home">HOME</a>
-							</li> -->
-                <li class="menu-item clone-menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-						<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home">HOME</a>
-                </li>
+				<li class="menu-item clone-menu-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+						<a routerLink="/" class="kt-item-title ovic-menu-item-title" title="Home" (click)="mmenutoggleClass()">HOME</a>
+				</li>
 				<li class="menu-item clone-menu-item" routerLinkActive="active">
-						<a routerLink="/about" class="kt-item-title ovic-menu-item-title" title="Home">About Us</a>
-                </li>
-                <li class="menu-item clone-menu-item">	<a routerLink="/contact" class="kt-item-title ovic-menu-item-title" title="Home">Contact Us</a></li>
-            </ul>
+						<a routerLink="/about" class="kt-item-title ovic-menu-item-title" title="Home" (click)="mmenutoggleClass()">About Us</a>
+				</li>
+				<li class="menu-item clone-menu-item">	<a (click)="mmenutoggleClass()" routerLink="/contact" class="kt-item-title ovic-menu-item-title" title="Home">Contact Us</a></li>
+			</ul>
         </div>
 
 
@@ -107,7 +98,7 @@
 									</div>
 									
 									</form>
-									<div class="error" *ngIf="categoryerror">Please select category</div>
+									<!-- <div class="error" *ngIf="categoryerror">Please select category</div> -->
 						</div>
 					</div>
 				</div>
@@ -208,7 +199,7 @@
 								</div>
 								
 								</form>
-								<div class="error" *ngIf="categoryerror">Please select category</div>
+								<!-- <div class="error" *ngIf="categoryerror">Please select category</div> -->
 							</div>	
 
 							<div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 right-content hidden-sm hidden-xs">

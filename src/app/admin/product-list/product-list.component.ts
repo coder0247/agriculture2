@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  ElementRef, Renderer2 } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -29,7 +29,8 @@ export class ProductListComponent implements OnInit {
     private admin: AdminService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2
   ) {
     this.productSearchForm = this.formBuilder.group({
       catid: ['', Validators.required],
@@ -94,11 +95,12 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  makeProductFeatured(product) {
+  makeProductFeatured(product, event) {
     const product_id = product._id;
     this.message = '';
     this.message_type = '';
-
+    this.renderer.setAttribute(event.srcElement, 'disabled', 'disabled');
+    event.srcElement.innerHTML =  'Please Wait';
     this.admin
       .makeProductFeatured(this.category_id, this.currentSubcategory, product_id)
       .subscribe(
@@ -107,6 +109,8 @@ export class ProductListComponent implements OnInit {
           this.message_type = response.status ? 'success' : 'error';
 
           if (response.status) {
+            event.srcElement.innerHTML = 'Make Unfeatured';
+            this.renderer.removeAttribute(event.srcElement, 'disabled');
             this.products.map((item, index) => {
               if (item._id === product_id) {
                 item.is_featured = true;
@@ -116,23 +120,27 @@ export class ProductListComponent implements OnInit {
         },
         error => {
           console.log(error);
+          event.srcElement.innerHTML = 'Make Unfeatured';
+          this.renderer.removeAttribute(event.srcElement, 'disabled');
         }
       );
   }
 
-  makeProductUnfeatured(product) {
+  makeProductUnfeatured(product, event) {
     const product_id = product._id;
     this.message = '';
     this.message_type = '';
-
+    this.renderer.setAttribute(event.srcElement, 'disabled', 'disabled');
+    event.srcElement.innerHTML =  'Please Wait';
     this.admin
       .makeProductUnfeatured(this.currentSubcategory, product_id)
       .subscribe(
         response => {
           this.message = response.message;
           this.message_type = response.status ? 'success' : 'error';
-
+          event.srcElement.innerHTML = 'Make Featured';
           if (response.status) {
+            this.renderer.removeAttribute(event.srcElement, 'disabled');
             this.products.map((item, index) => {
               if (item._id === product_id) {
                 item.is_featured = false;
@@ -141,6 +149,8 @@ export class ProductListComponent implements OnInit {
           }
         },
         error => {
+          event.srcElement.innerHTML = 'Make Featured';
+          this.renderer.removeAttribute(event.srcElement, 'disabled');
           console.log(error);
         }
       );

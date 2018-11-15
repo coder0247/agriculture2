@@ -32,7 +32,7 @@ export class ReportedadviewComponent implements OnInit {
         }
       }, (err) => {
         console.log(err);
-      }); 
+      });
     });
      
     }

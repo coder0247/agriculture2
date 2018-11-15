@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -30,7 +30,8 @@ export class MakebestsellerComponent implements OnInit {
     private admin: AdminService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2
   ) {
     this.productSearchForm = this.formBuilder.group({
       catid: ['', Validators.required],
@@ -95,11 +96,12 @@ export class MakebestsellerComponent implements OnInit {
     }
   }
 
-  makeProductBestSeller(product) {
+  makeProductBestSeller(product, event) {
     const product_id = product._id;
     this.message = '';
     this.message_type = '';
-
+    this.renderer.setAttribute(event.srcElement, 'disabled', 'disabled');
+    event.srcElement.innerHTML =  'Please Wait';
     this.admin
       .makeProductBestSeller(product_id)
       .subscribe(
@@ -108,6 +110,8 @@ export class MakebestsellerComponent implements OnInit {
           this.message_type = response.status ? 'success' : 'error';
 
           if (response.status) {
+            event.srcElement.innerHTML = 'Not Bestseller';
+            this.renderer.removeAttribute(event.srcElement, 'disabled');
             this.products.map((item, index) => {
               if (item._id === product_id) {
                 item.is_bestseller = true;
@@ -116,16 +120,19 @@ export class MakebestsellerComponent implements OnInit {
           }
         },
         error => {
+          event.srcElement.innerHTML = 'Make Bestseller';
+          this.renderer.removeAttribute(event.srcElement, 'disabled');
           console.log(error);
         }
       );
   }
 
-  makeProductNotBestSeller(product) {
+  makeProductNotBestSeller(product, event) {
     const product_id = product._id;
     this.message = '';
     this.message_type = '';
-
+    this.renderer.setAttribute(event.srcElement, 'disabled', 'disabled');
+    event.srcElement.innerHTML =  'Please Wait';
     this.admin
       .makeProductNotBestSeller(product_id)
       .subscribe(
@@ -134,6 +141,8 @@ export class MakebestsellerComponent implements OnInit {
           this.message_type = response.status ? 'success' : 'error';
 
           if (response.status) {
+            event.srcElement.innerHTML = 'Make Bestseller';
+            this.renderer.removeAttribute(event.srcElement, 'disabled');
             this.products.map((item, index) => {
               if (item._id === product_id) {
                 item.is_bestseller = false;
@@ -142,6 +151,8 @@ export class MakebestsellerComponent implements OnInit {
           }
         },
         error => {
+          event.srcElement.innerHTML = 'Not Bestseller';
+          this.renderer.removeAttribute(event.srcElement, 'disabled');
           console.log(error);
         }
       );

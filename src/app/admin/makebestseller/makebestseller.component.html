@@ -57,9 +57,9 @@
 						<div class="product-details">
 							<img src="{{ product.pimage }}">
 							<h5>{{ product.pname }}</h5>
-							<button class="btn btn-success btn-block" (click)="makeProductBestSeller(product)" *ngIf="!product.is_bestseller; else bestsellerButtonElseBlock">Make Best Seller</button>
+							<button class="btn btn-success btn-block" (click)="makeProductBestSeller(product, $event)" *ngIf="!product.is_bestseller; else bestsellerButtonElseBlock">Make Best Seller</button>
 							<ng-template #bestsellerButtonElseBlock>
-								<button class="btn btn-primary btn-block" (click)="makeProductNotBestSeller(product)">Not Best Seller</button>
+								<button class="btn btn-primary btn-block" (click)="makeProductNotBestSeller(product, $event)">Not Best Seller</button>
 							</ng-template>
 						</div>
 					</div>

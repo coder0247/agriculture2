@@ -28,6 +28,18 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+  deleteUserAccount(passwd): Observable<any> {
+    const data = {
+      'email': localStorage.getItem('email'),
+      'id': localStorage.getItem('id'),
+      'password': passwd
+    };
+    return this.http.post(apiUrl + 'deleteuser', data)
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      );
+  }
   verify(verifyid): Observable<any> {
     return this.http.get(apiUrl + 'verify/' + verifyid, httpOptions)
       .pipe(
@@ -58,7 +70,7 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
-  
+
   forgotPassword(data): Observable<any> {
     // console.log('service userid', userid);
     return this.http.post(apiUrl + 'user/forgotpass/', data)

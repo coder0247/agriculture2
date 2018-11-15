@@ -12,4 +12,9 @@ app.get('/api/admin/category/:catid/subcategory/:subcatid/bestsellerproducts', a
 app.get('/api/admin/category/:catid/subcategory/:subcatid/newarrivalproducts', adUserController.getNewArrivalByCategorySubcategory);
 app.get('/api/admin/category/:catid/subcategory/:subcatid/onsaleproducts', adUserController.getOnSaleByCategorySubcategory);
 app.get('/api/admin/category/:catid/subcategory/:subcatid/mostviewedproducts', adUserController.getMostViewedByCategorySubcategory);
+app.get('/api/admin/getuserdetails/:uid',adUserController.getUserDetails);
+app.get('/api/admin/activateuser/:uid',adUserController.activateUser);
+app.get('/api/admin/deactivateuser/:uid',adUserController.deactivateUser);
+app.get('/api/admin/deleteuser/:uid',adUserController.deleteUser);
+
 module.exports = app;

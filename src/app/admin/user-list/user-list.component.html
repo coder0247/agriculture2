@@ -24,7 +24,7 @@
 									</td>
 								</tr>
 								<ng-template #elseBlock>
-										<tr *ngFor="let user of users">
+										<tr *ngFor="let user of users" (click)="getUserDetails(user._id)">
 												<td class="uc-first">{{ user.firstname }}</td>
 												<td class="uc-first">{{ user.middlename }}</td>
 												<td class="uc-first">{{ user.lastname }}</td>

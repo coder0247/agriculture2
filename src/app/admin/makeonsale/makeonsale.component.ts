@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  ElementRef, Renderer2 } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -30,7 +30,8 @@ export class MakeonsaleComponent implements OnInit {
     private admin: AdminService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2
   ) {
     this.productSearchForm = this.formBuilder.group({
       catid: ['', Validators.required],
@@ -95,11 +96,12 @@ export class MakeonsaleComponent implements OnInit {
     }
   }
 
-  makeProductOnSale(product) {
+  makeProductOnSale(product, event) {
     const product_id = product._id;
     this.message = '';
     this.message_type = '';
-
+    this.renderer.setAttribute(event.srcElement, 'disabled', 'disabled');
+    event.srcElement.innerHTML =  'Please Wait';
     this.admin
       .makeProductOnSale(product_id)
       .subscribe(
@@ -108,6 +110,8 @@ export class MakeonsaleComponent implements OnInit {
           this.message_type = response.status ? 'success' : 'error';
 
           if (response.status) {
+            event.srcElement.innerHTML = 'Not On Sale';
+            this.renderer.removeAttribute(event.srcElement, 'disabled');
             this.products.map((item, index) => {
               if (item._id === product_id) {
                 item.is_onsale = true;
@@ -116,16 +120,19 @@ export class MakeonsaleComponent implements OnInit {
           }
         },
         error => {
+          event.srcElement.innerHTML = 'Make On Sale';
+          this.renderer.removeAttribute(event.srcElement, 'disabled');
           console.log(error);
         }
       );
   }
 
-  makeProductNotOnSale(product) {
+  makeProductNotOnSale(product, event) {
     const product_id = product._id;
     this.message = '';
     this.message_type = '';
-
+    this.renderer.setAttribute(event.srcElement, 'disabled', 'disabled');
+    event.srcElement.innerHTML =  'Please Wait';
     this.admin
       .makeProductNotOnSale(product_id)
       .subscribe(
@@ -134,6 +141,8 @@ export class MakeonsaleComponent implements OnInit {
           this.message_type = response.status ? 'success' : 'error';
 
           if (response.status) {
+            event.srcElement.innerHTML = 'Make On Sale';
+            this.renderer.removeAttribute(event.srcElement, 'disabled');
             this.products.map((item, index) => {
               if (item._id === product_id) {
                 item.is_onsale = false;
@@ -142,6 +151,8 @@ export class MakeonsaleComponent implements OnInit {
           }
         },
         error => {
+          event.srcElement.innerHTML = 'Not On Sale';
+          this.renderer.removeAttribute(event.srcElement, 'disabled');
           console.log(error);
         }
       );

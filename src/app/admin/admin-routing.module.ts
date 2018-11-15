@@ -22,6 +22,10 @@ import { SitesettingComponent } from './sitesetting/sitesetting.component';
 import { MakemostviewedComponent } from './makemostviewed/makemostviewed.component';
 import { MakeonsaleComponent } from './makeonsale/makeonsale.component';
 import { MakenewarrivalsComponent } from './makenewarrivals/makenewarrivals.component';
+import { DeleteproductComponent } from './deleteproduct/deleteproduct.component';
+import { PopupComponent } from './popup/popup.component';
+import { QuickviewComponent } from './quickview/quickview.component';
+import { UseractionComponent } from './useraction/useraction.component';
 
 const routes: Routes = [
   {
@@ -73,6 +77,14 @@ const routes: Routes = [
         component: MakebestsellerComponent
       },
       {
+        path: 'product/delete',
+        component: DeleteproductComponent
+      },
+      {
+        path: 'popup',
+        component: PopupComponent
+      },
+      {
         path: 'product/mostviewed',
         component: MakemostviewedComponent
       },
@@ -111,6 +123,14 @@ const routes: Routes = [
       {
         path: 'edit/sitesettings',
         component: SitesettingComponent
+      },
+      {
+        path: 'user/detail/:id',
+        component: UseractionComponent
+      },
+      {
+        path: 'quickview',
+        component: QuickviewComponent
       }
     ]
   },
