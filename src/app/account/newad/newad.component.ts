@@ -249,6 +249,18 @@ export class NewadComponent implements OnInit {
         if (res.status === 'success') {
           // console.log(res);
           // this.cities = res.citylist;
+          res.citylist.sort(function(a, b) {
+            const nameA = a.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+          });
           this.formbaseelements.push(this.formcontrolservice.cityfield(res.citylist, true));
 
         }
@@ -503,7 +515,7 @@ export class NewadComponent implements OnInit {
             this.showAlert(templatenewaddposted);
             this.uploader.queue.length = 0;
             this.forcevalidation = false;
-            // this.newadForm.reset();
+            this.newadForm.reset();
             this.submitting = false;
           }
         },

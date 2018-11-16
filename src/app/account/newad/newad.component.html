@@ -375,6 +375,26 @@
                                     </div>
                                   </ng-template>
                                   <ng-template #templatenewaddposted>
+                                    <div class="modal-header">
+                                      <h4 class="modal-title pull-left">New Ad</h4>
+                                      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="info-box">
+                                            <span class="info-box-icon bg-green">
+                                                <i class="fa fa-check"></i></span>
+                                
+                                            <div class="info-box-content">
+                                              <span class="info-box-text">New Ad Posted Successfully</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                          </div>   
+                                      <!-- <p><span><i class="fa fa-times"></i></span>Your registration has been successful! You will receive a confirmation mail shortly containing the link to activate your account!</p> -->
+                                    </div>
+                                  </ng-template>
+                                  <!-- <ng-template #templatenewaddposted>
                                         <div class="modal-header">
                                           <h4 class="modal-title pull-left">Success</h4>
                                           <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
@@ -384,7 +404,7 @@
                                         <div class="modal-body">
                                           <p>New Ad Posted Successfully</p>
                                         </div>
-                                      </ng-template>
+                                      </ng-template> -->
                                       <ng-template #exceededuploadlimit>
                                           <div class="modal-header">
                                             <h4 class="modal-title pull-left">Error</h4>

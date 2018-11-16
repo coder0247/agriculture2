@@ -301,8 +301,8 @@
                                     <div class="modal-body">
                                       <p>Please Upload .jpeg/.jpg images ( e.g myproduct.jpg).</p>
                                     </div>
-                                  </ng-template>
-                                  <ng-template #templatenewaddposted>
+                                  </ng-template> 
+                                  <!-- <ng-template #templatenewaddposted>
                                         <div class="modal-header">
                                           <h4 class="modal-title pull-left">Success</h4>
                                           <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
@@ -311,6 +311,26 @@
                                         </div>
                                         <div class="modal-body">
                                           <p> Ad Updated Successfully</p>
+                                        </div>
+                                      </ng-template> -->
+                                      <ng-template #templatenewaddposted>
+                                        <div class="modal-header">
+                                          <h4 class="modal-title pull-left">Edit Ad</h4>
+                                          <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-green">
+                                                    <i class="fa fa-check"></i></span>
+                                    
+                                                <div class="info-box-content">
+                                                  <span class="info-box-text">Ad Updated Successfully</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                              </div>   
+                                          <!-- <p><span><i class="fa fa-times"></i></span>Your registration has been successful! You will receive a confirmation mail shortly containing the link to activate your account!</p> -->
                                         </div>
                                       </ng-template>
                                       <ng-template #exceededuploadlimit>

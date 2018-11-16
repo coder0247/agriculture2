@@ -152,6 +152,18 @@ export class EditadComponent implements OnInit {
     this.homepage.getCityList(cityname)
       .subscribe(res => {
         if (res.status === 'success') {
+          res.citylist.sort(function(a, b) {
+            const nameA = a.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+          });
           this.formbaseelements.push(this.formcontrolservice.cityfield(res.citylist));
         }
       }, (err) => {
@@ -171,6 +183,18 @@ export class EditadComponent implements OnInit {
     this.homepage.getCityList(e.target.value)
       .subscribe(res => {
         if (res.status === 'success') {
+          res.citylist.sort(function(a, b) {
+            const nameA = a.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+          });
           this.formbaseelements.push(this.formcontrolservice.cityfield(res.citylist));
         }
       }, (err) => {
@@ -274,13 +298,18 @@ export class EditadComponent implements OnInit {
                   'country': productdetails.country
                 });
                 this.newadForm.controls['country'].markAsDirty({ onlySelf: true });
-                break;
-              case 'city':
                 this.getCity(productdetails.country);
                 this.newadForm.patchValue({
                   'city': productdetails.city
                 });
                 this.newadForm.controls['city'].markAsDirty({ onlySelf: true });
+                break;
+              case 'city':
+                // this.getCity(productdetails.country);
+                // this.newadForm.patchValue({
+                //   'city': productdetails.city
+                // });
+                // this.newadForm.controls['city'].markAsDirty({ onlySelf: true });
                 break;
               case 'name':
                 this.getProductName(this.formElements[item].isrequired);

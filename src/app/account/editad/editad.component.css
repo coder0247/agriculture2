@@ -147,3 +147,41 @@ span.uploadinginprog {
     position: relative;
     top: 3px;
 }
+
+span.successmsg {
+    padding: 10px;
+    left: 5px;
+    position: relative;
+}
+.info-box {
+    display: block;
+    min-height: 50px;
+    background: #fff;
+    width: 100%;
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+.info-box-icon {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+    display: block;
+    float: left;
+    height: 46px;
+    width: 50px;
+    text-align: center;
+    font-size: 28px;
+    line-height: 45px;
+    background: rgba(0,0,0,0.2);
+}
+.info-box-content {
+    padding: 10px;
+    margin-left: 50px;
+    margin-top: 18px;
+    border: 1px solid #ddd;
+}
+.bg-green {
+    background-color: #35b035 !important;
+    color: #ffffff;
+}
