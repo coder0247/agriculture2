@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     const userid = localStorage.getItem('id');
+    if (!userid) { this.router.navigate(['user/signin']); }
     this.product.userdashboard(userid)
     .subscribe(res => {
         if (res['status'] === 'success') {
