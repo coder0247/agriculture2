@@ -55,7 +55,7 @@
 				<ng-template #productElseBlock>
 					<div class="col-sm-2" *ngFor="let product of products">
 						<div class="product-details">
-							<img src="{{ product.pimage }}">
+							<img src="{{ product.pimage[0] }}">
 							<h5>{{ product.pname }}</h5>
 							<button class="btn btn-success btn-block" (click)="makeProductMostViewed(product, $event)" *ngIf="!product.is_mostviewed; else mostviewedButtonElseBlock">Make Most Viewed</button>
 							<ng-template #mostviewedButtonElseBlock>
