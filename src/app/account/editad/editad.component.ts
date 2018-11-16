@@ -148,6 +148,7 @@ export class EditadComponent implements OnInit {
         console.log(err);
       });
   }
+  
   getCity(cityname) {
     this.homepage.getCityList(cityname)
       .subscribe(res => {
@@ -439,7 +440,7 @@ export class EditadComponent implements OnInit {
     console.log('form values', this.newadForm.value);
     const userid = localStorage.getItem('id');
     const productdetails = JSON.parse(localStorage.getItem('productinfo'));
-  
+
     let productimage;
     if (typeof this.uploadedimages !== undefined && this.uploadedimages) {
       productimage = this.uploadedimages;
