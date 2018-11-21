@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment-fix');
 const config = require('../config');
-var connection = mongoose.createConnection(config.dbUrl);
+var connection = mongoose.createConnection('mongodb://agrilive:agrilive123@ds133533.mlab.com:33533/agrilive');
 autoIncrement.initialize(connection);
 // create a schema
 const productSchema = new Schema({
