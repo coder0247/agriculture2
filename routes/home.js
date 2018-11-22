@@ -7,6 +7,8 @@ app.get('/api/onsalelist/:limit', homeController.onSaleByLimit);
 app.get('/api/mostviewed/:limit', homeController.mostViewedByLimit);
 app.get('/api/newarrival/:limit', homeController.newArrivalByLimit);
 app.get('/api/page/:pageslug', homeController.getPageContent);
+app.get('/api/slideritems', homeController.getslideritems);
+
 // test
 // app.get('/api/category1/:catid/subcatlist', homeController.subCategoryList);
 module.exports = app;

@@ -3,6 +3,7 @@ const config = require('../config');
 const Category = require('../model/category');
 const Subcategory = require('../model/subcategory');
 const Form = require ('../model/form');
+const Slider = require('../model/slider');
 exports.categoryList = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;
@@ -318,3 +319,76 @@ exports.addSubCategory = function (req, res) {
         });
     });
 }
+exports.addNewSlider = function (req, res) {
+    // title: { type: String, required: false },
+    // subtitle: { type: String, required: false },
+    // smalltext: { type: String, required: false },
+    // buttontext: { type: String, required: false },
+    // buttonurl: { type: String, required: false },
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+
+        var slideritem = new Slider();
+        slideritem.title = req.body.title;
+        slideritem.subtitle = req.body.subtitle;
+        slideritem.smalltext = req.body.smalltext;
+        slideritem.buttontext = req.body.buttontext;
+        slideritem.buttonurl = req.body.buttonurl;
+        slideritem.sliderimage = req.body.sliderimage;
+        slideritem.save(function (error, slideritemsave) {
+            if (slideritemsave) {
+                return res.status(200).json({
+                    status: true,
+                    message: 'Slider item added successfully',
+                    data: req.body
+                });
+            } else {
+                return res.status(200).json({
+                    status: false,
+                    message: 'Oops! There was an error while saving the subcategory',
+                    errors: error.errors,
+                });
+            }
+        });
+    });
+  
+}
+exports.getslideritems = function( req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        Slider.find().exec(function (error, slideritems) {
+            if (slideritems.length > 0) {
+                return res.status(200).json({
+                    status: true,
+                    slideritems: slideritems
+                });
+            } else {
+                return res.status(200).json({
+                    status: false,
+                    message: 'Oops! Subcategory details not found',
+                })
+            }
+        })
+    });
+}
+
+exports.deleteslider = function (req , res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        Slider.findByIdAndDelete({ _id: req.params.sliderid }, function (error, sliderdeleted) {
+            if (sliderdeleted) {
+                return res.status(200).json({
+                    status: true,
+                    message: 'sliderdeleted deleted',
+                   
+                });
+            } else {
+                return res.status(200).json({
+                    status: false,
+                    message: 'Oops! There was an error while deleting the category',
+                    errors: error.errors,
+                });
+            }
+        });
+    });
+};

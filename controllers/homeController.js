@@ -300,3 +300,22 @@ exports.newArrivalByLimit = function (req, res) {
 //         });
 //     });
 // };
+
+exports.getslideritems = function( req, res) {
+    mongoose.connect(config.dbUrl, function (err) {
+        if (err) throw err;
+        Slider.find().exec(function (error, slideritems) {
+            if (slideritems.length > 0) {
+                return res.status(200).json({
+                    status: true,
+                    slideritems: slideritems
+                });
+            } else {
+                return res.status(200).json({
+                    status: false,
+                    message: 'Oops! Subcategory details not found',
+                })
+            }
+        })
+    });
+}

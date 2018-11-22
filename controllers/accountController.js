@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 const config = require('../config');
 const Form = require ('../model/form');
 const User = require('../model/user');
+
 var dashdata = {
     activeadscount: 0,
     archiveadscount: 0,
@@ -363,6 +364,7 @@ exports.singleSent = function (req, res) {
             })
     });
 };
+
 exports.addNewProduct = function (req, res) {
     mongoose.connect(config.dbUrl, function (err) {
         if (err) throw err;

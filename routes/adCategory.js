@@ -15,4 +15,8 @@ app.put('/api/admin/subcategory/:subcatid', adCategoryListController.updateSubCa
 app.post('/api/admin/subcategory', adCategoryListController.addSubCategory);
 app.post('/api/admin/addformfields', adCategoryListController.addFormFields);
 app.post('/api/admin/updateformfield', adCategoryListController.updateFormFields);
+app.post('/api/admin/addnewslider', adCategoryListController.addNewSlider);
+app.get('/api/admin/slideritems', adCategoryListController.getslideritems);
+app.delete('/api/admin/slider/:sliderid', adCategoryListController.deleteslider);
+
 module.exports = app;

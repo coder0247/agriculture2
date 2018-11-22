@@ -88,54 +88,53 @@ exports.register = function (req, res ) {
                 let vcode = {
                     verifcode: verificationcode,
                 };
-                // User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
-                //     return res.status(200).json({
-                //         status: 'success',
-                //         data: { 'error': false, 'msg': "Registered Successfully" },
+                User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
+                                return res.status(200).json({
+                                    status: 'success',
+                                    data: { 'error': false, 'msg': "Registered Successfully" },
+                                });
+                            });
+                // nodemailer.createTestAccount((err, account) => {
+                //     // create reusable transporter object using the default SMTP transport
+                //     let transporter = nodemailer.createTransport({
+                //         host: config.mail.host,
+                //         port: config.mail.port,
+                //         secure: config.mail.secure, // true for 465, false for other ports
+                //         auth: {
+                //             user: config.mail.user, // generated ethereal user
+                //             pass: config.mail.pass // generated ethereal password
+                //         }
+                //     });
+
+                //     // setup email data with unicode symbols
+                //     let mailOptions = {
+                //         from: '"AgriPata" <'+config.mail.user+'>', // sender address
+                //         to: req.body.email, // list of receivers
+                //         subject: 'AgriPata - Email Verification', // Subject line
+                //         text: '', // plain text body
+                //         html: 'Dear ' + req.body.firstname + '<br><br>' +
+                //        'thank you for your registration at AgriPata with the following data<br><br><br>' +
+                //        'To complete your registration at AgriPata please follow this link:<br><br>'+
+
+                //         config.siteUrl+'verify/'+ verificationcode +'<br>'+
+
+                //         'Your sincerely<br><br>Your AgriPata team'
+                //     };
+
+                //     // send mail with defined transport object
+                //     transporter.sendMail(mailOptions, (error, info) => {
+                //         if (error) {
+                //             return console.log(error);
+                //         }
+
+                //         User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
+                //             return res.status(200).json({
+                //                 status: 'success',
+                //                 data: { 'error': false, 'msg': "Registered Successfully" },
+                //             });
+                //         });
                 //     });
                 // });
-                // console.log('verificationcode', verificationcode);
-                nodemailer.createTestAccount((err, account) => {
-                    // create reusable transporter object using the default SMTP transport
-                    let transporter = nodemailer.createTransport({
-                        host: config.mail.host,
-                        port: config.mail.port,
-                        secure: config.mail.secure, // true for 465, false for other ports
-                        auth: {
-                            user: config.mail.user, // generated ethereal user
-                            pass: config.mail.pass // generated ethereal password
-                        }
-                    });
-
-                    // setup email data with unicode symbols
-                    let mailOptions = {
-                        from: '"AgriPata" <'+config.mail.user+'>', // sender address
-                        to: req.body.email, // list of receivers
-                        subject: 'AgriPata - Email Verification', // Subject line
-                        text: '', // plain text body
-                        html: 'Dear ' + req.body.firstname + '<br><br>' +
-                       'thank you for your registration at AgriPata with the following data<br><br><br>' +
-                       'To complete your registration at AgriPata please follow this link:<br><br>'+
-
-                        config.siteUrl+'verify/'+ verificationcode +'<br>'+
-
-                        'Your sincerely<br><br>Your AgriPata team'
-                    };
-
-                    // send mail with defined transport object
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                            return console.log(error);
-                        }
-
-                        User.findByIdAndUpdate({ _id : register._id }, { $set: vcode }, function (error, verificationcode) {
-                            return res.status(200).json({
-                                status: 'success',
-                                data: { 'error': false, 'msg': "Registered Successfully" },
-                            });
-                        });
-                    });
-                });
 
             } //else
         });

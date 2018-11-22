@@ -42,13 +42,8 @@ exports.homeprodcatwisestatus = function (req, res) {
                                         return res.status(200).json({
                                             status: 'success',
                                             data: { 'msg': 'done successfully' },
-                                            bestsellerproductArray,
-                                            bestseller,
-                                            mostviewed,
-                                            newarrivals,
-                                            onsale,
-                                            featured,
-                                            docs
+                                            message: 'Category updated successfully'
+                                           
                                         });
                                     });
                                 });
