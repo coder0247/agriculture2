@@ -1,0 +1,160 @@
+<div class="row">
+		<div class="white-bg clearfix">
+			<div class="col-md-6 cont-heading">
+				<h2>Most Viewed Products</h2>
+				<h3>Make product most viewed</h3>
+				<span class="side-toggle-menu visible-xs visible-sm"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="white-bg clearfix breadcrumb">
+			<div class="col-md-12">
+				<ul>
+					<li><a routerLink="/admin/product/mostviewed"><i class="fa fa-list-alt" aria-hidden="true"></i> Product</a></li>
+					<li><span>Most Viewed</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	
+	<app-message *ngIf="message" [message]="message" [type]="message_type"></app-message>
+	<div class="row">
+		<div class="white-bg clearfix breadcrumb">
+			<div class="col-md-12">
+				<div class="alert alert-info fade in alert-dismissible">
+					<strong>Info!</strong> Click on
+					<strong>Show Product</strong> button to see product.
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="white-bg clearfix breadcrumb">
+			<div class="col-md-12">
+				<form [formGroup]="productSearchForm" (submit)="findProducts()" class="form-inline">
+					<div class="col-sm-3">
+						<div class="form-group" [ngClass]="displayFieldCss(productSearchForm, 'catid')">
+							<label for="catid">Category : </label>&nbsp;
+							<select class="form-control" formControlName="catid" id="catid" (change)="loadSubcategoryByCategoryID($event.target.value)">
+								<option value="">-- Select Category --</option>
+								<option *ngFor="let category of categories" value="{{ category._id }}">{{ category.catname }}</option>
+							</select>
+							<span class="help-block" *ngIf="isFieldValid(productSearchForm, 'catid')">Category is required</span>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group" [ngClass]="displayFieldCss(productSearchForm, 'subcatid')">
+							<label for="subcatid">Subcategory : </label>&nbsp;
+							<select class="form-control" formControlName="subcatid" id="subcatid" (change)="currentSubcategory = $event.target.value">
+								<option value="">-- Select Subcategory --</option>
+								<option *ngFor="let subcategory of subcategories" value="{{ subcategory._id }}">{{ subcategory.subcatname }}</option>
+							</select>
+							<span class="help-block" *ngIf="isFieldValid(productSearchForm, 'subcatid')">Subcategory is required</span>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<p>&nbsp;</p>
+						<button type="submit" class="btn btn-success pull-left">Show Product</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="white-bg clearfix">
+			<div class="col-md-6 cont-heading">
+				<h2>Product List</h2>
+	
+			</div>
+		</div>
+	</div>
+	<div class="row">
+	
+	
+		<div class=" product-list">
+	
+			<div class="products">
+	
+				<div *ngIf="!productFormSubmitted; else productElseBlock">
+	
+				</div>
+				<ng-template #productElseBlock>
+					<div *ngIf="!productLoaded; else productElseBlock">
+						<h4>
+							<i class="fa fa-spinner fa-spin fa-lg"></i> Loading products ...
+						</h4>
+					</div>
+					<ng-template #productElseBlock>
+	
+						<div class="white-bg clearfix breadcrumb">
+							<div class="col-md-12">
+								<div class="product-container auto-clear grid-style equal-container box-has-content" *ngIf="pagedItems">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Product Image</th>
+												<th>Name</th>
+												<th>Price</th>
+												<th>Added on</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- {{pagedItems | json}} -->
+											<tr *ngFor="let item of pagedItems; let i = index">
+												<th scope="row">{{i + 1}}</th>
+												<td><img src="{{item.pimage[0]}}" width="100" alt=""></td>
+												<td>{{item.pname}}</td>
+												<td>{{item.saleamount}} {{item.currencytype | uppercase}}</td>
+												<!-- <td>{{item.category}}</td>
+																						<td>{{item.subcategory}}</td> -->
+												<td>{{item.created_at | date:'MM-dd-y'}}</td>
+												<td>
+														<button class="btn btn-success btn-block" (click)="makeProductMostViewed(item, $event)" *ngIf="!item.is_mostviewed; else mostviewedButtonElseBlock">Make Most Viewed</button>
+														<ng-template #mostviewedButtonElseBlock>
+															<button class="btn btn-primary btn-block" (click)="makeProductNotMostViewed(item, $event)">Not Most Viewed</button>
+														</ng-template>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+	
+	
+						</div>
+						<div class="white-bg clearfix breadcrumb">
+							<div class="pagination" *ngIf="pagedItems?.length">
+								<ul class="list-page" *ngIf="pager.pages && pager.pages.length">
+									<li [ngClass]="{disabled:pager.currentPage === 1}">
+										<a href="javascript:void(0)" class="nav-button" (click)="setPage(1)">First</a>
+									</li>
+									<li [ngClass]="{disabled:pager.currentPage === 1}">
+										<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.currentPage - 1)">Previous</a>
+									</li>
+									<li *ngFor="let page of pager.pages">
+										<a href="javascript:void(0)" [ngClass]="{'page-number current':pager.currentPage === page}" (click)="setPage(page)">{{page}}</a>
+									</li>
+									<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+										<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.currentPage + 1)">Next</a>
+									</li>
+									<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+										<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.totalPages)">Last</a>
+									</li>
+								</ul>
+							</div>
+							<span *ngIf="pagedItems?.length" class="note">Showing {{pager.startIndex + 1}}-{{pager.endIndex + 1}} of
+								{{pager.totalItems}} result</span>
+						</div>
+					</ng-template>
+				</ng-template>
+			</div>
+	
+		</div>
+	
+	</div>
+

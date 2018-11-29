@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="white-bg clearfix">
+        <div class="col-md-6 cont-heading">
+            <h2>Reported Ad</h2>
+            <h3>Details of Reported Ad</h3>
+            <span class="side-toggle-menu visible-xs visible-sm"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="white-bg clearfix breadcrumb">
+        <div class="col-md-12">
+            <ul>
+                <li><a routerLink="/admin/reportedads/list"><i class="fa fa-list-alt" aria-hidden="true"></i>Reported
+                        Ad</a></li>
+                <li><span>View</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="white-bg clearfix breadcrumb">
+        <div class="col-md-12">
+            <div class="categories-content">
+                <aside class="lg-side">
+                    <div class="inbox-head">
+                        <h3>Reported Ad View
+                            <span *ngIf="productinfo?.length ==0">Loading...</span>
+                        </h3>
+                    </div>
+
+                    <div class="inbox-body" *ngIf="productinfo?.length != 0">
+
+                        <section>
+
+                            <div class="card">
+                                <div class="row ">
+                                    <div class="col-md-4">
+                                        <img src="{{productinfo.pimage}}" class="w-100">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-block">
+                                            <h4 class="card-title">Ad Details</h4>
+                                            <p class="card-text">
+                                                <strong>Ad ID :</strong>{{productinfo.adid}}</p>
+                                            <p class="card-text">
+                                                <strong>Product Name :</strong>{{productinfo.pname}}</p>
+                                            <p class="card-text">
+                                                <strong>Posted On :</strong>{{productinfo.created_at | date:'y-MM-dd'}}</p>
+
+                                            <a routerLink="/product/detail/{{productinfo._id}}" class="goturlbtn" title="Gotourl"
+                                                target="_new">Live Url</a>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="msgblk">
+                                            <div class="msghead">
+                                                Message
+                                            </div>
+                                            <div style="width:100%; padding:0px 0px;border-bottom:1px solid rgba(0,0,0,0.2);float:left;">
+                                                <div style="width:30%; float:left;padding:10px;">
+
+                                                    <span class="detailslbl">
+                                                        <i class="fa fa-user" aria-hidden="true"></i> {{msgs.fullname}}
+                                                    </span>
+
+                                                    <span class="detailslbl">
+                                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                        {{msgs.email}}
+                                                    </span>
+                                                    <span class="detailslbl">
+                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                        {{msgs.reportadregion.c_fullname}}
+                                                    </span>
+                                                    <span class="detailslbl">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i>
+                                                        {{msgs.phonenumber}}
+                                                    </span>
+                                                    <span class="detailslbl">
+                                                        <strong>Subject : </strong> {{msgs.reportreason.reason}}
+                                                    </span>
+                                                </div>
+
+                                                <div>
+                                                    <span class="dateblk">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i> <b> Date :
+                                                        </b>{{msgs.created_at | date:'y-MM-dd'}}
+                                                    </span>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="description">
+
+                                                <div class="commentblk">
+                                                    <span class="commentlbl">
+                                                        Comment
+                                                    </span>
+                                                </div>
+
+                                                <div class="msgdetails">
+                                                    <span class="msgtext">
+                                                        {{msgs.msg}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>

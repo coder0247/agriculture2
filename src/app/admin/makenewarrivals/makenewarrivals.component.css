@@ -1,0 +1,19 @@
+.pagination li:after {
+    content: "" !important;
+}
+.product-list-heading {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #cfcfcf;
+}
+.product-details {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #cfcfcf;
+}
+.product-details img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}

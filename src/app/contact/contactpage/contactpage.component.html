@@ -1,0 +1,123 @@
+<app-header-common></app-header-common>
+<div class="main-content shop-page contact-page">
+	<div class="container">
+		<div class="breadcrumbs">
+			<a href="#">Home</a> \ <span class="current">contact</span>
+		</div>
+		<div class="row content-form ">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 map-content">
+				<div class="map"><img src="assets/images/contactus.png" alt=""></div>
+				<div class="information-form">
+					<h4 class=" main-title">Agriculture</h4>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<h5 class="title">Help</h5>
+							<ul class="list-info">
+								<li>
+									<div class="icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+									<div class="info">
+										<h5 class="subtitle">Email</h5>
+										<p class="des"><a href="mailto:support@agripata.com">Support@AgriPata.com</a></p>
+									</div>
+								</li>
+								<li>
+									<div class="icon"><i class="fa fa-phone" aria-hidden="true"></i></div>
+									<div class="info">
+										<h5 class="subtitle">Phone</h5>
+										<p class="des">(+49) 1578 8523 297</p>
+									</div>
+								</li>
+								<li>
+									<div class="icon"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+									<div class="info">
+										<h5 class="subtitle">Whatsapp Contact</h5>
+										<p class="des">(+49) 1578 8523 297</p>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<h5 class="title">Hours Of Operation</h5>
+								<ul class="time-work">
+									<li><div class="day">Monday:</div><div class="time">12-5 PM</div></li>
+									<li><div class="day">Tuesday:</div><div class="time">12-5 PM</div></li>
+									<li><div class="day">Wendnesday:</div><div class="time">12-5 PM</div></li>
+									<li><div class="day">Thursday:</div><div class="time">12-5 PM</div></li>
+									<li><div class="day">Friday:</div><div class="time">12-5 PM</div></li>
+									<li><div class="day">Saturday:</div><div class="time">12-5 PM</div></li>
+								</ul>
+							</div> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 info-content">
+				<form [formGroup]="contactForm">
+					<div class="contact-form">
+						<h4 class="main-title">Leave A Message</h4>
+						<h5 class="note-title">All ( * ) fields are required</h5>
+						<div class="row">
+
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+								<span class="label-text">Your Name <span>*</span></span>
+								<input type="text" class="input-info" formControlName="fullname" required>
+								<div *ngIf="contactForm.invalid && formsubmitted" class="error-msg">
+									<div class="text-danger" *ngIf="!!contactForm.controls['fullname'].pristine || !!contactForm.controls['fullname'].errors?.required">Name
+										is required.</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<span class="label-text">Email Address <span>*</span></span>
+								<input type="email" class="input-info" formControlName="email" required>
+								<div *ngIf="contactForm.invalid && formsubmitted" class="error-msg">
+									<div class="text-danger" *ngIf="!!contactForm.controls['email'].pristine || !!contactForm.controls['email'].errors?.required">Email
+										is required.</div>
+									<div class="text-danger" *ngIf="contactForm.controls['email'].dirty && !!contactForm.controls['email'].errors?.patternInvalid?.regexp">Email
+										is invalid.</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									<span class="label-text">Country Code<span>*</span></span>
+									<select class="form-control" formControlName="countrycode"> 
+											<option *ngFor="let item of countrycode" value="{{item._id}}">{{item.c_text}}</option>
+										</select>
+										<div *ngIf="!contactForm.valid && formsubmitted" class="error-msg">
+												<div class="text-danger" *ngIf="contactForm.controls['countrycode'].pristine || contactForm.controls['countrycode'].errors?.required">Country code is required.</div> 
+											  </div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+									<span class="label-text">Phone Number <span>*</span></span>
+									<input type="tel"  class="input-info" formControlName="phoneno" placeholder="1234567890">
+									<div *ngIf="contactForm.invalid && formsubmitted" class="error-msg">
+										<div class="text-danger" *ngIf="!!contactForm.controls['phoneno'].pristine || !!contactForm.controls['phoneno'].errors?.required">Phone number is required.</div>
+										<div class="text-danger" *ngIf="contactForm.controls['phoneno'].dirty && !!contactForm.controls['phoneno'].errors?.patternInvalid?.regexp">Phone Number is invalid.</div>
+									</div>
+							</div>
+						</div>
+						
+
+
+						<span class="label-text">Your Message <span>*</span></span>
+						<textarea rows="8" class="input-info input-note" formControlName="msg"></textarea>
+						<div *ngIf="contactForm.invalid && formsubmitted" class="error-msg">
+							<div class="text-danger" *ngIf="!!contactForm.controls['msg'].pristine || !!contactForm.controls['msg'].errors?.required">Message
+								is required.</div>
+						</div>
+						<div class="group-button">
+							<button class="button submit" (click)="contactus()">
+								<span *ngIf="loading">Please Wait ...</span>
+								<span *ngIf="!loading">Send Message</span>
+							</button>
+							<span class="successmsg bg-success" *ngIf="sentsuccess"><strong>Message sent :</strong> {{replymsg}}</span>
+						</div>
+					</div>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+<app-footer></app-footer>

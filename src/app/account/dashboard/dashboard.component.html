@@ -1,0 +1,142 @@
+<app-header-common></app-header-common>
+<div class="main-content shop-page main-content-grid">
+	<div class="container">
+		<div class="breadcrumbs">
+				<a href="user/account">My Account</a>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset">
+				<div class="categories-content">
+					<h4 class="shop-title">Dashboard</h4>
+					<!-- <div class="productloading" *ngIf="showloading">Loading...</div> -->
+
+					<div class="product-container auto-clear grid-style equal-container box-has-content">
+						<!-- dashboard content -->
+						<div class="row" >
+								<div class="col-lg-4 col-sm-6">
+									<div class="circle-tile">
+										
+											<div class="circle-tile-heading dark-blue">
+												<i class="fa fa-check-square-o fa-fw fa-3x"></i>
+											</div>
+										
+										<div class="circle-tile-content dark-blue">
+											<div class="circle-tile-description text-faded">
+												Active Ads
+											</div>
+											<div class="circle-tile-number text-faded">
+													<div  *ngIf="showloading; else activeads"><img src="assets/images/loader.gif" alt="loading"></div>
+													<ng-template #activeads>{{dashboardata.activeadscount}}</ng-template>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 col-sm-6">
+									<div class="circle-tile">
+										
+											<div class="circle-tile-heading green">
+												<i class="fa fa-circle-o-notch fa-fw fa-3x"></i>
+											</div>
+										
+										<div class="circle-tile-content green">
+											<div class="circle-tile-description text-faded">
+												Archive Ads
+											</div>
+											<div class="circle-tile-number text-faded">
+												<div  *ngIf="showloading; else archivedata"><img src="assets/images/loader.gif" alt="loading"></div>
+												<ng-template #archivedata>{{archiveadslength}}</ng-template>
+											</div>
+										
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 col-sm-6">
+									<div class="circle-tile">
+									
+											<div class="circle-tile-heading orange">
+												<i class="fa fa-inbox fa-fw fa-3x"></i>
+											</div>
+									
+										<div class="circle-tile-content orange">
+											<div class="circle-tile-description text-faded">
+												Inbox
+											</div>
+											<div class="circle-tile-number text-faded">
+													<div  *ngIf="showloading; else newmsgs"><img src="assets/images/loader.gif" alt="loading"></div>
+													<ng-template #newmsgs>New {{dashboardata.inboxnewmsg}}</ng-template>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						<!-- /end dashboard content -->
+
+					</div>
+
+				</div>
+			</div>
+			<!-- sidebar -->
+			<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 sidebar">
+				<div class="widget widget-categories">
+					<h5 class="widgettitle">New Ad</h5>
+					<ul class="list-categories dashboardmenu">
+						<li>
+							<i class="fa fa-plus-square"></i>
+							<a [routerLink]="['newad']" class="label-text">Create New Ad</a>
+						</li>
+					</ul>
+				</div>
+				<div class="widget widget-categories">
+					<h5 class="widgettitle">Ads</h5>
+					<ul class="list-categories dashboardmenu">
+							<li>
+									<i class="fa fa-edit"></i>
+									<a [routerLink]="['editads']" class="label-text"> Edit/Delete Ads</a>
+								</li>
+						<li>
+							<i class="fa fa-eye"></i>
+							<a [routerLink]="['activeads']" class="label-text"> Active Ads</a>
+						</li>
+						<li>
+							<i class="fa fa-archive"></i>
+							<a [routerLink]="['archiveads']" class="label-text">Archive</a>
+						</li>
+					</ul>
+				</div>
+				<div class="widget widget-categories">
+					<h5 class="widgettitle">Messages</h5>
+					<ul class="list-categories">
+						<li>
+							<i class="fa fa-inbox"></i>
+							<a [routerLink]="['inbox']" class="label-text"> Inbox</a>
+						</li>
+						<li>
+							<i class="fa fa-paper-plane"></i>
+							<a [routerLink]="['sent']" class="label-text">Sent</a>
+						</li>
+					</ul>
+				</div>
+				<div class="widget widget-categories">
+					<h5 class="widgettitle">Profile</h5>
+					<ul class="list-categories dashboardmenu">
+						<li>
+							<i class="fa fa-user"></i>
+							<a [routerLink]="['profile']" class="label-text">Edit Profile</a>
+						</li>
+						<li>
+								<i class="fa fa-user"></i> <a  [routerLink]="['changepassword']" class="label-text">Change Password</a>
+							</li>
+							<li>
+									<i class="fa fa-trash"></i> <a  [routerLink]="['deletemyaccount']" class="label-text">Delete My Account</a>
+							</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /sidebar-->
+		</div>
+	</div>
+</div>
+<app-footer></app-footer>

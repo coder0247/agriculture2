@@ -1,0 +1,719 @@
+<!-- <app-headersecondary></app-headersecondary> -->
+<app-header-common></app-header-common>
+<div class="main-content shop-page main-content-detail">
+	<div class="container">
+		<div class="breadcrumbs">
+			<a href="#">Home</a> \
+			<span class="current">Detail</span>
+		</div>
+		<div class="row">
+				<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset" *ngIf="!singleproduct">
+					<div class="about-product row">
+							<!-- {{singleproduct | json}} -->
+							<div class="details-thumb col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="prodimgbox shine"></div>
+							</div>
+							<div class="details-info col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<div class="price margintop-0">
+									<div class="textline shine"></div>
+								</div>
+			
+										<div class="textline shine"></div>
+					
+										<div class="textline shine"></div>
+					
+								<div class="price">
+										<div class="textline shine"></div>
+								</div>
+								<div class="price" style="margin-top: 10px;">
+										<div class="textline shine"></div>
+								</div>
+								<div class="price" style="margin-top: 10px;">
+					
+										<div class="textline shine"></div>
+										<div class="textline shine"></div>
+								</div>
+								<div class="price">
+										<div class="textline shine"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+			<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset" *ngIf="singleproduct">
+				<div class="about-product row">
+					<!-- {{singleproduct | json}} -->
+					<div class="details-thumb col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<h4 class="imgloading" *ngIf="showloading">Loading...</h4>
+						<div class="details-thumb">
+							<!-- <img src="{{singleproduct.pimage}}" alt=""> -->
+							<owl-carousel #owlElement  [options]="{thumbs: true, dots: false, autoplay: false, smartSpeed:800, navigation: true ,
+								responsive: { '0': {  items: 1},
+											  '480': { items: 2 },
+											  '768': { items: 1 },
+											  '1024': { items: 1 },
+											  '1200': { items: 1 }
+											}
+											}" [items]="singleproduct.pimage"  [carouselClasses]="['owl-carousel', 'nav-style3', 'has-thumbs']">
+
+								<div class="item" *ngFor="let image of singleproduct.pimage;let i = index">
+									
+									<div class="details-item">
+			
+									<img [src]="image" alt=""> 
+									</div>
+								</div>
+								
+							</owl-carousel>
+							
+							<div class="owl-thumbs">
+									<button class="owl-thumb-item" *ngFor="let image of singleproduct.pimage;let i = index" (click)="gotoitem(i)"><img [ngClass]="{'thumbactive': i==slideindex}" [src]="image" alt=""></button>
+									<div class="owl-nav"> 
+										<div class="owl-prev"  (click)="prevprod()"></div>
+										<div class="owl-next"  (click)="nextprod()"></div>
+									</div>
+								</div>
+								
+						</div>
+			<!-- 
+				<div class="owl-carousel nav-style3 has-thumbs" data-autoplay="false" 
+				data-nav="true" data-dots="false" data-loop="true" data-slidespeed="800" 
+				data-margin="0"  
+				data-responsive = '{"0":{"items":1}, "480":{"items":2}, "768":{"items":1}, "1024":{"items":1}, "1200":{"items":1}}'>
+              <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
+              <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
+              <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
+              <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
+              <div class="details-item"><img src="images/detail1.jpg" alt=""></div>
+            </div> -->
+					</div>
+					<div class="details-info col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<div class="price margintop-0" *ngIf="!!singleproduct.pname">
+									<span>{{singleproduct.pname | titlecase}}</span>
+								</div>
+
+						<h4><strong>Ad ID:</strong> {{singleproduct.adid}}</h4>
+						<h4><strong>Posted at :</strong> {{singleproduct.updated_at | date:'y-MM-dd'}}</h4>
+						<!-- <a href="javascript:void(0)" class="product-name">{{singleproduct.pname | titlecase}}</a> -->
+						<!-- <div class="rating">
+              <ul class="list-star">
+                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+              </ul>
+              <span class="count">5 Review(s)</span>
+            </div> -->
+						<!-- <p class="description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 making it over 2000 years old. Richard McClintock, a Latin at Hampden-Sydney College in Virginia.</p> -->
+						
+						<div class="price">
+								<span>Details</span>
+						</div>
+						
+						<div class="price"  style="margin-top: 10px;" *ngIf="!!singleproduct.currencytype">
+							
+								<h4>Price per unit: {{singleproduct.unitprice | number:'1.2'}} {{singleproduct.currencytype | uppercase}}</h4>
+								
+						</div>
+						<div class="price" style="margin-top: 10px;">
+							
+							<h4  *ngIf="!singleproduct.negotiable">Price negotiable : No</h4>
+							<h4  *ngIf="singleproduct.negotiable">Price negotiable : Yes</h4>
+						</div>
+						<div class="price" style="margin-top: 10px;">
+							
+							<h4  *ngIf="!!singleproduct.unitprice">Amount of Sale : {{singleproduct.saleamount | number:'1.2'}}  {{singleproduct.amtunit.amountunit}}</h4>
+							<h4  *ngIf="!!singleproduct.condition">Condition : {{singleproduct.condition}}</h4>
+							<h4  *ngIf="!!singleproduct.manufacture">Manufacture : {{singleproduct.manufacture}}</h4>
+							<h4  *ngIf="!!singleproduct.yearmfg">Year of manufacture : {{singleproduct.yearmfg}}</h4>
+							<h4  *ngIf="!!singleproduct.productstatus">Status : {{singleproduct.productstatus}}</h4>
+						</div>
+						
+						<div class="price" *ngIf="!!productlocation"><span>
+							Location
+						</span>
+						<h4>Country: {{productlocation.country}}</h4>
+						<h4>City: {{productlocation.city}}</h4>
+					</div>
+						<!-- <div class="availability">Availability: <a href="#">in Stock</a></div> -->
+						<div class="group-social">
+							<ul class="list-socials">
+								<li>
+									<a href="#">
+										<i class="fa fa-facebook" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-twitter" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-google-plus" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-instagram" aria-hidden="true"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-pinterest" aria-hidden="true"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<!-- <div class="quantity">
+              <div class="group-quantity-button">
+                <a class="minus" href="#"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                <input class="input-text qty text" type="text" size="4" title="Qty" value="1" name="quantity">
+                                <a class="plus" href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+              </div>
+            </div> -->
+						
+						
+					</div>
+					
+				</div>
+				
+				<div class="kt-tab nav-tab-style2">
+					<ul class="nav list-nav">
+						<li  *ngIf="!!singleproduct.pdesc" [ngClass]="{'active': desctab}">
+							<a data-animated="fadeIn" data-toggle="pill" href="javascript:void(0)" (click)="showdesc()">Description</a>
+						</li>
+						<li  *ngIf="!!singleproduct.addinfo" [ngClass]="{'active': addinfotab}">
+							<a data-animated="zoomInUp" data-toggle="pill" href="javascript:void(0)" (click)="addinfo()">Addtional Infomation</a>
+						</li>
+						<li [ngClass]="{'active': sellerinfotab}">
+							<a data-animated="rotateInDownLeft" data-toggle="pill" href="javascript:void(0)" (click)="sellerinfo()">Seller Info</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div *ngIf="!!singleproduct.pdesc" [ngClass]="{'tab-panel': true, 'active': desctab}">
+							<div class="description" >
+								{{singleproduct.pdesc}}
+							</div>
+						</div>
+						<div *ngIf="!!singleproduct.addinfo"  [ngClass]="{'tab-panel': true, 'active': addinfotab}">
+							<div class="additional">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<p>{{singleproduct.addinfo}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div [ngClass]="{'tab-panel': true, 'active': sellerinfotab}">
+							<div class="custom-review">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<div class="customer-review">
+																	
+											<div class="content-form" *ngIf="showsellerDetails">
+												<div class=" info-content">
+													<div class="contact-form">
+														<h4 class="main-title">Seller Info</h4>
+														<!-- <p class="des">Maecenas dolor elit, semper a sem sed, pulvinar molestie lacus. Aliquam dignissim, elit non mattis ultrices, neque odio ultricies tellus, eu porttitor nisl ipsum eu massa.</p> -->
+														<div class="row">
+															<div class="col-xs-12">
+																<strong class="label-text">Name</strong>
+																<span class="label-text">
+																	{{sellerdetails.name}}
+																</span>
+																<hr>
+															</div>
+															<div class="col-xs-12">
+																<strong class="label-text">Email Address </strong>
+																<span class="label-text">
+																	{{sellerdetails.email}}
+																</span>
+																<hr>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-xs-12">
+																<strong class="label-text">Country </strong>
+																<span class="label-text">
+																	{{sellerdetails.country}}
+																</span>
+																<hr>
+															</div>
+															<div class="col-xs-12">
+																<strong class="label-text">City </strong>
+																<span class="label-text">
+																	{{sellerdetails.city}}
+																</span>
+																<hr>
+															</div>
+														</div>
+														<div class="row">
+																<div class="col-xs-12">
+																	<strong class="label-text">Phone Number </strong>
+																	<span class="label-text">
+																	{{sellerdetails.countrycode}} {{sellerdetails.phonenumber}}
+																	</span>
+																	<hr>
+																</div>
+																
+															</div>
+														
+														<!-- <span class="label-text">Phone Number</span>
+										  <input type="text" class="input-info">	 -->
+										  <h3 *ngIf="showmsgsent" class="thank-you">Thank you for contacting.</h3>
+														<form [formGroup]="sendMsgForm" method="POST">
+															<strong class="label-text">Your Message <span>*</span></strong>
+															<textarea rows="8" class="input-info input-note" formControlName="comment" required></textarea>
+															<div *ngIf="sendMsgForm.invalid" class="error-msg">
+																	<div class="text-danger" *ngIf="msgerror">Message is required.</div>
+																</div>
+															<div class="group-button margin-0">
+																<button href="#" class="button submit"  (click)="sendMsg()">
+																	<span *ngIf="showmsgsending">Please Wait ...</span>
+																	<span *ngIf="!showmsgsending">Send Message</span>
+																</button>
+															</div>
+														</form>
+					
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+							<div class="disclaimer">
+									<span>Disclaimer:</span>
+									WE VALUE YOUR SAFETY ABOVE EVERYTHING. NEVER PAY MONEY BEFORE VIEWING A PROPERTY, PLEASE REPORT ANY USER REQUESTING UPFRONT PAYMENT USING THE REPORT ABUSE BUTTON ON THIS PAGE. FOR MORE TOP TIPS ON KEEPING SAFE, SEE OUR SAFETY PAGES.
+							</div>
+							<div class="pull-right">
+								<button class="btn btn-danger" (click) ="reportAd(singleproduct.adid)">
+										<i class="fa fa-exclamation-circle" aria-hidden="true"></i>	Report Ad
+								</button>
+								
+							</div>
+					</div>
+			</div>
+			</div>
+			<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 sidebar">
+				<!-- <div class="equal-container widget-featrue-box">
+					<div class="row">
+
+						<div class="col-ts-12 col-xs-4 col-sm-12 col-md-12 col-lg-12 featrue-item">
+							<div class="featrue-box layout2 equal-elem">
+								<div class="block-icon">
+									<a href="#">
+										<span class="fa fa-retweet"></span>
+									</a>
+								</div>
+								<div class="block-inner">
+									<a href="#" class="title">Money back guarantee</a>
+									<p class="des">100% money back guarantee</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-ts-12 col-xs-4 col-sm-12 col-md-12 col-lg-12 featrue-item">
+							<div class="featrue-box layout2 equal-elem">
+								<div class="block-icon">
+									<a href="#">
+										<span class="fa fa-life-ring"></span>
+									</a>
+								</div>
+								<div class="block-inner">
+									<a href="#" class="title">Online support 24/7</a>
+									<p class="des">Online support 24/7</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+				<!-- <div class="widget widget-banner row-banner">
+					<div class="banner banner-effect1">
+						<a href="#">
+							<img src="images/banner23.jpg" alt="">
+						</a>
+					</div>
+				</div> -->
+				<div class="widget widget-recent-post">
+					<h5 class="widgettitle">Bestseller</h5>
+					
+					<ul class="list-recent-posts" *ngIf="!best_sell_products.length">
+							<li class="product-item">
+								<div class="thumb">
+									<div class="thumblock shine"></div>
+								</div>
+								<div class="info">
+									<div class="textline shine"></div>
+									<div class="textline shine"></div>
+								</div>
+							</li>
+							<li class="product-item">
+									<div class="thumb">
+										<div class="thumblock shine"></div>
+									</div>
+									<div class="info">
+										<div class="textline shine"></div>
+										<div class="textline shine"></div>
+									</div>
+								</li>
+								<li class="product-item">
+										<div class="thumb">
+											<div class="thumblock shine"></div>
+										</div>
+										<div class="info">
+											<div class="textline shine"></div>
+											<div class="textline shine"></div>
+										</div>
+									</li>
+									<li class="product-item">
+											<div class="thumb">
+												<div class="thumblock shine"></div>
+											</div>
+											<div class="info">
+												<div class="textline shine"></div>
+												<div class="textline shine"></div>
+											</div>
+										</li>
+						</ul>
+					<ul class="list-recent-posts">
+						<li class="product-item" *ngFor="let item of best_sell_products; let i = index;">
+							<div class="thumb">
+								<a href="javascript:void(0)" (click)="showproductdetails(item.productid._id)" >
+									<img src="{{ item.productid.pimage[0] }}" alt="">
+								</a>
+							</div>
+							<div class="info">
+								<!-- <div class="rating">
+									<ul class="list-star">
+										<li>
+											<a href="#">
+												<i class="fa fa-star" aria-hidden="true"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<i class="fa fa-star" aria-hidden="true"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<i class="fa fa-star" aria-hidden="true"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<i class="fa fa-star" aria-hidden="true"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<i class="fa fa-star-half-o" aria-hidden="true"></i>
+											</a>
+										</li>
+									</ul>
+									<span class="count">5 Review(s)</span>
+								</div> -->
+								<a href="javascript:void(0)" (click)="showproductdetails(item.productid._id)"  class="product-name">
+									{{ item.productid.pname | titlecase}}
+								</a>
+								<div class="price">
+									<span class="ins">{{ item.productid.unitprice | number:'1.2' }} {{item.productid.currencytype| uppercase}}</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="products-arrivals">
+			<div class="section-head box-has-content">
+				<h4 class="section-title">Related Products</h4>
+			</div>
+			<div class="section-content">
+				<div class="owl-carousel product-list-owl nav-style2 equal-container" data-autoplay="false" data-nav="true" data-dots="false"
+				 data-loop="false" data-slidespeed="800" data-margin="0" data-responsive='{"0":{"items":1}, "480":{"items":2}, "650":{"items":3}, "1024":{"items":4}, "1200":{"items":5}}'>
+					<div class="product-item layout1">
+						<div class="product-inner equal-elem">
+							<div class="thumb">
+								<a href="#" class="quickview-button">
+									<span class="icon">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</span> Quick View</a>
+								<a href="detail.html" class="thumb-link">
+									<img src="images/product1.jpg" alt="">
+								</a>
+							</div>
+							<div class="info">
+								<a href="detail.html" class="product-name">Rubberized Hard Case Older MacBook Pro 13.3"</a>
+								<div class="price">
+									<span>$350.00</span>
+								</div>
+							</div>
+							<div class="group-button">
+								<div class="inner">
+									<a href="#" class="add-to-cart">
+										<span class="text">ADD TO CART</span>
+										<span class="icon">
+											<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+										</span>
+									</a>
+									<a href="#" class="compare-button">
+										<i class="fa fa-exchange" aria-hidden="true"></i>
+									</a>
+									<a href="#" class="wishlist-button">
+										<i class="fa fa-heart-o" aria-hidden="true"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="product-item layout1">
+						<div class="product-inner equal-elem">
+							<ul class="group-flash">
+								<li>
+									<span class="new flash">NEW</span>
+								</li>
+							</ul>
+							<div class="thumb">
+								<a href="#" class="quickview-button">
+									<span class="icon">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</span> Quick View</a>
+								<a href="detail.html" class="thumb-link">
+									<img src="images/product4.jpg" alt="">
+								</a>
+							</div>
+							<div class="info">
+								<a href="detail.html" class="product-name">Smartphone RAM 4 GB New</a>
+								<div class="price">
+									<span>$350.00</span>
+								</div>
+							</div>
+							<div class="group-button">
+								<div class="inner">
+									<a href="#" class="add-to-cart">
+										<span class="text">ADD TO CART</span>
+										<span class="icon">
+											<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+										</span>
+									</a>
+									<a href="#" class="compare-button">
+										<i class="fa fa-exchange" aria-hidden="true"></i>
+									</a>
+									<a href="#" class="wishlist-button">
+										<i class="fa fa-heart-o" aria-hidden="true"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="product-item layout1">
+						<div class="product-inner equal-elem">
+							<ul class="group-flash">
+								<li>
+									<span class="sale flash">-50%</span>
+								</li>
+								<li>
+									<span class="best flash">Bestseller</span>
+								</li>
+							</ul>
+							<div class="thumb">
+								<a href="#" class="quickview-button">
+									<span class="icon">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</span> Quick View</a>
+								<a href="detail.html" class="thumb-link">
+									<img src="images/product5.jpg" alt="">
+								</a>
+							</div>
+							<div class="info">
+								<a href="detail.html" class="product-name">Fujifilm INSTAX Mini 8 Instant Camera (White)</a>
+								<div class="price">
+									<span class="del">$700.00</span>
+									<span class="ins">$350.00</span>
+								</div>
+							</div>
+							<div class="group-button">
+								<div class="inner">
+									<a href="#" class="add-to-cart">
+										<span class="text">ADD TO CART</span>
+										<span class="icon">
+											<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+										</span>
+									</a>
+									<a href="#" class="compare-button">
+										<i class="fa fa-exchange" aria-hidden="true"></i>
+									</a>
+									<a href="#" class="wishlist-button">
+										<i class="fa fa-heart-o" aria-hidden="true"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="product-item layout1">
+						<div class="product-inner equal-elem">
+							<div class="thumb">
+								<a href="#" class="quickview-button">
+									<span class="icon">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</span> Quick View</a>
+								<a href="detail.html" class="thumb-link">
+									<img src="images/product6.jpg" alt="">
+								</a>
+							</div>
+							<div class="info">
+								<a href="detail.html" class="product-name">PC Prox 21.5-inch and 27-inch (Late 2018) reviews</a>
+								<div class="price">
+									<span>$550.00</span>
+								</div>
+							</div>
+							<div class="group-button">
+								<div class="inner">
+									<a href="#" class="add-to-cart">
+										<span class="text">ADD TO CART</span>
+										<span class="icon">
+											<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+										</span>
+									</a>
+									<a href="#" class="compare-button">
+										<i class="fa fa-exchange" aria-hidden="true"></i>
+									</a>
+									<a href="#" class="wishlist-button">
+										<i class="fa fa-heart-o" aria-hidden="true"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="product-item layout1">
+						<div class="product-inner equal-elem">
+							<ul class="group-flash">
+								<li>
+									<span class="sale flash">-50%</span>
+								</li>
+							</ul>
+							<div class="thumb">
+								<a href="#" class="quickview-button">
+									<span class="icon">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</span> Quick View</a>
+								<a href="detail.html" class="thumb-link">
+									<img src="images/product7.jpg" alt="">
+								</a>
+							</div>
+							<div class="info">
+								<a href="detail.html" class="product-name">Best Accessories- SteelSeries NIMBUS Controlle</a>
+								<div class="price">
+									<span class="del">$500.00</span>
+									<span class="ins">$250.00</span>
+								</div>
+							</div>
+							<div class="group-button">
+								<div class="inner">
+									<a href="#" class="add-to-cart">
+										<span class="text">ADD TO CART</span>
+										<span class="icon">
+											<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+										</span>
+									</a>
+									<a href="#" class="compare-button">
+										<i class="fa fa-exchange" aria-hidden="true"></i>
+									</a>
+									<a href="#" class="wishlist-button">
+										<i class="fa fa-heart-o" aria-hidden="true"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="product-item layout1">
+						<div class="product-inner equal-elem">
+							<ul class="group-flash">
+								<li>
+									<span class="sale flash">-50%</span>
+								</li>
+								<li>
+									<span class="best flash">Bestseller</span>
+								</li>
+							</ul>
+							<div class="thumb">
+								<a href="#" class="quickview-button">
+									<span class="icon">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</span> Quick View</a>
+								<a href="detail.html" class="thumb-link">
+									<img src="images/product24.jpg" alt="">
+								</a>
+							</div>
+							<div class="info">
+								<a href="detail.html" class="product-name">Fujifilm INSTAX Mini 8 Instant Camera (White)</a>
+								<div class="price">
+									<span class="del">$700.00</span>
+									<span class="ins">$350.00</span>
+								</div>
+							</div>
+							<div class="group-button">
+								<div class="inner">
+									<a href="#" class="add-to-cart">
+										<span class="text">ADD TO CART</span>
+										<span class="icon">
+											<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+										</span>
+									</a>
+									<a href="#" class="compare-button">
+										<i class="fa fa-exchange" aria-hidden="true"></i>
+									</a>
+									<a href="#" class="wishlist-button">
+										<i class="fa fa-heart-o" aria-hidden="true"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+	</div>
+
+	<!-- <div class="brand">
+		<div class="container">
+			<div class="owl-carousel" data-autoplay="false" data-nav="false" data-dots="false" data-loop="false" data-slidespeed="800"
+			 data-margin="30" data-responsive='{"0":{"items":2}, "640":{"items":3}, "768":{"items":3}, "1024":{"items":4}, "1200":{"items":5}}'>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</div>
+<app-footer></app-footer>

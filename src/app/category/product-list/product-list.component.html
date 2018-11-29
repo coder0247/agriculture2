@@ -1,0 +1,290 @@
+<!-- <app-headersecondary></app-headersecondary> -->
+<app-header-common></app-header-common>
+<div class="main-content shop-page main-content-grid">
+	<div class="container">
+		<div class="breadcrumbs">
+			<a href="#">Home</a> \
+			<span class="current">Category</span>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset">
+				<!-- <div class="main-banner">
+						<div class="banner banner-effect1">
+							<a href="#"><img src="images/banner22.jpg" alt=""></a>
+						</div>
+					</div> -->
+				<div class="categories-content">
+					<h4 class="shop-title">Products</h4>
+					<div class="productloading" *ngIf="showloading">Loading...</div>
+					<div class="top-control box-has-content">
+							<div class="control">
+								<div class="filter-choice"> 
+									   <ng-select [searchable]="false"  [items]="filterchoice" [selectOnTab]="true" bindLabel="sortbyfilter" bindValue="_id"
+									   [(ngModel)]="filterdefault" (change)="getfilteritem($event._id)">
+									  </ng-select>
+								</div>
+								<div class="filter-choice">
+									<ng-select [searchable]="false"  [items]="perpageitems" [selectOnTab]="true" bindLabel="perpagevalue" bindValue="_id"
+									 [(ngModel)]="pagevaluedefault" (change)="getitembypagevalue($event._id)">
+								   </ng-select>
+								</div>
+								<div class="control-button">
+									<a href="javascript:void(0)" (click)="togglegrid()" [ngClass]="{'grid-button': true, 'active': gridstatus}"><span class="icon"><i class="fa fa-th-large" aria-hidden="true"></i> </span>Grid</a>
+									<a href="javascript:void(0)" (click)="togglelist()" [ngClass]="{'list-button': true, 'active': liststatus}"><span class="icon"><i class="fa fa-th-list" aria-hidden="true"></i></span> List</a>
+								</div>
+							</div>
+						</div>
+					<div class="auto-clear grid-style equal-container box-has-content" *ngIf="notfound">
+						<h3>Found nothing to show</h3>
+					</div>
+					<div [ngClass]="{'product-container auto-clear box-has-content  equal-container': true, 'grid-style': gridstatus, 'list-style': liststatus}"  *ngIf="pagedItems">
+
+						<div class="product-item layout1 col-ts-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 no-padding" *ngFor="let item of pagedItems">
+							<div [ngClass]="{'product-inner equal-elem': true, 'togglelist': togglestatus}" >
+								<div class="thumb">
+									<!-- {{item | json}} -->
+									<button href="#" class="quickview-button" (click)="quickview(item._id)">
+										<span class="icon">
+											<i class="fa fa-eye" aria-hidden="true"></i>
+										</span> Quick View</button>
+									<a href="javascript:void(0)" (click)="showproductdetails(item._id)" class="thumb-link">
+										<img src="{{item.pimage[0]}}" alt="">
+									</a>
+								</div>
+								<div class="info">
+									<!-- <div class="rating">
+											<ul class="list-star">
+												<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+												<li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+											</ul>
+											<span class="count">5 Review(s)</span>
+										</div> -->
+									<a href="javascript:void(0)" (click)="showproductdetails(item._id)" class="product-name">{{item.pname | titlecase }}</a>
+									<!-- <p class="description">Lorem Ipsum is simply dummy text of the printing and try. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer.</p> -->
+									<div class="price">
+										<span> {{item.unitprice | number:'1.2'}} {{item.currencytype| uppercase}}</span>
+									</div>
+									<!-- <div class="availability">Availability: <a href="#">in Stock</a></div> -->
+								</div>
+								<div class="group-button">
+									<div class="inner">
+										<a href="javascript:void(0)" class="add-to-cart" (click)="showproductdetails(item._id)">
+											<span class="text">Contact</span>
+										</a>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+						<div class="pagination" *ngIf="pagedItems?.length" >
+								<ul class="list-page" *ngIf="pager.pages && pager.pages.length">
+										<li [ngClass]="{disabled:pager.currentPage === 1}">
+											<a href="javascript:void(0)" class="nav-button" (click)="setPage(1)">First</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === 1}">
+											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.currentPage - 1)">Previous</a>
+										</li>
+										<li *ngFor="let page of pager.pages" >
+											<a href="javascript:void(0)" [ngClass]="{'page-number current':pager.currentPage === page}" (click)="setPage(page)">{{page}}</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.currentPage + 1)">Next</a>
+										</li>
+										<li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+											<a href="javascript:void(0)" class="nav-button" (click)="setPage(pager.totalPages)">Last</a>
+										</li>
+								</ul> 
+							</div>
+						<span  *ngIf="pagedItems?.length" class="note">Showing {{pager.startIndex + 1}}-{{pager.endIndex + 1}}  of {{pager.totalItems}} result</span>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 sidebar">
+				<!-- <h4 class="main-title">Shop by</h4> -->
+				<div class="widget widget-categories">
+					    <form [formGroup]="productfilterForm">
+								<h5 class="widgettitle">Country</h5>
+								<select class="form-control" formControlName="country" (change)="getCities($event)"> 
+										<option [ngValue]="null" [disabled]="true">Select Country</option>
+										<option *ngFor="let item of countries" value="{{item}}">{{item}}</option>
+								</select>
+								<h5 class="widgettitle">City</h5>
+								<select class="form-control"  formControlName="city" (change)="updateCity($event)"> 
+										<option value="">Select All City</option>
+										<option *ngFor="let item of cities" value="{{item}}">{{item}}</option>
+								</select>
+								<h5 class="widgettitle">{{catname}}</h5>
+								<select class="form-control" formControlName="prodcat" (change)="getproduct($event)"> 
+										<option value="">Select All</option>
+										<option *ngFor="let item of sidecorps" value="{{item._id}}">{{item.subcatname}}</option>
+								</select>
+						</form>
+						
+						<!-- <ul class="list-categories">
+							<li *ngFor="let item of sidecorps">
+								<input type="checkbox" id="{{item._id}}" name="{{item._id}}" value="{{item._id}}" (change)="getproductbysubcat($event)">
+								<label for="{{item._id}}" class="label-text">{{item.subcatname}}</label>
+							</li>
+						</ul> -->
+					</div>
+				<!-- <div class="widget widget-brand">
+						<h5 class="widgettitle">Brand</h5>
+						<ul class="list-categories">
+							<li><input type="checkbox" id="cb10"><label for="cb10" class="label-text">Cameras</label></li>
+							<li><input type="checkbox" id="cb11"><label for="cb11" class="label-text">Smartphone</label></li>
+							<li><input type="checkbox" id="cb12"><label for="cb12" class="label-text">Printer & Ink</label></li>
+							<li><input type="checkbox" id="cb13"><label for="cb13" class="label-text">Game & Consoles</label></li>
+							<li><input type="checkbox" id="cb14"><label for="cb14" class="label-text">Sound & Speaker</label></li>
+						</ul>
+					</div> -->
+				<!-- <div class="widget widget_filter_price box-has-content">
+						<h3 class="widgettitle">Filter by Crop Type </h3>
+						<div class="price-filter">
+		                    <div data-label-reasult="price:" data-min="0" data-max="3000" data-unit="$" class="slider-range-price " data-value-min="185" data-value-max="2000"></div>
+		                    <div class="amount-range-price">Price: <span class="from">$85</span> - <span class="to">$2000</span></div>
+		                    <a href="#" class="filter">Filter</a>
+		                </div>
+					</div> -->
+				<!-- <div class="widget widget_filter_size">
+					<h3 class="widgettitle">{{catname}}</h3>
+					<ul class="list-color" *ngFor="let item of sidecorps">
+						<li>
+							<a routerLink="/{{catname}}/{{item._id}}">{{item.subcatname}}</a>
+						</li>
+					</ul>
+				</div> -->
+				<!-- <div class="widget widget_filter_color box-has-content">
+						<h3 class="widgettitle">color</h3>
+						<ul class="list-color">
+							<li><input type="checkbox" id="cb15"><label for="cb15" class="label-text">Red<span class="count">(12)</span></label></li>
+							<li><input type="checkbox" id="cb16"><label for="cb16" class="label-text">Black<span class="count">(34)</span></label></li>
+							<li><input type="checkbox" id="cb17"><label for="cb17" class="label-text">Pink<span class="count">(52)</span></label></li>
+							<li><input type="checkbox" id="cb18"><label for="cb18" class="label-text">Grey<span class="count">(55)</span></label></li>
+							<li><input type="checkbox" id="cb19"><label for="cb19" class="label-text">White<span class="count">(16)</span></label></li>
+							<li><input type="checkbox" id="cb20"><label for="cb20" class="label-text">Yellow<span class="count">(21)</span></label></li>
+							<li><input type="checkbox" id="cb21"><label for="cb21" class="label-text">Blue<span class="count">(19)</span></label></li>
+							<li><input type="checkbox" id="cb22"><label for="cb22" class="label-text">Green<span class="count">(31)</span></label></li>
+						</ul>
+					</div> -->
+				<!-- <div class="widget widget-banner row-banner">
+					<div class="banner banner-effect2">
+						<a href="#">
+							<img src="images/banner21.jpg" alt="">
+						</a>
+					</div>
+				</div> -->
+				<!-- <div class="widget widget-recent-post">
+						<h5 class="widgettitle">New Products</h5>
+						<ul class="list-recent-posts">
+							<li class="product-item">
+								<div class="thumb"><a href="detail.html"><img src="images/small-product14.jpg" alt=""></a></div>
+								<div class="info">
+									<div class="rating">
+										<ul class="list-star">
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+										</ul>
+										<span class="count">5 Review(s)</span>
+									</div>
+									<a href="detail.html" class="product-name">Instant Camera</a>
+									<div class="price">
+										<span class="del">$700.00</span>
+										<span class="ins">$350</span>
+									</div>
+								</div>
+							</li>
+							<li class="product-item">
+								<div class="thumb"><a href="detail.html"><img src="images/small-product15.jpg" alt=""></a></div>
+								<div class="info">
+									<div class="rating">
+										<ul class="list-star">
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+										</ul>
+										<span class="count">5 Review(s)</span>
+									</div>
+									<a href="detail.html" class="product-name">SteelSeries NIMBUS Controlle</a>
+									<div class="price">
+										<span>$100</span>
+									</div>
+								</div>
+							</li>
+							<li class="product-item">
+								<div class="thumb"><a href="detail.html"><img src="images/small-product16.jpg" alt=""></a></div>
+								<div class="info">
+									<a href="detail.html" class="product-name">Smartphone RAM 4 GB New</a>
+									<div class="price">
+										<span >$350.00</span>
+									</div>
+								</div>
+							</li>
+							<li class="product-item">
+								<div class="thumb"><a href="detail.html"><img src="images/small-product15.jpg" alt=""></a></div>
+								<div class="info">
+									<div class="rating">
+										<ul class="list-star">
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+										</ul>
+										<span class="count">5 Review(s)</span>
+									</div>
+									<a href="detail.html" class="product-name">SteelSeries NIMBUS Controlle</a>
+									<div class="price">
+										<span>$100</span>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div> -->
+			</div>
+		</div>
+	</div>
+	<!-- <div class="brand">
+		<div class="container">
+			<div class="owl-carousel" data-autoplay="false" data-nav="false" data-dots="false" data-loop="false" data-slidespeed="800"
+			 data-margin="30" data-responsive='{"0":{"items":2}, "640":{"items":3}, "768":{"items":3}, "1024":{"items":4}, "1200":{"items":5}}'>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+				<div class="brand-item">
+					<a href="#">
+						<img src="images/brand1.jpg" alt="">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<div  [ngClass]="{'overlaypanelscreen': blockui}"><img src="assets/images/ajax-loader.gif" alt="loading" *ngIf="blockui"></div>
+</div>
+<app-footer></app-footer>

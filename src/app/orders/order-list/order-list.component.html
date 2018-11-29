@@ -1,0 +1,55 @@
+<div>
+  <form [formGroup]="newadForm" class="addnewproduct register-form" (ngSubmit)="addnewproduct()">
+    <div *ngFor="let formbaseelement of formbaseelements; trackBy: trackByFn" class="form-row">
+      
+      <app-formname [formbase]="formbaseelement" [newadForm]="newadForm"></app-formname>
+    </div>
+
+    <div class="form-row">
+      <button type="submit" [disabled]="!newadForm.valid">Save</button>
+    </div>
+  </form>
+
+  <div *ngIf="payLoad" class="form-row">
+    <strong>Saved the following values</strong><br>{{payLoad}}
+  </div>
+</div>
+<!-- <form [formGroup]="newadForm" class="addnewproduct register-form" (ngSubmit)="addnewproduct()">
+  <div class="contact-form">
+    <h4 class="main-title"> Details</h4>
+    <h5 class="note-title">( * ) Required fields</h5>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <span class="label-text">firstname <span>*</span></span>
+        <input type="text" class="input-info" formControlName="firstname">
+        <div *ngIf="!newadForm.valid && forcevalidation" class="error-msg">
+          <div *ngIf="newadForm.controls['firstname'].pristine && newadForm.controls['firstname'].errors?.required">firstname
+            is required.</div>
+          <div *ngIf="newadForm.controls['firstname'].dirty && newadForm.controls['firstname'].errors?.required">firstname
+            is required.</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <span class="label-text">lastname <span>*</span></span>
+        <input type="text" class="input-info" formControlName="lastname">
+        <div *ngIf="!newadForm.valid && forcevalidation" class="error-msg">
+          <div *ngIf="newadForm.controls['lastname'].pristine && newadForm.controls['lastname'].errors?.required">lastname
+            is required.</div>
+          <div *ngIf="newadForm.controls['lastname'].dirty && newadForm.controls['lastname'].errors?.required">lastname
+            is required.</div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="group-button">
+    <button href="#" class="button submit">Submit</button>
+  </div>
+
+</form> -->

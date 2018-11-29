@@ -1,0 +1,58 @@
+
+<div class="dashboard-left menu-out" [ngClass]="{'menu-out': !leftsidebar, 'width-change': leftsidebar }">
+
+	<div class="sub-menu-outer">
+		<div class="side-menu">
+			<ul>
+				<li [ngClass]="{'text-del': leftsidebar}"> <a href="javascript:void(0)" class="heading"><i class="fa fa-file-text-o" aria-hidden="true"></i> <span>Dashboard</span></a></li>
+				<!-- sdfd -->
+			
+				<!-- end sdfd -->
+				<li class="child" [ngClass]="{'text-del': leftsidebar}">
+					<a href="javascript:void(0)" (click)="submenutoggle($event)">
+						<i class="fa fa-file-o" aria-hidden="true"></i> <span>Category </span> 
+					</a>
+					<ul class="sub-menu">
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="category/list"><span> List</span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="category/add"><span> Add </span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="subcategory/add"><span> Add Subcategory </span></a>
+					</ul>
+				</li>
+				<li class="child" [ngClass]="{'text-del': leftsidebar}"><a href="javascript:void(0)"  (click)="submenutoggle($event)">
+					<i class="fa fa-file-o" aria-hidden="true"></i> <span> Product </span></a>
+					<ul class="sub-menu">
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="product/list"><span>Make Featured</span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="product/bestseller"><span>Make Bestseller</span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="product/mostviewed"><span>Make Most Viewed</span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="product/onsale"><span>Make Onsale</span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="product/newarrivals"><span> Make New Arrivals </span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="product/delete"><span> Delete Product </span></a>
+					</ul>
+				</li>
+				<li class="child" [ngClass]="{'text-del': leftsidebar}"><a href="javascript:void(0)"  (click)="submenutoggle($event)">
+					<i class="fa fa-file-o" aria-hidden="true"></i> <span> User </span></a>
+					<ul class="sub-menu">
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="user/list"><span>List</span></a>
+					</ul>
+				</li>
+				<li class="child" [ngClass]="{'text-del': leftsidebar}"><a href="javascript:void(0)"  (click)="submenutoggle($event)">
+					<i class="fa fa-file-o" aria-hidden="true"></i> <span>Reported Ads </span></a>
+					<ul class="sub-menu">
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="reportedads/list"><span>List</span></a>
+					</ul>
+				</li>
+				<li class="child" [ngClass]="{'text-del': leftsidebar}"><a href="javascript:void(0)"  (click)="submenutoggle($event)">
+					<i class="fa fa-file-o" aria-hidden="true"></i> <span> Pages </span></a>
+					<ul class="sub-menu">
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="edit/about"><span>About</span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="edit/termsofuse"><span>Terms of use</span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="edit/privacypolicy" ><span>Privacy Policy</span></a>
+						<li [ngClass]="{'text-del': leftsidebar}"><a routerLink="edit/termsandcondition"><span>Terms and condition</span></a>
+					</ul>
+				</li>
+				<li [ngClass]="{'text-del': leftsidebar}"> <a routerLink="slider" ><i class="fa fa-file-text-o" aria-hidden="true"></i> <span>Slider</span></a></li>
+			</ul>
+		</div>
+	</div>
+	
+</div>

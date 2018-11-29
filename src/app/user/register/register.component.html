@@ -1,0 +1,128 @@
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <form [formGroup]="registerForm">
+    <div class="register-form">
+      <h4 class="main-title">Create an Account</h4>
+      <h5 class="note-title">All ( * ) fields are required</h5>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+          <span class="label-text">First name <span>*</span></span>
+          <input type="text"  class="input-info" formControlName="firstname" required>
+          <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+              <div class="text-danger" *ngIf="!!registerForm.controls['firstname'].pristine || !!registerForm.controls['firstname'].errors?.required">First Name is required.</div>
+          </div>
+        </div> 
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+          <span class="label-text">Last name <span>*</span></span>
+          <input type="text"  class="input-info" formControlName="lastname" required>
+      <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+          <div class="text-danger" *ngIf="!!registerForm.controls['lastname'].pristine || !!registerForm.controls['lastname'].errors?.required">Last Name is required.</div>
+      </div>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <span class="label-text">Country Code<span>*</span></span>
+              <select class="form-control" formControlName="countrycode"> 
+                  <option value="none" selected>Select country code</option>
+                  <option *ngFor="let item of countrycode" value="{{item._id}}">{{item.c_text}}</option>
+                </select>
+                <div *ngIf="!registerForm.valid && formsubmitted" class="error-msg top-minus-20">
+                    <div class="text-danger" *ngIf="registerForm.controls['countrycode'].pristine || registerForm.controls['countrycode'].errors?.required">Country code is required.</div> 
+                    </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"> 
+              <span class="label-text">Phone Number <span>*</span></span>
+              <input type="tel"  class="input-info" formControlName="phoneno" placeholder="01234567890">
+              <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+                <div class="text-danger" *ngIf="!!registerForm.controls['phoneno'].pristine || !!registerForm.controls['phoneno'].errors?.required">Phone number is required.</div>
+                <div class="text-danger" *ngIf="registerForm.controls['phoneno'].dirty && !!registerForm.controls['phoneno'].errors?.patternInvalid?.regexp">Phone Number is invalid.</div>
+              </div>
+          </div>
+        </div>
+      <!-- <span class="label-text">Last name <span>*</span></span>
+      <input type="text"  class="input-info" formControlName="lastname" required>
+      <div *ngIf="registerForm.controls['lastname'].errors && !registerForm.controls['lastname'].pristine" class="error-msg">
+          <div class="text-danger" [hidden]="!registerForm.controls['lastname'].errors.required">Last Name is required.</div>
+      </div> -->
+      <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <span class="label-text">Country<span>*</span></span> 
+            <select class="form-control" formControlName="country" (change)="getCities($event)"> 
+                <option [ngValue]="null" [disabled]="true">Select Country</option>
+                <option *ngFor="let item of countries" value="{{item}}">{{item}}</option>
+            </select>
+              <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg top-minus-20">
+                  <div class="text-danger" *ngIf="!!registerForm.controls['country'].pristine || !!registerForm.controls['country'].errors?.required">Country is required.</div> 
+              </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <span class="label-text">City<span>*</span></span>
+              <select class="form-control" formControlName="city"> 
+                  <option [ngValue]="null" [disabled]="true">Select City</option>
+                  <option *ngFor="let item of cities" value="{{item}}">{{item}}</option>
+              </select>
+                <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg top-minus-20">
+                    <div class="text-danger" *ngIf="!!registerForm.controls['city'].pristine || !!registerForm.controls['city'].errors?.required">City is required.</div> 
+                </div>
+          </div>
+          
+      </div>
+      <span class="label-text">Email Address <span>*</span></span>
+      <input type="email" class="input-info" formControlName="email" required>
+      <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+          <div class="text-danger" *ngIf="!!registerForm.controls['email'].pristine || !!registerForm.controls['email'].errors?.required">Email is required.</div>
+          <div class="text-danger" *ngIf="registerForm.controls['email'].dirty && !!registerForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
+      </div>
+      <div class="check-box">
+        <input type="checkbox" formControlName="newsletter" class="login-check" id="register-check"> <label class="text-label" for="register-check">Sign Up for Newsletter</label>
+      </div>
+      <h5 class="title">Login Information</h5>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+          <span class="label-text">Password <span>*</span></span>
+          <input type="password"  formControlName="password"  class="input-info">
+          <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+              <div class="text-danger" *ngIf="!!registerForm.controls['password'].pristine || !!registerForm.controls['password'].errors?.required">Password is required.</div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+          <span class="label-text">Confirm Password <span>*</span></span>
+          <input type="password"  formControlName="confirm_password"  class="input-info">
+          <div *ngIf="registerForm.invalid && formsubmitted" class="error-msg">
+              <div class="text-danger" *ngIf="!!registerForm.controls['confirm_password'].pristine || !!registerForm.controls['confirm_password'].errors?.required">Confirm Password is required.</div>
+          </div>
+          <div *ngIf="registerForm.invalid && formsubmitted && registerForm.controls['confirm_password'].dirty" class="error-msg">
+              <div class="text-danger" *ngIf="!!registerForm.errors?.mismatch && !!registerForm.controls['confirm_password'].errors?.required === false">Password & Confirm Password should be same.</div>
+         </div>
+        
+        </div>
+    
+      </div>
+      <div class="group-button">
+        <button class="button submit"  [disabled]="showloading" (click)="register(templateregsuccess)">SUBMIT <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
+        <!-- <span class="successmsg" [ngClass]="{'bg-success': error, 'bg-success': success}"  *ngIf="!!usermsg"  >{{usermsg}}</span> -->
+      </div>
+	
+    </div>
+    </form> 
+    <ng-template #templateregsuccess>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Registration successful</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="info-box">
+                <span class="info-box-icon bg-green">
+                    <i class="fa fa-check"></i></span>
+    
+                <div class="info-box-content">
+                  <span class="info-box-text">Your registration has been successful! You will receive a confirmation mail shortly containing the link to activate your account!</span>
+                </div>
+                <!-- /.info-box-content -->
+              </div>   
+          <!-- <p><span><i class="fa fa-times"></i></span>Your registration has been successful! You will receive a confirmation mail shortly containing the link to activate your account!</p> -->
+        </div>
+      </ng-template>
+  </div>

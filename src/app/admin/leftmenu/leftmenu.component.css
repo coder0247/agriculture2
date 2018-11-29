@@ -1,0 +1,6 @@
+.vertical-content{
+    min-height: calc(100vh - 165px);
+}
+:host {
+    display: block;
+  }

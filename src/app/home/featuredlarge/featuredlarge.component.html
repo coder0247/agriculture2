@@ -1,0 +1,84 @@
+<div class="product-show box-has-content">
+	<div class="section-head box-has-content">
+		<h4 class="section-title">Best Seller <span *ngIf="!topSellProduct">: Loading</span></h4>
+	</div>
+	<div class="section-content">
+		<div class="item-show" *ngIf="topSellProduct">
+			<!-- <div class="owl-carousel nav-style3 has-thumbs" data-autoplay="false" data-nav="false" data-dots="false" data-loop="false"
+			 data-slidespeed="800" data-margin="0" data-responsive='{"0":{"items":1}, "640":{"items":1}, "768":{"items":1}, "1024":{"items":1}, "1200":{"items":1}}'>
+				<a href="detail.html">
+					<img src="images/product-slide1.jpg" alt="">
+				</a>
+				<a href="detail.html">
+					<img src="images/product-slide1.jpg" alt="">
+				</a>
+				<a href="detail.html">
+					<img src="images/product-slide1.jpg" alt="">
+				</a>
+				<a href="detail.html">
+					<img src="images/product-slide1.jpg" alt="">
+				</a>
+			</div> -->
+			<div>
+				<a routerLink="product/detail/{{ topSellProduct.productid._id }}" class="">
+					<img src="{{ topSellProduct.productid.pimage[0] }}" alt="">
+				</a>
+			</div>
+			<div class="product-item">
+				<div class="product-inner">
+					<div class="info">
+						<a routerLink="product/detail/{{ topSellProduct.productid._id }}" class="product-name">
+							{{ topSellProduct.productid.pname | titlecase}}
+						</a>
+						<div class="price">
+							<span class="ins">{{ topSellProduct.productid.unitprice | number:'1.2' }} {{topSellProduct.productid.currencytype| uppercase}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="other-product-show auto-clear box-has-content equal-container">
+			<div class="product-item layout1 col-lg-4 col-md-4 col-sm-4 col-xs-6 col-ts-12" *ngFor="let item of otherTopSellProduct; let i = index;">
+				<div class="product-inner equal-elem">
+					<div class="thumb">
+						<a href="javascript:void(0);" class="quickview-button" (click)="quickview(item)">
+							<span class="icon">
+								<i class="fa fa-eye" aria-hidden="true"></i>
+							</span> Quick View</a>
+						<a routerLink="product/detail/{{ item.productid._id }}" class="thumb-link">
+							<img src="{{ item.productid.pimage[0] }}" alt="">
+						</a>
+					</div>
+					<div class="info">
+							<a routerLink="product/detail/{{ item.productid._id }}" class="product-name">
+								{{ item.productid.pname | titlecase}}
+							</a>	
+							<div class="price">
+								<span>{{ item.productid.saleamount | number:'1.2' }} {{item.productid.currencytype | uppercase}}</span>
+							</div>
+						</div>
+					<!-- <div class="info">
+						<a routerLink="product/detail/{{ item.productid._id }}" class="product-name">
+							<div class="price">
+								<span>${{ item.productid.saleamount }}</span>
+							</div>
+						</a>
+					</div> -->
+					<div class="group-button">
+						<div class="inner">
+							<a routerLink="product/detail/{{ item.productid._id }}" class="add-to-cart">
+								<span class="text">Contact</span>
+							</a>
+							<!-- <a href="#" class="compare-button">
+								<i class="fa fa-exchange" aria-hidden="true"></i>
+							</a>
+							<a href="#" class="wishlist-button">
+								<i class="fa fa-heart-o" aria-hidden="true"></i>
+							</a> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

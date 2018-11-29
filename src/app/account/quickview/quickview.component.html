@@ -1,0 +1,45 @@
+<!-- <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div> -->
+
+
+    <div class="modal-content modal-lg">
+<div class="modal-body">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+     </button>
+  <!-- {{modaldata | json}} -->
+  <!-- [ "Green Okra", "file-1531900835736.jpg", "100", "5b4debdd5580971bc49e89d4", "22" ] -->
+  <!-- <ul *ngIf="list.length">
+    <li *ngFor="let item of list">{{item}}</li>
+  </ul> -->
+  <div class="row">
+    <div class="details-info col-xs-12 col-sm-6">
+      <a href="javascript:void(0)" (click)="showproductdetails()" class="product-name">
+        <img src="{{modaldata[1]}}" alt="{{modaldata[0]}}" />
+        </a>
+    </div>
+    <div class="details-info col-xs-12 col-sm-6">
+      <a href="detail.html" class="product-name">{{modaldata[0]}}</a>
+
+      <div class="price">
+        <span>$ {{modaldata[2]}}</span>
+      </div>
+
+      <div class="group-button">
+        <div class="inner">
+          <a href="#" class="add-to-cart">
+            <span class="text">Archive</span>
+            <span class="icon">
+              <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

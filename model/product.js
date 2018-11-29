@@ -25,11 +25,20 @@ const productSchema = new Schema({
     updated_at: { type: Date, default: Date.now() }
 }, { collection: 'products' });
 
-const Product = mongoose.model('Products', productSchema);
 productSchema.plugin(autoIncrement.plugin, {
     model: 'Products',
     field: 'adid',
     startAt: 1601,
     incrementBy: 1
 });
+const Product = mongoose.model('Products', productSchema);
+Product.nextCount(function(err, count) {
+    var product = new Product();
+    product.save(function(err) {
+        product.nextCount(function(err, count) {
+            // count === 1 -> true
+        });
+    });
+});
+
 module.exports = Product;

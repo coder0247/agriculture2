@@ -1,0 +1,357 @@
+<app-header-common></app-header-common>
+<div class="main-content shop-page main-content-grid">
+		<div class="container">
+			<div class="breadcrumbs">
+				<a href="user/account">My Account</a>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset">
+					<div class="categories-content">
+						<h4 class="shop-title">Edit Ad</h4>
+                        <div class="row content-form ">
+
+
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 info-content">
+                                    <form [formGroup]="newadForm" class="addnewproduct register-form" (ngSubmit)="addnewproduct(templatenewaddposted, templateproductimg)">
+                                    <div class="contact-form">
+                                        <h4 class="main-title">Product Details</h4>
+                                        <h5 class="note-title">( * ) Required fields</h5>
+                                       
+                                         <div class="row">
+                                            <div class="col-md-12" *ngIf="!formbaseelements.length">
+                                              Loading...
+                                            </div>
+                                            <app-editproductfrm [formbase]="formbaseelements[0]" [newadForm]="newadForm"></app-editproductfrm>
+                                            <app-editproductfrm [formbase]="formbaseelements[3]" [newadForm]="newadForm"></app-editproductfrm>
+                                         </div>
+                                         <div class="row">
+                                          <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='country'" >
+                                                <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm" (selectcities)="getCitieslist($event)"></app-editproductfrm>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='city'" >
+                                                <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                            </div>
+                                            </div>
+                                      </div>
+                                         <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                            <div class="row" *ngIf="dynFormitem.key==='name'">
+                                              
+                                                <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                            </div>
+                                            <div class="row" *ngIf="dynFormitem.key==='description'">
+                                                <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                              </div>
+                                         </div>
+                                         
+                                        <div class="row">
+                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='condition'" >
+                                                  <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                              </div>
+                                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='yearmfg'" >
+                                                  <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                              </div>
+                                              </div>
+                                        </div>
+                                        <div class="row" *ngIf="formbaseelements[pricenegradio1]">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
+                                                <span class="label-text priceneg">Price Negotiable</span>
+                                                <div class="widget widget-categories">
+                                                    <ul class="list-categories">
+                                                        <li>
+                                                              <app-editproductfrm [formbase]="formbaseelements[pricenegradio1]" [newadForm]="newadForm"></app-editproductfrm>
+                                                        </li>
+                                                        <li>
+                                                            <app-editproductfrm [formbase]="formbaseelements[pricenegradio2]" [newadForm]="newadForm"></app-editproductfrm>
+                                                      </li>
+                                                       </ul>
+                                                </div>
+                                              
+                                            </div>
+                                         </div>
+                                         <div class="row" *ngIf="!!formbaseelements[statusradio1]">
+                               
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tsidebar">
+                                                <span class="label-text priceneg">Status</span>
+                                                <div class="widget widget-categories">
+                                                 
+                                                    <ul class="list-categories">
+                                                        <li>
+                                                              <app-editproductfrm [formbase]="formbaseelements[statusradio1]" [newadForm]="newadForm"></app-editproductfrm>
+                                                        </li>
+                                                        <li>
+                                                            <app-editproductfrm [formbase]="formbaseelements[statusradio2]" [newadForm]="newadForm"></app-editproductfrm>
+                                                      </li>
+                                                       </ul>
+                                                </div>
+                                              
+                                            </div>
+                                         </div>
+                                         <!-- <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                          
+                                          <div class="row" *ngIf="dynFormitem.key==='region'">
+                                              <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                          </div>
+                                         </div> -->
+                                         <div class="row">
+                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="dynFormitem.key==='amountforsale'">
+                                          
+                                                    <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                                </div>
+                                               
+                                                <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='amountunit'">
+                                            
+                                                    <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                                </div>
+                                            </div>
+                                         </div>
+                                <div class="row">
+                                    <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                        <div  class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='priceperunit'">
+                                            
+                                            <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                        </div>
+                                      </div>     
+                                      <div  *ngFor="let dynFormitem of formbaseelements;let i = index"> 
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"  *ngIf="dynFormitem.key==='currency'">
+                                            <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                        </div>
+                                      </div>
+                                </div>
+                                            <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                          
+                                              
+                                                <div class="row" *ngIf="dynFormitem.key==='manufacture'">
+                                                    <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                                </div>
+                                               
+                                               </div>
+                                               
+                                               
+                                                    <div  *ngFor="let dynFormitem of formbaseelements;let i = index">
+                                                        <div class="row" *ngIf="dynFormitem.key==='addinfo'">
+                                                            <app-editproductfrm [formbase]="formbaseelements[i]" [newadForm]="newadForm"></app-editproductfrm>
+                                                        </div>
+                                                    </div>
+                                           
+                                                
+
+
+                                    </div>
+                                    <div class="group-button">
+                                            <button href="#" class="button submit" [disabled]="submitting">
+                                              <span *ngIf="submitting">Please Wait ...</span>
+                                              <span *ngIf="!submitting">submit</span>
+                                            </button>
+                                          </div>
+                                 </form>
+                                <!-- <div class="alert alert-success" role="alert" *ngIf="uploadsuccess">
+                                        <strong>New Ad : </strong> New Ad Posted Successfully
+                                    </div> -->
+                                </div>
+                                <div *ngIf="!uploadsuccess">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 map-content" *ngIf="!!defaultproductimage">
+                                    
+                                                <div *ngIf="uploadCountAfterRemove===0 && !queuehasproduct">
+                                                        <h3>Default product image</h3>
+                                                        <small>If you don’t have a product image this image will be appeared as your product image</small>
+                                                        <img src="{{defaultproductimage[0]}}" alt="default product image">
+                                                </div>
+                                            <!-- <div *ngIf="!uploader?.queue?.length"> -->
+                                                <h3 *ngIf="uploadCountAfterRemove!==0">Current product images</h3>
+                                                <ul class="prevuploadedimages" *ngIf="uploadCountAfterRemove!==0">
+                                                  <li *ngFor="let item of defaultproductimage; let i = index">
+                                                    <div class="prodblockedit">
+                                                      <a href="javascript:void(0)" (click)="removeprevimage(i)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                      <img src="{{item}}">
+                                                    </div>
+                                                  </li>
+                                                </ul>
+                                        <!-- </div> -->
+                                         <!-- fileupload ui -->
+                                        
+                                        
+                                       <div class="row" *ngIf="maxAllowedImage!=0">
+                                           <div class="col-lg-12">
+                                                <h4 class="main-title">Upload Product Images</h4>
+                                         <h5 class="note-title note-bg ">You can upload max {{maxAllowedImage}} ({{ordinal[maxAllowedImage]}}) image<br />Maximum allowed image file size is <strong>300 KB</strong></h5>
+                                           </div>
+                                       </div>
+                                         <div class="row"  *ngIf="maxAllowedImage!=0">
+                                             <!-- <div class="col-lg-8">
+                                                 <div class="dragdrop" appDnd (filesChangeEmiter)="onFilesChange($event)" (filesInvalidEmiter)="onFileInvalids($event)" [allowed_extensions]="['jpg','jpeg']">
+                                                     <div class="uploadinfo">
+                                                         <i class="fa fa-cloud-upload"></i>
+                                                         <span>Drag File to Upload</span>
+                                                     </div>
+                                                 </div>
+                                             </div> -->
+                                             
+                                             <div class="col-lg-12 file">
+                                               <div class="dottedborder">
+                                                   <div class="iconblk fileuploadclr">
+                                                       <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                               </div>
+                                           <div class="browsebtn">
+                                                <label class="file-upload btn btn-success">
+                                                   I want to upload my product images <input type="file" id="file" uploader="uploader"  (change)="onSelectChange($event, template, exceededuploadlimit)" />
+                                                </label>
+                                           </div>                                            
+                                               </div>  
+                                             </div>
+                                         </div>
+                                         <div class="row"  *ngIf="maxAllowedImage!=0">
+                                             <div class="col-lg-12" style="margin-bottom: 40px">
+                                                 <p>File in Queue: {{ uploader.queue.length }}</p>
+                                                 <table class="table uploadlisting">
+                                                   <thead>
+                                                     <tr>
+                                                       <th width="50%">Name</th>
+                                                       <!-- <th ng-show="uploader.isHTML5">Size</th> -->
+                                                       <th ng-show="uploader.isHTML5">Progress</th>
+                                                       <th>Status</th>
+                                                       <th>Actions</th>
+                                                     </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                     <tr *ngFor="let item of uploader.queue; let i = index">
+                                                       <td>
+                                                         <strong>{{ item.file.name }}</strong>
+                                                         <!-- Image preview -->
+                                                         <!--auto height-->
+                                                         <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                                                         <!--auto width-->
+                                                         <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                                                         <!--fixed width and height -->
+                                                         <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                                                       </td>
+                                                       <!-- <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024 | number }} MB</td> -->
+                                                       <td ng-show="uploader.isHTML5">
+                                                         <div class="progress" style="margin-bottom: 0;">
+                                                           <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                                         </div>
+                                                       </td>
+                                                       <td class="text-center">
+                                                         <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                                         <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                                         <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                                       </td>
+                                                     <td nowrap>
+                                                         <ul class="actiongroup">
+                                                             <li>
+                                                                 <button type="button" class="btn btn-success btn-xs" (click)="upload(item.id)" [disabled]="item.isSuccess">
+                                                                     <span class="glyphicon glyphicon-upload"></span> Upload
+                                                                 </button>
+                                                             </li>
+                                                             <li>
+                                                                 <button type="button" class="btn btn-danger btn-xs" (click)="removeSelected(i)" [disabled]="item.isUploading">
+                                                                     <span class="glyphicon glyphicon-remove"></span> Remove
+                                                                 </button>
+                                                             </li>
+                                                         </ul>
+                                                     </td>
+                                                     </tr>
+                                                   </tbody>
+                                                 </table>
+                                                 <div class="uploadall">
+                                                   <div>
+                                                     Queue progress:
+                                                     <div class="progress">
+                                                       <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': progress + '%' }"></div>
+                                                     </div>
+                                                   </div>
+                                                   <!-- <button type="button" class="btn btn-success btn-sm" (click)="uploadAll()" [disabled]="!uploader.queue.length">
+                                                     <span class="glyphicon glyphicon-upload"></span> Upload all
+                                                   </button>   -->
+                                                    
+                                                   <button type="button" class="btn btn-danger btn-sm" (click)="removeAll()" [disabled]="!uploader.queue.length">
+                                                     <span class="glyphicon glyphicon-remove"></span> Remove all
+                                                   </button>
+                                  
+                                                   <span *ngIf="ifuploading" class="uploadinginprog">Please Wait Uploading..</span>
+                                                 </div>
+                                               </div>
+                                         </div>
+                                          <!-- fileupload ui end -->
+                                           
+                                        </div>
+                                </div>
+                               
+                            </div>
+                            <ng-template #template>
+                                <div class="modal-header">
+                                  <h4 class="modal-title pull-left">File size error</h4>
+                                  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>Select image file size seems to be greater than allowed file size.</p>
+                                    <p>Maximum allowed image file size is <strong>300 KB</strong>.</p> 
+    
+                                </div>
+                              </ng-template>
+                              <ng-template #templateproductimg>
+                                    <div class="modal-header">
+                                      <h4 class="modal-title pull-left">Error</h4>
+                                      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p>Please Upload .jpeg/.jpg images ( e.g myproduct.jpg).</p>
+                                    </div>
+                                  </ng-template> 
+                                  <!-- <ng-template #templatenewaddposted>
+                                        <div class="modal-header">
+                                          <h4 class="modal-title pull-left">Success</h4>
+                                          <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p> Ad Updated Successfully</p>
+                                        </div>
+                                      </ng-template> -->
+                                      <ng-template #templatenewaddposted>
+                                        <div class="modal-header">
+                                          <h4 class="modal-title pull-left">Edit Ad</h4>
+                                          <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="info-box">
+                                                <span class="info-box-icon bg-green">
+                                                    <i class="fa fa-check"></i></span>
+                                    
+                                                <div class="info-box-content">
+                                                  <span class="info-box-text">Ad Updated Successfully</span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                              </div>   
+                                          <!-- <p><span><i class="fa fa-times"></i></span>Your registration has been successful! You will receive a confirmation mail shortly containing the link to activate your account!</p> -->
+                                        </div>
+                                      </ng-template>
+                                      <ng-template #exceededuploadlimit>
+                                            <div class="modal-header">
+                                              <h4 class="modal-title pull-left">Error</h4>
+                                              <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <p>Upload limit Exceeded. Only 5(Five) images are allowed.</p>
+                                            </div>
+                                        </ng-template>
+					</div>
+				</div>
+      <!-- sidebar -->
+      <app-sidebar></app-sidebar>
+      <!-- /sidebar-->
+			</div>
+		</div>
+	</div>
+	<app-footer></app-footer>

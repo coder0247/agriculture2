@@ -1,0 +1,41 @@
+<div class="modal-content modal-lg">
+<div class="modal-body">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+     </button>
+  <div class="row">
+    <!-- {{modaldata[0]}} -->
+    
+    <div class="details-info col-xs-8 col-sm-8">
+    <label>Original Image</label>
+    <div class="orgimg">
+            <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="4/3"
+            [resizeToWidth]="0"
+            format="jpg"
+        
+            (imageCroppedBase64)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+    </div>
+       
+    </div>
+    <label>Cropped Image</label>
+    <div class="details-info col-xs-4 col-sm-4">
+            
+            <img [src]="croppedImage" class="croppedborder" />
+        </div>
+   
+    
+  </div> <!-- row-->
+  <div class="row">
+ 
+    <div class="col-md-12 text-center">
+        <button type="button" class="btn btn-success" (click)="confirmupload()" >Submit</button>  
+    </div>
+  </div>
+</div>
+</div>

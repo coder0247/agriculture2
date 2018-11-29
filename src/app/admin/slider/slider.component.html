@@ -1,0 +1,175 @@
+<div class="row">
+    <div class="white-bg clearfix">
+      <div class="col-md-6 cont-heading">
+        <h2>Slider Settings</h2>
+        <h3>Add/Edit Slider</h3>
+        <span class="side-toggle-menu visible-xs visible-sm"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="white-bg clearfix breadcrumb">
+      <div class="col-md-6">
+          <form [formGroup]="sliderForm" (submit)="addNewSlider()" class="form-horizontal">
+              <div class="form-group">
+                  <label class="control-label col-sm-3" for="title">Title:</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="Enter title" formControlName="title">
+                  </div>
+                </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3" for="subtitle">Sub Title:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" placeholder="Enter Subtitle" formControlName="subtitle">
+                </div>
+              </div>
+              <div class="form-group">
+                  <label class="control-label col-sm-3" for="smalltext">Short Text:</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" placeholder="Enter short text" formControlName="smalltext">
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="buttontext">Button Text:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="Enter button text" formControlName="buttontext">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label col-sm-3" for="buttonurl">Button Url:</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" placeholder="Enter button url" formControlName="buttonurl">
+                      </div>
+                    </div>
+                    <div class="group-button text-right">
+                        <button href="#" class="btn btn-success" [disabled]="submitting">
+                          <span *ngIf="submitting">Please Wait ...</span>
+                          <span *ngIf="!submitting">submit</span>
+                        </button>
+                      </div>
+                
+                    
+          </form>
+          <div class="alert alert-success" role="alert" *ngIf="formsuccess"> <strong>Success!</strong> Slider item added successfully. </div>
+          <div class="slideruploader">
+           
+            <h4 class="main-title">Upload Slider Images</h4>
+
+                     <!-- <input type="file" name="file" ng2FileSelect [uploader]="uploader"  *ngIf="uploader?.queue?.length < 1"/> -->
+                  <div class="dottedborder file" *ngIf="!uploader?.queue?.length">
+                   
+                    <div class="iconblk fileuploadclr">
+                      <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                    </div>
+                    <div class="browsebtn">
+                      <label class="file-upload btn btn-success">
+                        Browse... <input type="file" id="file" uploader="uploader" (change)="onSelectChange($event, template, templateproductimg)" />
+                        <!--  Browse ... <input type="file" id="file" uploader="uploader" multiple (change)="onSelectChange($event)" /> -->
+                      </label>
+                    </div>
+                  </div>
+                   <!-- fileupload ui -->
+                   <div class="row" *ngIf="uploader?.queue?.length">
+                  <div class="col-lg-12" style="margin-bottom: 40px">
+                    <!-- <p>File in Queue: {{ uploader.queue.length }}</p> -->
+                    <table class="table uploadlisting">
+                      <thead>
+                      <tr>
+                        <th width="50%">Name</th>
+                        <!-- <th ng-show="uploader.isHTML5">Size</th> -->
+                        <th ng-show="uploader.isHTML5">Progress</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let item of uploader.queue; let i = index">
+                        <td>
+                          
+                        <strong>{{ item.file.name }}</strong>
+                        <!-- Image preview -->
+                        <!--auto height-->
+                        <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                        <!--auto width-->
+                        <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                        <!--fixed width and height -->
+                        <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                        </td>
+                        <!-- <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024 | number }} MB</td> -->
+                        <td ng-show="uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                          <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                        </td>
+                        <td class="text-center">
+                        <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                        </td>
+                      <td nowrap>
+                        <ul class="actiongroup">
+                          <li>
+                            <button type="button" class="btn btn-success btn-xs" (click)="upload(item.id)" [disabled]="item.isSuccess">
+                              <span class="glyphicon glyphicon-upload"></span> Upload
+                            </button>
+                          </li>
+                          <li>
+                            <button type="button" class="btn btn-danger btn-xs" (click)="removeSelected(i)" [disabled]="item.isUploading">
+                              <span class="glyphicon glyphicon-remove"></span> Remove
+                            </button>
+                          </li>
+                        </ul>
+                      </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                    <div class="imguploading" *ngIf="imageloader">
+                      <span>Please wait... image uploading</span>
+                      </div>
+                    </div>
+                </div>
+                  <!-- fileupload ui end -->
+          
+                  <ng-template #template>
+                      <div class="modal-header">
+                        <h4 class="modal-title pull-left">File size error</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Select image file size seems to be greater than allowed file size.</p>
+                        <p>Maximum allowed image file size is <strong>300 KB</strong>.</p> 
+          
+                      </div>
+                      </ng-template>
+                      <ng-template #templateproductimg>
+                        <div class="modal-header">
+                          <h4 class="modal-title pull-left">Error</h4>
+                          <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+                          <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Please Upload .jpeg/.jpg images ( e.g myproduct.jpg).</p>
+                        </div>
+                        </ng-template>
+             
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h3 id="slidertitle">Slider Images</h3>
+        <ul class="sliderimages" *ngIf="slideritems">
+          <li *ngFor="let item of slideritems"><img src="{{item.sliderimage}}"  class="img-responsive" />
+            <div class="controlblock">
+              <ul class="actions">
+                <li *ngIf="deleteing">Please wait deleting...</li>
+                <!-- <li><button class="btn btn-primary">Edit</button></li> -->
+                <li><button class="btn btn-danger" (click)="deleteslider(item._id)">Delete</button></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        </div>
+    </div>
+  </div>

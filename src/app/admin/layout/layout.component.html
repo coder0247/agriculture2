@@ -1,0 +1,15 @@
+<app-header (sidebartoggle)="sidebarstatus($event)"></app-header>
+<div class="dashboard">
+	<section class="main">
+		<div class="dashboard-sec clearfix">
+				<app-leftmenu [leftsidebarstatus]= "togglesidebar"></app-leftmenu>
+				<div class="dashboard-right" [ngClass]="{'width-change-right': togglesidebar}">
+						<div class="container-fluid">
+										<router-outlet></router-outlet>
+						</div>
+				</div>
+
+		</div>
+	</section>
+</div>
+<app-footer></app-footer>

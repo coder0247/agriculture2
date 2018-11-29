@@ -1,0 +1,48 @@
+<app-header-common></app-header-common>
+<div class="main-content shop-page main-content-grid">
+		<div class="container">
+			<div class="breadcrumbs">
+					<a href="user/account">My Account</a>
+			</div>
+			<div class="row">
+					<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9 content-offset">
+							<div class="categories-content">
+									<div class="login-register-form content-form">
+											<h4 class="shop-title">Delete Account</h4>
+											<div class="product-container auto-clear grid-style equal-container box-has-content">
+                     
+													<form [formGroup]="accountdeleteForm">
+															<div class="register-form">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                              <span class="label-text">Enter your Password <span>*</span></span>
+                                              <input type="password"  formControlName="password"  class="input-info">
+                                              <div *ngIf="accountdeleteForm.invalid && formsubmitted" class="error-msg">
+                                                <div class="text-danger" *ngIf="!!accountdeleteForm.controls['password'].pristine || !!accountdeleteForm.controls['password'].errors?.required">Password is required.</div>
+                                              </div>
+                                            </div>
+                                        <div class="group-button">
+                                        <button class="button submit"  (click)="deleteMyAccount()">SUBMIT <span class="loading" *ngIf="showloading"><img src="assets/images/loader.gif"></span></button>
+                                        <span class="successmsg" [ngClass]="{'bg-danger': error, 'bg-success': success}"  *ngIf="!!usermsg" >{{usermsg}}</span>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>	
+															</div>
+															</form>
+											</div>
+									</div>
+									
+									</div>
+							
+						  </div>
+      <!-- sidebar -->
+      <app-sidebar></app-sidebar>
+      <!-- /sidebar-->
+			</div>
+		</div>
+	</div>
+	<app-footer></app-footer>

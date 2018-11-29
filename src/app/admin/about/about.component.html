@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="white-bg clearfix">
+    <div class="col-md-6 cont-heading">
+      <h2>{{title}}</h2>
+      <h3>{{title}} content</h3>
+      <span class="side-toggle-menu visible-xs visible-sm"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="white-bg clearfix breadcrumb">
+    <div class="col-md-12">
+      <h3>Page: {{title}} <span><strong>Updated At: </strong> <i class="fa fa-calendar" aria-hidden="true"></i>
+          {{updatedAT | date:'medium'}}</span></h3>
+    </div>
+  </div>
+</div>
+
+<div class="row content-form">
+  <div class="white-bg clearfix breadcrumb">
+    <div class="col-md-12">
+      <form [formGroup]="pageForm">
+        <fieldset>
+          <legend>Editor</legend>
+          <ck-editor *ngIf="!loading; else elseBlock" skin="moono-lisa" [config]="editorConfig" [language]="language"
+            [fullPage]="false" formControlName="pagecontent"></ck-editor>
+          <ng-template #elseBlock>Loading content ...</ng-template>
+        </fieldset>
+        <div class="group-button" *ngIf="!loading">
+          <button class="button submit" (click)="saveapage()">
+            <span *ngIf="saving">Please Wait ...</span>
+            <span *ngIf="!saving">Save</span>
+          </button>
+          <span class="successmsg bg-success" *ngIf="savesuccess"><i class="fa fa-check" aria-hidden="true"></i>
+            <strong>{{successmsg}}</strong></span>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

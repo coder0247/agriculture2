@@ -1,0 +1,189 @@
+
+<div class="row">
+	<div class="white-bg clearfix">
+		<div class="col-md-6 cont-heading">
+			<h2>Subcategory</h2>
+			<h3>Add New Subcategory</h3>
+			<span class="side-toggle-menu visible-xs visible-sm"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="white-bg clearfix breadcrumb">
+		<div class="col-md-12">
+			<ul>
+				<li><a  routerLink="/admin/subcategory/add" ><i class="fa fa-list-alt" aria-hidden="true"></i>Subcategory</a></li>
+				<li><span>Add</span></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+<app-message *ngIf="message" [message]="message" [type]="message_type"></app-message>
+
+<div class="row">
+	<div class="white-bg clearfix breadcrumb">
+		<div class="col-md-6">
+			<form [formGroup]="subcategoryForm" (submit)="addSubcategory()" class="form-horizontal">
+				<div class="form-group" [ngClass]="displayFieldCss(subcategoryForm, 'subcatname')">
+					<label class="control-label col-sm-3" for="subcatname">Subcategory Name:</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" placeholder="Enter category name" formControlName="subcatname" id="subcatname">
+						<span class="help-block" *ngIf="isFieldValid(subcategoryForm, 'subcatname')">Subcategory name is required</span>
+					</div>
+				</div>
+		
+				<div class="form-group" [ngClass]="displayFieldCss(subcategoryForm, 'catid')">
+					<label class="control-label col-sm-3" for="catid">Category:</label>
+					<div class="col-sm-9">
+						<select class="form-control" formControlName="catid" id="catid">
+							<option value="">-- Select category --</option>
+							<option *ngFor="let category of categories" value="{{category._id}}">{{category.catname}}</option>
+						</select>
+						<span class="help-block" *ngIf="isFieldValid(subcategoryForm, 'catid')">Category is required</span>
+					</div>
+				</div>
+				<div class="form-group" [ngClass]="displayFieldCss(subcategoryForm, 'status')">
+					<label class="control-label col-sm-3" for="status">Status:</label>
+					<div class="col-sm-9">
+						<select class="form-control" formControlName="status" id="status">
+							<option value="1">Active</option>
+							<option value="0">In-Active</option>
+						</select>
+						<span class="help-block" *ngIf="isFieldValid(subcategoryForm, 'status')">Subcategory status is required</span>
+					</div>
+				</div>
+			
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<!-- <button type="submit" class="btn btn-success" [disabled]="!subcategoryForm.valid">Submit</button> -->
+						<button type="submit" class="btn btn-success">Submit</button>
+					</div>
+				</div>
+			</form>
+			<form  [formGroup]="newadForm">
+					<div class="dynamicform">
+							<h3 class="white">Add Form Fields</h3>
+							<div class="controls">
+								<ul class="controlnames">
+									<li *ngFor="let field of fieldbuttons; let i=index" (click)="addfield(i, field)" id="{{i}}">
+											{{field}} <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+									</li>
+								</ul>
+							</div>
+							<div class="formcontent">
+									<div *ngFor="let formbaseelement of formbaseelements; trackBy: trackByFn" class="form-row">
+											
+							<app-formfields (removeformfield)="removeField($event)" (checkboxevent) = "persistchkstatus($event)" [formbase]="formbaseelement" [newadForm]="newadForm"></app-formfields>		
+										
+										</div>
+								
+							</div>
+						</div>
+			</form>
+		</div>
+		<div class="col-md-6">
+			<h3 class="bggreen white">Subcategory Image</h3>
+		<img *ngIf="!uploader?.queue?.length" src="{{defaultimage}}" />
+				<!-- <input type="file" name="file" ng2FileSelect [uploader]="uploader"  *ngIf="uploader?.queue?.length < 1"/> -->
+				<div class="dottedborder file" *ngIf="!uploader?.queue?.length">
+						<h5 class="note-title note-bg ">Upload default product image (Allowed Extension: .jpg) <br /> Maximum allowed image file size is <strong>300 KB</strong></h5>
+					<div class="iconblk fileuploadclr">
+						<i class="fa fa-file-image-o" aria-hidden="true"></i>
+					</div>
+					<div class="browsebtn">
+						<label class="file-upload btn btn-success">
+							Browse... <input type="file" id="file" uploader="uploader" (change)="onSelectChange($event, template, templateproductimg)" />
+							<!--  Browse ... <input type="file" id="file" uploader="uploader" multiple (change)="onSelectChange($event)" /> -->
+						</label>
+					</div>
+				</div>
+			   <!-- fileupload ui -->
+			   <div class="row" *ngIf="uploader?.queue?.length">
+				<div class="col-lg-12" style="margin-bottom: 40px">
+					<!-- <p>File in Queue: {{ uploader.queue.length }}</p> -->
+					<table class="table uploadlisting">
+					  <thead>
+						<tr>
+						  <th width="50%">Name</th>
+						  <!-- <th ng-show="uploader.isHTML5">Size</th> -->
+						  <th ng-show="uploader.isHTML5">Progress</th>
+						  <th>Status</th>
+						  <th>Actions</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr *ngFor="let item of uploader.queue; let i = index">
+						  <td>
+							  
+							<strong>{{ item.file.name }}</strong>
+							<!-- Image preview -->
+							<!--auto height-->
+							<!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+							<!--auto width-->
+							<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+							<!--fixed width and height -->
+							<!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+						  </td>
+						  <!-- <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024 | number }} MB</td> -->
+						  <td ng-show="uploader.isHTML5">
+							<div class="progress" style="margin-bottom: 0;">
+							  <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+							</div>
+						  </td>
+						  <td class="text-center">
+							<span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+							<span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+							<span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+						  </td>
+						<td nowrap>
+							<ul class="actiongroup">
+								<li>
+									<button type="button" class="btn btn-success btn-xs" (click)="upload(item.id)" [disabled]="item.isSuccess">
+										<span class="glyphicon glyphicon-upload"></span> Upload
+									</button>
+								</li>
+								<li>
+									<button type="button" class="btn btn-danger btn-xs" (click)="removeSelected(i)" [disabled]="item.isUploading">
+										<span class="glyphicon glyphicon-remove"></span> Remove
+									</button>
+								</li>
+							</ul>
+						</td>
+						</tr>
+					  </tbody>
+					</table>
+					<div class="uploadall">
+						</div>
+				  </div>
+			</div>
+				<!-- fileupload ui end -->
+
+				<ng-template #template>
+						<div class="modal-header">
+						  <h4 class="modal-title pull-left">File size error</h4>
+						  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+							<span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div class="modal-body">
+						  <p>Select image file size seems to be greater than allowed file size.</p>
+							<p>Maximum allowed image file size is <strong>300 KB</strong>.</p> 
+
+						</div>
+					  </ng-template>
+					  <ng-template #templateproductimg>
+							<div class="modal-header">
+							  <h4 class="modal-title pull-left">Error</h4>
+							  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+								<span aria-hidden="true">&times;</span>
+							  </button>
+							</div>
+							<div class="modal-body">
+							  <p>Please Upload .jpeg/.jpg images ( e.g myproduct.jpg).</p>
+							</div>
+						  </ng-template>
+		</div>
+	</div>
+</div>

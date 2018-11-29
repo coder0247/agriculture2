@@ -1,0 +1,135 @@
+<!-- <div class="modal-content modal-lg">
+  <div class="modal-body">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+       </button>
+    <div class="row">
+      <div class="details-info col-xs-12 col-sm-6">
+        <a href="javascript:void(0)" (click)="showproductdetails()" class="product-name">
+          <img src="{{modaldata[1]}}" alt="{{modaldata[0]}}" />
+          </a>
+      </div>
+      <div class="details-info col-xs-12 col-sm-6">
+        <a href="detail.html" class="product-name">{{modaldata[0]}}</a>
+  
+        <div class="price">
+          <span>$ {{modaldata[2]}}</span>
+        </div>
+  
+        <div class="group-button">
+          <div class="inner">
+            <a href="#" class="add-to-cart">
+              <span class="text">Archive</span>
+              <span class="icon">
+                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+              </span>
+            </a>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+   -->
+   <div class="modal-content modal-md">
+    <div class="modal-body">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      <div class="row content-form">
+        <div class="details-info col-xs-12 col-sm-12">
+            <form [formGroup]="reportadForm">
+                <div class="contact-form">
+                  <h4 class="main-title">Report This Ad</h4>
+                  <h5 class="note-title">All ( * ) fields are required</h5>
+                  <div class="row"  *ngIf="sentsuccess" >
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                      <span class="successmsg bg-success"  >{{replymsg}}</span>
+                    </div>
+                  </div>
+                 
+                  <div class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                          <h5><strong>Ad ID :</strong>{{modaldata[0]}}</h5>
+                       
+                        </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  
+                      <span class="label-text">Your Name <span>*</span></span>
+                      <input type="text"  class="input-info" formControlName="fullname" required>
+                      <div *ngIf="reportadForm.invalid && formsubmitted" class="error-msg">
+                          <div class="text-danger" *ngIf="!!reportadForm.controls['fullname'].pristine || !!reportadForm.controls['fullname'].errors?.required">Name is required.</div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                      <span class="label-text">Email Address <span>*</span></span>
+                      <input type="email" class="input-info" formControlName="email" required>
+              <div *ngIf="reportadForm.invalid && formsubmitted" class="error-msg">
+                  <div class="text-danger" *ngIf="!!reportadForm.controls['email'].pristine || !!reportadForm.controls['email'].errors?.required">Email is required.</div>
+                  <div class="text-danger" *ngIf="reportadForm.controls['email'].dirty && !!reportadForm.controls['email'].errors?.patternInvalid?.regexp">Email is invalid.</div>
+                </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 reasonoption">
+                          <span class="label-text">Reason <span>*</span></span>
+                                  <ng-select [searchable]="false"  #reportreasonSelect [items]="reportreason"
+                                  [selectOnTab]="true"
+                                  bindLabel="reason"
+                                  bindValue="_id"
+                                  placeholder="Select reason"
+                                  formControlName="reason">
+                                </ng-select>
+                                <div *ngIf="!reportadForm.valid && formsubmitted" class="error-msg">
+                                    <div class="text-danger" *ngIf="!!reportadForm.controls['reason'].pristine || !!reportadForm.controls['reason'].errors?.required">Reason is required.</div> 
+                                    </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 reasonoption">
+                          <span class="label-text">Country Code <span>*</span></span>
+                                  <ng-select [searchable]="true"  #countrycodeSelect [items]="countrycode"
+                                  [selectOnTab]="true"
+                                  bindLabel="c_text"
+                                  bindValue="_id"
+                                  placeholder="Select countrycode"
+                                  formControlName="countrycode"
+                                 >
+                                </ng-select>
+                                <div *ngIf="!reportadForm.valid && formsubmitted" class="error-msg">
+                                      <div class="text-danger" *ngIf="reportadForm.controls['countrycode'].pristine || reportadForm.controls['countrycode'].errors?.required">Country code is required.</div> 
+                                    </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                           
+                          <span class="label-text">Phone Number <span>*</span></span>
+                          <input type="tel"  class="input-info" formControlName="phoneno" placeholder="1234567890">
+                          <div *ngIf="reportadForm.invalid && formsubmitted" class="error-msg">
+                              <div class="text-danger" *ngIf="!!reportadForm.controls['phoneno'].pristine || !!reportadForm.controls['phoneno'].errors?.required">Phone number is required.</div>
+                              <div class="text-danger" *ngIf="reportadForm.controls['phoneno'].dirty && !!reportadForm.controls['phoneno'].errors?.patternInvalid?.regexp">Phone Number is invalid.</div>
+                          </div>
+                      </div>
+                  </div>
+                 
+                  <span class="label-text">Your Message <span>*</span></span>
+                  <textarea rows="8" class="input-info input-note" formControlName="msg"></textarea>
+                  <div *ngIf="reportadForm.invalid && formsubmitted" class="error-msg">
+                <div class="text-danger" *ngIf="!!reportadForm.controls['msg'].pristine || !!reportadForm.controls['msg'].errors?.required">Message is required.</div>
+                  </div>
+                  <div class="group-button pull-right">
+                    <button class="button submit"   (click)="senddata()">
+                    <span *ngIf="loading">Please Wait ...</span>  
+                    <span *ngIf="!loading">Send Mail</span>
+              </button>
+            
+            </div>
+                </div>
+                </form>
+         
+        </div>
+     
+      </div>
+    </div>
+    </div>
+    

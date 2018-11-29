@@ -1,0 +1,16 @@
+
+.field {
+    display: inline-block;
+    min-width:200px;
+    padding: 0 10px;
+}
+.fieldvalidcontrol {
+    display: inline-block;
+    min-width:100px;
+    padding: 0 10px;
+}
+.fieldbutton {
+    display: inline-block;
+    min-width:100px;
+    padding: 0 10px;
+}
